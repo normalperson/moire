@@ -1,0 +1,30 @@
+div.translate-mode-bar {
+	width: 100%;
+	height: auto;
+	background-color: #DFDFDF;
+	border-bottom: outset 1px;
+	text-align: center;
+}
+
+div.translate-mode-bar  > p {
+	font-weight: bold;
+	margin: 10px;
+	line-height: 30px;
+	font-size: 1.3em;
+	display: inline;
+}
+
+div.translate-mode-bar  > input {
+	margin: 10px;
+	display: inline;
+}
+
+font.translate-popup-link  > span {
+	border-bottom: dotted 2px green;
+	text-decoration: none;
+	cursor : pointer;
+}
+
+font.translate-popup-link.modified  > span {
+	border-bottom: dotted 2px red;
+}

@@ -1,0 +1,136 @@
+<div id="wrap" class="pagecontent">
+<table width="100%">
+	<tr>
+		<td width="60%">
+			<div id="monthtodate" style="min-width: 310px; height: 400px; margin: 0 auto">
+			</div>
+		</td>
+		<td width="5%">&nbsp;</td>
+		<td width="35%">
+			<table id="extracharge" width="100%"  class="ui-custom-table-no-header" style="margin-top:20px">
+			<thead class="ui-state-default">
+			<tr>
+				<th colspan="2">Revenue Month To Date</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="width:70%;text-align:left">{'Total'|tl:true:''}</td>
+					<td style="width:70%;text-align:right">{$monthToDate.totalRev|number_format:0:".":","}</td>
+				</tr>
+				<tr>
+					<td style="width:70%;text-align:left">{'Revenue By Night'|tl:true:''}</td>
+					<td style="width:70%;text-align:right">{$monthToDate.totolByNight|number_format:0:".":","}</td>
+				</tr>
+				<tr>
+					<td style="width:70%;text-align:left">{'Revenue By Duration'|tl:true:''}</td>
+					<td style="width:70%;text-align:right">{$monthToDate.totolByDur|number_format:0:".":","}</td>
+				</tr>			
+			</tbody>	
+			</table>
+
+			<table id="extracharge" width="100%"  class="ui-custom-table-no-header" style="margin-top:20px">
+			<thead class="ui-state-default">
+			<tr>
+				<th colspan="2">{'Average Daily Occupancy'|tl:true:''}</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="width:70%;text-align:left">{'Monday'|tl:true:''}</td>
+					<td style="width:70%;text-align:right">65%</td>
+				</tr>
+				<tr>
+					<td style="width:70%;text-align:left">{'Tuesday'|tl:true:''}</td>
+					<td style="width:70%;text-align:right">82%</td>
+				</tr>
+				<tr>
+					<td style="width:70%;text-align:left">{'Wednesday'|tl:true:''}</td>
+					<td style="width:70%;text-align:right">91%</td>
+				</tr>				
+				<tr>
+					<td style="width:70%;text-align:left">{'Thursday'|tl:true:''}</td>
+					<td style="width:70%;text-align:right">75%</td>
+				</tr>								
+				<tr>
+					<td style="width:70%;text-align:left">{'Friday'|tl:true:''}</td>
+					<td style="width:70%;text-align:right">93%</td>
+				</tr>												
+				<tr>
+					<td style="width:70%;text-align:left">{'Saturday'|tl:true:''}</td>
+					<td style="width:70%;text-align:right">94%</td>
+				</tr>																
+				<tr>
+					<td style="width:70%;text-align:left">{'Sunday'|tl:true:''}</td>
+					<td style="width:70%;text-align:right">97%</td>
+				</tr>																				
+			</tbody>	
+			</table>
+		</td>
+	</tr>
+</table>
+
+</div>
+
+
+<script type="text/javascript">
+var $jsmsg = {
+	'revenue'       : '{"Revenue"|tl:false}',
+	'bynight'       : '{"By Night"|tl:false}',
+	'duration'      : '{"Duration"|tl:false}',
+	'mthtodaterev'  : '{"Month To Date Revenue"|tl:false}'
+};
+{literal}
+var chartdata = {	
+	init : function() {
+		this.finaldata = new Array();			
+		$.ajax({
+			url: 'getMonthToDateRevenue',
+			dataType: 'json',
+			async:   false,
+			success: function(results) {
+			   var self = chartdata;												                         
+	           self.finaldata = [{ 
+	           	                 type: 'pie',
+	                             name: $jsmsg.revenue,
+								 data: [
+					                    [$jsmsg.bynight,   parseFloat(results[0].totolByNight) ],
+					                    [$jsmsg.duration,  parseFloat(results[0].totolByDur) ]
+					                  ]
+					             }];
+			}
+		});
+	}
+};
+$(document).ready(function() {
+	chartdata.init();
+	console.log(chartdata.finaldata);
+	// Build the chart
+    $('#monthtodate').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+
+        },
+        title: {
+            text: $jsmsg.mthtodaterev
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series:chartdata.finaldata
+    });
+});
+</script>
+{/literal}

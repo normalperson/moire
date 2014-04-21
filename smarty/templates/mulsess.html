@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<title>Login</title>
+</head>
+<body>
+<table class="container" align="center">
+	<tr>
+		<td rowspan="2" class="leftspace">&nbsp;</td>
+		<td class="banner">&nbsp;</td>
+		<td rowspan="2" class="formContainer">
+			<div class="mulsessFormContainer">
+				<form method="post">
+					<div id="captionContainer">
+						<div class="error_warning">You are logged in into 2 different session.<br />Please select one of the following actions.</div>
+					</div>
+					<div id="userInfoContainer">{$username}</div>
+					<div id="chooseContainer">
+						<table>
+							<tr>
+								<td style="padding-right:20px;"><input type="radio" name="mulsess" id="mulsess_stay" value="stay"/></td>
+								<td><label for="mulsess_stay"> Log in to this session.<br />(You will be logged out from the other session)</label></td>
+							</tr>
+							<tr>
+								<td style="padding-right:20px;"><input type="radio" name="mulsess" id="mulsess_logout" value="logout"/></td>
+								<td><label for="mulsess_logout"> Undo log in to this session.<br />(You will remain log in into the other session)</label></td>
+							</tr>
+						</table>
+					</div>
+					<!--<div id="rememberContainer">
+						<label for="remember">
+							<input type="checkbox" name="remember" id="remember" value="1"/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</label>
+					</div>-->
+					<div id="submitContainer">
+						<input type="submit" name="submit" id="submit" value=" "/>
+					</div>
+					<div id="helpContainer">
+						<a href="">Can't sign in to your account?</a>
+					</div>
+				</form>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="message">
+			<h2>Message Board</h2>
+			<p>Phi Orion wishes everyone a Merry Chrismas and we would like to take this opportunity to announce that vantagepos had been upgraded to version 6 includes:<br />- big fixes<br />- improve performance<br />- added export report to pdf<br /><br />Also, version 6 will be available for upgrade free of charge starting next month. Thank you for your continuous support for our software.</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3" class="copyright">
+			<hr>
+			<p>&copy;{$year} Phi Orion</p>
+		</td>
+	</tr>
+</table>
+<!--<div id="loginFormContainer">
+	<form method="post">
+		<div id="usernameContainer">
+			<input type="text" name="username" id="username"/>
+		</div>
+		<div id="passwordContainer">
+			<input type="password" name="password" id="password"/>
+		</div>
+		<div id="rememberContainer">
+			<label for="remember">
+				<input type="checkbox" name="remember" id="remember" value="1"/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</label>
+		</div>
+		<div id="submitContainer">
+			<input type="submit" name="submit" id="submit" value=" "/>
+		</div>
+	</form>
+</div>-->
+</div>
+<script type="text/javascript" defer="defer">
+(function(){
+	if(document.getElementById('username')) document.getElementById('username').focus();
+}());
+</script>
+</body>
+</html>

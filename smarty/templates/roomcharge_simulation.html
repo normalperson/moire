@@ -1,0 +1,74 @@
+<div id="container" class="pagecontent" style="margin-top:20px">
+<div id="rcsimulation" >
+	<form id="simulation">
+	<div class="ui-widget ui-helper-hidden ui-custom-dialog-alert" id="err_simulation1">
+	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;" id="err_simulation2" style="display:none;"> 
+		<p style="text-align:left">
+		   <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span> 
+           <strong>{'Alert'|tl:true:''}:</strong>{' Errors detected'|tl:true:''}!
+		</p>
+		<ul style="text-align:left"></ul>
+	</div>
+	</div>
+	<table id="rcsimulation" width="70%"  >
+		<thead class="ui-state-default">
+			<tr>
+				<td colspan="2" style="text-align:center;font-size:1.1em;font-weight:bold">{'Room Charge Simulation'|tl:true:''}</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><label for='checkindatetime'>{'Check in date time'|tl:true:''}</label></td>
+				<td><input type='text' class='ui-custom-input ui-corner-all' id='checkindatetime' name='checkindatetime' class='ui-custom-input ui-corner-all'/></td>
+			</tr>
+			<tr>
+				<td><label for='checkoutdatetime'>{'Check out date time'|tl:true:''}</label></td>
+				<td><input type='text' class='ui-custom-input ui-corner-all' id='checkoutdatetime' name='checkoutdatetime' class='ui-custom-input ui-corner-all'/></td>
+			</tr>		
+			<tr>
+				<td>{'Room Type'|tl:true:''}</td>
+				<td>
+					<div id="divroomtype" class="radio">
+					{foreach from=$roomtype item="rt"}
+					<label for='{$rt.hrt_id}'>{$rt.hrt_desc}</label>
+					<input type='radio' id='{$rt.hrt_id}' name='roomtype' value="{$rt.hrt_id}" />
+					{/foreach}
+					</div>
+				</td>
+			</tr>		
+			<tr>
+				<td>{'Charge Type'|tl:true:''}</td>
+				<td>
+					<div id="divchargetype" class="radio">
+					<label for='night'>Night</label>
+					<input type='radio' id='night' name='chargetype' value="night" />
+					<label for='duration'>Duration</label>
+					<input type='radio' id='duration' name='chargetype' value="duration"/>
+					</div>
+				</td>
+			</tr>			
+		</tbody>	
+		<tfoot>			
+			<tr>
+				<td style="text-align:right;font-size:1.1em;font-weight:bold">{'Room Charges'|tl:true:''}:</td>
+				<td style="text-align:left;font-size:1.1em;font-weight:bold"><strong><span id="roomcharge" ></span></strong></td>
+			</tr>
+		</tfoot>
+	</table>
+	</form>
+	<input type="button" id="simulate" value="{'Simulate'|tl:false}" />
+	<input type="button" id="reset" value="{'Reset'|tl:false}" />
+	<h4>{'Note'|tl:true:''}: {'Simulation does not include addtional charges'|tl:true:''} </h4>
+</div>
+</form>	
+</div><!-- End of Main container -->
+<script type="text/javascript">
+var $jsmsg = {
+	'systemerr'     : '{"System Error"|tl:false}.',
+	'reqcheckindt'  : '{"Please enter check in date and time"|tl:false}.',
+	'reqcheckoutdt' : '{"Please enter check out date and time"|tl:false}.',
+	'reqroomtype'   : '{"Please select room type"|tl:false}.',
+	'reqchargetype' : '{"Please select charge type"|tl:false}.',
+}
+</script>
+

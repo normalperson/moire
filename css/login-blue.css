@@ -1,0 +1,144 @@
+html, body{
+	font-family:Segoe UI Light, Arial;
+}
+.panel-banner {
+  border-color: #dddddd;
+}
+.panel-banner > .panel-heading {
+  color: #333333;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  padding:0px;
+  margin:0px;
+  border:0px;
+
+}
+.panel-banner > .panel-body{
+  background-color:#006bd6;
+  color:#ffffff;
+  overflow:auto;
+  /*height:222px;*/
+}
+
+.panel-banner > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #dddddd;
+}
+
+.panel-banner > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #dddddd;
+}
+
+.nav-login {
+  border-bottom: 1px solid #a22323;
+}
+
+.nav-login > li {
+  float: left;
+  margin-bottom: -1px;
+}
+
+.nav-login > li > a {
+  /*margin-right: 2px;*/
+  line-height: 1.428571429;
+  border: 1px solid transparent;
+  background-color: #428bca ;
+  color:white;
+/*  border-radius: 4px 4px 0 0;*/
+}
+/*border color: #a22323*/
+.nav >li>a:hover, .nav>li>a:focus {
+	text-decoration: none;
+	background-color:#428bca;
+}
+
+.nav-login > li > a:hover {
+  border-color: #357ebd;
+  background-color:#428bca;
+}
+
+.nav-login > li.active > a,
+.nav-login > li.active > a:hover,
+.nav-login > li.active > a:focus {
+  color: #ffffff;
+  cursor: default;
+  background-color: #006bd6;
+  border: 1px solid #0101DF;
+  border-bottom-color: transparent;
+}
+
+.nav-login.nav-justified {
+  width: 100%;
+  border-bottom: 0;
+}
+
+.nav-login.nav-justified > li {
+  float: none;
+}
+
+.nav-login.nav-justified > li > a {
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.nav-login.nav-justified > .dropdown .dropdown-menu {
+  top: auto;
+  left: auto;
+}
+
+@media (min-width: 768px) {
+  .nav-login.nav-justified > li {
+    display: table-cell;
+    width: 1%;
+  }
+  .nav-login.nav-justified > li > a {
+    margin-bottom: 0;
+  }
+}
+
+.nav-login.nav-justified > li > a {
+  margin-right: 0;
+  border-radius: 4px;
+}
+
+.nav-login.nav-justified > .active > a,
+.nav-login.nav-justified > .active > a:hover,
+.nav-login.nav-justified > .active > a:focus {
+  border: 1px solid #a22323;
+}
+
+@media (min-width: 768px) {
+  .nav-login.nav-justified > li > a {
+    border-bottom: 1px solid #a22323;
+    border-radius: 4px 4px 0 0;
+  }
+  .nav-login.nav-justified > .active > a,
+  .nav-login.nav-justified > .active > a:hover,
+  .nav-login.nav-justified > .active > a:focus {
+    border-bottom-color: #a22323;
+  }
+}
+
+.login-content{
+  padding-top: 5%;
+	background-color: #ffffff;
+	height:420px;
+	padding-left:25px;
+	padding-right:25px;
+  border: 2px solid #006bd6;
+}
+
+
+.btn-login {
+  color: #ffffff;
+  background-color:#006bd6;
+  border-color: #006bd6;
+}
+.img-thumbnail{
+	padding:0px;
+	border:0px;
+}
+#loginfooter{
+	width:100%;
+/*	bottom:0;*/
+	border-top: 1px solid #dddddd;
+}

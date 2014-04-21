@@ -1,0 +1,142 @@
+<style>
+/* force a height so the tabs don't jump as content height changes */
+#tabs .tabs-spacer { float: left; height: 200px; }
+.tabs-bottom .ui-tabs-nav { clear: left; padding: 0 .2em .2em .2em; }
+.tabs-bottom .ui-tabs-nav li { top: auto; bottom: 0; margin: 0 .2em 1px 0; border-bottom: auto; border-top: 0; }
+.tabs-bottom .ui-tabs-nav li.ui-tabs-active { margin-top: -1px; padding-top: 1px; }
+</style>
+<div id="container" class="pagecontent" style="margin-top:20px">
+<div style="width:100%">
+	<label for='searchroom'>Search by room number</label>
+	<input type='hidden' style="width:50%" class='ui-custom-input ui-corner-all' id='searchroom' name='searchroom'/>
+</div>
+{literal}
+<form id="guessInfo">
+<input type="hidden" id="mainid" name="mainid" />
+<div id="tabs" class="tabs-bottom" style="margin-top:20px;margin-bottom:20px">
+	<ul>
+		<li><a href="#tabs-1">Guess 1</a></li>
+		<li><a href="#tabs-2">Guess 2</a></li>
+		<li><a href="#tabs-3">Guess 3</a></li>
+	</ul>
+	<div class="tabs-spacer"></div>
+	<div id="tabs-1">
+		<input type="hidden" id="customerid_1" name="customerid_1" />
+		<p>
+		<table style='text-align:left'>
+		<tr>
+			<td><label for='custname_1'>Customer Name</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custname_1' name='custname_1'/></td>
+			<td><label for='custemail_1'>Email</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custemail_1' name='custemail_1'/></td>
+		</tr>
+		<tr>
+			<td><label for='custmobile_1'>Mobile Number</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custmobile_1' name='custmobile_1'/></td>
+			<td><label for='custprimid_1'>Primary ID</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custprimid_1' name='custprimid_1'/></td>
+		</tr>
+		<tr>
+			<td><label for='custdob_1'>Date Of Birth</label></td><td><input type='text' class='ui-custom-input ui-corner-all date' id='custdob_1' name='custdob_1'/></td>
+			<td><label>Gender</label></td>
+			<td>
+				<div id="gender_1" class="radio" style="width:100%">
+				<label for='custgenderm_1'>Male</label>
+				<input type='radio' class='text' id='custgenderm_1' name='custgender_1' value='M'/>
+				<label for='custgenderf_1'>Female</label>
+				<input type='radio' class='text' id='custgenderf_1' name='custgender_1' value='F'/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td><label for='custadd_1'>Address</label></td>
+			<td colspan=3><input style='width:85%' type='text' class='ui-custom-input ui-corner-all' id='custadd_1' name='custadd_1'/></td>
+		</tr>
+		<tr>
+			<td><label for='custzipcode_1'>Zip Code</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custzipcode_1' name='custzipcode_1'/></td>
+			<td><label for='custcity_1'>City</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custcity_1' name='custcity_1'/></td>
+		</tr>
+		<tr>
+			<td><label for='custstate_1'>State</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custstate_1' name='custstate_1'/></td>
+			<td><label for='custcountry_1'>Country</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custcountry_1' name='custcountry_1'/></td>
+		</tr>
+		</table>	
+		</p>
+	</div>
+	<div id="tabs-2">
+		<input type="hidden" id="customerid_2" name="customerid_2" />
+		<p>
+		<table style='text-align:left'>
+		<tr>
+			<td><label for='custname_2'>Customer Name</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custname_2' name='custname_2'/></td>
+			<td><label for='custemail_2'>Email</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custemail_2' name='custemail_2'/></td>
+		</tr>
+		<tr>
+			<td><label for='custmobile_2'>Mobile Number</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custmobile_2' name='custmobile_2'/></td>
+			<td><label for='custprimid_2'>Primary ID</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custprimid_2' name='custprimid_2'/></td>
+		</tr>
+		<tr>
+			<td><label for='custdob_2'>Date Of Birth</label></td><td><input type='text' class='ui-custom-input ui-corner-all date' id='custdob_2' name='custdob_2'/></td>
+			<td><label>Gender</label></td>
+			<td>
+				<div id="gender_2" class="radio" style="width:100%">
+				<label for='custgenderm_2'>Male</label>
+				<input type='radio' class='text' id='custgenderm_2' name='custgender_2' value='M'/>
+				<label for='custgenderf_2'>Female</label>
+				<input type='radio' class='text' id='custgenderf_2' name='custgender_2' value='F'/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td><label for='custadd_2'>Address</label></td>
+			<td colspan=3><input style='width:85%' type='text' class='ui-custom-input ui-corner-all' id='custadd' name='custadd_2'/></td>
+		</tr>
+		<tr>
+			<td><label for='custzipcode_2'>Zip Code</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custzipcode_2' name='custzipcode_2'/></td>
+			<td><label for='custcity_2'>City</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custcity_2' name='custcity_2'/></td>
+		</tr>
+		<tr>
+			<td><label for='custstate_2'>State</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custstate_2' name='custstate_2'/></td>
+			<td><label for='custcountry_2'>Country</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custcountry_2' name='custcountry_2'/></td>
+		</tr>
+		</table></p>
+	</div>
+	<div id="tabs-3">
+		<input type="hidden" id="customerid_3" name="customerid_3" />
+		<p>
+		<table style='text-align:left'>
+		<tr>
+			<td><label for='custname_3'>Customer Name</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custname_3' name='custname_3'/></td>
+			<td><label for='custemail_3'>Email</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custemail_3' name='custemail_3'/></td>
+		</tr>
+		<tr>
+			<td><label for='custmobile_3'>Mobile Number</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custmobile_3' name='custmobile_3'/></td>
+			<td><label for='custprimid_3'>Primary ID</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custprimid_3' name='custprimid_3'/></td>
+		</tr>
+		<tr>
+			<td><label for='custdob_3'>Date Of Birth</label></td><td><input type='text' class='ui-custom-input ui-corner-all date' id='custdob_3' name='custdob_3'/></td>
+			<td><label>Gender</label></td>
+			<td>
+				<div id="gender_3" class="radio" style="width:100%">
+				<label for='custgenderm_3'>Male</label>
+				<input type='radio' class='text' id='custgenderm_3' name='custgender_3' value='M'/>
+				<label for='custgenderf_3'>Female</label>
+				<input type='radio' class='text' id='custgenderf_3' name='custgender_3' value='F'/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td><label for='custadd_3'>Address</label></td>
+			<td colspan=3><input style='width:85%' type='text' class='ui-custom-input ui-corner-all' id='custadd' name='custadd_3'/></td>
+		</tr>
+		<tr>
+			<td><label for='custzipcode_3'>Zip Code</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custzipcode_3' name='custzipcode_3'/></td>
+			<td><label for='custcity_3'>City</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custcity_3' name='custcity_3'/></td>
+		</tr>
+		<tr>
+			<td><label for='custstate_3'>State</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custstate_3' name='custstate_3'/></td>
+			<td><label for='custcountry_3'>Country</label></td><td><input type='text' class='ui-custom-input ui-corner-all' id='custcountry_3' name='custcountry_3'/></td>
+		</tr>
+		</table></p>
+	</div>	
+</div><!-- End of Tab -->
+<input type="button" id="save" value="Save" name="save" />
+</form>
+</div><!-- End of Main container -->
+{/literal}

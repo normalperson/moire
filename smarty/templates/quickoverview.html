@@ -1,0 +1,120 @@
+<div id='wrap' class="pagecontent" style="margin-top:30px">
+	<table cellspacing="3" width="100%">
+	<tr ><td width="55%" valign="top">
+	<table id="extracharge" width="100%"  class="ui-custom-table-no-header">
+		<thead class="ui-state-default">
+		<tr>
+			<th colspan="2">{'Todays Statistic'|tl:true:''}</th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="width:70%;text-align:left">{'Total Room'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.totalroom}</td>
+			</tr>
+			<tr>
+				<td style="width:70%;text-align:left">{'Total Room Available'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.totalavaroom}</td>
+			</tr>
+			<tr>
+				<td style="width:70%;text-align:left">{'Current Rooms Occupied'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.occupied}</td>
+			</tr>
+			<tr>
+				<td style="width:70%;text-align:left">{'Rooms Due Out'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.expEnd}</td>
+			</tr>			
+			<tr>
+				<td style="width:70%;text-align:left">{'Arrival'|tl:true:''} ({'Unconfirm'|tl:true:''})</td>
+				<td style="width:70%;text-align:right">{$stat.expArrival}</td>
+			</tr>
+<!-- 			<tr>
+				<td style="width:70%;text-align:left">{'Projected Occupancy'|tl:true:''} </td>
+				<td style="width:70%;text-align:right">to be find out</td>
+			</tr>
+			<tr>
+				<td style="width:70%;text-align:left">{'Projected ADR'|tl:true:''} </td>
+				<td style="width:70%;text-align:right">to be find out</td>
+			</tr>			
+			<tr>
+				<td style="width:70%;text-align:left">{'Projected RevPar'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">to be find out</td>
+			</tr>	 -->		
+		</tbody>	
+	</table>
+	</td>
+	<td width="5%">
+		&nbsp;
+	</td>
+	<td width="40%">
+		<table id="extracharge" width="100%"  class="ui-custom-table-no-header">
+		<thead class="ui-state-default">
+		<tr>
+			<th colspan="2">Total Guess</th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="width:70%;text-align:left">{'Current In House'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.totalPeople}</td>
+			</tr>
+			<tr>
+				<td style="width:70%;text-align:left">{'Current for duration'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.totalForDur}</td>
+			</tr>
+			<tr>
+				<td style="width:70%;text-align:left">{'Current for night'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.totalForNight}</td>
+			</tr>
+			<tr>
+				<td style="width:70%;text-align:left">{'Due to checkout'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.noPeopleDue}</td>
+			</tr>			
+			<tr>
+				<td style="width:70%;text-align:left">{'Due to arrive'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.noPeopleArr}</td>
+			</tr>						
+		</tbody>	
+		</table>	
+
+		<table id="extracharge" width="100%"  class="ui-custom-table-no-header" style="margin-top:20px">
+		<thead class="ui-state-default">
+		<tr>
+			<th colspan="2">{'Todays activity count'|tl:true:''}</th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="width:70%;text-align:left">{'Walk In'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.totalwalkin}</td>
+			</tr>
+			<tr>
+				<td style="width:70%;text-align:left">{'Walk In'|tl:true:''} ({'Night'|tl:true:''})</td>
+				<td style="width:70%;text-align:right">{$stat.totalwalkinNight}</td>
+			</tr>
+			<tr>
+				<td style="width:70%;text-align:left">{'Walk In'|tl:true:''} ({'Duration'|tl:true:''})</td>
+				<td style="width:70%;text-align:right">{$stat.totalwalkinDur}</td>
+			</tr>			
+			<tr>
+				<td style="width:70%;text-align:left">{'Due to arrive'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.dueToArrive}</td>
+			</tr>						
+			<tr>
+				<td style="width:70%;text-align:left">{'Checked Out'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.checkedOut}</td>
+			</tr>						
+			<tr>
+				<td style="width:70%;text-align:left">{'Due Out'|tl:true:''}</td>
+				<td style="width:70%;text-align:right">{$stat.expEnd}</td>
+			</tr>									
+		</tbody>	
+		</table>	
+	</td>
+	</tr>
+	</table>
+
+</div>
+
+
+

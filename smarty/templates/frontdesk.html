@@ -1,0 +1,187 @@
+<div id='wrap' style="margin-top:30px">
+<div id='external-events' class="custom-dragable-container ui-helper-hidden">
+	<h4>{'Room Type'|tl:true:''}</h4>
+	{foreach from=$roomtype item="rt"}
+	<div class='custom-external-event' data-roomtype="{$rt.hrt_id}" >{$rt.hrt_desc} ({$rt.avairoom})</div>
+	{/foreach}
+</div>
+<div id='legend' class="legend-container" >{'Legend'|tl:true:''}
+	<div class='fc-event-reserve legend-desc' >{'Reserve'|tl:true:''}</div>
+	<div class='fc-event-checkin legend-desc' >{'Checkedin'|tl:true:''}</div>
+	<div class='fc-event-done legend-desc' >{'Checkedout'|tl:true:''}</div>	
+</div>
+<!-- Start of calender div -->
+<div id='calendar'></div>
+<!-- End of calender div -->
+<div style='clear:both'></div>
+
+<!-- Start of guessInfo div -->
+<div id='guessInfo' style="display:none">
+	<!-- Start of form validation error container -->
+        <div class="ui-widget ui-helper-hidden ui-custom-dialog-alert" id="errorblock-div1">
+			<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;" id="errorblock-div2" style="display:none;"> 
+				<p style="text-align:left">
+				   <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span> 
+	               <strong>{'Alert'|tl:true:''}:</strong> {'Error Detected'|tl:true:''}
+				</p>
+				<ul style="text-align:left"></ul>
+			</div>
+		</div>
+	<!--  End of validation error container -->
+	<form id="guessInfoForm">
+	<table id="tblguessinfo" class="ui-custom-table-guessinfo" border="0" >
+	<tr>
+		<td colspan="4" >
+			<div id="roomtype" class="radio" style="width:100%">
+				{'Room Type'|tl:true:''}
+				{foreach from=$roomtype item="rt"}
+				<input type="radio" id="rt_{$rt.hrt_id}" name="roomtype" value="{$rt.hrt_id}" /><label for="rt_{$rt.hrt_id}">{$rt.hrt_desc}</label>
+				{/foreach}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="50%" colspan="2">
+			<div id="chargetype" class="radio" style="width:100%">	
+				{'Room Rate'|tl:true:''}:			
+				<input type="radio" id="rr_night" name="chargetype" value="night" checked="checked" /><label for="rr_night">By Night</label>
+				<input type="radio" id="rr_duration" name="chargetype"  value="duration" /><label for="rr_duration">By Duration</label>
+			</div>
+		</td>
+		<td width="50%" colspan="2">			
+			<div id="type" class="radio" style="width:100%">				
+				{'Type'|tl:true:''} :		
+				<input type="radio" id="reserve" name="type" value="reserve" /><label for="reserve">Reserve</label>
+				<input type="radio" id="checkin" name="type"  value="checkin" /><label for="checkin">Check In</label>
+			</div>
+		</td>
+	</tr>			
+	<tr>
+		<td width="20%">
+			<label for="title">{'Title'|tl:true:''} :</label>
+			<input id="title" name="title" style="width:60%" class="ui-custom-input ui-corner-all" value="" />
+		</td>
+		<td width="80%" colspan="3">
+			<label for="guessname">{'Guest Name'|tl:true:''} :</label>
+			<input id="guessname" name="guessname" style="width:70%" class="ui-custom-input ui-corner-all" value="" required />
+		</td>
+	</tr>	
+	<tr>
+	<td width="25%">
+		<label for="noadult">{'No. Adult'|tl:true:''}:</label>
+		<input id="noadult" name="noadult" class="spinner" style="width:20px">
+	</td>
+	<td width="25%">
+		<label for="nochild">{'No. Child'|tl:true:''}:</label>
+		<input id="nochild" name="nochild" class="spinner" style="width:20px">
+	</td>
+	<td width="25%">
+		<label for="nonight">{'No. Night'|tl:true:''}:</label>
+		<input id="nonight" name="nonight" class="spinner" style="width:20px">
+	</td>
+	<td width="25%">
+		{'Room No'|tl:true:''}:
+		<input type="hidden" id="roomno" name="roomno" style="width:100px"/>
+	</td>
+	</tr>
+	<tr>
+		<td width="50%" colspan="2">
+			<label for="primaryid">{'Primary ID'|tl:true:''}:</label>
+			<input id="primaryid" name="primaryid" class="ui-custom-input ui-corner-all" value="" />		
+		</td>
+		<td width="25%" >
+			<label for="contactno">{'Phone'|tl:true:''}:</label>
+			<input id="contactno" name="contactno" style="width:50%"  class="ui-custom-input ui-corner-all" value="" />		
+		</td>
+		<td width="25%" >
+			<label for="email">{'Email'|tl:true:''}:</label>
+			<input id="email" name="email" style="width:60%" class="ui-custom-input ui-corner-all" value="" />		
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" colspan="4" >
+			<label for="preference" class="ui-custom-textarealabel">{'Guest Preference'|tl:true:''}:</label>
+			<textarea id="preference" name="preference" style="width:90%" class="ui-custom-textarea ui-corner-all" >
+			</textarea>
+		</td>
+	</tr>
+	</table>
+	</form>
+</div>
+<!-- End of guessInfo div-->
+
+</div>
+<script type="text/javascript">
+var calendartext = {
+	'january'   : '{"January"|tl:false}',
+	'february'  : '{"Feburary"|tl:false}',
+	'march'     : '{"March"|tl:false}',
+	'april'     : '{"April"|tl:false}',
+	'may'       : '{"May"|tl:false}',
+	'june'      : '{"June"|tl:false}',
+	'july'      : '{"July"|tl:false}',
+	'august'    : '{"August"|tl:false}',
+	'september' : '{"September"|tl:false}',
+	'october'   : '{"October"|tl:false}',
+	'november'  : '{"November"|tl:false}',
+	'december'  : '{"December"|tl:false}',
+	'jan'       : '{"Jan"|tl:false}',
+	'feb'       : '{"Feb"|tl:false}',
+	'mar'       : '{"Mar"|tl:false}',
+	'apr'       : '{"Apr"|tl:false}',
+	'may'       : '{"May"|tl:false}',
+	'jun'       : '{"Jun"|tl:false}',
+	'jul'       : '{"Jul"|tl:false}',
+	'aug'       : '{"Aug"|tl:false}',
+	'sept'      : '{"Sept"|tl:false}',
+	'oct'       : '{"Oct"|tl:false}',
+	'nov'       : '{"Nov"|tl:false}',
+	'dec'       : '{"Dec"|tl:false}',
+	'monday'    : '{"Monday"|tl:false}',
+	'tuesday'   : '{"Tuesday"|tl:false}',
+	'wednesday' : '{"Wednesday"|tl:false}',
+	'thursday'  : '{"Thursday"|tl:false}',
+	'friday'    : '{"Friday"|tl:false}',
+	'saturday'  : '{"Saturday"|tl:false}',
+	'sunday'    : '{"Sunday"|tl:false}',
+	'mon'       : '{"Mon"|tl:false}',
+	'tue'       : '{"Tue"|tl:false}',
+	'wed'       : '{"Wed"|tl:false}',
+	'thu'       : '{"Thu"|tl:false}',
+	'fri'       : '{"Fri"|tl:false}',
+	'sat'       : '{"Sat"|tl:false}',
+	'sun'       : '{"Sun"|tl:false}',
+	'today'     : '{"Today"|tl:false}',
+	'month'     : '{"Month"|tl:false}',
+	'week'      : '{"Week"|tl:false}',
+	'day'       : '{"Day"|tl:false}'
+
+};
+var guessformval = {
+	'valguessname'  : '{"Please enter guess name"|tl:false}.',
+	'valemail'      : '{"Please enter valid email address"|tl:false}.',
+	'valroomno'     : '{"Please select room no"|tl:false}.',
+	'valroomtype'   : '{"Please select room type"|tl:false}.',
+	'valchargetype' : '{"Please select night/duration"|tl:false}.',
+	'valtype'       : '{"Please select reserve/checkin"|tl:false}.',
+	'valprimaryid'  : '{"Please enter primary id"|tl:false}.'
+};
+var diabtn = {
+	'confirm'         : '{"Confirm"|tl:false}',
+	'close'           : '{"Close"|tl:false}',
+	'cancelreserve'   : '{"Cancel Reserve"|tl:false}'
+};
+
+var jsmsg = {
+	'cfcancelreserve' : '{"Are you sure you want to cancel reserve"|tl:false}?',
+	'gftitle'         : '{"Guess Form"|tl:false}',
+	'syserror'        : '{"System Error"|tl:false}',
+	'noselpassday'    : '{"You are not allow to select pass days"|tl:false}',
+	'nodroppassday'   : '{"You are not allow drop to pass days"|tl:false}',
+	'nomodcomptrans'  : '{"You are not allow to modify complete transaction"|tl:false}.',
+	'nochangestartdt' : '{"You are not allow to change start date when the customer has checked in"|tl:false}.',
+	'noless1night'    : '{"You are not allow to change less than 1 night"|tl:false}!'
+}
+</script>
+
+

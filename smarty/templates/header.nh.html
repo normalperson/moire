@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="{$charset}">
+{foreach from=$csslist item="css"}
+	<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+{foreach from=$jslist item="js"}
+	<script type="text/javascript" src="{$js}"></script>
+{/foreach}
+	<title>{$title}</title>
+</head>
+<body class='noheaderbody'>
+	<div id="body">

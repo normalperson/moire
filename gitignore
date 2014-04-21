@@ -1,0 +1,5 @@
+#ignore compiled smarty
+/smarty/templates_c/
+#ignore windows thumnail
+/smarty/templates_c/
+*.db

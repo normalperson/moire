@@ -1,0 +1,72 @@
+<html>
+<head>
+</head>
+<body>
+<div id='guessInfo'>
+	<form id="guessInfoForm">
+	<table width="100%">
+	<tr>
+	<td width="15%">
+		<label for="noadult">{__('No. of adult')}:</label>
+		<input id="noadult" name="noadult" class="spinner" style="width:20px">
+	</td>
+	<td width="15%">
+		<label for="nochild">{__('No. of children')}:</label>
+		<input id="nochild" name="nochild" class="spinner" style="width:20px">
+	</td>
+	<td width="35%">
+		<div id="roomtype" class="radio">
+			{__('Room Type')}:
+			<input type="radio" id="rt_std" name="roomtype" checked="checked"/><label for="rt_std">{__('Standard')}</label>
+			<input type="radio" id="rt_deluxe" name="roomtype"  /><label for="rt_deluxe">{__('Deluxe')}</label>
+			<input type="radio" id="rt_vip" name="roomtype" /><label for="rt_vip">{__('VIP')}</label>
+		</div>
+	</td>
+	<td width="35%">
+		<div id="roomrate" class="radio">
+			{__('Room Rate')}:
+			<input type="radio" id="rr_std" name="roomrate" checked="checked" /><label for="rr_std">{__('Standard')}</label>
+			<input type="radio" id="rr_promo" name="roomrate"  /><label for="rr_promo">{__('Promotion')}</label>
+		</div>
+	</td>
+	</tr>
+	<tr>
+		<td width="20%" colspan="2">
+			<label for="title">{__('Title')}:</label>
+			<input id="title" name="title" class="ui-custom-input" value="" />
+		</td>
+		<td width="35%">
+			<label for="firstname">{__('First Name')}:</label>
+			<input id="firstname" name="firstname" class="ui-custom-input" value="" required />
+		</td>
+		<td width="35%">
+			<label for="lastname">{__('Last Name')}:</label>
+			<input id="lastname" name="lastname" class="ui-custom-input" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td width="50%" colspan="2">
+			<label for="contactno">{__('Contact No')}:</label>
+			<input id="contactno" name="contactno" class="ui-custom-input" value="" />
+		</td>
+		<td width="50%" colspan="2">
+			<label for="email">{__('Email')}:</label>
+			<input id="email" name="email" class="ui-custom-input" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" colspan="4" >
+			<label for="preference" class="ui-custom-textarealabel">{__('Guess Preference')|:</label>
+			<textarea id="preference" name="preference" class="ui-custom-textarea" >
+			</textarea>
+		</td>
+	</tr>
+	</table>
+	</form>
+</div>
+<!-- End of guessInfo div-->
+
+</div>
+
+</body>
+</html>

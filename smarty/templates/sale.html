@@ -1,0 +1,283 @@
+<div id="container" class="pagecontent" style="margin-top:20px">
+<div class="ui-state-default" style="text-align:center;font-size:1.2em;margin-bottom:2px">{$type} : {$itemdesc} Selected
+	<input type="hidden" id="seltype" name="seltype" value="{$type}">
+	<input type="hidden" id="selid" name="selid" value="{$mainid}">
+	<input type="hidden" id="saleid" name="saleid" value="{$saleid}">
+</div>
+<div class="leftdiv">	
+	<div id="tabs">
+		<ul>
+			{foreach from=$itemcat item="itemc"}
+				<li><a href="#{$itemc.ic_id}">{$itemc.ic_title}</a></li>
+			{/foreach}
+		</ul>
+		{foreach from=$itemcat item="itemc"}
+			<div id="{$itemc.ic_id}" class="menutab">
+				{if isset($itemc.item)}
+					{foreach from=$itemc.item item="item"}	       	  
+					<div class="menuitem" data-itmid="{$item.itm_id}">
+						<div>{$item.itm_number|number_format:0}. </div>
+						<div class="itemname" style="font-size:0.8em">
+						{$item.itm_name}
+						</div>
+					</div>
+					{/foreach}
+				{/if}
+			</div>	
+		{/foreach}		
+	</div> <!-- end of tabs -->
+	<div class="buttonlistleft">
+		<input type="button" id="main" value="{'Main'|tl:false:''}" />	
+		<input type="button" id="discard" value="{'Discard Receipt'|tl:false:''}" />	
+		<input type="button" id="btnpricemod" value="{'Discount'|tl:false:''}" />	
+	</div>
+</div> <!-- end of foodorder -->
+<div class="rightdiv">
+	<div class="pricesum">
+		<div class="itemtable">
+		<table id="saleitem" class="saletable">
+			<thead>
+				<tr>
+					<td>{'Item Name'|tl:true:''}</td>
+					<td class="center">{'Qty'|tl:true:''}</td>
+					<td class="right">{'Total'|tl:true:''}</td>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+			<tfoot>
+				<tr>
+					<td class="left">{'Total'|tl:true:''}:</td>
+					<td class="center"><span id="totalqty"></span></td>
+					<td class="right"><span id="subtotal" class="doubleUnderline"></span></td>
+				</tr>
+			</tfoot>
+		</table>
+		</div><!-- end of itemtable div -->
+		<div class="totaldiv">
+			<table id="totalsale" class="totalsale">
+				<tbody>
+				<tr>
+					<td>{'Discount'|tl:true:''}:</td>
+					<td class="right"><span id="discount"></span></td>
+				</tr>
+				<tr>
+					<td>{'Net Total'|tl:true:''}:</td>
+					<td class="right"><span id="nettotal" class="doubleUnderline"></span></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div><!-- end of price sum -->
+	<div class="buttonlistright">
+		<input type="button" id="clearitem" value="{'Clear Item'|tl:false:''}" />	
+		<input type="button" id="payment" value="{'Payment'|tl:false:''}" />	
+	</div>
+</div><!-- end of right div -->
+</div><!-- end of page content -->
+
+<!-- custom cash payment dialog -->
+<div id="paymentdiv" class="ui-helper-hidden">
+	<form id="paymentform">
+	<div class="ui-widget ui-helper-hidden ui-custom-dialog-alert" id="err_payment1">
+		<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;" id="err_payment2" style="display:none;"> 
+			<p style="text-align:left">
+			   <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span> 
+               <strong>{'Alert'|tl:true:''}:</strong> {'Errors detected'|tl:true:''}!
+			</p>
+			<ul style="text-align:left"></ul>
+		</div>
+	</div>
+	<table class="tbl-dialog">
+		<tbody>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Bill Amount'|tl:true:''}</td>
+			<td style="text-align:right"><span id="pfbilltotal" style="text-align:right"></span></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Existing Payment'|tl:true:''}</td>
+			<td style="text-align:right"><span id="pftotalpayment" style="text-align:right"></span></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Total Due'|tl:true:''}</td>
+			<td style="text-align:right"><span id="pftotaldue" style="text-align:right"></span></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Change'|tl:true:''}</td>
+			<td style="text-align:right"><span id="pfchangeamt" style="text-align:right"></span></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Payment Type'|tl:true:''}</td>
+			<td>
+				<div id="paymenttype">
+					<label for='pt_cash'>{'Cash'|tl:true:''}</label>
+					<input type='radio' id='pt_cash' name='paymenttype' value="cash" />
+					<label for='pt_card'>{'Credit Card'|tl:true:''}</label>
+					<input type='radio' id='pt_card' name='paymenttype' value="card"/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Card Type'|tl:true:''}</td>
+			<td>
+				<div id="cardtype">
+					<label for='ct_visa'>{'Visa'|tl:true:''}</label>
+					<input type='radio' id='ct_visa' name='cardtype' value="visa" />
+					<label for='ct_master'>{'Master'|tl:true:''}</label>
+					<input type='radio' id='ct_master' name='cardtype' value="master"/>
+					<label for='ct_amess'>{'American Express'|tl:true:''}</label>
+					<input type='radio' id='ct_amess' name='cardtype' value="amess"/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top"><label for="cardnumber">{'Card Number'|tl:true:''}</label></td>
+			<td><input type='text' style="text-align:right;width:100%" class='ui-custom-input ui-corner-all' id='cardnumber' name='cardnumber'/></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top"><label for="paymentamt"> {'Amount'|tl:true:''}</label></td>
+			<td><input type='text'  style="text-align:right;width:100%" class='ui-custom-input ui-corner-all' id='paymentamt' name='paymentamt' value=""
+			    onkeyup="accounting.formatObj(this); calDueChange(this);" onkeypress="return accounting.isNumericKey(event,this,false,false)" /></td>
+		</tr>
+		<tr>
+			<td colspan=2><div id="keyboard"></div></td>
+		</tr>
+		</tbody>
+	</table>
+	</form>
+</div>
+
+
+<!-- discount/markup dialog -->
+<div id="pricemod" class="ui-helper-hidden">
+	<form id="pricemodform">
+	<div class="ui-widget ui-helper-hidden ui-custom-dialog-alert" id="err_pricemod1">
+		<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;" id="err_pricemod2" style="display:none;"> 
+			<p style="text-align:left">
+			   <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span> 
+               <strong>{'Alert'|tl:true:''}:</strong> {'Errors detected'|tl:true:''}!
+			</p>
+			<ul style="text-align:left"></ul>
+		</div>
+	</div>
+	<table class="tbl-dialog">
+		<tbody>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Bill Amount'|tl:true:''}</td>
+			<td style="text-align:right"><span id="pmbilltotal" style="font-weight:bold;text-align:right"></span></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Type'|tl:true:''}</td>
+			<td>
+				<div id="pricemodtype">
+					<label for='pm_discount'>{'Discount'|tl:true:''}</label>
+					<input type='radio' id='pm_discount' name='pricemodtype' value="discount" />
+					<label for='pm_markup'>{'Markup'|tl:true:''}</label>
+					<input type='radio' id='pm_markup' name='pricemodtype' value="markup"/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Type'|tl:true:''}</td>
+			<td>
+				<div id="pricemodpam">
+					<label for='pm_percentage'>{'By percentage'|tl:true:''}</label>
+					<input type='radio' id='pm_percentage' name='pricemodpam' value="bypercent" />
+					<label for='pm_amount'>{'By amount'|tl:true:''}</label>
+					<input type='radio' id='pm_amount' name='pricemodpam' value="byamount"/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top"><label for="pmvalue"> {'Value'|tl:true:''}</label></td>
+			<td><input type='text'  style="text-align:right;width:100%" class='ui-custom-input ui-corner-all' id='pmvalue' name='pmvalue' value=""
+			    onkeyup="accounting.formatObj(this);calPriceMod(this)" onkeypress="return accounting.isNumericKey(event,this,false,false)" /></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Final Price'|tl:true:''}</td>
+			<td style="text-align:right">
+				<span id="pmfinalprice" style="font-weight:bold;text-align:right"></span>
+				<input type="hidden" id="hdfinalprice" name="hdfinalprice" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2><div id="pmkeyboard"></div></td>
+		</tr>
+		</tbody>
+	</table>
+	</form>
+</div>
+<!-- End if item div -->
+
+<!-- discount/markup dialog -->
+<div id="editItem" class="ui-helper-hidden">
+	<form id="editItemForm">
+	<div class="ui-widget ui-helper-hidden ui-custom-dialog-alert" id="err_edititem1">
+		<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;" id="err_edititem2" style="display:none;"> 
+			<p style="text-align:left">
+			   <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span> 
+               <strong>{'Alert'|tl:true:''}:</strong> {'Errors detected'|tl:true:''}!
+			</p>
+			<ul style="text-align:left"></ul>
+		</div>
+	</div>
+	<table class="tbl-dialog">
+		<tbody>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Item Name'|tl:true:''}</td>
+			<td style="text-align:right"><span id="edititemname" style="font-weight:bold;text-align:right"></span></td>
+			<td rowspan="7" style="padding-left:25px"><div id="eikeyboard"></div></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Price'|tl:true:''}</td>
+			<td style="text-align:right"><span id="edititemprice" style="font-weight:bold;text-align:right"></span></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Quantity'|tl:true:''}</td>
+			<td style="text-align:right"><input type="text" style="text-align:right;width:100%"  class='ui-custom-input ui-corner-all' id="edititemqty" name="edititemqty" /></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Type'|tl:true:''}</td>
+			<td>
+				<div id="eipricemodtype">
+					<label for='ei_discount'>{'Discount'|tl:true:''}</label>
+					<input type='radio' id='ei_discount' name='eipricemodtype' value="discount" />
+					<label for='ei_markup'>{'Markup'|tl:true:''}</label>
+					<input type='radio' id='ei_markup' name='eipricemodtype' value="markup"/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Type'|tl:true:''}</td>
+			<td>
+				<div id="eipricemodpam">
+					<label for='ei_percentage'>{'By percentage'|tl:true:''}</label>
+					<input type='radio' id='ei_percentage' name='eipricemodpam' value="bypercent" />
+					<label for='ei_amount'>{'By amount'|tl:true:''}</label>
+					<input type='radio' id='ei_amount' name='eipricemodpam' value="byamount"/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top"><label for="eivalue"> {'Value'|tl:true:''}</label></td>
+			<td><input type='text'  style="text-align:right;width:100%" class='ui-custom-input ui-corner-all' id='eivalue' name='eivalue' value=""
+			    onkeyup="accounting.formatObj(this);calPriceModItem(this)" onkeypress="return accounting.isNumericKey(event,this,false,false)" /></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;vertical-align:top">{'Final Price'|tl:true:''}</td>
+			<td style="text-align:right">
+				<span id="eifinalprice" style="font-weight:bold;text-align:right"></span>
+				<input type="hidden" id="hdeifinalprice" name="hdeifinalprice" />
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	</form>
+</div>
+
+
+<iframe id="ifmcontentstoprint" style="height: 0px; width: 0px; position: absolute; background-color:black">
+	<body>
+	</body>
+</iframe>

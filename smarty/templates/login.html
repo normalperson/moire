@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shine portal</title>
+
+    <!-- Bootstrap -->
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap_metro/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap_metro/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="css/login-red.css">
+	<script type="text/javascript" src="js/jquery-1.10.0.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<div class="container" style="margin-top:50px;margin-bottom:50px">
+    <div class="row">
+      <div class="col-md-1">&nbsp;</div>
+
+	  <div id="leftdiv" class="hidden-xs col-md-5">
+  		<div class="panel panel-banner">
+			<div class="panel-heading">
+				<img src="image/login_banner1.png" alt="..." class="img-responsive img-thumbnail ">
+			</div>
+		  <div class="panel-body">
+		    {$contents}
+		  </div>
+		</div>	  		
+	  </div>
+
+	  <div id="rightdiv" class="col-md-5">
+	  	<!-- Nav tabs -->
+		<ul class="nav nav-login">
+		  <li class="active" style="width:30%"><a href="#login" data-toggle="tab">Login</a></li>
+		  <li style="width:40%"><a href="#sendmessage" data-toggle="tab">Leave a message</a></li>
+		  <li style="width:30%"><a href="#contactus" data-toggle="tab">Contact Us</a></li>
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content login-content">
+		  <div class="tab-pane active" id="login">		  	
+		  	<div class="row">
+			  	<div class="col-md-12">
+			  		<p style="font-size:2.2em;">Welcome to SHINE portal</p>
+			  	</div>
+			  	<div class="col-md-12">
+			  		<p>This is Taylor's University SHINE portal. <br>Kindly login with your username and password </p>
+			  	</div>
+			  	<form class="form-horizontal" role="form"  method="post" id="loginform">
+				    <div class="col-md-12" style="margin-bottom:15px">
+				      <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+				    </div><!-- /col-md-12 -->
+
+				    <div class="col-md-12"  style="margin-bottom:15px">
+				      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+				    </div><!-- /col-md-12 -->
+
+				    
+				    <div class="col-md-12"  style="margin-bottom:15px">
+				    	<input type="submit" class="btn  btn-lg btn-login" value="sign in" />
+				    	
+				    </div>
+				    <div class="col-md-12">
+				    	<a href="nologin/register.php?dboid=register&dbostate=new" class="atag-login">first time registration</a>
+				    </div>
+				</form>
+				</div><!-- end of row -->		   
+		  </div>
+		  <div class="tab-pane" id="sendmessage">
+		  	<div class="row">
+		  		<div class="col-md-12" style="margin-bottom:15px">
+		  			<textarea id="message" class="form-control" rows="10" placeholder="Type your message here......"></textarea>
+		  		</div>
+		  		<div class="col-md-12">
+		  			<input type="button" class="btn  btn-lg btn-login" value="Send" />
+		  		</div>
+		  	</div>
+		  </div>
+		  <div class="tab-pane" id="contactus">
+		  	<h5>Taylor's University Lakeside Campus</h5>
+		  	<table width="100%"> 
+		  		<tr>
+		  			<td width="15%" valign="top">Address</td>
+		  			<td width="5%" valign="top">:</td>
+		  			<td>No. 1 Jalan Taylor's <br>
+						47500 Subang Jaya,<br>
+						Selangor Darul Ehsan<br>
+						Malaysia										
+					</td>
+		  		</tr>
+		  		<tr>
+		  			<td></td>
+		  			<td></td>
+		  			<td><a class="link_about" title="Find us on Google Maps" href="http://maps.google.com.my/maps?hl=en&amp;georestrict=input_srcid:245ac40000a106f2&amp;ie=UTF8&amp;view=map&amp;cid=17490085504323192881&amp;q=Taylor's+University+Lakeside+Campus&amp;ved=0CB8QpQY&amp;ei=AL70TMu-Bs-SkQWllayaBA&amp;hq=Taylor's+University+Lakeside+Campus&amp;hnear=&amp;ll=3.06651,101.616154&amp;spn=0.009771,0.01929&amp;z=16&amp;iwloc=A" target="_blank">Find us on Google Maps</a></td>
+		  		</tr>
+		  		<tr>
+		  			<td>GPS</td>
+		  			<td>:</td>
+		  			<td>N 3° 3' 52.91", E 101° 36' 58.15"</td>
+		  		</tr>
+		  		<tr>
+		  			<td>Phone</td>
+		  			<td>:</td>
+		  			<td>603-5629 5000</td>
+		  		</tr>
+		  		<tr>
+		  			<td>Fax</td>
+		  			<td>:</td>
+		  			<td>603-5629 5001</td>
+		  		</tr>
+		  		<tr>
+		  			<td>Email</td>
+		  			<td>:</td>
+		  			<td>admissions@taylors.edu.my</td>
+		  		</tr>
+		  	</table>
+			
+		  </div>
+		</div>
+		<div class="col-md-1">&nbsp;</div>
+
+	  </div>
+
+
+	</div><!-- end of row -->
+	  <div id="loginfooter" >
+	  	<div class="pull-left" style="margin-top:15px">Phi Orion Sdn Bhd 2014 All rights reserved</div>
+	  	<div class="pull-right"  style="margin-top:15px"><img src="image/posb.jpg" alt="Phi Orion Sdn Bhd" class="img-responsive img-thumbnail "></div>
+	  </div>
+
+	</div><!-- end of container -->
+
+  </body>
+</html>

@@ -1,0 +1,125 @@
+<h2>Receipt</h2>
+<table border="0" cellspacing="3" cellpadding="4">
+	<tr>
+    	<td style="text-align:center;font-weight:bold;border-bottom:1px solid black">Main Guess Info</td>
+    </tr>
+	<tr>
+		<td>
+			<table border="0" cellspacing="2" cellpadding="1">
+				<tr>		
+					<td>Main Guess Name</td>
+					<td colspan="3">{$custinfo.cus_name} {if $custinfo.cus_gender!=''} ({$custinfo.cus_gender}) {/if}</td>
+					<td>Country</td>
+					<td >{$custinfo.cus_country}</td>
+				</tr>
+				<tr>
+					<td>Primary ID</td>
+					<td>{$custinfo.cus_primaryid}</td>
+					<td colspan="2">Email:{$custinfo.cus_email}</td>
+					<td>City</td>
+					<td>{$custinfo.cus_city}</td>
+				</tr>
+				<tr>
+					<td>Contact No</td>
+					<td>{$custinfo.cus_mobilephone}</td>
+					<td>Date Of Birth</td>
+					<td>{$custinfo.cus_dob}</td>
+					<td>Zipcode</td>
+					<td>{$custinfo.cus_zip}</td>
+				</tr>
+			</table>
+	    </td>
+    </tr>
+    <tr>
+    	<td>&nbsp;</td>
+    </tr>	
+    <tr>
+    	<td style="text-align:center;font-weight:bold;border-bottom:1px solid black">Charges Info</td>
+    </tr>
+    <tr>
+    	<td>
+    		<table cellspacing="2" cellpadding="1">
+    			<thead >
+    			<tr  style="color:white;font-weight:bold;background-color:black">
+					<td>No.</td>
+					<td>Room Type</td>
+					<td>Date From</td>
+					<td>Date To</td>		
+					<td>Room Charge</td>		
+					<td style="text-align:right">Subtotal</td>		
+				</tr>
+				</thead>
+				{foreach from=$transArr item="tr"}
+				<tr>
+					<td>{$tr.rownum}</td>
+					<td>{$tr.roomtype}</td>
+					<td>{$tr.startdt}</td>
+					<td>{$tr.enddt}</td>		
+					<td style="text-align:right">{$tr.roomoricharges|number_format:0:".":","}</td>		
+					<td style="text-align:right">{$tr.roomoricharges|number_format:0:".":","}</td>	
+				</tr>
+					{foreach from=$tr.addCharge item="tra"}
+					<tr>
+						<td>&nbsp;</td>
+						<td>Extra Charge</td>
+						<td colspan="2">{$tra.had_description}</td>
+						<td>({$tra.had_status})</td>		
+						<td style="text-align:right">{if $tra.had_status =='VOID'}<strike>{/if}
+							{$tra.had_amount|number_format:0:".":","}
+							{if $tra.had_status =='VOID'}</strike>{/if}
+						</td>		
+					</tr>
+					{/foreach}
+				<tr>
+					<td colspan="2">&nbsp;</td>
+					<td colspan="3">Discount/Markup</td>
+					<td style="text-align:right">{$tr.customamt|number_format:0:".":","}</td>		
+				</tr>
+				<tr>
+					<td colspan="3">&nbsp;</td>
+					<td colspan="2" style="font-weight:bold">Total for this room</td>
+					<td style="font-weight:bold;text-align:right">{$tr.netcharges|number_format:0:".":","}</td>		
+				</tr>
+				{/foreach}
+				{if $totalcharge.totalroom >1}
+				<tfoot>
+					<tr>
+						<td colspan="3">&nbsp;</td>
+						<td colspan="2" style="font-weight:bold">TOTAL</td>
+						<td style="font-weight:bold;text-align:right">{$totalcharge.finaltotal|number_format:0:".":","}</td>		
+					</tr>
+				</tfoot>
+				{/if}
+    		</table>
+    	</td>
+    </tr>
+       <tr>
+    	<td>&nbsp;</td>
+    </tr>
+    <tr>
+    	<td style="text-align:center;font-weight:bold;border-bottom:1px solid black">Payment Info</td>
+    </tr>
+    <tr>
+    	<td>
+    		<table cellspacing="2" cellpadding="1">
+				<tr style="color:white;font-weight:bold;background-color:black;">
+					<td>No.</td>
+					<td colspan="4">Payment Type</td>
+					<td style="text-align:right">Payment Amount</td>		
+				</tr>
+				{foreach from=$paymentArr item="pay"}
+				<tr>
+					<td>{$pay.rownum}</td>
+					<td colspan="4">{$pay.paydesc}</td>
+					<td style="text-align:right">{$pay.amount|number_format:0:".":","}</td>		
+				</tr>
+				{/foreach}
+				<tr>
+					<td colspan="3">&nbsp;</td>
+					<td colspan="2" style="font-weight:bold">Total Payment</td>
+					<td style="font-weight:bold;text-align:right">{$totalpayment|number_format:0:".":","}</td>		
+				</tr>
+			</table>
+    	</td>
+    </tr>
+</table>

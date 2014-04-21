@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="{$charset}">
+{foreach from=$csslist item="css"}
+	<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}	
+{foreach from=$jslist item="js"}
+	<script type="text/javascript" src="{$js}"></script>
+{/foreach}
+	<title>{$title}</title>
+</head>
+
+<body style="padding-bottom:30px;">
+<div id="container">
+	<!-- <nav class="navbar navbar-red navbar-fixed-top" role="navigation"> -->
+	<nav class="navbar navbar-default" role="navigation">
+	  <div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavi">
+		  <span class="sr-only">Toggle navigation</span>
+		  <span class="icon-bar"></span>
+		  <span class="icon-bar"></span>
+		  <span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="#">Shine</a>
+		<ul class="nav navbar-nav navbar-fix">
+		  <li>
+			<a href="#" id='calendarToggle'><span class="glyphicon glyphicon-calendar"></span></a>
+		  </li>
+		</ul>
+		<input type='checkbox' id='toggleDateTime'/>
+		<label  class="navbar-text" for='toggleDateTime' id="dateTimeContainer">
+			<div id='timeContainer'><span id="hourContainer">10</span><span id="pointContainer">:</span><span id="minuteContainer">30</span> <span id="pmContainer">PM</span> <span id="dateContainer">10-Jan-2014</span></div>
+		</label>
+	  </div>
+	  <div class="collapse navbar-collapse" id='mainNavi'>
+		{$Menu->render()}		
+		<ul class="nav navbar-nav navbar-right">
+
+		{assign var=reqList value={$Menu->genRequestList()}}
+		{if $reqList}
+			<li class="dropdown">
+				<a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-plus" style="font-size:2.0em"></a>
+				<ul class="dropdown-menu" role="menu">
+					{$reqList}
+				</ul>
+			</li>
+		{/if}
+			<li class="dropdown">
+				<a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bullhorn" style="font-size:2.0em"></span>
+					<span class="badge-menu">{count($alertdata)}</span>
+				</a>
+				<ul class="dropdown-menu alert" role="menu">
+				  <li class="header"> You have {count($alertdata)} notification </li>
+				  {foreach from=$alertdata item="ad"}		
+					  <li><a href="#" class="pull-left">
+					  	   <div class="pull-left">{$ad.di_subject} </div>					  	   
+					       <span class="pull-left glyphicon glyphicon-minus-sign"></span>				  	  
+					      </a>
+					  </li>
+				  {/foreach}		
+
+				  <li> <a href="#" class="footer">View all <span class="glyphicon glyphicon-circle-arrow-right"></span> </a> 
+				  </li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" style="font-size:2.0em"></span></a>
+				<ul class="dropdown-menu" role="menu">
+				  <li class="header">{$name}</li>				  
+				  <li><a href="{$logouturl}">Logout</a></li>
+				  <li><a href="{$logouturl}">Account Setting</a></li>
+				</ul>
+			</li>
+		</ul>
+	  </div>
+	</nav>
+
+<div id="body">
+
+
+
+<script type="text/javascript">
+var now = moment({$serverdate->getTimestamp()}*1000),
+	serverTZOffset = "{$serverdate->format('O')}";
+
+{literal}
+
+(function($){ //create closure so we can safely use $ as alias for jQuery
+	now.formatLocal = function (fmt) {
+		return this.format(fmt);
+	}
+	now.formatServer = function (fmt) {
+		var serverNow = moment(now);
+		return serverNow.zone(serverTZOffset).format(fmt);
+	}
+
+	var dateEL = {
+		$hour : $('#dateTimeContainer').find('#hourContainer'),
+		$min : $('#dateTimeContainer').find('#minuteContainer'),
+		$pm : $('#dateTimeContainer').find('#pmContainer'),
+		$date : $('#dateTimeContainer').find('#dateContainer')
+	}
+	
+	refreshAutotime();
+	window.setInterval(refreshAutotime, 1000);
+	function refreshAutotime(){
+		now.add('s', 1);
+		dateEL.$hour.html(now.formatServer('h'));
+		dateEL.$min.html(now.formatServer('mm'));
+		dateEL.$pm.html(now.formatServer('A'));
+		dateEL.$date.html(now.formatServer('D-MMM-YYYY'));
+	}
+	
+/*	$('#slideleft').click(function() {
+	  $('#tutCarousel').carousel('prev');
+	});
+	$('#slideright').click(function() {
+	  $('#tutCarousel').carousel('next');
+	});*/
+})(jQuery);
+</script>
+{/literal}

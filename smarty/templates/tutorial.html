@@ -1,0 +1,65 @@
+<!-- Modal -->
+<div class="modal fade modal-fullscreen" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="btn btn-danger pull-right" type="button" data-dismiss="modal" aria-hidden="true">
+          <span class="glyphicon glyphicon-remove"></span>
+          <span>Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body" >
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height:400px">
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner">
+            <div class="item active">
+              <img src="{cat1.jpg}" alt="..." >
+              <div class="carousel-caption">
+                ...
+              </div>
+            </div>
+            
+             <div class="item ">
+              <img src="cat2.jpg" alt="...">
+              <div class="carousel-caption">
+                ...
+              </div>
+            </div>
+
+            <div class="item ">
+              <img src="cat3.jpg" alt="...">
+              <div class="carousel-caption">
+                ...
+              </div>
+            </div>
+          </div>
+          
+         
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="caption">
+          Caption...
+        </div>
+        <span class="pull-left glyphicon glyphicon-chevron-left footer-arrow" id="slideleft" ></span>
+        <span class="pull-right glyphicon glyphicon-chevron-right footer-arrow" id="slideright"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+
+<script type="text/javascript">
+$('#slideright').click(function() {
+  $('#myCarousel').carousel('prev');
+});
+$('#slideright').click(function() {
+  $('#myCarousel').carousel('next');
+});
+</script>

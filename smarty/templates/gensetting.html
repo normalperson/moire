@@ -1,0 +1,91 @@
+<div id="container" class="pagecontent" style="margin-top:20px">
+<div id="gensettingdiv">
+	<h3>{'General Setting'|tl:true:''}</h3>
+	<div>					
+		<table style='text-align:left'>
+			<tr>
+				<td><label for='theme'>{'Theme'|tl:true:''}</label></td>
+				<td><input type='hidden' class='ui-custom-input ui-corner-all' style="width:300px" id='theme' name='theme'/></td>
+			</tr>
+			<tr>
+				<td><label for='language'>{'Language'|tl:true:''}</label></td>
+				<td><input type='hidden' class='ui-custom-input ui-corner-all'  style="width:500px" id='language' name='language'/></td>
+			</tr>
+		</table>
+	</div>	
+	<h3>Time Setting</h3>
+	<div>					
+		<table style='text-align:left' border="0">
+			<tr>
+				<td><label for='sessiontime'>{'Session Timeout'|tl:true:''} </label></td>
+				<td><input type="text" id="sessiontime" name="sessiontime" style="border: 0; color: #f6931f; font-weight: bold; width:50px" readonly/>(min)</td>				
+			</tr>
+			<tr>
+				<td colspan="2"><div id="slider-sessiontime" ></div></td>
+			</tr>
+
+			<tr>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td><label for='defcheckintime'>{'Default Check In Time'|tl:true:''}</label></td>
+				<td><input type="text" id="defcheckintime" name="defcheckintime" style="border: 0; color: #f6931f; font-weight: bold; width:100px" readonly/></td>				
+				<td><label for='eicharge'>{'Early Check In Charges'|tl:true:''}</label></td>
+				<td><input type="text" id="eicharge" name="eicharge" class='ui-custom-input ui-corner-all' style="text-align:right"
+					onkeyup="accounting.formatObj(this)" onkeypress="return accounting.isNumericKey(event,this,false,false)"/></td>				
+			</tr>
+			<tr>
+				<td colspan="2"><div id="slider-defcheckin"></div></td>
+			</tr>
+			<tr>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td><label for='div'>{'Default Check Out Time'|tl:true:''}</label></td>
+				<td><input type="text" id="defcheckouttime" name="defcheckouttime" style="border: 0; color: #f6931f; font-weight: bold; width:100px"  readonly/></td>				
+				<td><label for='locharge'>{'Late Check Out Charges'|tl:true:''}</label></td>
+				<td><input type="text" id="locharge" name="locharge" class='ui-custom-input ui-corner-all' style="text-align:right"
+					onkeyup="accounting.formatObj(this)" onkeypress="return accounting.isNumericKey(event,this,false,false)"/></td>				
+			</tr>
+			<tr>
+				<td colspan="2"><div id="slider-defcheckout"></div></td>
+			</tr>
+		</table>
+	</div>	
+	<h3>{'Hotel Info'|tl:false}</h3>
+	<div>					
+		<table style='text-align:left' border="0">
+			<tr>
+				<td><label for='sessiontime'>{'Hotel Name'|tl:true} </label></td>
+				<td><input type="text" id="hotelname" name="hotelname" class="text" style="width:470px" value="{$hotelname}" /></td>	
+			</tr>
+			<tr>
+				<td><label for='sessiontime'>{'Hotel Address'|tl:true} </label></td>
+				<td><textarea id="hoteladdress" name="hoteladdress" rows="4" cols="50" class="textarea">{$hoteladd}</textarea></td>	
+			</tr>
+		</table>
+	</div>
+</div>
+<div id="buttonlist" style="float:left;margin-top:50px;">
+<input type="button" id="resetdefault" value="{'Reset to default'|tl:false}" />	
+<input type="button" id="save" value="{'Save'|tl:false}" />	
+</div>
+</form>	
+</div><!-- End of Main container -->
+<script type="text/javascript">
+var def = {
+	'checkinmin'  :{$checkinmin}, 
+	'checkoutmin' :{$checkoutmin},
+	'checkinstr'  :'{$checkinstr}',
+	'checkoutstr' :'{$checkoutstr}',
+	'sessiontime' :{$sessiontime},
+	'eicharge'    :{$eicharge},
+	'locharge'    :{$locharge}
+};
+
+var $jsmsg = {
+	'systemerr' : '{"System Error"|tl:false}.',
+	'updatemsg' : '{"Setting updated successfully"|tl:false}!',
+	'resetmsg' : '{"Setting reset to default"|tl:false}.'
+}
+</script>
