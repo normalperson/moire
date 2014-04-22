@@ -127,35 +127,55 @@ class AppMenu extends Menu{
 		global $USER;
 		$html = "";
 		
-		if ($USER->inGroup('REQUEST_ADHOC_ACTIVITY')) {
-			$frameURL = WEB_HREF."/Task/create?opid=42";
-			$html .= "<li><a href='javascript:void(0)' id='requestAdhocEvent'>Adhoc Activity Registration</a></li>
-<script type='text/javascript'>
-$('#requestAdhocEvent').click(function () {
-	popupFrameContent('{$frameURL}', 'Adhoc Activity Registration', '90%', function (\$modal) {
-		if (\$modal.data('post')) {
-			$('#taskPanel').find('.panel-reload').click();
-		}
-	});
-})
-</script>";
-		}
-		if ($USER->inGroup('PERFORM_TSAT')) {
-			$URL =  WEB_HREF."/Home/TSAT";
-			$html .= "<li><a href='{$URL}' id='performTSAT'>Perform TSAT</a></li>";
-		}
 		
-		if ($USER->inGroup('ADHOC_NOTIFICATION')) {
-			$frameURL = WEB_HREF."/Home/adhocNotification";
-			$html .= "<li><a href='javascript:void(0)' id='requestAdhocNotification'>Adhoc Notification</a></li>
-<script type='text/javascript'>
-$('#requestAdhocNotification').click(function () {
-	popupFrameContent('{$frameURL}', 'Adhoc Notification', '70%');
-})
-</script>";
-		}
+		
+		$URL =  WEB_HREF."/Job/newJob";
+		$html .= "<li><a href='{$URL}' id='newjob'>New Job</a></li>";
+		
+		
+		
 		
 		return $html;
+	}
+	function getalertData(){
+		global $DB,$USER;
+		/*get the notifiction for this user*/
+		$sql = "select di_subject from fcuserdiary
+				where di_cat = :0
+				and di_userid = :1
+				and di_status = :2 order by di_id desc";			
+		$alertdata = $DB->GetArray($sql,array('Notice',$USER->userid,'ACTIVE'), PDO::FETCH_ASSOC);
+
+		return $alertdata;
+
+	}
+	function genAlertList(){
+
+		$html = "";
+		/*get the notifiction for this user*/
+		$sql = "select di_subject from fcuserdiary
+				where di_cat = :0
+				and di_userid = :1
+				and di_status = :2 order by di_id desc";			
+		$alertdata = $this->getalertData();
+		foreach ($alertdata as $key => $value) {
+			$string = $value['di_subject'];
+
+			$html .= "<li><a href='#'' class='pull-left'>
+					  	   <div class='pull-left'>".$string." </div>					  	   
+					       <span class='pull-left glyphicon glyphicon-minus-sign'></span>				  	  
+					      </a>
+					  </li>";
+
+		}
+
+		return $html;
+
+	}
+	function countAlert(){
+		$alertdata = $this->getalertData();
+
+		return count($alertdata);
 	}
 }
 ?>

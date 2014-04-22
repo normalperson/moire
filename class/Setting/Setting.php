@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__).'/../../init.inc.php');
+require_once(dirname(__FILE__).'/../../inc/generalFunc.php');
 
 class Setting{
 	function __construct(){
@@ -119,71 +120,28 @@ class Setting{
 
 		$DB->Execute("select resetfcsetting()");
 		
-	}
-	function rtypesetting(){
-		global $HTML,$DB;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
-		
+	}	
+	function cartonSetup(){
 		html_header();
-		$dbo = dbo_include('setup_roomtype');
+		$dbo = dbo_include('cartonsetup');
 	}
-	function roomsetting(){
-		global $HTML;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
+	function lookupSetup(){
 		html_header();
-		$dbo = dbo_include('setup_roomno');
+		$dbo = dbo_include('lookup');
 	}
-	function dursetting(){
-		global $HTML,$DB;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
-		
+	function jobcatsetup(){
 		html_header();
-		$dbo = dbo_include('setup_durationchargebyhour');	
-	}
-	function onightsetting(){
-		global $HTML,$DB;
-
-		html_header();
-		$dbo = dbo_include('setup_durationchargebynight');
-	}
-	function holsetting(){
-		global $HTML,$DB;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
-
-		html_header();
-		$dbo = dbo_include('setup_publicholiday');
-
-	}
-	function menudemo(){
-		global $HTML,$DB;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
-
-		$dbo = dbo_include('menutable');
-
-	}
-	function weekdaysetting(){
-		global $HTML,$DB;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
-
-		html_header();	
-		$dbo = dbo_include('setup_weekday');
-
+		$dbo = dbo_include('jobcatsetup');
 	}
 	function User(){
-		global $HTML;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
 		html_header();
 		$dbo = dbo_include('user');
 	}
 	function Role(){
-		global $HTML;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
 		html_header();
 		$dbo = dbo_include('role');
 	}
 	function Permission(){
-		global $HTML;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
 		html_header();
 		$dbo = dbo_include('permission');
 	}
@@ -193,34 +151,20 @@ class Setting{
 		echo json_encode($rolepermarr);
 	}
 	function usersetting(){
-		global $HTML;
 		html_header();
 		$dbo = dbo_include('user');
 	}
 	function rolesetting(){
-		global $HTML;
 		html_header();
 		$dbo = dbo_include('role');
 	}
 	function permsetting(){
-		global $HTML;
 		html_header();
 		$dbo = dbo_include('permission');
 	}
-	function journalMapping(){
-		global $HTML;
-		html_header();
-		$dbo = dbo_include('journalmapping');	
-	}
 	function menusetup(){
-		global $HTML;
 		html_header();
 		$dbo = dbo_include('menu');	
-	}
-	function tutsetup(){
-		html_header();
-		$dbo = dbo_include('tutorial_setup');	
-
 	}
 	
 }

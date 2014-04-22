@@ -19,19 +19,7 @@ function html_header($headerTemplate='header.html'){
 		$HTML->addCSS('css/'.$THEME.'/select2.css');
 		$HTML->addCSS('css/'.$THEME.'/select2-bootstrap.css');
 		$HTML->smarty->assign('Menu', $Menu);
-		$serverdate = new DateTime() ;
-		/*get the notifiction for this user*/
-		$sql = "select di_subject from fcuserdiary
-				where di_cat = :0
-				and di_userid = :1
-				and di_status = :2 order by di_id desc";			
-		$alertdata = $DB->GetArray($sql,array('Notice',$USER->userid,'ACTIVE'), PDO::FETCH_ASSOC);
-		foreach ($alertdata as $key => $value) {
-			$string = $value['di_subject'];
-			$alertdata[$key]['di_subject'] = wordwrap($string,$stringwidth,"<br>\n");
-		}
-
-		$HTML->smarty->assign('alertdata', $alertdata);
+		$serverdate = new DateTime() ;	
 		$HTML->smarty->assign('serverdate', $serverdate);
 		$HTML->smarty->assign('name', $USER->name);
 		$HTML->genHeader($headerTemplate);
