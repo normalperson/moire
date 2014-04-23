@@ -324,8 +324,7 @@ function moveSingleImage($destination, $newfilename='',$image){
 	  else
 		{
 			if($newfilename =='') $filename = $image["name"];
-			else $filename  = $newfilename;
-
+			else $filename  = $newfilename.".".$extension;
 			move_uploaded_file($image["tmp_name"],$destination.$filename);			  	
 		}
 	}
