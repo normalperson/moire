@@ -23,7 +23,7 @@ class AppMenu extends Menu{
 		}
 		$retRS = arr2tree($menuRS, 'mn_id', 'mn_parentid');
 		foreach ($retRS as $rt) {
-			if ($rt['mn_code'] == 'HEADERMENU') {
+			if (!$rt['mn_parentid']) {
 				$this->treeRS = $rt['__CHILDREN'];
 				break;
 			}

@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__).'/../../init.inc.php');
 require_once(dirname(__FILE__).'/../../inc/appFunc.php');
+
 class Home{
 
 	function __construct(){
@@ -19,6 +20,5 @@ class Home{
 		return $smarty;
 	}
 	
-	
-}
+
 ?>
