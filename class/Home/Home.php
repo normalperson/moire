@@ -15,7 +15,6 @@ class Home{
 		$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
 		$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
 		html_header($headerTmpl);
-		
 		return $smarty;
 	}
 	
@@ -23,7 +22,14 @@ class Home{
 		global $HTML, $DB,$THEME;
 	
 		$smarty = $this->initSmarty();
-
+		$pm = new ProcessManager();
+		
+		// $ev = new PM_Event(1);
+		// $ret = $ev->perform('123','abc');
+		
+		$ret = new PM_Case(10);
+		$ret->performFlow(1);
+		vd($ret);
 	}
 	
 }

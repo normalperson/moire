@@ -41,7 +41,6 @@ function format_number($number,$decimal,$type='currency'){
 
 function arr2tree($arr, $id_index, $parent_index, $ret_index = "__CHILDREN", $level_index = "__LEVEL"){
 	$rootRow = array();
-	if (!$arr) return array();
 	foreach ($arr as $i=>$row) {
 		$haveParent = false;
 		foreach ($arr as $crow) {
@@ -99,62 +98,210 @@ function time_different_string($to, $from = false, $full = false, $nowtext = 'ju
             unset($string[$k]);
         }
     }
+
     if (!$full) $string = array_slice($string, 0, 1);
     return $string ? implode(', ', $string) . (($now > $ago) ? ' ago' : ' later') : $nowtext;
 }
 
-function insertNotice($to, $subject, $text = null, $duedate = null, $from = null, $displaydate = null) {
+function insertNotice($to, $subject, $text = null, $duedate = null, $from = null) {
 	global $DB;
-	// role 
-	if (!is_array($to)) {
-		if (substr($to, 0, 1) == '*') {
-			$to = $DB->getCol("select usr_userid from fcuserorgrole join fcrole on rol_id = uor_rolid join fcuser on uor_usrid = usr_userid
-			where rol_code = :0 and rol_status = 'ACTIVE' and usr_status = 'ACTIVE'", array(substr($to,1)));
+	$data = array(
+		"di_created_by" => ($from) ? $from : '*'.APP,
+		"di_userid" => $to,
+		"di_cat"=>"Notice",
+		"di_subject"=>$subject,
+		"di_text"=>$text,
+		"di_duedate"=>$duedate,
+	);
+	return $DB->doInsert("fcuserdiary", $data);
+}
+
+function autoDetailTableInput(&$dbo) { // search for DBO columns with __map_{detailtable}__{detailtable_col}__ and auto generate input fields
+	global $DETAIL_SETUP;
+	$detailSetup = array();
+	$detailTableKeyMap = array();
+	if (!in_array($dbo->state, array('detail', 'edit', 'new'))) return;
+	foreach ($dbo->cols as $colname=>&$setup) {
+		if (stripos($colname,'__map_') === 0 && substr($colname, -2) == '__') {
+			$det = explode('__', substr($colname, 6, -2));
+			if (count($det) == 2) {
+				$detailSetup[$det[0]][$det[1]] = $setup;
+				$detailSetup[$det[0]][$det[1]]->col = $det[1];
+				if (in_array($colname, $dbo->colEdit)) {
+					$detailTableKeyMap[$det[0]] = array("ori"=>$colname, "target"=>$det[1]);
+					$setup->inputEditModifierMethod = 'phpfunc';
+					$setup->inputEditModifier = 'genDetailTableInput';
+				}
+				if (in_array($colname, $dbo->colNew)) {
+					$detailTableKeyMap[$det[0]] = array("ori"=>$colname, "target"=>$det[1]);
+					$setup->inputNewModifierMethod = 'phpfunc';
+					$setup->inputNewModifier = 'genDetailTableInput';
+				}
+			}
 		}
-		else $to = array($to);
 	}
-	
-	foreach ($to as $t) {
-		$data = array(
-			"di_created_by" => ($from) ? $from : '*'.APP,
-			"di_userid" => $t,
-			"di_cat"=>"Notice",
-			"di_subject"=>$subject,
-			"di_text"=>$text,
-			"di_duedate"=>$duedate,
-			"di_display_date"=> ($displaydate) ? $displaydate : $DB->getOne("select now()"),
+	if ($detailSetup) {
+		$dbo->editModifier = 'autoDetailCustomEdit';
+		$dbo->newModifier = 'autoDetailCustomNew';
+	}
+	foreach($detailSetup as $detTab=>$detCols) {
+		$detailDBO = clone $dbo;
+		unset($detCols[$detailTableKeyMap[$detTab]["target"]]);
+		$detailDBO->cols = $detCols;
+		$detailDBO->userFunctions = array();
+		$state = $detailDBO->state;
+		$tmp = 'col'.ucfirst($state);
+		$detailDBO->col = $detailDBO->$tmp = array_keys($detCols);
+		$detCaption = $detailDBO->renderPrepareCaption($state);
+		$detValue = $detailDBO->renderPrepareValue($state);
+		$mandatoryCols = array();
+		foreach ($detailDBO->cols as $c=>$s) {
+			if ($s->isMandatory($state)) $mandatoryCols[] = $c;
+		}
+		$DETAIL_SETUP["keycol"] = $dbo->key[0];
+		$DETAIL_SETUP[$detailTableKeyMap[$detTab]["ori"]] = array(
+			"mustfill"=>$dbo->cols[$detailTableKeyMap[$detTab]["ori"]]->isMandatory($state),
+			"mustfillCols"=>$mandatoryCols,
+			"caption"=>$detCaption,
+			"value"=>$detValue,
+			"table"=>$detTab,
+			"cols"=>$detailDBO->col,
+			"fkcol"=>$detailTableKeyMap[$detTab]["target"],
+			"fkcolcaption"=>$dbo->cols[$detailTableKeyMap[$detTab]["ori"]]->caption->get($state),
+			"inputPrefix"=>"dbo_".$detailDBO->id."_".$state."_",
 		);
-		$ok = $DB->doInsert("fcuserdiary", $data);
-		if (!$ok) return false;
-	}
-	return true;
-}
-
-function addOrdinalNumberSuffix($num) {
-    if (!in_array(($num % 100),array(11,12,13))){
-        switch ($num % 10) {
-            // Handle 1st, 2nd, 3rd
-            case 1:  return $num.'st';
-            case 2:  return $num.'nd';
-            case 3:  return $num.'rd';
-        }
-    }
-    return $num.'th';
-}
-
-
-// TEMP SOLUTION TO READONLY COLUMNS IN DBO  START //
-function set_dbo_readonly_cols(&$dbo, $cols=array()) {
-	foreach ($cols as $c) {
-		$dbo->cols[$c]->inputEditModifierMethod = 'phpfunc';
-		$dbo->cols[$c]->inputEditModifier = 'hideInputModifier';
 	}
 }
 
-function hideInputModifier($c, $currval, $rs, $html) {
-	return "<div style='display:none'>{$html}</div><div class='dbo_readonly_value_container'>{$currval}</div>";
+function genDetailTableInput($colname, $currval, $rs, $html) {
+	global $DB, $DETAIL_SETUP;
+	if (empty($DETAIL_SETUP[$colname])) return $html;
+	$d = $DETAIL_SETUP[$colname];
+	$data = array();
+	if ($currval) $data = $DB->getArray("select * from {$d['table']} where {$d['fkcol']} = :0 order by 1", array($currval), PDO::FETCH_ASSOC);
+	if (!empty($_POST['detail'][$d['fkcol']]['data'])) $data = $_POST['detail'][$d['fkcol']]['data'];
+
+	$smarty = new Smarty();
+	$smarty->caching = false;
+	$smarty->setTemplateDir(DOC_DIR.DS.'smarty'.DS.'templates');
+	$smarty->setCompileDir(DOC_DIR.DS.'smarty'.DS.'templates_c');
+	$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
+	$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
+	
+	$smarty->assign("d", $d);
+	$smarty->assign("data", $data);
+	$smarty->assign("keyhtml",$html);
+	
+	return $smarty->fetch("dbodetailsetup.html");
 }
 
-// TEMP SOLUTION TO READONLY COLUMNS IN DBO  END   //
 
+function autoDetailCustomEdit($table, $cols, $wheres){
+	global $DB, $DETAIL_SETUP;
+	$ret = array();
+	foreach ($cols as $k=>$v) {
+		if (substr($k,0,6) == '__map_') unset($cols[$k]);
+	}
+	$ok = $DB->doUpdate($table, $cols, $wheres);
+	if(!$ok){
+		$ret[] = $DB->lastError;
+	}
+	else {
+		if (!empty($_POST['detail'])) {
+			foreach($_POST['detail'] as $keycol=>$d) {
+				$currset = false;
+				foreach ($DETAIL_SETUP as $k=>$set) {
+					if (!empty($set['fkcol']) && $set['fkcol'] == $keycol) $currset = $set;
+				}
+				if (empty($d['data']) && $currset['mustfill']) {
+					$ret[] = "Please fill up ".strip_tags($currset['fkcolcaption']);
+				}
+				else {
+					$detcols = array($keycol => $d['key']);
+					$ok = $DB->execute("delete from {$d['table']} where {$keycol} = :0", array($d['key']));
+					if(!$ok) $ret[] = $DB->lastError;
+					else {
+						if (!empty($d['data'])) {
+							foreach ($d['data'] as $i=>$currcols) {
+								$detcols = array_merge($detcols, $currcols);
+								foreach ($detcols as &$val) {
+									if (is_array($val)) $val = implode(", ", $val);
+								}
+								foreach ($currset['mustfillCols'] as $mcol) {
+									if (empty($detcols[$mcol])) $ret[] = "Please fill up ".strip_tags($currset['caption'][$mcol]);
+								}
+								if (!$ret) {
+									$ok = $DB->doInsert($d['table'], $detcols);
+									if(!$ok) $ret[] = $DB->lastError;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+	}
+
+	return $ret;
+}
+
+function autoDetailCustomNew($table, $cols) {
+	global $DB, $DETAIL_SETUP;
+	$ret = array();
+	foreach ($cols as $k=>$v) {
+		if (substr($k,0,6) == '__map_') unset($cols[$k]);
+	}
+	$ok = $DB->doInsert($table, $cols);
+	if(!$ok){
+		$ret[] = $DB->lastError;
+	}
+	else {
+		$newid = $DB->lastID();
+		if (!$newid) {
+			$seq = $DB->getOne("select pg_get_serial_sequence(:0, :1)", array($table, $DETAIL_SETUP['keycol']));
+			$newid = $DB->lastInsertId($seq);
+		}
+		
+		if (!$newid) $ret[] = 'Error retrieving last ID';
+		else {
+			if (!empty($_POST['detail'])) {
+			
+				foreach($_POST['detail'] as $keycol=>$d) {
+					$currset = false;
+					foreach ($DETAIL_SETUP as $k=>$set) {
+						if (!empty($set['fkcol']) && $set['fkcol'] == $keycol) $currset = $set;
+					}
+					if (empty($d['data']) && $currset['mustfill']) {
+						$ret[] = "Please fill up ".strip_tags($currset['fkcolcaption']);
+					}
+					else {
+						$detcols = array($keycol => $newid);
+						$ok = $DB->execute("delete from {$d['table']} where {$keycol} = :0", array($newid));
+						if(!$ok) $ret[] = $DB->lastError;
+						else {
+							if (!empty($d['data'])) {
+								foreach ($d['data'] as $i=>$currcols) {
+									$detcols = array_merge($detcols, $currcols);
+									foreach ($detcols as &$val) {
+										if (is_array($val)) $val = implode(", ", $val);
+									}
+									foreach ($currset['mustfillCols'] as $mcol) {
+										if (empty($detcols[$mcol])) $ret[] = "Please fill up ".strip_tags($currset['caption'][$mcol]);
+									}
+									if (!$ret) {
+										$ok = $DB->doInsert($d['table'], $detcols);
+										if(!$ok) $ret[] = $DB->lastError;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return $ret;
+}
 ?>
