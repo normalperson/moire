@@ -147,7 +147,7 @@ class Setting{
 	}
 	function getrole(){
 		global $DB;
-		$rolepermarr = $DB->GetArray("select rp_pmsid from fcroleperm join fcrole on rp_rolid = rol_id where rol_code = :0",array($_POST['rolecode']));
+		$rolepermarr = $DB->GetArray("select rp_pmscode from fcroleperm join fcrole on rp_rolid = rol_id where rol_id = :0",array($_POST['rolid']));
 		echo json_encode($rolepermarr);
 	}
 	function usersetting(){

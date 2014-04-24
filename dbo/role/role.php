@@ -19,7 +19,7 @@ function role_custom_new($table, $cols){
 	$fcroleid = $DB->lastInsertId('fcrole_rol_id_seq');
 	if($ok){		
 		foreach($cols['rol_permission'] as $val){
-			$rolepermdata = Array('rp_rolid' => $fcroleid , 'rp_pmsid' => $val);
+			$rolepermdata = Array('rp_rolid' => $fcroleid , 'rp_pmscode' => $val);
 			$ok = $DB->doInsert($tablename, $rolepermdata);	
 			if(!$ok){
 				$ret[] = $DB->lastError;
@@ -42,16 +42,16 @@ function role_custom_edit($table, $cols, $wheres){
 	$tableprefix = $DB->prefix;
 	$tablename = $tableprefix.$tablepostname;
 	unset($roledata['rol_permission']);
+	unset($roledata['rol_id']);
 	$ok = $DB->doUpdate($table, $roledata, $wheres);
-	// get role id
-	$roleid = $DB->GetOne("select rol_id from fcrole where rol_code = :0",array($cols['rol_code']));
+	$roleid = $cols['rol_id'];
 	if($roleid){
 		$sql = "delete from fcroleperm where rp_rolid = :0";
 		$ok = $DB->Execute($sql,array($roleid));
 		if($ok && count( $cols['rol_permission'] ) > 0){
 			$rolpermission = explode(",", $cols['rol_permission']);
 			foreach($rolpermission as $val){
-				$rolepermdata = Array('rp_rolid' => $roleid , 'rp_pmsid' => trim($val));
+				$rolepermdata = Array('rp_rolid' => $roleid , 'rp_pmscode' => trim($val));
 				$ok = $DB->doInsert($tablename, $rolepermdata);	
 				if(!$ok){
 					$ret[] = $DB->lastError;
@@ -65,7 +65,7 @@ function role_custom_edit($table, $cols, $wheres){
 }
 
 
-$dbo->deleteModifier = 'role_custom_delete';
+/*$dbo->deleteModifier = 'role_custom_delete';
 function role_custom_delete($table, $wheres){
 	global $DB;
 	$ret = array();	
@@ -84,7 +84,7 @@ function role_custom_delete($table, $wheres){
 		if(!$ok) $ret[] = $DB->lastError;
 	}
 	return $ret;
-}
+}*/
 
 /*
 $dbo->searchModifier = 'role_custom_search';
@@ -144,9 +144,10 @@ var editRole = {
 		$.ajax({
     		url : 'getrole',
     		type: 'POST',
-			data:  { rolecode: self.config.inprolecode.val()},
+			data:  { rolid: self.config.inprolid.val()},
 			dataType: 'json',
 			success: function(results) {
+				console.log(results);
 				if(results.length > 0){
 					for (var i = 0; i < results.length; i++){
 						$('input[value="'+results[i][0]+'"]').attr('checked','checked');
@@ -180,11 +181,13 @@ var editRole = {
 	}
 }
 if($('#dbo_role_edit_cont_rol_permission').attr("id")){
+	console.log('inside if');
 	editRole.init({
 		permissiondiv     : $('#dbo_role_edit_cont_rol_permission'),
 		checkallhtml      : $('<tr><td><label for="checkall"><input type="checkbox" name="checkall" id="checkall" />Check All</label></td></tr>'),
 		checkall          : '#checkall',
-		inprolecode       : $('#dbo_role_edit_rol_code')
+		inprolid          : $('#dbo_role_edit_rol_id')
 	});
+	console.log('after init');
 }
 </script>

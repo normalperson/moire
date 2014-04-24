@@ -19,6 +19,31 @@ class Home{
 		
 		return $smarty;
 	}
-	
+	function qchome(){
+		global $HTML;
+		$HTML->addJS('js/highchart/highcharts.js');
+		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		$smarty = $this->initSmarty();
+		$smarty->display('qchome.html');
+		$HTML->addJS('js/js.php?c=Home&js=graph');
+	}
+	function artisthome(){
+		global $HTML;
+		$HTML->addJS('js/highchart/highcharts.js');
+		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		$smarty = $this->initSmarty();
+		$smarty->display('artisthome.html');
+		$HTML->addJS('js/js.php?c=Home&js=graph');
+	}
+	function supervisorhome(){
+		global $HTML;
+		$HTML->addJS('js/highchart/highcharts.js');
+		$HTML->addJS('js/highchart/highcharts-more.js');
+		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		$smarty = $this->initSmarty();
+		$smarty->display('supervisorhome.html');
+		$HTML->addJS('js/js.php?c=Home&js=graph');
+	}
+}
 
 ?>

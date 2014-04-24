@@ -128,9 +128,10 @@ class AppMenu extends Menu{
 		$html = "";
 		
 		
-		
-		$URL =  WEB_HREF."/Job/newJob";
-		$html .= "<li><a href='{$URL}' id='newjob'>New Job</a></li>";
+		if ($USER->inGroup('REQUEST_NEWJOB')) {
+			$URL =  WEB_HREF."/moireJob/newJob";
+			$html .= "<li><a href='{$URL}' id='newjob'>New Job</a></li>";
+		}
 		
 		
 		
