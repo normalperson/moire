@@ -19,7 +19,26 @@ class Setting{
 			// echo '<!-- function not found -->';
 		}
 	}
-	
+	function testMove(){
+		vd('inside this function');
+		vd($_POST);
+
+	}
+	function testUpload(){
+		html_header();
+		dbo_include('testUpload');
+	}
+	function customUpload(){
+		html_header();
+		$smarty = new Smarty();
+		$smarty->caching = false;
+		$smarty->setTemplateDir(DOC_DIR.DS.'smarty'.DS.'templates');
+		$smarty->setCompileDir(DOC_DIR.DS.'smarty'.DS.'templates_c');
+		$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
+		$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
+
+		$smarty->display('customupload.html');
+	}
 	
 	function gensetting(){
 		global $HTML,$DB;

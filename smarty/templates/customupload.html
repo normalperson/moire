@@ -1,0 +1,72 @@
+<style type="text/css">
+#progressbox {
+  border: 1px solid #0099CC;
+  padding: 1px; 
+  position:relative;
+  width:400px;
+  border-radius: 3px;
+  margin: 10px;
+  display:none;
+  text-align:left;
+}
+#progressbar {
+  height:20px;
+  border-radius: 3px;
+  background-color: #003333;
+  width:1%;
+}
+#statustxt {
+  top:3px;
+  left:50%;
+  position:absolute;
+  display:inline-block;
+  color: #000000;
+}
+</style>
+<div class="container">
+    <div class="row">
+
+
+    <div id="upload-wrapper">
+    <div align="center">
+    <h3>Ajax Image Uploader with Progressbar</h3>
+    <span class="">Image Type allowed: Jpeg, Jpg, Png and Gif. | Maximum Size 1 MB</span>
+    <form action="processupload.php" onSubmit="return false" method="post" enctype="multipart/form-data" id="MyUploadForm">
+    <input name="ImageFile" id="imageInput" type="file" />
+    <input type="submit"  id="submit-btn" value="Upload" />
+    <img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/>
+    </form>
+    <div id="progressbox" style="display:none;"><div id="progressbar"></div ><div id="statustxt">0%</div></div>
+    <div id="output"></div>
+    </div>
+    </div>
+
+
+    </div>
+</div>
+<script type="text/javascript">
+function OnProgress(event, position, total, percentComplete)
+{
+    //Progress bar
+    progressbar.width(percentComplete + '%') //update progressbar percent complete
+    statustxt.html(percentComplete + '%'); //update status text
+    if(percentComplete>50)
+        {
+            statustxt.css('color','#fff'); //change status text to white after 50%
+        }
+}
+$(document).ready(function() {  
+    var options = { 
+            target:   '#output', 
+            beforeSubmit:  beforeSubmit,
+            uploadProgress: OnProgress, //upload progress callback 
+            success:       afterSuccess,
+            resetForm: true  
+        }; 
+        
+     $('#MyUploadForm').submit(function() { 
+            $(this).ajaxSubmit(options);            
+            return false; 
+        });
+});
+</script>
