@@ -19,6 +19,18 @@ class Home{
 		
 		return $smarty;
 	}
+	function alljob(){
+		html_header();
+		dbo_include('alljob');
+	}
+	function ackjob(){
+		html_header();
+		dbo_include('ackjob');
+	}
+	function assignment(){
+		html_header();
+		dbo_include('assignment');
+	}
 	function qchome(){
 		global $HTML;
 		$HTML->addJS('js/highchart/highcharts.js');

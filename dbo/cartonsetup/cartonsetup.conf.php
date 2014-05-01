@@ -11,16 +11,16 @@ null as "__map_mcartonvariable__carv_code__",
 null as "__map_mcartonvariable__carv_unit__",
 \'\' as file
 from mcarton a';
-$dbo->col = array('car_id', 'car_name', 'car_fileextension', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', 'file');
+$dbo->col = array('car_id', 'car_name', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', 'file');
 $dbo->colList = array('car_name', '__map_mcartonvariable__carv_carid__');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('car_id', 'car_name', 'car_fileextension', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', 'file');
+$dbo->colDetail = array('car_id', 'car_name', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', 'file');
 $dbo->colNew = array('car_name', 'file', '__map_mcartonvariable__carv_carid__');
 $dbo->colEdit = array('car_name', '__map_mcartonvariable__carv_carid__');
-$dbo->colSearch = array('car_id', 'car_name', 'car_fileextension', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', 'file');
-$dbo->colExport = array('car_id', 'car_name', 'car_fileextension', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', 'file');
+$dbo->colSearch = array('car_id', 'car_name', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', 'file');
+$dbo->colExport = array('car_id', 'car_name', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', 'file');
 $dbo->colSort = array();
 $dbo->canSearch = false;
 $dbo->canNew = true;
@@ -106,10 +106,17 @@ $dbo->cols['__map_mcartonvariable__carv_code__']->option->detailMethod = 'text';
 $dbo->cols['__map_mcartonvariable__carv_code__']->option->newMethod = 'text';
 $dbo->cols['__map_mcartonvariable__carv_code__']->option->editMethod = 'text';
 $dbo->cols['__map_mcartonvariable__carv_unit__'] = new DBO_COL('__map_mcartonvariable__carv_unit__', 'unknown', '-2', '-1');
-$dbo->cols['__map_mcartonvariable__carv_unit__']->inputTypeDefault = 'text';
+$dbo->cols['__map_mcartonvariable__carv_unit__']->defaultNewValueMethod = 'text';
+$dbo->cols['__map_mcartonvariable__carv_unit__']->defaultNewValue = 'mm';
+$dbo->cols['__map_mcartonvariable__carv_unit__']->inputTypeDefault = 'select';
 $dbo->cols['__map_mcartonvariable__carv_unit__']->searchMode = 'exact';
 $dbo->cols['__map_mcartonvariable__carv_unit__']->capContClassDefault = array();
 $dbo->cols['__map_mcartonvariable__carv_unit__']->valContClassDefault = array();
+$dbo->cols['__map_mcartonvariable__carv_unit__']->option->default = 'mm
+cm
+in
+ft
+m';
 $dbo->cols['__map_mcartonvariable__carv_unit__']->option->defaultMethod = 'text';
 $dbo->cols['__map_mcartonvariable__carv_unit__']->option->searchMethod = 'text';
 $dbo->cols['__map_mcartonvariable__carv_unit__']->option->listMethod = 'text';
