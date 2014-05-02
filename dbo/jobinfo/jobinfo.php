@@ -11,4 +11,6 @@ $dbo->render();
 ?>
 <script type="text/javascript">
 $('#dbo_jobinfo_newform > fieldset > legend').css('display','none');
+$('.dbo_container_detail > fieldset > legend').css('display','none');
+$('#dbo_jobinfo_detail_cancel').css('display','none');
 </script>

@@ -18,15 +18,21 @@ class ActivityFunc{
 		
 		return $smarty;
 	}
-	function newjob(){
+	function reqVerification(){
+		html_header();
+		dbo_include('reqverification');
+		$this->viewJobInfo();
+	}
+	function viewJobInfo($jsid=''){
 		global $DB;
 		$smarty = $this->initSmarty();
 
 		$sql = "select * from mcarton";
 		$carton = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
-
+		$jsid = 36;
 		$smarty->assign('carton',$carton);
-		$smarty->display('newjob.html');
+		$smarty->assign('jsid',$jsid);
+		$smarty->display('viewjob.html');
 	}
 	function jobinfo(){
 		global $HTML;

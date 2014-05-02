@@ -30,6 +30,10 @@ $dbo->cols['js_trapping_size']->caption->set('default', 'js_trapping_size', 'tex
 $dbo->cols['js_barcodetype']->caption->set('default', 'js_barcodetype', 'text');
 $dbo->cols['js_barcodenumber']->caption->set('default', 'js_barcodenumber', 'text');
 $dbo->cols['attachment']->caption->set('default', 'File', 'text');
+$dbo->cols['js_primcat']->caption->set('default', 'js_primcat', 'text');
+$dbo->cols['js_status']->caption->set('default', 'js_status', 'text');
+$dbo->cols['js_completiondate']->caption->set('default', 'js_completiondate', 'text');
+$dbo->cols['js_assignto']->caption->set('default', 'js_assignto', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
@@ -42,6 +46,7 @@ $dbo->text->editCancel = 'Cancel';
 $dbo->text->editSubmit = 'Save';
 $dbo->text->newCancel = 'Cancel';
 $dbo->text->newSubmit = 'Save';
+$dbo->text->detailCancel = 'Back';
 $dbo->text->defaultMessageAfterNew = 'Record created.';
 $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';

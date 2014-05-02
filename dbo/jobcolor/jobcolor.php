@@ -11,4 +11,5 @@ $dbo->render();
 ?>
 <script type="text/javascript">
 $('#dbo_jobcolor_newform > fieldset > legend').css('display','none');
+$('.dbo_container_detail > fieldset > legend').css('display','none');
 </script>
