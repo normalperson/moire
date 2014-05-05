@@ -293,7 +293,7 @@ ul.alert > li > a > span{
 	position: absolute;
 	width: 5px;
 	height: 5px;
-	background: #fff; 
+	background: #000; 
 	-moz-border-radius: 8px; 
 	-webkit-border-radius: 8px; 
 	-ms-border-radius: 8px; 

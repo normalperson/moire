@@ -1,0 +1,90 @@
+html, body, #container, #body {
+	height : 100%;
+}
+.navbar {
+	margin-bottom : 0;
+}
+#sideDiv {
+	width : 350px;
+	height:100%;
+	padding : 0;
+	background-color : #3d3d3d;
+	color : white;
+	float : left;
+}
+
+#contentDiv{
+	margin-left : 350px;
+}
+
+#sidebarListing a {
+	color : #FAFAFA;
+	text-decoration: none;
+}
+
+#sidebarListing .fa {
+	color : #A0A0A0;
+}
+
+#sidebarListing .list-icon-collapse , #sidebarListing .list-icon-expand {
+	color : #FAFAFA;
+}
+
+#sidebarListing .badge {
+	margin-left : 10px;
+}
+#sidebarListing .list-workflow>a>.badge {
+	margin-right : 10px;
+}
+
+#sidebarListing .badge.normal {
+	background-color : #629E4A;
+	border: 1px solid #134E21;
+}
+#sidebarListing .badge.urgent {
+	background-color : #DB2C2C;
+	border: 1px solid #4E1818;
+}
+
+
+#sidebarListing .list-workflow > a > .list-icon-collapse{
+	display : none;
+}
+#sidebarListing .list-workflow > a.collapsed > .list-icon-expand{
+	display : none;
+}
+#sidebarListing .list-workflow > a.collapsed > .list-icon-collapse{
+	display : inline;
+}
+
+#sidebarListing  .list-workflow:not(:last-of-type) {
+	border-bottom: 1px solid #535353;
+}
+
+#sidebarListing .list-activity > a{
+	padding-left : 45px;
+}
+
+#sidebarListing .list-activity >a>span , #sidebarListing .list-workflow >a>span {
+	word-break : break-all;
+}
+
+#sidebarListing li.list-workflow>a:hover, #sidebarListing li.list-workflow>a:focus {
+	background-color: #303030;
+}
+
+#sidebarListing li.list-activity>a:hover, #sidebarListing li.list-activity>a:focus {
+	background-color: #575757;
+}
+
+#sidebarListing li.list-activity.active>a {
+	background-color: #D64635;
+}
+
+#sidebarListing li.list-activity.active>a>.badge {
+	color : #fff;
+}
+#contentFrame{
+	border : 0;
+	width : 100%;
+}

@@ -1,0 +1,29 @@
+
+<div id='sideDiv'>
+	<div id='activityNavList'>
+	</div>
+</div>
+<div id='contentDiv'><iframe class='autoheight' id='contentFrame'></iframe></div>
+
+<script type='text/javascript'>
+$(function () {
+	var $activityNavList = $('#activityNavList'),
+		$contentFrame = $('#contentFrame');
+	toggleLoading(true,function () {
+		$activityNavList.load( "renderTaskList", function(data) {
+			$activityNavList.find('.list-activity>a').click(function () {
+				var $this = $(this);
+				toggleLoading(true,function () {
+					var id = $this.data('atid');
+					$contentFrame.attr('src', 'renderCaseFlowList?atid='+id).load(function () {
+						$activityNavList.find('.list-activity.active').removeClass('active');
+						$this.parent('.list-activity').addClass('active');
+						toggleLoading(false);
+					});
+				});
+			})
+			toggleLoading(false);
+		});
+	});
+})
+</script>
