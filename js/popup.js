@@ -179,7 +179,7 @@ Example usage:
 		$body.append($modalDiv);
 		$modalDiv.modal('show');
 		
-		$modalDiv.on('hidden.bs.modal', function (e) {
+		$modalDiv.modal().on('hidden.bs.modal', function () {
 			$(this).remove();
 		})
 
@@ -206,7 +206,7 @@ function toggleLoading(state, callback, titleText) {
 			$modalHeader.append($("<h4 class='modal-title' id='confirm_label'>"+titleText+"</h4>"))
 			
 			var $modalBody = $("<div class='modal-body'>");
-			if (0) { // use css3 loader animation
+			if (1) { // use css3 loader animation
 				$modalBody.append($('<div class="loader"><div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div></div>'));
 			}
 			else { // use gif loader animation
@@ -217,7 +217,7 @@ function toggleLoading(state, callback, titleText) {
 			$body.append($modalDiv);
 			$modalDiv.modal('show');
 			
-			$modalDiv.on('hidden.bs.modal', function (e) {
+			$modalDiv.modal().on('hidden.bs.modal', function (e) {
 				$(this).remove();
 			}).on('shown.bs.modal', function (e) {
 				if ($.isFunction(callback)) {

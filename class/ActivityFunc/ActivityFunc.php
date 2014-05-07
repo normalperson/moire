@@ -20,7 +20,12 @@ class ActivityFunc{
 	}
 	function reqVerification(){
 		html_header();
+		$_GET['dboid']='reqverification';
+		$_GET['js_id']='36';
+		$_GET['dbostate']='edit';
 		dbo_include('reqverification');
+		
+
 		$this->viewJobInfo();
 	}
 	function viewJobInfo($jsid=''){

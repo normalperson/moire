@@ -16,7 +16,6 @@ class Home{
 		$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
 		$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
 		html_header($headerTmpl);
-		
 		return $smarty;
 	}
 	function alljob(){
@@ -55,6 +54,14 @@ class Home{
 		$smarty = $this->initSmarty();
 		$smarty->display('supervisorhome.html');
 		$HTML->addJS('js/js.php?c=Home&js=graph');
+/*		$pm = new ProcessManager();
+		
+		$ev = new PM_Event(1);
+		$ret = $ev->perform('123','abc');
+		*/
+		// $ret = new PM_Case(10);
+		// $ret->performFlow(1);
+
 	}
 }
 

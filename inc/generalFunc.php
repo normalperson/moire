@@ -78,7 +78,7 @@ function time_different_string($to, $from = false, $full = false, $nowtext = 'ju
     $now = ($from) ? new DateTime($from) : new DateTime;
     $ago = new DateTime($to);
     $diff = $now->diff($ago);
-	
+
     $diff->w = floor($diff->d / 7);
     $diff->d -= $diff->w * 7;
 
@@ -187,11 +187,11 @@ function genDetailTableInput($colname, $currval, $rs, $html) {
 	$smarty->setCompileDir(DOC_DIR.DS.'smarty'.DS.'templates_c');
 	$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
 	$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
-	
+
 	$smarty->assign("d", $d);
 	$smarty->assign("data", $data);
 	$smarty->assign("keyhtml",$html);
-	
+
 	return $smarty->fetch("dbodetailsetup.html");
 }
 
@@ -240,7 +240,7 @@ function autoDetailCustomEdit($table, $cols, $wheres){
 				}
 			}
 		}
-		
+
 	}
 
 	return $ret;
@@ -262,11 +262,11 @@ function autoDetailCustomNew($table, $cols) {
 			$seq = $DB->getOne("select pg_get_serial_sequence(:0, :1)", array($table, $DETAIL_SETUP['keycol']));
 			$newid = $DB->lastInsertId($seq);
 		}
-		
+
 		if (!$newid) $ret[] = 'Error retrieving last ID';
 		else {
 			if (!empty($_POST['detail'])) {
-			
+
 				foreach($_POST['detail'] as $keycol=>$d) {
 					$currset = false;
 					foreach ($DETAIL_SETUP as $k=>$set) {

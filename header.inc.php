@@ -14,6 +14,7 @@ function html_header($headerTemplate='header.html'){
 		$HTML->addJS('js/init.js');
 		$HTML->addCSS('css/'.$THEME.'/css/bootstrap.min.css');
 		$HTML->addCSS('css/'.$THEME.'/css/bootstrap-theme.min.css');
+		$HTML->addCSS('css/font-awesome/css/font-awesome.min.css');
 		$HTML->addCSS('css/'.$THEME.'/dbo.css');
 		$HTML->addCSS('css/'.$THEME.'/custom.css');
 		$HTML->addCSS('css/'.$THEME.'/select2.css');
