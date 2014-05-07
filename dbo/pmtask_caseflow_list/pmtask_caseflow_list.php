@@ -48,8 +48,9 @@ function showcasedescription($colname, $currval, $rs, $html) {
 
 function showactions($colname, $currval, $rs, $html) {
 	global $DB;
+	$isFlagged = false;
 	$ret = 
-		"<span class='fa fa-flag fa-border action action-flag' title='Flag This Case' data-caseid='{$rs['pmc_id']}'></span>
+		"<span class='fa fa-flag fa-border action action-flag' title='".($isFlagged ? 'Unflag' : 'Flag')." This Case' data-caseid='{$rs['pmc_id']}'></span>
 		<span class='fa fa-comments fa-border action action-comment' title='Comments' data-caseid='{$rs['pmc_id']}'></span>
 		<span class='fa fa-pencil-square-o fa-border action action-perform' title='Perform This Activity' data-flowid='{$rs['pmf_id']}'></span>";
 		
@@ -67,5 +68,10 @@ $dbo->render();
 			var flowid = $this.data('flowid');
 			window.location.href = 'renderActivityPerform?fid='+flowid;
 		})
+	})
+	$('.action-flag').click(function () {
+		var $this = $(this);
+		if ($this.hasClass('flagged')) $this.removeClass('flagged').attr('title','Flag This Case');
+		else $this.addClass('flagged').attr('title','Unflag This Case');
 	})
 </script>

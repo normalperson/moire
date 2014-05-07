@@ -32,13 +32,31 @@
 	color : #fff;
 	background-color : #ACABAB;
 	cursor : pointer;
+	-webkit-transition: background-color 200ms linear;
+    -moz-transition: background-color 200ms linear;
+    -o-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear;
+}
+
+.action-flag:hover{
+	background-color: #BD0404;
 }
 
 .action-flag.flagged {
 	background-color: #BD0404;
 }
+
+.action-comment:hover{
+	background-color: #EEA332;
+}
+
 .action-comment.hascomment {
 	background-color: #EEA332;
+}
+
+.action-perform:hover{
+	background-color: #42C95D;
 }
 
 .action-comment.hascomment.unread {

@@ -1,8 +1,12 @@
 html, body, #container, #body {
 	height : 100%;
 }
+
 .navbar {
 	margin-bottom : 0;
+}
+#contentFrame {
+	height:100%;
 }
 #sideDiv {
 	width : 350px;
@@ -15,6 +19,8 @@ html, body, #container, #body {
 
 #contentDiv{
 	margin-left : 350px;
+	min-height : 100%;
+	padding-bottom : 22px;
 }
 
 #sidebarListing a {
