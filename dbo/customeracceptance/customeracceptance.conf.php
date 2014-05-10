@@ -1,28 +1,28 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
-$dboID = 'jobcolor';
+$dboID = 'customeracceptance';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
-$dbo->sql = 'select * from mjobsheet';
-$dbo->col = array('js_id', 'js_cuid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_carcode', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_category', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
-$dbo->colList = array('js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark');
+$dbo->sql = 'select mjobsheet.*, \'\' decision, \'\' remark,\'\' artwork from mjobsheet';
+$dbo->col = array('js_id', 'js_cuid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_carcode', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_category', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'decision', 'remark', 'artwork');
+$dbo->colList = array('js_id', 'js_cuid', 'js_ctid', 'js_request_date', 'js_request_by');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark');
-$dbo->colNew = array('js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark');
-$dbo->colEdit = array('js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark');
-$dbo->colSearch = array('js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_carcode', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_category', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber');
-$dbo->colExport = array('js_id', 'js_cuid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_carcode', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_category', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber');
+$dbo->colDetail = array('js_id', 'js_cuid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_carcode', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_category', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
+$dbo->colNew = array('js_id', 'js_cuid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_carcode', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_category', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
+$dbo->colEdit = array('decision', 'remark', 'artwork');
+$dbo->colSearch = array('js_id', 'js_cuid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_carcode', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_category', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
+$dbo->colExport = array('js_id', 'js_cuid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_carcode', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_category', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colSort = array();
 $dbo->canSearch = false;
-$dbo->canNew = true;
+$dbo->canNew = false;
 $dbo->canEdit = true;
 $dbo->canDelete = false;
-$dbo->canDetail = true;
+$dbo->canDetail = false;
 $dbo->canListEdit = false;
 $dbo->canListNew = false;
 $dbo->canNewGroup = array();
@@ -32,11 +32,8 @@ $dbo->showSearch = true;
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
 $dbo->titleNew = 'New Record';
-$dbo->titleEdit = 'Edit Record';
+$dbo->titleEdit = 'Customer acceptance';
 $dbo->titleSearch = 'Search Record';
-$dbo->layoutDetail = '1|1';
-$dbo->layoutNew = '1|1';
-$dbo->layoutEdit = '1|1';
 $dbo->theme = 'metro';
 $dbo->layout = 'One';
 $dbo->pageLinkCount = 7;
@@ -236,16 +233,10 @@ $dbo->cols['js_angle_4']->option->detailMethod = 'text';
 $dbo->cols['js_angle_4']->option->newMethod = 'text';
 $dbo->cols['js_angle_4']->option->editMethod = 'text';
 $dbo->cols['js_bleeding'] = new DBO_COL('js_bleeding', 'varchar', '-1', '16');
-$dbo->cols['js_bleeding']->inputTypeDefault = 'select';
+$dbo->cols['js_bleeding']->inputTypeDefault = 'text';
 $dbo->cols['js_bleeding']->searchMode = 'exact';
 $dbo->cols['js_bleeding']->capContClassDefault = array();
 $dbo->cols['js_bleeding']->valContClassDefault = array();
-$dbo->cols['js_bleeding']->option->default = '0
-3
-5
-7
-10
-15';
 $dbo->cols['js_bleeding']->option->defaultMethod = 'text';
 $dbo->cols['js_bleeding']->option->searchMethod = 'text';
 $dbo->cols['js_bleeding']->option->listMethod = 'text';
@@ -406,6 +397,43 @@ $dbo->cols['js_assignto']->option->listMethod = 'text';
 $dbo->cols['js_assignto']->option->detailMethod = 'text';
 $dbo->cols['js_assignto']->option->newMethod = 'text';
 $dbo->cols['js_assignto']->option->editMethod = 'text';
+$dbo->cols['decision'] = new DBO_COL('decision', 'unknown', '-2', '-1');
+$dbo->cols['decision']->inputTypeDefault = 'select';
+$dbo->cols['decision']->searchMode = 'exact';
+$dbo->cols['decision']->capContClassDefault = array();
+$dbo->cols['decision']->valContClassDefault = array();
+$dbo->cols['decision']->option->default = 'Accept
+Revert';
+$dbo->cols['decision']->option->defaultMethod = 'text';
+$dbo->cols['decision']->option->searchMethod = 'text';
+$dbo->cols['decision']->option->listMethod = 'text';
+$dbo->cols['decision']->option->detailMethod = 'text';
+$dbo->cols['decision']->option->newMethod = 'text';
+$dbo->cols['decision']->option->editMethod = 'text';
+$dbo->cols['remark'] = new DBO_COL('remark', 'unknown', '-2', '-1');
+$dbo->cols['remark']->inputTypeDefault = 'textarea';
+$dbo->cols['remark']->searchMode = 'exact';
+$dbo->cols['remark']->capContClassDefault = array();
+$dbo->cols['remark']->valContClassDefault = array();
+$dbo->cols['remark']->option->defaultMethod = 'text';
+$dbo->cols['remark']->option->searchMethod = 'text';
+$dbo->cols['remark']->option->listMethod = 'text';
+$dbo->cols['remark']->option->detailMethod = 'text';
+$dbo->cols['remark']->option->newMethod = 'text';
+$dbo->cols['remark']->option->editMethod = 'text';
+$dbo->cols['artwork'] = new DBO_COL('artwork', 'unknown', '-2', '-1');
+$dbo->cols['artwork']->inputEditModifierMethod = 'phpfunc';
+$dbo->cols['artwork']->inputEditModifier = 'downloadlink';
+$dbo->cols['artwork']->inputTypeDefault = 'text';
+$dbo->cols['artwork']->searchMode = 'exact';
+$dbo->cols['artwork']->capContClassDefault = array();
+$dbo->cols['artwork']->valContClassDefault = array();
+$dbo->cols['artwork']->option->defaultMethod = 'text';
+$dbo->cols['artwork']->option->searchMethod = 'text';
+$dbo->cols['artwork']->option->listMethod = 'text';
+$dbo->cols['artwork']->option->detailMethod = 'text';
+$dbo->cols['artwork']->option->newMethod = 'text';
+$dbo->cols['artwork']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;
@@ -421,8 +449,8 @@ $dbo->saveDir = dirname(dirname(__FILE__));
 $dbo->run();
 
 /*
-$dbo->newModifier = 'dbo_jobcolor_custom_new';
-function dbo_jobcolor_custom_new($table, $cols){
+$dbo->newModifier = 'dbo_customeracceptance_custom_new';
+function dbo_customeracceptance_custom_new($table, $cols){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -432,8 +460,8 @@ function dbo_jobcolor_custom_new($table, $cols){
 	return $ret;
 }
 
-$dbo->editModifier = 'dbo_jobcolor_custom_edit';
-function dbo_jobcolor_custom_edit($table, $cols, $wheres){
+$dbo->editModifier = 'dbo_customeracceptance_custom_edit';
+function dbo_customeracceptance_custom_edit($table, $cols, $wheres){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -443,12 +471,12 @@ function dbo_jobcolor_custom_edit($table, $cols, $wheres){
 	return $ret;
 }
 
-$dbo->searchModifier = 'dbo_jobcolor_custom_search';
-function dbo_jobcolor_custom_search(&$search){
+$dbo->searchModifier = 'dbo_customeracceptance_custom_search';
+function dbo_customeracceptance_custom_search(&$search){
 }
 
-$dbo->deleteModifier = 'dbo_jobcolor_custom_delete';
-function dbo_jobcolor_custom_delete($table, $wheres){
+$dbo->deleteModifier = 'dbo_customeracceptance_custom_delete';
+function dbo_customeracceptance_custom_delete($table, $wheres){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);
@@ -458,7 +486,7 @@ function dbo_jobcolor_custom_delete($table, $wheres){
 	return $ret;
 }
 
-function dbo_jobcolor_display_modifier($col, $colVal, $data=array(), $html=null){
+function dbo_customeracceptance_display_modifier($col, $colVal, $data=array(), $html=null){
 }
 */
 ?>

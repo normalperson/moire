@@ -54,13 +54,19 @@ class Home{
 		$smarty = $this->initSmarty();
 		$smarty->display('supervisorhome.html');
 		$HTML->addJS('js/js.php?c=Home&js=graph');
-/*		$pm = new ProcessManager();
-		
-		$ev = new PM_Event(1);
-		$ret = $ev->perform('123','abc');
-		*/
-		// $ret = new PM_Case(10);
-		// $ret->performFlow(1);
+
+	}
+	function customerhome(){
+		global $HTML;
+		$HTML->addJS('js/highchart/highcharts.js');
+		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		$smarty = $this->initSmarty();
+		$smarty->display('customerhome.html');
+		$HTML->addJS('js/js.php?c=Home&js=graph');
+	}
+	function engtest(){
+		$smarty = $this->initSmarty();
+		$smarty->display('engtest.html');
 
 	}
 }
