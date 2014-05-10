@@ -1,0 +1,186 @@
+<div class="container">
+<!-- glance -->
+<div class="row" style="padding-bottom:15px;margin-bottom:15px">
+	<div class="col-md-3">
+			<div class="dashboard-stat green">
+				<div class="visual">
+					<img src="../../image/dashboard/globe.png" style="width:60px;height:60px">
+				</div>
+				<div class="details">
+					<div class="number">
+						142
+					</div>
+					<div class="desc">
+						 total jobs <br>completed 
+					</div>
+				</div>
+				<a class="more" href="alljob">
+					 View more <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+				</a>
+			</div>	
+		</div>
+		<div class="col-md-3">
+			<div class="dashboard-stat blue">
+				<div class="visual">
+					<img src="../../image/dashboard/points.png" style="width:60px;height:60px">
+				</div>
+				<div class="details">
+					<div class="number">
+						 8
+					</div>
+					<div class="desc">
+						 jobs pending  <br>completion
+					</div>
+				</div>
+				<a class="more" href="#">
+					 View more <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+				</a>
+			</div>	
+		</div>
+		<div class="col-md-3">
+			<div class="dashboard-stat purple">
+				<div class="visual">
+					<img src="../../image/dashboard/medal.png" style="width:60px;height:60px">
+				</div>
+				<div class="details">
+					<div class="number">
+						 4
+					</div>
+					<div class="desc">
+						 jobs pending  <br>acknowledgement
+					</div>
+				</div>
+				<a class="more" href="ackjob">
+					 View more <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+				</a>
+			</div>	
+		</div>
+		<div class="col-md-3">
+			<div class="dashboard-stat orange">
+				<div class="visual">
+					<img src="../../image/dashboard/points.png" style="width:60px;height:60px">
+				</div>
+				<div class="details">
+					<div class="number">
+						17
+					</div>
+					<div class="desc">
+						 jobs exceeded  <br>SLA
+					</div>
+				</div>
+				<a class="more" href="pointsummary">
+					 View more <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+				</a>
+			</div>	
+		</div>	
+</div>
+<!-- monthly sales and my performance -->
+<div class="row">
+	<!-- monthly sales -->
+	<div class="col-md-6">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<div>MONTHLY SALES BY CATEGORY
+					<div class="pull-right pointer" id="fullcalendarview">
+					View my job history
+					<span class="glyphicon glyphicon-circle-arrow-right"></span>
+					</div>
+				</div>					
+			</div>
+		    <div class="panel-body">
+		       <div id="monthlysales" style="height:400px"></div>
+		    </div>
+		</div>		
+	</div>
+
+	<!-- myperformance -->
+	<div class="col-md-6">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<div>MY PERFORMANCE
+					<div class="pull-right pointer" id="fullcalendarview">
+					View my online time report
+					<span class="glyphicon glyphicon-circle-arrow-right"></span>
+					</div>
+				</div>					
+			</div>
+		    <div class="panel-body">
+		       <div id="myperformance" style="height:400px"></div>
+		    </div>
+		</div>		
+	</div>
+
+</div>
+
+<!-- pending job count and QC pass category-->
+<div class="row">
+	<!-- monthly sales -->
+	<div class="col-md-6">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<div>MY PENDING JOB COUNT
+					<div class="pull-right pointer" id="fullcalendarview">
+					View my pending task list
+					<span class="glyphicon glyphicon-circle-arrow-right"></span>
+					</div>
+				</div>					
+			</div>
+		    <div class="panel-body">
+		       <div id="pendingjob" style="height:400px"></div>
+		    </div>
+		</div>		
+	</div>
+
+	<!-- myperformance -->
+	<div class="col-md-6">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<div>JOB PENDING ACKNOWLEDGEMENT
+					<div class="pull-right pointer" id="fullcalendarview">
+					View all
+					<span class="glyphicon glyphicon-circle-arrow-right"></span>
+					</div>
+				</div>					
+			</div>
+		    <div class="panel-body">
+		       <table class="table">
+		       		<thead>
+		       			<tr>
+		       			<th>Time received</th>
+		       			<th>Time lapse</th>
+		       			<th>Job code</th>
+		       			<th style="text-align:center">Acknowledge</th>
+		       			</tr>
+		       		</thead>
+		       		<tbody>
+		       			<tr>
+		       				<td>09:33 am</td>
+		       				<td>00h:14m</td>
+		       				<td>A51724n</td>
+		       				<td style="text-align:center"><input type="checkbox" /></td>
+		       			</tr>
+		       			<tr>
+		       				<td>09:35 am</td>
+		       				<td>00h:16m</td>
+		       				<td>G14918D</td>
+		       				<td style="text-align:center"><input type="checkbox" /></td>
+		       			</tr>
+		       			<tr>
+		       				<td>09:36 am</td>
+		       				<td>00h:17m</td>
+		       				<td>K591234GG</td>
+		       				<td style="text-align:center"><input type="checkbox" /></td>
+		       			</tr>
+		       		</tbody>
+		       </table>
+		    </div>
+		    <div class="panel-footer">
+		    	<button id="refreshdata" class="btn btn-success">Refresh Data</button>
+		    	<button id="refreshdata" class="btn btn-success">Save</button>
+		    </div>
+		</div>		
+	</div>
+
+</div>
+
+</div><!--  end of container -->

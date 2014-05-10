@@ -758,3 +758,8 @@ div.dbo_theme_metro td.dbo_container_edit th.caption div.mandatory:after, div.db
 /* delete */
 div.dbo_theme_metro td.dbo_container_delete{
 }
+
+.inline-block > table > tbody > tr {
+	display: inline-block;
+	min-width: 300px;
+}

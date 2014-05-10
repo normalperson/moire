@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__).'/../../init.inc.php');
+require_once(dirname(__FILE__).'/../../inc/appFunc.php');
 
 class Home{
 
@@ -17,20 +18,57 @@ class Home{
 		html_header($headerTmpl);
 		return $smarty;
 	}
-	
-	function home(){
-		global $HTML, $DB,$THEME;
-	
-		$smarty = $this->initSmarty();
-		$pm = new ProcessManager();
-		
-		$ev = new PM_Event(1);
-		$ret = $ev->perform('123','abc');
-		
-		// $ret = new PM_Case(10);
-		// $ret->performFlow(1);
-		vd($ret);
+	function alljob(){
+		html_header();
+		dbo_include('alljob');
 	}
-	
+	function ackjob(){
+		html_header();
+		dbo_include('ackjob');
+	}
+	function assignment(){
+		html_header();
+		dbo_include('assignment');
+	}
+	function qchome(){
+		global $HTML;
+		$HTML->addJS('js/highchart/highcharts.js');
+		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		$smarty = $this->initSmarty();
+		$smarty->display('qchome.html');
+		$HTML->addJS('js/js.php?c=Home&js=graph');
+	}
+	function artisthome(){
+		global $HTML;
+		$HTML->addJS('js/highchart/highcharts.js');
+		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		$smarty = $this->initSmarty();
+		$smarty->display('artisthome.html');
+		$HTML->addJS('js/js.php?c=Home&js=graph');
+	}
+	function supervisorhome(){
+		global $HTML;
+		$HTML->addJS('js/highchart/highcharts.js');
+		$HTML->addJS('js/highchart/highcharts-more.js');
+		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		$smarty = $this->initSmarty();
+		$smarty->display('supervisorhome.html');
+		$HTML->addJS('js/js.php?c=Home&js=graph');
+
+	}
+	function customerhome(){
+		global $HTML;
+		$HTML->addJS('js/highchart/highcharts.js');
+		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		$smarty = $this->initSmarty();
+		$smarty->display('customerhome.html');
+		$HTML->addJS('js/js.php?c=Home&js=graph');
+	}
+	function engtest(){
+		$smarty = $this->initSmarty();
+		$smarty->display('engtest.html');
+
+	}
 }
+
 ?>

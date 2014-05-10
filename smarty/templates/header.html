@@ -22,7 +22,7 @@
 		  <span class="icon-bar"></span>
 		  <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="#">Shine</a>
+		<a class="navbar-brand" href="#">Moire</a>
 		<ul class="nav navbar-nav navbar-fix">
 		  <li>
 			<a href="#" id='calendarToggle'><span class="glyphicon glyphicon-calendar"></span></a>
@@ -46,20 +46,15 @@
 				</ul>
 			</li>
 		{/if}
+		{assign var=alertList value={$Menu->genAlertList()}}
+
 			<li class="dropdown">
 				<a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bullhorn" style="font-size:2.0em"></span>
-					<span class="badge-menu">{count($alertdata)}</span>
+					<span class="badge-menu">{$Menu->countAlert()}</span>
 				</a>
 				<ul class="dropdown-menu alert" role="menu">
-				  <li class="header"> You have {count($alertdata)} notification </li>
-				  {foreach from=$alertdata item="ad"}		
-					  <li><a href="#" class="pull-left">
-					  	   <div class="pull-left">{$ad.di_subject} </div>					  	   
-					       <span class="pull-left glyphicon glyphicon-minus-sign"></span>				  	  
-					      </a>
-					  </li>
-				  {/foreach}		
-
+				  <li class="header"> You have {$Menu->countAlert()} notification </li>
+				  {$alertList}
 				  <li> <a href="#" class="footer">View all <span class="glyphicon glyphicon-circle-arrow-right"></span> </a> 
 				  </li>
 				</ul>

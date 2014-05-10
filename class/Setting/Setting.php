@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__).'/../../init.inc.php');
+require_once(dirname(__FILE__).'/../../inc/generalFunc.php');
 
 class Setting{
 	function __construct(){
@@ -18,7 +19,26 @@ class Setting{
 			// echo '<!-- function not found -->';
 		}
 	}
-	
+	function testMove(){
+		vd('inside this function');
+		vd($_POST);
+
+	}
+	function testUpload(){
+		html_header();
+		dbo_include('testUpload');
+	}
+	function customUpload(){
+		html_header();
+		$smarty = new Smarty();
+		$smarty->caching = false;
+		$smarty->setTemplateDir(DOC_DIR.DS.'smarty'.DS.'templates');
+		$smarty->setCompileDir(DOC_DIR.DS.'smarty'.DS.'templates_c');
+		$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
+		$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
+
+		$smarty->display('customupload.html');
+	}
 	
 	function gensetting(){
 		global $HTML,$DB;
@@ -119,108 +139,51 @@ class Setting{
 
 		$DB->Execute("select resetfcsetting()");
 		
-	}
-	function rtypesetting(){
-		global $HTML,$DB;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
-		
+	}	
+	function cartonSetup(){
 		html_header();
-		$dbo = dbo_include('setup_roomtype');
+		$dbo = dbo_include('cartonsetup');
 	}
-	function roomsetting(){
-		global $HTML;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
+	function lookupSetup(){
 		html_header();
-		$dbo = dbo_include('setup_roomno');
+		$dbo = dbo_include('lookup');
 	}
-	function dursetting(){
-		global $HTML,$DB;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
-		
+	function jobcatsetup(){
 		html_header();
-		$dbo = dbo_include('setup_durationchargebyhour');	
-	}
-	function onightsetting(){
-		global $HTML,$DB;
-
-		html_header();
-		$dbo = dbo_include('setup_durationchargebynight');
-	}
-	function holsetting(){
-		global $HTML,$DB;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
-
-		html_header();
-		$dbo = dbo_include('setup_publicholiday');
-
-	}
-	function menudemo(){
-		global $HTML,$DB;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
-
-		$dbo = dbo_include('menutable');
-
-	}
-	function weekdaysetting(){
-		global $HTML,$DB;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
-
-		html_header();	
-		$dbo = dbo_include('setup_weekday');
-
+		$dbo = dbo_include('jobcatsetup');
 	}
 	function User(){
-		global $HTML;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
 		html_header();
 		$dbo = dbo_include('user');
 	}
 	function Role(){
-		global $HTML;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
 		html_header();
 		$dbo = dbo_include('role');
 	}
 	function Permission(){
-		global $HTML;
-		$HTML->addJS('js/js.php?c=DBO&js=DBO');
 		html_header();
 		$dbo = dbo_include('permission');
 	}
 	function getrole(){
 		global $DB;
-		$rolepermarr = $DB->GetArray("select rp_pmsid from fcroleperm join fcrole on rp_rolid = rol_id where rol_code = :0",array($_POST['rolecode']));
+		$rolepermarr = $DB->GetArray("select rp_pmscode from fcroleperm join fcrole on rp_rolid = rol_id where rol_id = :0",array($_POST['rolid']));
 		echo json_encode($rolepermarr);
 	}
 	function usersetting(){
-		global $HTML;
 		html_header();
 		$dbo = dbo_include('user');
 	}
 	function rolesetting(){
-		global $HTML;
 		html_header();
 		$dbo = dbo_include('role');
 	}
 	function permsetting(){
-		global $HTML;
 		html_header();
 		$dbo = dbo_include('permission');
 	}
-	function journalMapping(){
-		global $HTML;
-		html_header();
-		$dbo = dbo_include('journalmapping');	
-	}
 	function menusetup(){
-		global $HTML;
 		html_header();
 		$dbo = dbo_include('menu');	
-	}
-	function tutsetup(){
-		html_header();
-		$dbo = dbo_include('tutorial_setup');	
-
 	}
 	
 }

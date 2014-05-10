@@ -11,7 +11,7 @@ function neworgrole(){
 	$tableprefix = $DB->prefix;
 	$tblorg = $tableprefix.$orgpostname;
 
-	$orgdata = $DB->GetArray("select org_id,org_code,org_name from $tblorg where org_status = :0",array('ACTIVE'));
+	$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0",array('ACTIVE'));
 
 	$orgHTML = "<select id='userorg_1' name='userorg_1'><option value='default'>--Select Org--</option>";
 	foreach ($orgdata as $data){
@@ -23,12 +23,12 @@ function neworgrole(){
 	$tableprefix = $DB->prefix;
 	$tblrole = $tableprefix.$rolepostname;
 
-	if($USER->userid == 'admin') $roledata = $DB->GetArray("select rol_id,rol_code,rol_desc from $tblrole where rol_status = :0 ",array('ACTIVE'));
-	else $roledata = $DB->GetArray("select rol_id,rol_code,rol_desc from $tblrole where rol_status = :0 and rol_code not in (:1,:2)",array('ACTIVE','admin','PNDADMIN'));
+	if($USER->userid == 'admin') $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole");
+	else $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where rol_name not in (:0,:1)",array('admin','ADMIN'));
 
 	$roleHTML = "<select id='userrole_1' name='userrole_1'><option value='default'>--Select Role--</option>";
 	foreach ($roledata as $data){
-		$roleHTML .= "<option value='".$data['rol_id']."'>".$data['rol_desc']."</option>";
+		$roleHTML .= "<option value='".$data['rol_id']."'>".$data['rol_name']."</option>";
 	}
 	$roleHTML .= "</select>"; 
 	$html = "<table id='userorgrole'>
@@ -88,7 +88,7 @@ function editorgrole($param1,$param12,$param3){
 		$i = 0;
 		foreach($relationshiparr as $key => $val){
 			$num = $i+1;
-			$orgdata = $DB->GetArray("select org_id,org_code,org_name from $tblorg where org_status = :0",array('ACTIVE'));
+			$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0",array('ACTIVE'));
 
 			$orgHTML = "<select id='userorg_$num' name='userorg_$num'><option value='default'>--Select Org--</option>";
 			foreach ($orgdata as $data){
@@ -98,14 +98,14 @@ function editorgrole($param1,$param12,$param3){
 			}
 			$orgHTML .= "</select>"; 
 
-			if($USER->userid == 'admin') $roledata = $DB->GetArray("select rol_id,rol_code,rol_desc from $tblrole where rol_status = :0 ",array('ACTIVE'));
-			else $roledata = $DB->GetArray("select rol_id,rol_code,rol_desc from $tblrole where rol_status = :0 and rol_code not in (:1,:2)",array('ACTIVE','admin','PNDADMIN'));
-			#$roledata = $DB->GetArray("select rol_id,rol_code,rol_desc from $tblrole where rol_status = :0 ",array('ACTIVE'));
+			if($USER->userid == 'admin') $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole ");
+			else $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where rol_name not in (:0,:1)",array('ADMIN','ADMIN'));
+			#$roledata = $DB->GetArray("select rol_id,rol_code,rol_name from $tblrole where rol_status = :0 ",array('ACTIVE'));
 
 			$roleHTML = "<select id='userrole_$num' name='userrole_$num'><option value='default'>--Select Role--</option>";
 			foreach ($roledata as $data){
-				if($data['rol_id'] == $val['uor_rolid']) $roleHTML .= "<option selected value='".$data['rol_id']."'>".$data['rol_desc']."</option>";
-				else $roleHTML .= "<option value='".$data['rol_id']."'>".$data['rol_desc']."</option>";
+				if($data['rol_id'] == $val['uor_rolid']) $roleHTML .= "<option selected value='".$data['rol_id']."'>".$data['rol_name']."</option>";
+				else $roleHTML .= "<option value='".$data['rol_id']."'>".$data['rol_name']."</option>";
 			}
 			$roleHTML .= "</select>"; 
 
@@ -128,7 +128,7 @@ function editorgrole($param1,$param12,$param3){
 			$i++;
 		}		
 	}else{
-		$orgdata = $DB->GetArray("select org_id,org_code,org_name from $tblorg where org_status = :0",array('ACTIVE'));
+		$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0",array('ACTIVE'));
 
 		$orgHTML = "<select id='userorg_1' name='userorg_1'><option value='default'>--Select Org--</option>";
 		foreach ($orgdata as $data){
@@ -136,11 +136,11 @@ function editorgrole($param1,$param12,$param3){
 		}
 		$orgHTML .= "</select>"; 
 
-		$roledata = $DB->GetArray("select rol_id,rol_code,rol_desc from $tblrole where rol_status = :0 ",array('ACTIVE'));
+		$roledata = $DB->GetArray("select rol_id,rol_name from $tblrole ");
 
 		$roleHTML = "<select id='userrole_1' name='userrole_1'><option value='default'>--Select Role--</option>";
 		foreach ($roledata as $data){
-			$roleHTML .= "<option value='".$data['rol_id']."'>".$data['rol_desc']."</option>";
+			$roleHTML .= "<option value='".$data['rol_id']."'>".$data['rol_name']."</option>";
 		}
 		$roleHTML .= "</select>"; 
 
@@ -209,9 +209,9 @@ function user_custom_new($table, $cols){
 		// insert into vrelationship
 		foreach($rowkey as $i){
 			// get org info
-			list($orgid,$orgcode) = $DB->GetRow("select org_id,org_code from $tblorg where org_id = :0",array($_POST['userorg_'.$i]));
+			list($orgid,$orgname) = $DB->GetRow("select org_id,org_name from $tblorg where org_id = :0",array($_POST['userorg_'.$i]));
 			// get role info
-			list($roleid,$rolecode) = $DB->GetRow("select rol_id,rol_code from $tblrole where rol_id = :0",array($_POST['userrole_'.$i]));
+			list($roleid,$rolename) = $DB->GetRow("select rol_id,rol_name from $tblrole where rol_id = :0",array($_POST['userrole_'.$i]));
 			// check if primary
 			if(isset($_POST['checkbox_'.$i]) && $_POST['checkbox_'.$i] == 1) $reltype = 1;
 			else $reltype = null; 
@@ -287,10 +287,10 @@ function user_custom_edit($table, $cols, $wheres){
 			foreach($rowkey as $i){	
 				// get org info
 				if(isset($_POST['userorg_'.$i]) && $_POST['userorg_'.$i]!='')
-					list($orgid,$orgcode) = $DB->GetRow("select org_id,org_code from $tblorg where org_id = :0",array($_POST['userorg_'.$i]));
+					list($orgid,$orgname) = $DB->GetRow("select org_id,org_name from $tblorg where org_id = :0",array($_POST['userorg_'.$i]));
 				// get role info
 				if(isset($_POST['userrole_'.$i]) && $_POST['userrole_'.$i]!='')
-					list($roleid,$rolecode) = $DB->GetRow("select rol_id,rol_code from $tblrole where rol_id = :0",array($_POST['userrole_'.$i]));
+					list($roleid,$rolename) = $DB->GetRow("select rol_id,rol_name from $tblrole where rol_id = :0",array($_POST['userrole_'.$i]));
 				// check if primary
 				if(isset($_POST['checkbox_'.$i]) && $_POST['checkbox_'.$i] == 1) 
 					$reltype = 1;

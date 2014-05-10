@@ -10,6 +10,7 @@ $dbo->cols['last_synchronized_date']->caption->set('default', 'last_synchronized
 $dbo->cols['record_synchronized']->caption->set('default', 'record_synchronized', 'text');
 $dbo->cols['cloud_refid']->caption->set('default', 'cloud_refid', 'text');
 $dbo->cols['rol_status']->caption->set('default', 'Status', 'text');
+$dbo->cols['rol_name']->caption->set('default', 'Role name', 'text');
 
 $dbo->titleList = 'List Role';
 $dbo->titleDetail = 'Detail';

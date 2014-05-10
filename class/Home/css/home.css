@@ -1,0 +1,93 @@
+.dashboard-stat.yellow {
+	background-color: #ffb848;
+}
+.modal-large .modal-dialog {
+  width: 80%; /* or whatever you wish */
+}
+.dashboard-stat:after {
+	clear: both;
+}
+.dashboard-stat.blue {
+	background-color: #27a9e3;
+}
+.dashboard-stat.purple {
+	background-color: #833192;
+}
+.dashboard-stat.orange {
+	background-color: #fcb649;
+}
+.dashboard-stat.green {
+	background-color: #28b579;
+}
+.dashboard-stat .visual {
+	font-size: 35px;
+	line-height: 35px;
+	width: 80px;
+	height: 80px;
+	display: block;
+	float: left;
+	padding-top: 10px;
+	padding-left: 15px;
+	margin-bottom: 10px;
+}
+.dashboard-stat .details {
+	position: absolute;
+	right: 15px;
+	padding-right: 10px;
+}
+.dashboard-stat .details .number {
+	padding-top: 15px;
+	text-align: right;
+	font-size: 34px;
+	line-height: 34px;
+	letter-spacing: -1px;
+	margin-bottom: 5px;
+	font-weight: 300;
+	color: #fff;
+}
+.dashboard-stat .details .desc {
+	text-align: right;
+	font-size: 13px;
+	letter-spacing: 0px;
+	font-weight: 300;
+	color: #fff;
+}
+.dashboard-stat:before, .dashboard-stat:after {
+	display: table;
+	line-height: 0;
+	content: "";
+}
+.dashboard-stat.blue .more {
+	background-color: #208DBE;
+}
+.dashboard-stat.purple .more {
+	background-color: #732a86;
+}
+.dashboard-stat.orange .more {
+	background-color: #db9627;
+}
+.dashboard-stat .more:hover {
+	text-decoration: none;
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+.dashboard-stat .more {
+	clear: both;
+	display: block;
+	padding: 5px 10px 5px 10px;
+	text-transform: uppercase;
+	font-weight: 300;
+	font-size: 11px;
+	color: #FFF;
+	opacity: 0.7;
+	filter: alpha(opacity=70);
+}
+.dashboard-stat.green .more {
+	background-color: #14a668;
+}
+.dashboard-stat.yellow .more {
+	background-color: #cb871b;
+}
+.task-item{
+	cursor : pointer;
+}
