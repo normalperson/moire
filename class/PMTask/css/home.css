@@ -1,26 +1,33 @@
 html, body, #container, #body {
 	height : 100%;
 }
-
 .navbar {
 	margin-bottom : 0;
+}
+#mainTaskDiv  {
+	width : 100%;
+	display: table;
+	height:100%;
+}
+#rowTaskDiv{
+		display: table-row;
 }
 #contentFrame {
 	height:100%;
 }
 #sideDiv {
 	width : 350px;
-	height:100%;
 	padding : 0;
 	background-color : #3d3d3d;
 	color : white;
-	float : left;
+	display:table-cell;
+	vertical-align:top;
 }
 
 #contentDiv{
-	margin-left : 350px;
-	min-height : 100%;
+	display:table-cell;
 	padding-bottom : 22px;
+	vertical-align:top;
 }
 
 #sidebarListing a {
