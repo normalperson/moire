@@ -48,10 +48,12 @@ function showcasedescription($colname, $currval, $rs, $html) {
 
 function showactions($colname, $currval, $rs, $html) {
 	global $DB;
+	$isFlagged = false;
 	$ret = 
-		"<span class='fa fa-flag fa-border action action-flag' title='Flag This Case' data-caseid='{$rs['pmc_id']}'></span>
-		<span class='fa fa-comments fa-border action action-comment' title='Comments' data-caseid='{$rs['pmc_id']}'></span>
-		<span class='fa fa-pencil-square-o fa-border action action-perform' title='Perform This Activity' data-flowid='{$rs['pmf_id']}'></span>";
+		"<input class='hidden-flowid' type='hidden' value='{$rs['pmf_id']}' />
+		<span class='fa fa-flag fa-border action action-flag' title='".($isFlagged ? 'Unflag' : 'Flag')." This Case' data-caseid='{$rs['pmc_id']}'></span>
+		<span class='fa fa-comments fa-border action action-comment' title='Comments' data-caseid='{$rs['pmc_id']}'></span>";
+		//<span class='fa fa-pencil-square-o fa-border action action-perform' title='Perform This Activity' data-flowid='{$rs['pmf_id']}'></span>";
 		
 	return $ret;
 }
@@ -61,11 +63,20 @@ $dbo->render();
 ?>
 <script type='text/javascript'>
 	$('[data-toggle="tooltip"]').tooltip();
-	$('.action-perform').click(function () {
+	$('#dbo_pmtask_caseflow_list_listtable > tbody > tr').css('cursor', 'pointer').click(function () {
+		var $this = $(this),
+			$flowInp = $this.find('input.hidden-flowid');
+		if ($flowInp.length > 0) {
+			window.top.toggleLoading(true, function () {
+				var flowid = $flowInp.val();
+				window.location.href = 'renderActivityPerform?fid='+flowid;
+			})
+		}
+	})
+	$('.action-flag').click(function (e) {
+		e.stopPropagation();
 		var $this = $(this);
-		window.top.toggleLoading(true, function () {
-			var flowid = $this.data('flowid');
-			window.location.href = 'renderActivityPerform?fid='+flowid;
-		})
+		if ($this.hasClass('flagged')) $this.removeClass('flagged').attr('title','Flag This Case');
+		else $this.addClass('flagged').attr('title','Unflag This Case');
 	})
 </script>

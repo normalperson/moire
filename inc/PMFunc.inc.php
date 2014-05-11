@@ -2,9 +2,7 @@
 class PMFunc{
 	
 	function testScriptActivity($flowid, $o) {
-		
-		return true;
-		
+		dbo_include('user');
 	}
 	function initSmarty(){
 		$smarty = new Smarty();
