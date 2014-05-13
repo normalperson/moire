@@ -3,10 +3,11 @@ require(dirname(__FILE__).DIRECTORY_SEPARATOR.'pmtask_caseflow_list.conf.php');
 
 # customization
 function dbo_pmtask_caseflow_list_customize(&$dbo){
-	global $GLOBAL, $DB;
+	global $GLOBAL, $DB,$USER;
 	if (empty($GLOBAL['PMTask_atid'])) die('missing activity id');
-	$dbo->sql = "select a.*,b.*,'' as urgency, '' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
-	where pmf_obj_id = {$GLOBAL['PMTask_atid']} and pmf_obj_type = 'PM_Activity' order by pmf_due_date, pmf_id";
+ $dbo->sql = "select a.*,b.*,'' as urgency, '' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
+ where pmf_obj_id = {$GLOBAL['PMTask_atid']} and pmf_obj_type = 'PM_Activity' 
+ and (pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = ".$DB->quote($USER->userid).")) order by pmf_due_date, pmf_id";
 	
 }
 

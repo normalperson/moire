@@ -20,18 +20,21 @@ class PMTask {
 	}
 	
 	function renderTaskList() {
-		global $DB;
+		global $DB,$USER;
 		
-		$html = '<ul id="sidebarListing" class="nav nav-pills nav-stacked">';
-		$rs = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, pmat_id activityid, max(pmat_name) activityname, 
-		sum(case when pmf_id is not null then 1 else 0 end) totalcount,
-		sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount,
-		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
-		min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
-		from fcpmworkflow join fcpmactivity on pmwf_id = pmat_pmwfid 
-		left join fcpmcaseflow on pmf_obj_type = 'PM_Activity' and pmat_type = 'USER' and pmat_id = pmf_obj_id and pmf_end_date is null
-		group by pmwf_id, pmat_id
-		order by 2,4", array(), PDO::FETCH_ASSOC);
+		 $html = '<ul id="sidebarListing" class="nav nav-pills nav-stacked">';
+		 $rs = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, pmat_id activityid, max(pmat_name) activityname, 
+		  sum(case when pmf_id is not null then 1 else 0 end) totalcount,
+		  sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount,
+		  sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
+		  min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
+		  from fcpmworkflow join fcpmactivity on pmwf_id = pmat_pmwfid 
+		  left join fcpmcaseflow on pmf_obj_type = 'PM_Activity' and pmat_type = 'USER' and pmat_id = pmf_obj_id and pmf_end_date is null
+		  where pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = :0)
+		  group by pmwf_id, pmat_id
+		  order by 2,4", array($USER->userid), PDO::FETCH_ASSOC);
+
+
 		
 		$data = array();
 		foreach ($rs as $row) {

@@ -8,7 +8,10 @@
 	<div class="col-md-12">		
 		<div style="margin-left:1%">
 			<fieldset>
-			<legend style="background-color:#D8D8D8;padding-left:8px">Job Detail				
+			<legend style="background-color:#D8D8D8;padding-left:8px">Job Detail
+				{if isset({$createcase}) &&  {$createcase} eq 'Y'}
+				<input type="button" class="btn btn-sm btn-primary pull-right"  value="Create case"/> 
+				{/if}
 			</legend>
 		    <ul class="nav nav-tabs">
 			  <li class="active"><a href="#job" id="ajob" data-toggle="tab">Job Info</a></li>
@@ -211,7 +214,7 @@
 			  	</table>
 
 			  </div>
-
+			  
 		  </div>
 		</div>
 		

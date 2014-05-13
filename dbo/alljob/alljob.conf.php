@@ -41,6 +41,7 @@ $dbo->theme = 'metro';
 $dbo->layout = 'One';
 $dbo->pageLinkCount = 7;
 $dbo->recordPerPage = 10;
+$dbo->showRecordNo = true;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
 $dbo->lang = 'EN-US';
@@ -49,6 +50,8 @@ $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
+$dbo->cols['js_id']->displayListModifierMethod = 'phpfunc';
+$dbo->cols['js_id']->displayListModifier = 'getjobid';
 $dbo->cols['js_id']->inputTypeDefault = 'text';
 $dbo->cols['js_id']->searchMode = 'exact';
 $dbo->cols['js_id']->capContClassDefault = array();
