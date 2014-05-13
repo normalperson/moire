@@ -3,11 +3,11 @@ require(dirname(__FILE__).DIRECTORY_SEPARATOR.'pmtask_caseflow_list.conf.php');
 
 # customization
 function dbo_pmtask_caseflow_list_customize(&$dbo){
-	global $GLOBAL, $DB;
+	global $GLOBAL, $DB, $USER;
 	if (empty($GLOBAL['PMTask_atid'])) die('missing activity id');
 	$dbo->sql = "select a.*,b.*,'' as urgency, '' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
-	where pmf_obj_id = {$GLOBAL['PMTask_atid']} and pmf_obj_type = 'PM_Activity' order by pmf_due_date, pmf_id";
-	
+	where pmf_obj_id = {$GLOBAL['PMTask_atid']} and pmf_obj_type = 'PM_Activity' 
+	and (pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = ".$DB->quote($USER->userid).")) order by pmf_due_date, pmf_id";
 }
 
 function showurgency($colname, $currval, $rs, $html) {
@@ -47,13 +47,19 @@ function showcasedescription($colname, $currval, $rs, $html) {
 
 
 function showactions($colname, $currval, $rs, $html) {
-	global $DB;
+	global $DB, $USER;
 	$isFlagged = false;
+	$comm = $DB->getRow("select count(*) total_comment, sum(case when pmcr_id is null then 1 else 0 end) unread_comment from fcpmcasecomment 
+	left join fcpmcasecommentread on pmcc_id = pmcr_pmccid and pmcr_read_by = :1 where pmcc_pmcid=:0", array($rs['pmc_id'], $USER->userid));
+	
+	if ($comm['unread_comment'] > 0) $commtitle = "{$comm['unread_comment']} unread comment(s)";
+	else if ($comm['total_comment'] > 0) $commtitle = "{$comm['total_comment']} comment(s)";
+	else $commtitle = "Post Comment";
+	
 	$ret = 
 		"<input class='hidden-flowid' type='hidden' value='{$rs['pmf_id']}' />
 		<span class='fa fa-flag fa-border action action-flag' title='".($isFlagged ? 'Unflag' : 'Flag')." This Case' data-caseid='{$rs['pmc_id']}'></span>
-		<span class='fa fa-comments fa-border action action-comment' title='Comments' data-caseid='{$rs['pmc_id']}'></span>";
-		//<span class='fa fa-pencil-square-o fa-border action action-perform' title='Perform This Activity' data-flowid='{$rs['pmf_id']}'></span>";
+		<span class='fa fa-comments fa-border action action-comment".(($comm['total_comment'] > 0) ? ' hascomment'.(($comm['unread_comment'] > 0) ? ' unread' : '') : '')."' title='{$commtitle}' data-caseid='{$rs['pmc_id']}' data-flowid='{$rs['pmf_id']}' data-commid=''></span>";
 		
 	return $ret;
 }
@@ -73,6 +79,38 @@ $dbo->render();
 			})
 		}
 	})
+	
+	$('.action-comment').click(function (e) {
+		e.stopPropagation();
+		var $this = $(this),
+			caseid = $this.data('caseid'),
+			flowid = $this.data('flowid'),
+			lastcommentid = $this.data('commid');
+		window.top.toggleLoading(true, function () {
+			$popupDiv = $('<div id="commentDiv"></div>').load("renderCommentList?caseid="+caseid+'&flowid='+flowid, function () {
+				var $thisDiv = $(this);
+				window.top.toggleLoading(false, function () {
+					window.top.popupContent($thisDiv, '<span class="fa fa-comments fa-lg"></span> Comments', '500px', function () {
+						var unreadPos = $thisDiv.find('.comment.unread').first().offset().top;
+						$('.content-box',window.top.document).animate({scrollTop: unreadPos}, '400', 'swing', function() { 
+							$.ajax({
+								url : "readComment",
+								data : {
+									'caseid' : caseid,
+									'tillcommid' : $thisDiv.find('.comment.unread').last().data('commid')
+								},
+								dataType : 'json',
+								success : function(data) {
+									
+								}
+							})
+						});
+					});
+				});
+			})
+		})
+	})
+	
 	$('.action-flag').click(function (e) {
 		e.stopPropagation();
 		var $this = $(this);

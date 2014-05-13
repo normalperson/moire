@@ -40,7 +40,7 @@ function format_number($number,$decimal,$type='currency'){
 }
 
 function arr2tree($arr, $id_index, $parent_index, $ret_index = "__CHILDREN", $level_index = "__LEVEL"){
-	$rootRow = array();
+	$tree = $rootRow = array();
 	foreach ($arr as $i=>$row) {
 		$haveParent = false;
 		foreach ($arr as $crow) {
@@ -75,10 +75,11 @@ function quote($str) {
 }
 
 function time_different_string($to, $from = false, $full = false, $nowtext = 'just now') {
-    $now = ($from) ? new DateTime($from) : new DateTime;
-    $ago = new DateTime($to);
+    $now = ($from) ? (($from instanceof DateTime) ? $from : new DateTime($from)) : new DateTime;
+	
+    $ago = ($to instanceof DateTime) ? $to : new DateTime($to);
     $diff = $now->diff($ago);
-
+	
     $diff->w = floor($diff->d / 7);
     $diff->d -= $diff->w * 7;
 

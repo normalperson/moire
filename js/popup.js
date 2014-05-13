@@ -1,11 +1,10 @@
-function popupContent (content, titleText, popupwidth, callback) {
+function popupContent (content, titleText, popupwidth, showcallback, hidecallback) {
 	
 	if (parent.$.fn.modal) {
 		popupwidth = typeof popupwidth !== 'undefined' ? popupwidth : false;
 	
 		var $body = $(window.top.document.body);
 		var $modalDiv = $("<div class='modal fade content-box' role='dialog' aria-labelledby='popup_label' data-backdrop='static' data-keyboard='false' aria-hidden='true'>");
-		
         
 		var $modalHeader = $("<div class='modal-header'>");
 		$modalHeader.append($("<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>"))
@@ -16,23 +15,30 @@ function popupContent (content, titleText, popupwidth, callback) {
 		var $modalDialog = $("<div class='modal-dialog'>").append($("<div class='modal-content'>").append($modalHeader).append($modalBody));
 		if (popupwidth) $modalDialog.css('width', popupwidth);
 		$modalDiv.append($modalDialog);
+		
 		$body.append($modalDiv);
 		$modalDiv.modal('show')
 
 		$modalDiv.modal().on('hidden.bs.modal', function () {
-			if ($.isFunction(callback)) {
-				callback($modalDiv);
+			if ($.isFunction(hidecallback)) {
+				hidecallback($modalDiv);
 			}
 			$(this).remove();
-		});	
+		}).on('shown.bs.modal', function () {
+			if ($.isFunction(showcallback)) {
+				showcallback($modalDiv);
+			}
+		})
+		
+		
 	}
 	else alert("Require bootstrap");
 }
 
 
-function popupFrameContent(renderurl, titleText, popupwidth, callback) {
+function popupFrameContent(renderurl, titleText, popupwidth, showcallback, hidecallback) {
 	var $contentFrame = $('<iframe src="'+renderurl+'" class="autoheight" width="100%" frameborder="0"></iframe>')
-	popupContent($contentFrame, titleText, popupwidth, callback);
+	popupContent($contentFrame, titleText, popupwidth, showcallback, hidecallback);
 	$contentFrame.iFrameResize()
 }
 
@@ -199,6 +205,7 @@ function toggleLoading(state, callback, titleText) {
 	var $body = $(window.top.document.body),
 		$exist = $body.find('.loading-box');
 	if (typeof state == 'undefined' || state) {
+	
 		if ($exist.length == 0) {
 			var $modalDiv = $("<div class='modal fade modal-custom loading-box' data-backdrop='static' role='dialog' aria-hidden='true'>");
 			
@@ -233,7 +240,13 @@ function toggleLoading(state, callback, titleText) {
 	else {
 		// remove loading
 		if ($exist.length > 0) {
-			$exist.modal('hide');
+			
+			$exist.modal().on('hidden.bs.modal', function (e) {
+				$(this).remove();
+				if ($.isFunction(callback)) {
+					callback(true);
+				}
+			}).modal('hide');
 		}
 	}
 }
