@@ -4,7 +4,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dbo->cols['jcl_id']->caption->set('default', 'ID', 'text');
 $dbo->cols['jcl_title']->caption->set('default', 'Title', 'text');
 $dbo->cols['jcl_requiretime']->caption->set('default', 'Require time (minutes)', 'text');
-$dbo->cols['jcl_sequence']->caption->set('default', 'Sequence', 'text');
+$dbo->cols['jcl_sequence']->caption->set('default', 'Priority', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

@@ -35,7 +35,7 @@ $dbo->cols['js_completiondate']->caption->set('default', 'js_completiondate', 't
 $dbo->cols['js_assignto']->caption->set('default', 'js_assignto', 'text');
 $dbo->cols['decision']->caption->set('default', 'Decision', 'text');
 $dbo->cols['remark']->caption->set('default', 'Remark', 'text');
-$dbo->cols['artwork']->caption->set('default', 'Finished artwork', 'text');
+$dbo->cols['artwork']->caption->set('default', 'Artist finished artwork', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

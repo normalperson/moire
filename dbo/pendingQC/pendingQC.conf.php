@@ -38,6 +38,7 @@ $dbo->theme = 'metro';
 $dbo->layout = 'One';
 $dbo->pageLinkCount = 7;
 $dbo->recordPerPage = 10;
+$dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
 $dbo->lang = 'EN-US';

@@ -29,6 +29,7 @@ $dbo->canNewGroup = array();
 $dbo->canEditGroup = array();
 $dbo->canDeleteGroup = array();
 $dbo->showSearch = true;
+$dbo->exportFormat = array('excel', 'pdf');
 $dbo->titleList = 'Job status report';
 $dbo->titleDetail = 'Detail';
 $dbo->titleNew = 'New Record';
