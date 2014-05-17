@@ -4573,8 +4573,8 @@ APPROVED_BY	Approved By	sql	select usr_name from fcuser join spcase on usr_useri
 --
 
 COPY fcuser (usr_userid, usr_password, usr_created, usr_name, usr_email, usr_last_active, usr_last_success_login, usr_last_fail_login, usr_group, usr_sessiondata, usr_status, usr_langcode) FROM stdin;
+supervisor	0f4d09e43d208d5e9222322fbc7091ceea1a78c3	2014-04-30 19:09:48.659+08	supervisor	supervisor@gmail.com	2014-05-17 14:52:37+08	2014-05-16 11:17:44+08	2014-05-14 14:38:13+08	\N	a:0:{}	ACTIVE	\N
 admin2	d033e22ae348aeb5660fc2140aec35850c4da997	2014-01-26 15:39:57.04+08	Administrator 2	\N	2014-05-01 18:22:23+08	2014-05-01 17:54:44+08	2014-02-05 15:30:53+08	ADMIN	a:2:{s:7:"dbosess";a:4:{s:6:"ackjob";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:7:"jobinfo";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}s:4:"user";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:0:"";a:3:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}}}s:9:"dboconfig";a:1:{s:6:"ackjob";i:1;}}	ACTIVE	\N
-supervisor	0f4d09e43d208d5e9222322fbc7091ceea1a78c3	2014-04-30 19:09:48.659+08	supervisor	supervisor@gmail.com	2014-05-16 11:18:02+08	2014-05-16 11:17:44+08	2014-05-14 14:38:13+08	\N	a:4:{s:7:"dbosess";a:3:{s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"146";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:7:"jobinfo";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"204";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"detail";}}s:11:"PMTask_atid";s:1:"7";s:9:"dboconfig";a:0:{}s:13:"PMTask_flowid";s:3:"146";}	ACTIVE	\N
 artist1	2cabffd3c7cb40ae6541b7f10a640b41190ccb27	2014-04-30 13:05:53.973+08	Artist 1	artist1@gmail.com	2014-05-14 14:43:06+08	2014-05-14 14:41:41+08	2014-05-14 12:08:00+08	\N	a:0:{}	ACTIVE	\N
 artist2	09c04a14fff8cbd7d0235da2c01bfd31d7826824	2014-04-30 13:06:14.614+08	Artist 2	artist2@gmail.com	\N	\N	\N	\N	\N	ACTIVE	\N
 customer	b39f008e318efd2bb988d724a161b61c6909677f	2014-04-24 15:46:41.898+08	Customer	customer@gmail.com	2014-05-15 13:49:42+08	2014-05-14 14:43:28+08	\N	\N	a:2:{s:7:"dbosess";a:1:{s:7:"jobinfo";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}}s:9:"dboconfig";a:0:{}}	ACTIVE	\N
@@ -5228,7 +5228,6 @@ COPY fcusersession (us_id, us_sessid, us_userid, us_ip, us_active, us_created, u
 408	1kkbhl72fl7lktmld4p5d10os0	ironman@gmail.com	127.0.0.1	Y	2014-02-17 15:31:34.882+08	2014-02-17 15:31:34+08	\N
 457	72dfg6tbh1jd98eifhla9r25i6	admin2	127.0.0.1	Y	2014-05-01 17:54:44.645+08	2014-05-01 17:54:44+08	\N
 512	h68n7hesc822jhi1caneg5ghl0	customer	127.0.0.1	Y	2014-05-14 14:43:28.229+08	2014-05-14 14:43:28+08	\N
-513	u5ad0a4n6sj3geo5hnqmbmhf55	supervisor	127.0.0.1	Y	2014-05-16 11:17:45.05+08	2014-05-16 11:17:45+08	\N
 \.
 
 
