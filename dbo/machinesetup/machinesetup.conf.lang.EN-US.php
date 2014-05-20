@@ -4,6 +4,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dbo->cols['mc_id']->caption->set('default', 'mc_id', 'text');
 $dbo->cols['mc_orgid']->caption->set('default', 'mc_orgid', 'text');
 $dbo->cols['mc_pressmanufacturer']->caption->set('default', 'mc_pressmanufacturer', 'text');
+$dbo->cols['mc_pressmanufacturer']->caption->setTabCaption('default', 'Press', 'text');
 $dbo->cols['mc_pressyearbuilt']->caption->set('default', 'mc_pressyearbuilt', 'text');
 $dbo->cols['mc_pressmodel']->caption->set('default', 'mc_pressmodel', 'text');
 $dbo->cols['mc_presswidth']->caption->set('default', 'mc_presswidth', 'text');
@@ -11,6 +12,7 @@ $dbo->cols['mc_presstype']->caption->set('default', 'mc_presstype', 'text');
 $dbo->cols['mc_pressspeed']->caption->set('default', 'mc_pressspeed', 'text');
 $dbo->cols['mc_presscylinderrepeat']->caption->set('default', 'mc_presscylinderrepeat', 'text');
 $dbo->cols['mc_inkmanufacturer']->caption->set('default', 'mc_inkmanufacturer', 'text');
+$dbo->cols['mc_inkmanufacturer']->caption->setTabCaption('default', 'Ink', 'text');
 $dbo->cols['mc_inkcommercialname']->caption->set('default', 'mc_inkcommercialname', 'text');
 $dbo->cols['mc_inktype']->caption->set('default', 'mc_inktype', 'text');
 $dbo->cols['mc_inktypeother']->caption->set('default', 'mc_inktypeother', 'text');
@@ -37,6 +39,7 @@ $dbo->cols['mc_inkdensity_3']->caption->set('default', 'mc_inkdensity_3', 'text'
 $dbo->cols['mc_inkdensity_4']->caption->set('default', 'mc_inkdensity_4', 'text');
 $dbo->cols['mc_inkdensity_5']->caption->set('default', 'mc_inkdensity_5', 'text');
 $dbo->cols['mc_platemanufacturer']->caption->set('default', 'mc_platemanufacturer', 'text');
+$dbo->cols['mc_platemanufacturer']->caption->setTabCaption('default', 'Plate', 'text');
 $dbo->cols['mc_platecommercialname']->caption->set('default', 'mc_platecommercialname', 'text');
 $dbo->cols['mc_platetype']->caption->set('default', 'mc_platetype', 'text');
 $dbo->cols['mc_platedurometer']->caption->set('default', 'mc_platedurometer', 'text');

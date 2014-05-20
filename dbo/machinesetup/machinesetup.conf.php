@@ -34,6 +34,19 @@ $dbo->titleDetail = 'Detail';
 $dbo->titleNew = 'New Record';
 $dbo->titleEdit = 'Edit Record';
 $dbo->titleSearch = 'Search Record';
+$dbo->layoutNew = '2;2
+=
+1|1;
+1|1;
+2;2;2
+=
+2;
+2;
+1|1;
+1|1;
+2;2;2;2;2;2;2
+=
+2';
 $dbo->theme = 'metro';
 $dbo->layout = 'AlwaysList';
 $dbo->pageLinkCount = 7;
