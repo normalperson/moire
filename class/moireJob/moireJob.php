@@ -19,14 +19,8 @@ class moireJob{
 		return $smarty;
 	}
 	function newjob(){
-		global $DB;
-		$smarty = $this->initSmarty();
-
-		$sql = "select * from mcarton";
-		$carton = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
-
-		$smarty->assign('carton',$carton);
-		$smarty->display('newjob.html');
+		html_header();
+		dbo_include('jobsheet');	
 	}
 	function jobinfo(){
 		global $HTML;
