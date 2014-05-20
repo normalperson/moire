@@ -46,6 +46,7 @@ $dbo->cols['mc_platedurometer']->caption->set('default', 'mc_platedurometer', 't
 $dbo->cols['mc_platethickness']->caption->set('default', 'mc_platethickness', 'text');
 $dbo->cols['mc_platerelief']->caption->set('default', 'mc_platerelief', 'text');
 $dbo->cols['mc_mountingtapemanufacturer']->caption->set('default', 'mc_mountingtapemanufacturer', 'text');
+$dbo->cols['mc_mountingtapemanufacturer']->caption->setTabCaption('default', 'Mounting', 'text');
 $dbo->cols['mc_mountingtapename']->caption->set('default', 'mc_mountingtapename', 'text');
 $dbo->cols['mc_mountingtapedensity']->caption->set('default', 'mc_mountingtapedensity', 'text');
 $dbo->cols['mc_mountingtapthickness']->caption->set('default', 'mc_mountingtapthickness', 'text');
@@ -55,6 +56,7 @@ $dbo->cols['mc_mountingcushonname']->caption->set('default', 'mc_mountingcushonn
 $dbo->cols['mc_mountingdensity']->caption->set('default', 'mc_mountingdensity', 'text');
 $dbo->cols['mc_mountingcushionthickness']->caption->set('default', 'mc_mountingcushionthickness', 'text');
 $dbo->cols['mc_cimplevel_1']->caption->set('default', 'mc_cimplevel_1', 'text');
+$dbo->cols['mc_cimplevel_1']->caption->setTabCaption('default', 'Cylinder Impression', 'text');
 $dbo->cols['mc_cimplevel_2']->caption->set('default', 'mc_cimplevel_2', 'text');
 $dbo->cols['mc_cimplevel_3']->caption->set('default', 'mc_cimplevel_3', 'text');
 $dbo->cols['mc_cimplevel_4']->caption->set('default', 'mc_cimplevel_4', 'text');
@@ -70,6 +72,7 @@ $dbo->cols['mc_cimpanlox_3']->caption->set('default', 'mc_cimpanlox_3', 'text');
 $dbo->cols['mc_cimpanlox_4']->caption->set('default', 'mc_cimpanlox_4', 'text');
 $dbo->cols['mc_cimpanlox_5']->caption->set('default', 'mc_cimpanlox_5', 'text');
 $dbo->cols['mc_aniloxmanufacturer']->caption->set('default', 'mc_aniloxmanufacturer', 'text');
+$dbo->cols['mc_aniloxmanufacturer']->caption->setTabCaption('default', 'Anilox/Doctor', 'text');
 $dbo->cols['mc_aniloxtype']->caption->set('default', 'mc_aniloxtype', 'text');
 $dbo->cols['mc_aniloxengravingangle']->caption->set('default', 'mc_aniloxengravingangle', 'text');
 $dbo->cols['mc_aniloxinking']->caption->set('default', 'mc_aniloxinking', 'text');
@@ -119,6 +122,7 @@ $dbo->cols['mc_aniloxdoctoring_3']->caption->set('default', 'mc_aniloxdoctoring_
 $dbo->cols['mc_aniloxdoctoring_4']->caption->set('default', 'mc_aniloxdoctoring_4', 'text');
 $dbo->cols['mc_aniloxdoctoring_5']->caption->set('default', 'mc_aniloxdoctoring_5', 'text');
 $dbo->cols['mc_substratemanufacturer']->caption->set('default', 'mc_substratemanufacturer', 'text');
+$dbo->cols['mc_substratemanufacturer']->caption->setTabCaption('default', 'Substrate', 'text');
 $dbo->cols['mc_substratename']->caption->set('default', 'mc_substratename', 'text');
 $dbo->cols['mc_substratetype']->caption->set('default', 'mc_substratetype', 'text');
 $dbo->cols['mc_substratedyna']->caption->set('default', 'mc_substratedyna', 'text');
