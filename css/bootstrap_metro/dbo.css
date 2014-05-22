@@ -28,7 +28,7 @@ div.dbo_theme_metro div.value_container input[type="text"],
 div.dbo_theme_metro div.value_container input[type="password"],
 div.dbo_theme_metro div.value_container select
  {
-	display: block;
+/*	display: block;*/
 	width: 100%;
 	height: 43px;
 	padding: 10px 18px;
@@ -734,6 +734,7 @@ div.dbo_theme_metro td.dbo_container_new th.caption div.mandatory:after, div.dbo
 div.dbo_theme_metro td.dbo_container_new td.form_button{
 	text-align:right;
 }
+
 
 /* edit */
 div.dbo_theme_metro td.dbo_container_edit{
