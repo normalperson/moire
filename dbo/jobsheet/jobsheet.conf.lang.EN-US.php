@@ -1,10 +1,10 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
-$dbo->cols['js_id']->caption->set('default', 'js_id', 'text');
+$dbo->cols['js_id']->caption->set('default', 'Job ID', 'text');
 $dbo->cols['js_cuid']->caption->set('default', 'Customer', 'text');
 $dbo->cols['js_ctid']->caption->set('default', 'Person in charge', 'text');
-$dbo->cols['js_request_date']->caption->set('default', 'js_request_date', 'text');
+$dbo->cols['js_request_date']->caption->set('default', 'Request date', 'text');
 $dbo->cols['js_request_by']->caption->set('default', 'js_request_by', 'text');
 $dbo->cols['js_title']->caption->set('default', 'js_title', 'text');
 $dbo->cols['js_description']->caption->set('default', 'Job description', 'text');
@@ -48,7 +48,7 @@ $dbo->cols['remark']->caption->set('default', 'Remark', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
-$dbo->titleNew = 'New Record';
+$dbo->titleNew = 'New Job';
 $dbo->titleEdit = 'Edit Record';
 $dbo->titleSearch = 'Search Record';
 $dbo->text->searchCancel = 'Cancel';
@@ -57,6 +57,7 @@ $dbo->text->editCancel = 'Cancel';
 $dbo->text->editSubmit = 'Save';
 $dbo->text->newCancel = 'Cancel';
 $dbo->text->newSubmit = 'Save';
+$dbo->text->detailCancel = 'Back';
 $dbo->text->defaultMessageAfterNew = 'Record created.';
 $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';
