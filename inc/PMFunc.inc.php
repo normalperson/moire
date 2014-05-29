@@ -23,10 +23,11 @@ class PMFunc{
 		$_GET['dbostate']='edit';
 		dbo_include('reqverification');
 		
-		$this->viewJobInfo($o->casekey);
+		//$this->viewJobInfo($o->casekey);
 	}
-	function viewJobInfo($jsid=''){
+	function viewJobInfo($caseobj){
 		global $DB;
+		$jsid = $caseobj->casekey;
 		$smarty = $this->initSmarty();
 		$sql = "select * from mcarton";
 		$carton = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
@@ -62,7 +63,7 @@ class PMFunc{
 		$_GET['dbostate']='edit';
 		dbo_include('wip');
 		
-		$this->viewJobInfo($o->casekey);
+		// $this->viewJobInfo($o->casekey);
 
 	}
 	function pendingQC($flowid, $o){
@@ -71,7 +72,7 @@ class PMFunc{
 		$_GET['dbostate']='edit';
 		dbo_include('pendingQC');
 		
-		$this->viewJobInfo($o->casekey);
+		// $this->viewJobInfo($o->casekey);
 
 	}
 	function pendingCust($flowid,$o){
@@ -80,10 +81,21 @@ class PMFunc{
 		$_GET['dbostate']='edit';
 		dbo_include('customeracceptance');
 		
-		$this->viewJobInfo($o->casekey);
+		// $this->viewJobInfo($o->casekey);
 
 	}
 	
+	function testActivity($flowid, $o) {
+		global $DB;
+		$DB->debug=1;
+		if (!empty($_POST['PROCEED'])) {
+			return true;
+		}
+		echo "<form method='post'><input type='submit' value='MOVE' name='PROCEED' /></form>";
+	}	
+	function testScript() {
+		return true;
+	}
 }
 
 

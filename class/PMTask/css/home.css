@@ -18,10 +18,19 @@ html, body, #container, #body {
 #sideDiv {
 	width : 350px;
 	padding : 0;
+	padding-bottom: 30px;
 	background-color : #3d3d3d;
 	color : white;
 	display:table-cell;
 	vertical-align:top;
+}
+
+#sideDiv > .nav-tabs > li > a{
+	color : #fff;
+}
+
+#sideDiv > .nav-tabs > li.active > a{
+	color : #000;
 }
 
 #contentDiv{
@@ -30,69 +39,111 @@ html, body, #container, #body {
 	vertical-align:top;
 }
 
-#sidebarListing a {
+
+
+#caseListing a {
 	color : #FAFAFA;
 	text-decoration: none;
 }
 
-#sidebarListing .fa {
-	color : #A0A0A0;
-}
-
-#sidebarListing .list-icon-collapse , #sidebarListing .list-icon-expand {
-	color : #FAFAFA;
-}
-
-#sidebarListing .badge {
-	margin-left : 10px;
-}
-#sidebarListing .list-workflow>a>.badge {
-	margin-right : 10px;
-}
-
-#sidebarListing .badge.normal {
-	background-color : #629E4A;
-	border: 1px solid #134E21;
-}
-#sidebarListing .badge.urgent {
-	background-color : #DB2C2C;
-	border: 1px solid #4E1818;
-}
-#sidebarListing .list-workflow > a > .list-icon-collapse{
-	display : none;
-}
-#sidebarListing .list-workflow > a.collapsed > .list-icon-expand{
-	display : none;
-}
-#sidebarListing .list-workflow > a.collapsed > .list-icon-collapse{
-	display : inline;
-}
-
-#sidebarListing  .list-workflow:not(:last-of-type) {
-	border-bottom: 1px solid #535353;
-}
-
-#sidebarListing .list-activity > a{
-	padding-left : 45px;
-}
-
-#sidebarListing .list-activity >a>span , #sidebarListing .list-workflow >a>span {
-	word-break : break-all;
-}
-
-#sidebarListing li.list-workflow>a:hover, #sidebarListing li.list-workflow>a:focus {
+#caseListing li.list-case>a:hover, #caseListing li.list-case>a:focus {
 	background-color: #303030;
 }
 
-#sidebarListing li.list-activity>a:hover, #sidebarListing li.list-activity>a:focus {
+#caseListing li.list-case>a:hover, #caseListing li.list-case>a:focus{
 	background-color: #575757;
 }
 
-#sidebarListing li.list-activity.active>a {
+#caseListing li.list-case.active>a {
+	background-color: #645D5D;
+}
+
+#caseListing .fa {
+	color : #A0A0A0;
+}
+
+
+#taskListing a {
+	color : #FAFAFA;
+	text-decoration: none;
+}
+
+#taskListing .fa {
+	color : #A0A0A0;
+}
+
+#taskListing .list-icon-collapse , #taskListing .list-icon-expand {
+	color : #FAFAFA;
+}
+
+#taskListing li.list-workflow>a:hover, #taskListing li.list-workflow>a:focus {
+	background-color: #303030;
+}
+
+#taskListing li.list-activity>a:hover, #taskListing li.list-activity>a:focus,
+#taskListing li.list-event>a:hover, #taskListing li.list-event>a:focus {
+	background-color: #575757;
+}
+
+#taskListing li.list-activity.active>a,
+#taskListing li.list-event.active>a  {
 	background-color: #D64635;
 }
 
-#sidebarListing li.list-activity.active>a>.badge {
+
+#taskListing .badge {
+	margin-left : 10px;
+}
+#taskListing .list-workflow>a>.badge {
+	margin-right : 10px;
+}
+
+#taskListing .badge.normal {
+	background-color : #629E4A;
+	border: 1px solid #134E21;
+}
+#taskListing .badge.urgent {
+	background-color : #DB2C2C;
+	border: 1px solid #4E1818;
+}
+#taskListing .list-workflow > a > .list-icon-collapse{
+	display : none;
+}
+#taskListing .list-workflow > a.collapsed > .list-icon-expand{
+	display : none;
+}
+#taskListing .list-workflow > a.collapsed > .list-icon-collapse{
+	display : inline;
+}
+
+#taskListing  .list-workflow:not(:last-of-type) {
+	border-bottom: 1px solid #535353;
+}
+
+#taskListing .list-activity > a, #taskListing .list-event > a{
+	padding-left : 45px;
+}
+
+#taskListing .list-activity >a>span , #taskListing .list-workflow >a>span, #taskListing .list-event >a>span {
+	word-break : break-all;
+}
+
+#taskListing li.list-workflow>a:hover, #taskListing li.list-workflow>a:focus {
+	background-color: #303030;
+}
+
+#taskListing li.list-activity>a:hover, #taskListing li.list-activity>a:focus,
+#taskListing li.list-event>a:hover, #taskListing li.list-event>a:focus {
+	background-color: #575757;
+}
+
+#taskListing li.list-activity.active>a,
+#taskListing li.list-event.active>a  {
+	background-color: #D64635;
+}
+
+#taskListing li.list-activity.active>a>.badge,
+#taskListing li.list-event.active>a>.badge  {
 	color : #fff;
 }
 #contentFrame{
@@ -227,3 +278,17 @@ to {background: #FFF8DC;}
 from {background: #FFF;}
 to {background: #FFF8DC;}
 }
+
+#caseNavList > .input-group {
+	margin : 10px;
+	border-bottom: 1px solid #4D4D4D;
+}
+
+#caseNavList > .input-group > input,  #caseNavList > .input-group  button{
+	background-color: transparent;
+	color : #B3B3B3;
+	border : 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+

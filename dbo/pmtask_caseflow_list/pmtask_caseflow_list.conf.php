@@ -7,8 +7,9 @@ $dbo->id = $dboID;
 $dbo->table = 'fcpmcaseflow';
 $dbo->key = array('pmf_id');
 $dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
-	where pmf_obj_id = 1 and pmf_obj_type = \'PM_Activity\' order by pmf_due_date, pmf_id';
-$dbo->col = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date', 'urgency', 'actions');
+	where pmf_obj_id = 5 and pmf_obj_type = \'PM_Activity\' and pmf_end_date is null
+	and (pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = \'admin\')) order by pmf_due_date, pmf_id';
+$dbo->col = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date', 'pmf_specific_userid', 'pmf_end_by', 'pmf_end_pmfid', 'pmf_from_event_gateway', 'urgency', 'actions');
 $dbo->colList = array('urgency', 'pmc_id', 'pmc_casekey', 'pmc_created_date', 'pmc_created_by', 'pmf_start_date', 'pmf_due_date', 'actions');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
@@ -47,6 +48,8 @@ $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
 
 $dbo->cols['pmc_id'] = new DBO_COL('pmc_id', 'int4', '4', '-1');
+$dbo->cols['pmc_id']->displayListModifierMethod = 'phpfunc';
+$dbo->cols['pmc_id']->displayListModifier = 'showcaselink';
 $dbo->cols['pmc_id']->inputTypeDefault = 'text';
 $dbo->cols['pmc_id']->searchMode = 'exact';
 $dbo->cols['pmc_id']->capContClassDefault = array();
@@ -337,6 +340,8 @@ $dbo->cols['urgency']->option->detailMethod = 'text';
 $dbo->cols['urgency']->option->newMethod = 'text';
 $dbo->cols['urgency']->option->editMethod = 'text';
 $dbo->cols['actions'] = new DBO_COL('actions', 'unknown', '-2', '-1');
+$dbo->cols['actions']->displayListModifierMethod = 'phpfunc';
+$dbo->cols['actions']->displayListModifier = 'showactions';
 $dbo->cols['actions']->inputTypeDefault = 'text';
 $dbo->cols['actions']->searchMode = 'exact';
 $dbo->cols['actions']->capContClassDefault = array();
@@ -347,8 +352,18 @@ $dbo->cols['actions']->option->listMethod = 'text';
 $dbo->cols['actions']->option->detailMethod = 'text';
 $dbo->cols['actions']->option->newMethod = 'text';
 $dbo->cols['actions']->option->editMethod = 'text';
-$dbo->cols['actions']->displayListModifierMethod = 'phpfunc';
-$dbo->cols['actions']->displayListModifier = 'showactions';
+$dbo->cols['pmf_specific_userid'] = new DBO_COL('pmf_specific_userid', 'varchar', '-1', '104');
+$dbo->cols['pmf_specific_userid']->capContClassDefault = array();
+$dbo->cols['pmf_specific_userid']->valContClassDefault = array();
+$dbo->cols['pmf_end_by'] = new DBO_COL('pmf_end_by', 'varchar', '-1', '104');
+$dbo->cols['pmf_end_by']->capContClassDefault = array();
+$dbo->cols['pmf_end_by']->valContClassDefault = array();
+$dbo->cols['pmf_end_pmfid'] = new DBO_COL('pmf_end_pmfid', 'int4', '4', '-1');
+$dbo->cols['pmf_end_pmfid']->capContClassDefault = array();
+$dbo->cols['pmf_end_pmfid']->valContClassDefault = array();
+$dbo->cols['pmf_from_event_gateway'] = new DBO_COL('pmf_from_event_gateway', 'varchar', '-1', '5');
+$dbo->cols['pmf_from_event_gateway']->capContClassDefault = array();
+$dbo->cols['pmf_from_event_gateway']->valContClassDefault = array();
 
 // support multiple language. only caption
 global $LANG;
