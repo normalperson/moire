@@ -5,6 +5,9 @@ class AppMenu extends Menu{
 	var $url;
 	var $treeRS;
 	
+	var $additionalLI;
+	
+	
 	function __construct(){
 		parent::__construct();
 		$this->class = isset($_GET['webc'])?$_GET['webc']:false;
@@ -88,28 +91,32 @@ class AppMenu extends Menu{
 			
 			if (!$url) $url = "#";
 			else $anchorclass = "with-link";
-			
-			$liclass = $this->isActiveMenu($r) ? ' active' : '';
+			$liclass = $this->isActiveMenu($r) ? 'active' : '';
 			
 			if ($r['__CHILDREN']) {
+				if ($liclass) $liclass .= ' open';
 				if ($lvl === 0) {
-					echo "<li class='mm-dropdown'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i>  <span class='mm-text'>{$r['mn_title']}</span> </a>";
+					echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i>  <span class='mm-text'>{$r['mn_title']}</span> </a>";
 				}
-				else echo "<li ><a href='$url'><span class='mm-text'> {$r['mn_title']} </span> </a>";
+				else echo "<li class='$liclass'><a href='$url'><span class='mm-text'> {$r['mn_title']} </span> </a>";
 				
 				$prependLi = array();
 				if ($url != "#") {
-					$prependLi[] = "<li><a tabindex='-1' href='$url'> <span class='mm-text'> {$r['mn_title']} </span> </a></li>";
+					$prependLi[] = "<li class='$liclass'><a tabindex='-1' href='$url'> <span class='mm-text'> {$r['mn_title']} </span> </a></li>";
 				}
 				$this->rendermenuonleft($r['__CHILDREN'],$lvl+1, $prependLi);
 				echo "</li>";
 			}
 			else {
 				if ($lvl === 0) {
-					if ($anchorclass != 'without-link') echo "<li><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i><span class='mm-text'> {$r['mn_title']}  </span></a></li>";
+					if ($anchorclass != 'without-link') echo "<li class='$liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i><span class='mm-text'> {$r['mn_title']}  </span></a></li>";
 				}
-				else echo "<li><a tabindex='-1' href='$url'><span class='mm-text'>  {$r['mn_title']} </span></a></li>";
+				else echo "<li class='$liclass'><a tabindex='-1' href='$url'><span class='mm-text'>  {$r['mn_title']} </span></a></li>";
 			}
+		}
+		
+		if ($lvl === 0 && $this->additionalLI) {
+			echo $this->additionalLI;
 		}
 		echo "</ul>";
 

@@ -23,16 +23,71 @@ body {
 .widget-messages-alt.dropdown-menu .messages-link{
 	width:49%;
 	display : inline-block;
+	margin:0 !important;
+}
+
+.widget-messages-alt.dropdown-menu .messages-link.messages-compose-link{
+	margin-left: 1.5px !important;
 }
 
 .widget-messages-alt.panel .message-subject {
 	white-space: normal;
 }
 
-.navigation#taskListing {
-	padding :0;
+#main-menu .mmc-dropdown-open-ul li a:after, #main-menu .navigation li a:after {
+	content: '';
+	clear: both;
+	display: block;
 }
 
-ul.navigation{
-	margin-bottom :0;
+.btn_group .btn-label.icon {
+	color : black;
 }
+
+.widget-article-comments .comment-reply-area {
+	float: none;
+	margin-left: 46px;
+	position: relative;
+	margin-top: 10px;
+}
+
+.widget-article-comments .comment-reply-button {
+	margin-left: 10px;
+}
+
+.widget-article-comments .comment-reply-area {
+	display:none;
+}
+.widget-article-comments .comment-reply-area.active {
+	display:block;
+}
+
+.widget-article-comments .comment.unread .comment-text {
+	background-color: #F0F8FF;
+}
+
+.action-comment.hascomment {
+	background: #F6F79F;
+}
+
+.action-comment.hascomment:hover {
+	background: #FCFF00 !important
+}
+
+.action-comment.hascomment.unread {
+	-webkit-animation: colorblink 0.5s  infinite alternate; /* Chrome, Safari, Opera */
+	animation: colorblink 0.5s  infinite alternate;
+}
+/* Chrome, Safari, Opera */
+@-webkit-keyframes colorblink
+{
+	from {background: #F6F79F;}
+	to {background: #FDC26A;}
+}
+/* Standard syntax */
+@keyframes colorblink
+{
+	from {background: #F6F79F;}
+	to {background: #FDC26A;}
+}
+ 

@@ -15,8 +15,12 @@ function dbo_pmtask_caseflow_list_customize(&$dbo){
 	if (empty($GLOBAL['PMTask_taskid'])) die('missing activity id');
 	$dbo->sql = "select a.*,b.*,'' as urgency, '' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
 	where pmf_obj_id = {$GLOBAL['PMTask_taskid']} and pmf_obj_type = 'PM_Activity' and pmf_end_date is null
+<<<<<<< HEAD
 	and (pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = ".$DB->quote($USER->userid).")) order by pmf_due_date, pmf_id";
 >>>>>>> 70c37bd2f6e0b2331be04ffd5f0f25086b62272e
+=======
+	order by pmf_due_date, pmf_id";
+>>>>>>> fc20f9352710ea3ea3033cd42d3f37e06bf1662d
 }
 
 function showurgency($colname, $currval, $rs, $html) {
@@ -50,9 +54,11 @@ function showactions($colname, $currval, $rs, $html) {
 	global $DB, $USER;
 
 	$ret = "<input class='hidden-flowid' type='hidden' value='{$rs['pmf_id']}' />";
+	$ret .= "<div class='btn-group btn-group-sm'>";
 	$ret .= PMTask::showCommentButton($rs['pmc_id'], $rs['pmf_id']);
 	$ret .= PMTask::showFlagButton($rs['pmc_id']);
-		
+	$ret .= "</div>";
+
 	return $ret;
 }
 
@@ -64,11 +70,8 @@ $dbo->render();
 		var $this = $(this),
 			$flowInp = $this.find('input.hidden-flowid');
 		if ($flowInp.length > 0) {
-			window.top.toggleLoading(true, function () {
-				var flowid = $flowInp.val();
-				window.location.href = 'renderActivityPerform?fid='+flowid;
-			})
+			var flowid = $flowInp.val();
+			window.location.href = 'renderActivityPerform?fid='+flowid;
 		}
 	})
-
 </script>

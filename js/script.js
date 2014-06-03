@@ -340,6 +340,7 @@ function createEmptyModal(modalID) {
 					'</div>'+
 				'</div>');
 	if (modalID) $ret.attr('id', modalID);
+	$ret.appendTo($('body'));
 	return $ret;
 }
 >>>>>>> 70c37bd2f6e0b2331be04ffd5f0f25086b62272e
