@@ -1,5 +1,5 @@
 <?php
-require_once(INCLUDE_DIR.DS.'PMFunc.inc.php');
+require_once(CLASS_DIR.DS.'PMFunc'.DS.'PMFunc.php');
 class PMTask {
 
 	var $classurl;
