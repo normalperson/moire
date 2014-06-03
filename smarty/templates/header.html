@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html class="gt-ie8 gt-ie9 not-ie pxajs">
 <head>
 	<meta charset="{$charset}">
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&amp;subset=latin" rel="stylesheet" type="text/css">
 {foreach from=$csslist item="css"}
 	<link rel="stylesheet" type="text/css" href="{$css}">
 {/foreach}	
 {foreach from=$jslist item="js"}
 	<script type="text/javascript" src="{$js}"></script>
 {/foreach}
+	<script>var init = [];</script>
 	<title>{$title}</title>
 </head>
+<<<<<<< HEAD
 
 <body style="padding-bottom:30px;">
 <div id="container">
@@ -74,45 +77,65 @@
 <div id="body">
 
 
+=======
+<body class="theme-fresh main-menu-animated">
+	<div id="main-wrapper">
+	<!-- 2. $MAIN_NAVIGATION ===========================================================================-->
+	<div id="main-navbar" class="navbar navbar-inverse" role="navigation">
+		<button type="button" id="main-menu-toggle"><i class="navbar-icon fa fa-bars icon"></i><span class="hide-menu-text">HIDE MENU</span></button>
+		<div class="navbar-inner">
+			<!-- Main navbar header -->
+			<div class="navbar-header">
+				<!-- Logo -->
+				<a href="{$appurl}" class="navbar-brand">
+					<div> <img alt="{$title}" src="{$appurl}/image/logo.png" style='background-color:white'> </div>
+					{$title}
+				</a>
+				<!-- Main navbar toggle -->
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse"><i class="navbar-icon fa fa-bars"></i></button>
+			</div> <!-- / .navbar-header -->
+			<div id="main-navbar-collapse" class="collapse navbar-collapse main-navbar-collapse">
+				<div>
+					<div class="right clearfix">
+						<ul class="nav navbar-nav pull-right right-navbar-nav">
+						{$Menu->genClock()}
+						{$NotificationList->renderDropDown()}
+						{$Messaging->renderDropDown()}
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
+									{$Menu->genUserAvatar()}
+									<span>{$USER->name}</span>
+								</a>
+								<ul class="dropdown-menu">
+									<!--
+									<li><a href="#"><span class="label label-warning pull-right">New</span>Profile</a></li>
+									<li><a href="#"><span class="badge badge-primary pull-right">New</span>Account</a></li>
+									<li><a href="#"><i class="dropdown-icon fa fa-cog"></i>&nbsp;&nbsp;Settings</a></li>
+									<li class="divider"></li>
+									-->
+									<li><a href="{$logouturl}"><i class="dropdown-icon fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+								</ul>
+							</li>
+						</ul> <!-- / .navbar-nav -->
+					</div> <!-- / .right -->
+				</div>
+			</div> <!-- / #main-navbar-collapse -->
+		</div> <!-- / .navbar-inner -->
+	</div> <!-- / #main-navbar -->
+<!-- /2. $END_MAIN_NAVIGATION -->
+	<div id="main-menu" role="navigation">
+		<div id="main-menu-inner">	
+			{$Menu->render()}
+			{$PMTask->renderNavi()}
+		</div> <!-- / #main-menu-inner -->
+	</div> <!-- / #main-menu -->
+>>>>>>> 70c37bd2f6e0b2331be04ffd5f0f25086b62272e
 
+<!-- /4. $MAIN_MENU -->
 <script type="text/javascript">
-var now = moment({$serverdate->getTimestamp()}*1000),
-	serverTZOffset = "{$serverdate->format('O')}";
-
-{literal}
-
-(function($){ //create closure so we can safely use $ as alias for jQuery
-	now.formatLocal = function (fmt) {
-		return this.format(fmt);
-	}
-	now.formatServer = function (fmt) {
-		var serverNow = moment(now);
-		return serverNow.zone(serverTZOffset).format(fmt);
-	}
-
-	var dateEL = {
-		$hour : $('#dateTimeContainer').find('#hourContainer'),
-		$min : $('#dateTimeContainer').find('#minuteContainer'),
-		$pm : $('#dateTimeContainer').find('#pmContainer'),
-		$date : $('#dateTimeContainer').find('#dateContainer')
-	}
-	
-	refreshAutotime();
-	window.setInterval(refreshAutotime, 1000);
-	function refreshAutotime(){
-		now.add('s', 1);
-		dateEL.$hour.html(now.formatServer('h'));
-		dateEL.$min.html(now.formatServer('mm'));
-		dateEL.$pm.html(now.formatServer('A'));
-		dateEL.$date.html(now.formatServer('D-MMM-YYYY'));
-	}
-	
-/*	$('#slideleft').click(function() {
-	  $('#tutCarousel').carousel('prev');
-	});
-	$('#slideright').click(function() {
-	  $('#tutCarousel').carousel('next');
-	});*/
-})(jQuery);
+	init.push(function () {
+		// Javascript code here
+	})
+	window.PixelAdmin.start(init);
 </script>
-{/literal}
+	<div id='content-wrapper'>

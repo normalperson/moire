@@ -1,6 +1,7 @@
-html, body{
-	font-family:Segoe UI Light, Arial;
+body {
+	font-family: "Segoe UI","Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
+
 div.welcomemsg{
 	background-color:#ee3d3e;
 	color:#ffffff;
@@ -127,7 +128,7 @@ div.welcomemsg{
 }
 
 .login-content{
-  padding-top: 5%;
+	padding-top: 5%;
 	background-color: #ee3d3e;
 	color: #ffffff;
 	height:420px;
@@ -153,16 +154,17 @@ div.welcomemsg{
   color: #ee3d3e;
 }
 
-
-.btn-login {
-  color: #ee3d3e;  
-}
 .img-thumbnail{
 	padding:0px;
 	border:0px;
+	width:100%;
 }
 #loginfooter{
 	width:100%;
 /*	bottom:0;*/
 	border-top: 1px solid #dddddd;
+}
+
+.link_about {
+	color: #1E222C;
 }

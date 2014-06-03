@@ -23,7 +23,7 @@ class AppMenu extends Menu{
 		}
 		$retRS = arr2tree($menuRS, 'mn_id', 'mn_parentid');
 		foreach ($retRS as $rt) {
-			if (!$rt['mn_parentid']) {
+			if ($rt['mn_code'] == 'HEADERMENU') {
 				$this->treeRS = $rt['__CHILDREN'];
 				break;
 			}
@@ -35,7 +35,7 @@ class AppMenu extends Menu{
 			$this->loadMenu();
 			if (!$this->treeRS) return;
 		}
-		$this->renderBootstrapNavi($this->treeRS);
+		$this->rendermenuonleft($this->treeRS);
 	}
 	
 	function renderBootstrapNavi($menuRS, $lvl = 0, $prependLi = array()) {
@@ -75,6 +75,44 @@ class AppMenu extends Menu{
 			}
 		}
 		echo "</ul>";
+	}
+	function rendermenuonleft($menuRS, $lvl = 0, $prependLi = array()) {
+		if ($lvl === 0) echo "<ul class='navigation'>";
+		else echo "<ul>";
+		foreach ($prependLi as $li) {
+			echo $li;
+		}
+		foreach ($menuRS as $r) {
+			$anchorclass = "without-link";
+			$url = $this->getURL($r);
+			
+			if (!$url) $url = "#";
+			else $anchorclass = "with-link";
+			
+			$liclass = $this->isActiveMenu($r) ? ' active' : '';
+			
+			if ($r['__CHILDREN']) {
+				if ($lvl === 0) {
+					echo "<li class='mm-dropdown'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i>  <span class='mm-text'>{$r['mn_title']}</span> </a>";
+				}
+				else echo "<li ><a href='$url'><span class='mm-text'> {$r['mn_title']} </span> </a>";
+				
+				$prependLi = array();
+				if ($url != "#") {
+					$prependLi[] = "<li><a tabindex='-1' href='$url'> <span class='mm-text'> {$r['mn_title']} </span> </a></li>";
+				}
+				$this->rendermenuonleft($r['__CHILDREN'],$lvl+1, $prependLi);
+				echo "</li>";
+			}
+			else {
+				if ($lvl === 0) {
+					if ($anchorclass != 'without-link') echo "<li><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i><span class='mm-text'> {$r['mn_title']}  </span></a></li>";
+				}
+				else echo "<li><a tabindex='-1' href='$url'><span class='mm-text'>  {$r['mn_title']} </span></a></li>";
+			}
+		}
+		echo "</ul>";
+
 	}
 	
 	function isActiveMenu($rs) {
@@ -120,7 +158,13 @@ class AppMenu extends Menu{
 		return false;
 	}
 	
+	function genUserAvatar() {
+		global $DB, $USER;
+		$imgfile = getUserAvatarImage($USER->userid);
+		return "<img src='{$imgfile}' alt=\"{$USER->name}\" />";
+	}
 	
+<<<<<<< HEAD
 /*Customization for SHINE menu*/	
 
 	function genRequestList() {
@@ -130,52 +174,44 @@ class AppMenu extends Menu{
 		if ($USER->inGroup('REQUEST_NEWJOB')) {
 			$URL =  WEB_HREF."/moireJob/newJob?dboid=jobsheet&dbostate=new";
 			$html .= "<li><a href='{$URL}' id='newjob'>New Job</a></li>";
+=======
+	function genClock($source = 'CLIENT', $useJSTime = false) {
+		global $LOCALE;
+		static $clockCount;
+		if ($clockCount) ++$clockCount;
+		else $clockCount = 1;
+		$id = "clockLI_{$clockCount}";
+		if (!$useJSTime) {
+			$dt = new DateTime();
+			if ($source == 'CLIENT') $dt = $LOCALE->getDateTime(null);
+			$now = 
+			"var now = moment('".($dt->format('Y-m-d H:i:s'))."');
+			var tzname = \"{$dt->format('(P) e')}\"";
+>>>>>>> 70c37bd2f6e0b2331be04ffd5f0f25086b62272e
 		}
+		else $now = 
+		"var now = moment();
+		var tzname = now.format('(Z) zz')";
 		
-		
-		
-		
-		return $html;
+		$html = "<li id='{$id}'><a href='javascript:void(0)'><span></span></a></li>";
+		$js = 
+"<script type='text/javascript'>
+$(function () { 
+	{$now}
+	var \$clockLI = $('#{$id}').attr('title', tzname);
+	var \$clockSpan = \$clockLI.find('span');
+	refreshAutotime();
+	window.setInterval(refreshAutotime, 1000);
+	function refreshAutotime(){
+		now.add('s', 1);
+		\$clockSpan.html(now.format('LLLL'));
 	}
-	function getalertData(){
-		global $DB,$USER;
-		/*get the notifiction for this user*/
-		$sql = "select di_subject from fcuserdiary
-				where di_cat = :0
-				and di_userid = :1
-				and di_status = :2 order by di_id desc";			
-		$alertdata = $DB->GetArray($sql,array('Notice',$USER->userid,'ACTIVE'), PDO::FETCH_ASSOC);
+})
+</script>";
 
-		return $alertdata;
-
+		return $html.$js;
 	}
-	function genAlertList(){
-
-		$html = "";
-		/*get the notifiction for this user*/
-		$sql = "select di_subject from fcuserdiary
-				where di_cat = :0
-				and di_userid = :1
-				and di_status = :2 order by di_id desc";			
-		$alertdata = $this->getalertData();
-		foreach ($alertdata as $key => $value) {
-			$string = $value['di_subject'];
-
-			$html .= "<li><a href='#'' class='pull-left'>
-					  	   <div class='pull-left'>".$string." </div>					  	   
-					       <span class='pull-left glyphicon glyphicon-minus-sign'></span>				  	  
-					      </a>
-					  </li>";
-
-		}
-
-		return $html;
-
-	}
-	function countAlert(){
-		$alertdata = $this->getalertData();
-
-		return count($alertdata);
-	}
+	
+	
 }
 ?>

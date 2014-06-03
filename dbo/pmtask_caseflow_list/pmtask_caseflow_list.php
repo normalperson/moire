@@ -3,31 +3,30 @@ require(dirname(__FILE__).DIRECTORY_SEPARATOR.'pmtask_caseflow_list.conf.php');
 
 # customization
 function dbo_pmtask_caseflow_list_customize(&$dbo){
+<<<<<<< HEAD
 	global $GLOBAL, $DB,$USER;
 	if (empty($GLOBAL['PMTask_atid'])) die('missing activity id');
  $dbo->sql = "select a.*,b.*,'' as urgency, '' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
  where pmf_obj_id = {$GLOBAL['PMTask_atid']} and pmf_obj_type = 'PM_Activity' 
  and (pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = ".$DB->quote($USER->userid).")) order by pmf_due_date, pmf_id";
 	
+=======
+	global $GLOBAL, $DB, $USER;
+	if (empty($GLOBAL['PMTask_taskid'])) die('missing activity id');
+	$dbo->sql = "select a.*,b.*,'' as urgency, '' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
+	where pmf_obj_id = {$GLOBAL['PMTask_taskid']} and pmf_obj_type = 'PM_Activity' and pmf_end_date is null
+	and (pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = ".$DB->quote($USER->userid).")) order by pmf_due_date, pmf_id";
+>>>>>>> 70c37bd2f6e0b2331be04ffd5f0f25086b62272e
 }
 
 function showurgency($colname, $currval, $rs, $html) {
-	global $DB;
-	$overdue = false;
-	$title = "";
-	$now = new DateTime();
-	if ($rs['pmf_due_date']) {
-		$duedate = new DateTime($rs['pmf_due_date']);
-		if ($duedate < $now) $overdue = true;
-		$str = time_different_string($duedate);
-		$title = "Task due $str";
-	}
-	else {
-		$str = time_different_string($rs['pmf_start_date']);
-		$title = "Task started $str";
-		
-	}
-	return "<div class='urgency ".(($overdue) ? 'overdue' : 'normal')."' data-toggle='tooltip' data-placement='top' title='{$title}'></div>";
+
+	return PMTask::showTaskUrgency($rs['pmf_id'], $rs['pmf_start_date'], $rs['pmf_due_date']);
+	
+}
+
+function showcaselink($colname, $currval, $rs, $html) {
+	return "<a href='renderCaseScreen?caseid={$currval}'>#".$currval."</a>";
 }
 
 
@@ -48,13 +47,11 @@ function showcasedescription($colname, $currval, $rs, $html) {
 
 
 function showactions($colname, $currval, $rs, $html) {
-	global $DB;
-	$isFlagged = false;
-	$ret = 
-		"<input class='hidden-flowid' type='hidden' value='{$rs['pmf_id']}' />
-		<span class='fa fa-flag fa-border action action-flag' title='".($isFlagged ? 'Unflag' : 'Flag')." This Case' data-caseid='{$rs['pmc_id']}'></span>
-		<span class='fa fa-comments fa-border action action-comment' title='Comments' data-caseid='{$rs['pmc_id']}'></span>";
-		//<span class='fa fa-pencil-square-o fa-border action action-perform' title='Perform This Activity' data-flowid='{$rs['pmf_id']}'></span>";
+	global $DB, $USER;
+
+	$ret = "<input class='hidden-flowid' type='hidden' value='{$rs['pmf_id']}' />";
+	$ret .= PMTask::showCommentButton($rs['pmc_id'], $rs['pmf_id']);
+	$ret .= PMTask::showFlagButton($rs['pmc_id']);
 		
 	return $ret;
 }
@@ -63,7 +60,6 @@ function showactions($colname, $currval, $rs, $html) {
 $dbo->render();
 ?>
 <script type='text/javascript'>
-	$('[data-toggle="tooltip"]').tooltip();
 	$('#dbo_pmtask_caseflow_list_listtable > tbody > tr').css('cursor', 'pointer').click(function () {
 		var $this = $(this),
 			$flowInp = $this.find('input.hidden-flowid');
@@ -74,10 +70,5 @@ $dbo->render();
 			})
 		}
 	})
-	$('.action-flag').click(function (e) {
-		e.stopPropagation();
-		var $this = $(this);
-		if ($this.hasClass('flagged')) $this.removeClass('flagged').attr('title','Flag This Case');
-		else $this.addClass('flagged').attr('title','Unflag This Case');
-	})
+
 </script>

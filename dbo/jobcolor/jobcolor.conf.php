@@ -39,6 +39,7 @@ $dbo->layoutNew = '1|1';
 $dbo->layoutEdit = '1|1';
 $dbo->theme = 'metro';
 $dbo->layout = 'One';
+$dbo->width = '100%';
 $dbo->pageLinkCount = 7;
 $dbo->recordPerPage = 10;
 $dbo->showRecordNo = 1;

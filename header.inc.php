@@ -1,29 +1,40 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'init.inc.php');
+
 function html_header($headerTemplate='header.html'){
 	global $HTML,$THEME,$DB,$USER;
 	if($HTML->smarty){
+
 		require_once('inc/AppMenu.inc.php');
 		$Menu = new AppMenu();
-		$HTML->addJS('js/jquery-1.10.0.js');
-		$HTML->addJS('js/bootstrap.min.js');
-		$HTML->addJS('js/moment.min.js');
-		$HTML->addJS('js/popup.js');
-		$HTML->addJS('js/select2.js');
-		$HTML->addJS('js/accounting.js');
-		$HTML->addJS('js/init.js');
-		$HTML->addCSS('css/'.$THEME.'/css/bootstrap.min.css');
-		$HTML->addCSS('css/'.$THEME.'/css/bootstrap-theme.min.css');
-		$HTML->addCSS('css/font-awesome/css/font-awesome.min.css');
-		$HTML->addCSS('css/'.$THEME.'/dbo.css');
+		$HTML->addCSS('css/'.$THEME.'/bootstrap.min.css');
+		$HTML->addCSS('css/'.$THEME.'/pixel-admin.min.css');
+		$HTML->addCSS('css/'.$THEME.'/widgets.min.css');
+		$HTML->addCSS('css/'.$THEME.'/rtl.min.css');
+		$HTML->addCSS('css/'.$THEME.'/themes.min.css');
 		$HTML->addCSS('css/'.$THEME.'/custom.css');
-		$HTML->addCSS('css/'.$THEME.'/select2.css');
-		$HTML->addCSS('css/'.$THEME.'/select2-bootstrap.css');
+		$HTML->addCSS('css/'.$THEME.'/dbo.css');
+		$HTML->addJS('js/jquery-2.1.1.min.js');
+		$HTML->addJS('js/bootstrap.min.js');
+		$HTML->addJS('js/pixel-admin.min.js');
+		$HTML->addJS('js/moment.min.js');
+		$HTML->addJS('js/script.js');
+		
+		$HTML->title = "PnD's Moire Portal";
 		$HTML->smarty->assign('Menu', $Menu);
-		$serverdate = new DateTime() ;	
-		$HTML->smarty->assign('serverdate', $serverdate);
-		$HTML->smarty->assign('name', $USER->name);
+		
+		// include Widgets in Menu
+		include_once(CLASS_DIR.DS.'NotificationList'.DS.'NotificationList.php');
+		$HTML->smarty->assign('NotificationList', new NotificationList());
+		
+		include_once(CLASS_DIR.DS.'Messaging'.DS.'Messaging.php');
+		$HTML->smarty->assign('Messaging', new Messaging());
+		
+		include_once(CLASS_DIR.DS.'PMTask'.DS.'PMTask.php');
+		$HTML->smarty->assign('PMTask', new PMTask());
+		
 		$HTML->genHeader($headerTemplate);
+
 	}
 }
 

@@ -1,0 +1,38 @@
+body {
+	font-family: "Segoe UI","Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.widget-notifications .notification.UNREAD {
+	background-color: #5E756A;
+}
+
+.widget-notifications .notification-ago, .widget-notifications .notification-description, .widget-notifications .notification-title {
+	margin-right: 55px;
+}
+.widget-notifications .notification-icon {
+	margin-right:35px;
+}
+
+.widget-messages-alt .message-subject {
+	padding-right:15px;
+}
+
+.widget-messages-alt .message.UNREAD {
+	background-color: #5E756A;
+}
+.widget-messages-alt.dropdown-menu .messages-link{
+	width:49%;
+	display : inline-block;
+}
+
+.widget-messages-alt.panel .message-subject {
+	white-space: normal;
+}
+
+.navigation#taskListing {
+	padding :0;
+}
+
+ul.navigation{
+	margin-bottom :0;
+}
