@@ -1,41 +1,56 @@
-<div class='widget-comments'>
-	<div class='comment-list-body'>
-	{$comments}
+<div class="panel widget-article-comments" style="margin:0">
+	<div class="panel-heading">
+		<span class="panel-title"><i class="panel-title-icon fa fa-comment"></i>Comments</span>
+		<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
 	</div>
-	<div class="comment-list-footer clearfix">
-		<div>
-			<textarea class='comment-new-textarea' placeholder="Write comment" ></textarea>
-			<div style="margin-top: 10px;">
-				<button class="btn btn-sm btn-primary pull-right comment-new-button">Post comment</button>
+	<div class="panel-body">
+		{$comments}
+	</div>
+	<div class="panel-footer clearfix">		
+		<div class="article-comments-add">
+			<textarea rows="1" class="form-control input-sm"></textarea>
+			<div class="expanding-input-hidden" style="margin-top: 10px;">
+				<button class="btn btn-sm btn-primary pull-right">Post comment</button>
 			</div>
 		</div>
 	</div>
 </div>
 <script type='text/javascript'>
-$(function () {
+(function () {
 	var caseid = '{$caseid}',
 		flowid = '{$flowid}',
-		lastcommid = '{$lastcommid}';
+		lastcommid = '{$lastcommid}',
+		classurl = '{$classurl}';
 {literal}
-	var $commentListBody = $('.comment-list-body'),
-		$newCommentText = $('.comment-new-textarea').autosize(),
-		$newCommentButt = $('.comment-new-button');
+	$(".comment-reply-textarea").autosize();
 	
-	$('.comment-reply-textarea').autosize();
+	$(".article-comments-add").expandingInput({
+		target: 'textarea',
+		hidden_content: '> div',
+		placeholder: 'Write comment',
+		onAfterExpand: function () {
+			this.$target.attr('rows', 2);
+			this.$target.removeClass('input-sm');
+			this.$target.autosize();
+		}
+	});
+	
+	var $newCommentText = $('.article-comments-add > textarea'),
+		$newCommentButt = $('.article-comments-add button'),
+		$commentListBody = $('.panel-body');
 	$newCommentButt.click(function () {
 		if ($newCommentText.val().length <= 0) return;
 		$newCommentButt.add($newCommentText).attr('disabled', true);
 
-		$.ajax({
-			url : "createNewComment",
-			data : {
-			'comment' : $newCommentText.val(),
-			'caseid' : caseid,
-			'flowid' : flowid,
-			'lastcommid' : lastcommid
-			},
-			dataType : 'json',
-			success : function(data) {
+		ajaxGetJSON(
+			classurl+'/ajaxCreateNewComment', 
+			{
+				'comment' : $newCommentText.val(),
+				'caseid' : caseid,
+				'flowid' : flowid,
+				'lastcommid' : lastcommid
+			}, 
+			function (data) {
 				if (data) {
 					lastcommid = data.lastcommid;
 					var $newContent = $(data.html).hide();
@@ -53,40 +68,39 @@ $(function () {
 				$newCommentText.val('');
 				$newCommentButt.add($newCommentText).attr('disabled', false);
 			}
-		})
-	
+		);
 	})
 	
-	$('.widget-comments').on('click' , '.comment-reply', function () {
-		$('.widget-comments').find('.comment-reply-area.active').removeClass('active').hide().find('.comment-reply-textarea').val('');;
+	$('.widget-article-comments').on('click' , '.comment-reply', function () {
+		$('.widget-article-comments').find('.comment-reply-area.active').removeClass('active').hide().find('.comment-reply-textarea').val('');
 		$(this).closest('.comment-body').siblings('.comment-reply-area').fadeIn(400, function () {
 			$(this).addClass('active').find('.comment-reply-textarea').focus();
 		});
 	})
+		
 	
-	$('.widget-comments').on('click' , '.comment-reply-close', function () {
+	$('.widget-article-comments').on('click' , '.comment-reply-close', function () {
 		$(this).closest('.comment-reply-area').removeClass('active').fadeOut().find('.comment-reply-textarea').val('');
 	})
 	
-	$('.widget-comments').on('click' , '.comment-reply-button', function () {
+	$('.widget-article-comments').on('click' , '.comment-reply-button', function () {
 		var $this = $(this),
 			$replyArea = $this.closest('.comment-reply-area'),
 			$replyTextArea = $replyArea.find('.comment-reply-textarea');
 		
 		if ($replyTextArea.val().length <= 0) return;
 		$this.add($replyTextArea).attr('disabled', true);
-
-		$.ajax({
-			url : "createNewComment",
-			data : {
+		
+		ajaxGetJSON(
+			classurl+'/ajaxCreateNewComment', 
+			{
 				'comment' : $replyTextArea.val(),
 				'caseid' : caseid,
 				'flowid' : flowid,
 				'parentid' : $this.data('parentid'),
 				'lastcommid' : lastcommid
-			},
-			dataType : 'json',
-			success : function(data) {
+			}, 
+			function (data) {
 				if (data) {
 					lastcommid = data.lastcommid;
 					var $newContent = $(data.html).hide();
@@ -106,11 +120,9 @@ $(function () {
 				$this.add($replyTextArea).attr('disabled', false);
 				$replyArea.hide();
 			}
-		})
+		);
 		
 	})
-	
-	
 {/literal}
-})
+})();
 </script>

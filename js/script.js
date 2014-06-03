@@ -59,5 +59,6 @@ function createEmptyModal(modalID) {
 					'</div>'+
 				'</div>');
 	if (modalID) $ret.attr('id', modalID);
+	$ret.appendTo($('body'));
 	return $ret;
 }

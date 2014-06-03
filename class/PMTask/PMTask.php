@@ -2,6 +2,11 @@
 require_once(INCLUDE_DIR.DS.'PMFunc.inc.php');
 class PMTask {
 
+	var $classurl;
+	function __construct() {
+		$this->classurl = WEB_HREF.'/'.__CLASS__;
+	}
+	
 	function initSmarty($headerTmpl = "header.html"){
 		$smarty = new Smarty();
 		$smarty->caching = false;
@@ -13,12 +18,9 @@ class PMTask {
 		return $smarty;
 	}
 
-	function renderNavi() {
-		global $DB, $USER;
-	
-		$html = '<ul id="taskListing" class="navigation">
-					<li class="mm-dropdown mm-dropdown-root"><a href="#"><i class="menu-icon fa fa-tasks"></i><span class="mm-text mmc-dropdown-delay animated fadeIn">Task</span></a>
-						<ul class="mmc-dropdown-delay animated fadeInLeft">';
+	function renderNavi($skipUL = true) {
+		global $DB, $USER, $GLOBAL;
+		
 
 		// USER ACTIVITIES
 		$rs = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Activity' as object_type, pmat_id activityid, max(pmat_name) activityname, 
@@ -44,6 +46,8 @@ class PMTask {
 		
 		$rs = array_merge($rs, $rs2);
 		$data = array();
+		$totalpending = 0;
+		$totaldue = 0;
 		foreach ($rs as $row) {
 			if (!isset($data[$row['workflowid']])) {
 				$data[$row['workflowid']] = array(
@@ -73,70 +77,118 @@ class PMTask {
 			}
 			$data[$row['workflowid']]['totalpendingcount'] += $row['totalpendingcount'];
 			$data[$row['workflowid']]['totaloverduecount'] += $row['totaloverduecount'];
+			$totalpending += $row['totalpendingcount'];
+			$totaldue += $row['totaloverduecount'];
 		}
-		
+		$html = "";
 		foreach ($data as $wfid=>$d) {
-		
+			$currhtml = "";
+			$focusWF = false;
+			foreach ($d['activities'] as $atvid=>$a){
+				$focusThis = $this->showingTask('PM_Activity', $a['id']);
+				if ($focusThis) $focusWF = true;
+				$pendingBadge = ($a['totalpendingcount'] > 0) ? "<span ".($a['totaloverduecount'] > 0 ? 
+					"class='label label-danger' title='{$a['totaloverduecount']} overdue task(s)'" : 
+					"class='label label-warning'").">{$a['totalpendingcount']}</span>" : "";
+				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
+								<a tabindex='-1' href='{$this->classurl}/caseFlowList?id={$a['id']}&type=PM_Activity'>
+									<i class='menu-icon fa fa-pencil-square-o' title='User Activity'></i>
+									<span class='mm-text'>{$a['name']}</span>{$pendingBadge}
+								</a>
+							</li>";
+			}
+			foreach ($d['events'] as $evid=>$e){
+				$focusThis = $this->showingTask('PM_Event', $e['id']);
+				if ($focusThis) $focusWF = true;
+				$pendingBadge = ($e['totalpendingcount'] > 0) ? "<span ".($e['totaloverduecount'] > 0 ? 
+					"class='label label-danger' title='{$e['totaloverduecount']} overdue task(s)'" : 
+					"class='label label-warning'").">{$e['totalpendingcount']}</span>" : "";
+				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
+								<a tabindex='-1' href='{$this->classurl}/caseFlowList?id={$e['id']}&type=PM_Event'>
+									<i class='menu-icon fa fa-play-circle-o' title='Intermediate Event'></i>
+									<span class='mm-text'>{$e['name']}</span>{$pendingBadge}
+								</a>
+							</li>";
+			}
+			
 			$pendingBadge = ($d['totalpendingcount'] > 0) ? "<span ".($d['totaloverduecount'] > 0 ? 
 				"class='label label-danger' title='{$d['totaloverduecount']} overdue task(s)'" : 
-				"class='label label-info'").">{$d['totalpendingcount']}</span>" : "";
-			$html .= "<li class='mm-dropdown'>
+				"class='label label-warning'").">{$d['totalpendingcount']}</span>" : "";
+			
+			$html .= "<li class='mm-dropdown ".(($focusWF) ? 'open active' : '')."'>
 						<a tabindex='-1' href='#'>
 							<span class='mm-text'>{$d['name']}</span>
 							{$pendingBadge}
 						</a>
-						<ul>";
-			foreach ($d['activities'] as $atvid=>$a){
-				$pendingBadge = ($a['totalpendingcount'] > 0) ? "<span ".($a['totaloverduecount'] > 0 ? 
-					"class='label label-danger' title='{$a['totaloverduecount']} overdue task(s)'" : 
-					"class='label label-info'").">{$a['totalpendingcount']}</span>" : "";
-				$html .= "
-							<li>
-								<a tabindex='-1' href='?atid={$a['id']}'><i class='menu-icon fa fa-pencil-square-o' title='Activity Task'></i><span class='mm-text'>{$a['name']}</span>{$pendingBadge}</a>
-							</li>";
-			}
-			foreach ($d['events'] as $evid=>$e){
-				$pendingBadge = ($e['totalpendingcount'] > 0) ? "<span ".($e['totaloverduecount'] > 0 ? 
-					"class='label label-danger' title='{$e['totaloverduecount']} overdue task(s)'" : 
-					"class='label label-info'").">{$e['totalpendingcount']}</span>" : "";
-				$html .= "
-							<li>
-								<a tabindex='-1' href='?evid={$e['id']}'><i class='menu-icon fa fa-play-circle-o' title='Intermediate Event'></i><span class='mm-text'>{$e['name']}</span>{$pendingBadge}</a>
-							</li>";
-			}
-			$html .= "</ul></li>";
+						<ul>
+							{$currhtml}
+						</ul>
+					</li>";
 		}
-		$html .="</ul>";
+		$pendingBadge = ($totalpending > 0) ? "<span ".($totaldue > 0 ? 
+					"class='label label-danger' title='{$totaldue} overdue task(s)'" : 
+					"class='label label-warning'").">{$totalpending}</span>" : "";
 		
-		echo $html;
+		$html = "<li class='mm-dropdown mm-dropdown-root ".((!empty($_GET['webc']) && $_GET['webc'] == __CLASS__) ? 'open active' : '')."'>
+					<a href='#'>
+						<i class='menu-icon fa fa-tasks'></i>
+						<span class='mm-text mmc-dropdown-delay animated fadeIn'>Task</span>{$pendingBadge}
+					</a>
+					<ul class='mmc-dropdown-delay animated fadeInLeft'>
+						{$html}
+					</ul>
+				</li>";
+		
+		if (!$skipUL) $html = "<ul id='taskListing' class='navigation'>{$html}</ul>";
+		
+		return $html;
 	}
 	
-	
-	function simulateStart() {
-		$s = new PM_Event(1);
-		$s->start(152, 'jobsheet');
-	}
-	
-	function runAllTimer() { // temp
-		global $DB;
-		$DB->showSQL=true;
-		$dueArr = $DB->getArray("select * from fcpmcaseflow where pmf_end_date is null and pmf_timer_due_date <= now()");
-		foreach($dueArr as $d) {
-			$case = new PM_Case($d['pmf_pmcid']);
-			$case->performFlow($d['pmf_id'], false, true);
+	function showingTask($type, $id) {
+		global $GLOBAL;
+		$class = isset($_GET['webc'])?$_GET['webc']:false;
+		$function = isset($_GET['webf'])?$_GET['webf']:false;
+		
+		if ($class == __CLASS__) {
+			if (!empty($_GET['id']) && !empty($_GET['type'])) {
+				if ($_GET['id']==$id && $_GET['type']==$type) return true;
+			}
+			else if (!empty($GLOBAL['PMTask_taskid']) && !empty($GLOBAL['PMTask_tasktype'])) {
+				if ($GLOBAL['PMTask_taskid'] == $id && $GLOBAL['PMTask_tasktype'] == $type) return true;
+			}
 		}
+		return false;
 	}
 	
-	function home() {
-		global $HTML, $DB;
-		
+	function caseFlowList() {
+		global $HTML, $GLOBAL, $DB;
 		$smarty = $this->initSmarty();
-		$HTML->addCSS('css/css.php?c=PMTask&css=home.css');
-		$HTML->addJS('js/jquery.autosize.min.js');
-		$casetype = $DB->getArray("select pmct_code, pmct_desc from fcpmcasetype order by pmct_desc");
-		$smarty->assign('casetype', $casetype);
-		$smarty->display('home.html');
+
+		if (!empty($_REQUEST['id']) && !empty($_REQUEST['type'])) {
+			$GLOBAL['PMTask_taskid'] = $_REQUEST['id'];
+			$GLOBAL['PMTask_tasktype'] = $_REQUEST['type'];
+		}
 		
+		if (empty($GLOBAL['PMTask_taskid']) || empty($GLOBAL['PMTask_tasktype'])) return;
+		
+		$this->renderTopBar($GLOBAL['PMTask_taskid'], $GLOBAL['PMTask_tasktype']);
+		if ($GLOBAL['PMTask_tasktype'] == 'PM_Event') {
+			if (!empty($_POST['event_action'])) {
+				$performed = null;
+				$toPerform = (!empty($_POST['pmtask_event_list_cb'])) ? $_POST['pmtask_event_list_cb'] : array();
+				foreach ($toPerform as $p) {
+					parse_str($p, $keys);
+					$case = new PM_Case($keys['pmf_pmcid']);
+					$ok = $case->performFlow($keys['pmf_id'], true);
+					if ($ok) $performed = $ok;
+				}
+				if ($performed) {
+					redirect($this->classurl."/caseFlowList?id={$GLOBAL['PMTask_taskid']}&type={$GLOBAL['PMTask_tasktype']}");
+				}
+			}
+			dbo_include('pmtask_caseflow_list_event');
+		}
+		else dbo_include('pmtask_caseflow_list');
 	}
 	
 	var $caseTypeLabel = array(
@@ -146,16 +198,59 @@ class PMTask {
 		'label-warning',
 		'label-danger',
 	);
+
+	function renderCaseSearch($limitresult = 12) {
+		static $caseSearchCount;
+		if ($caseSearchCount) ++$caseSearchCount;
+		else $caseSearchCount = 1;
+		$id = "caseSearchInp_{$caseSearchCount}";
+		$html = "<li><form class='navbar-form pull-left' onsubmit='return false;'><input id='{$id}' type='text' class='form-control' placeholder='Search Case'></form></li>";
+		
+		$html .=
+		"<script type='text/javascript'>
+		(function () {
+			$('#{$id}').autocomplete({
+				source: function(request, response) {
+					$.ajax({
+						url: '{$this->classurl}/ajaxCaseSearch',
+						dataType: 'json',
+						data: {
+							limitresult: {$limitresult},
+							q: request.term
+						},
+						success: function(data) {
+							response($.map(data.cases, function(item) {
+								return {
+									label: '#'+item.caseid + ' : ' + item.casedesc,
+									value: item.caseid
+								}
+							}));
+						}
+					});
+				},
+				minLength : 1,
+				select: function(event, ui) {
+					document.location = '{$this->classurl}/renderCaseScreen?caseid='+this.value;
+				},
+				error : function () {
+					alert(123);
+				}
+			});
+		})()
+		</script>";
+		return $html;
 	
-	function renderCaseSearch() {
+	}
+	
+	function ajaxCaseSearch() {
 		global $DB;
 		$query = $_REQUEST['q'];
-		$casetype = $_REQUEST['ct'];
+		$maxresult = $_REQUEST['limitresult'];
 		$data = array();
-		$maxresult = 10;
+		$ret = array();
 		if ($query) {
 			$query = "%{$query}%";
-			$setup = $DB->getArray("select * from fcpmcasetype where :0 = 'all' or (:0 != 'all' and :0 = pmct_code) order by pmct_desc", array($casetype), PDO::FETCH_ASSOC);
+			$setup = $DB->getArray("select * from fcpmcasetype order by pmct_desc", array(), PDO::FETCH_ASSOC);
 			foreach ($setup as $si=>$s) {
 				$rs = $DB->getAll("select pmc_id caseid, {$s['pmct_desc_col']} as casedesc, pmc_closed from fcpmcase join {$s['pmct_table']} on pmc_casekey = {$s['pmct_key_col']} 
 				where pmc_id::varchar ilike :0 or {$s['pmct_desc_col']} ilike :0 order by pmc_id", array($query));
@@ -172,119 +267,21 @@ class PMTask {
 				if (count($data) >= 10) break;
 			}
 		}
-		$html = '<ul id="caseListing" class="nav nav-pills nav-stacked">';
-		for ($i=0;$i<((count($data) < $maxresult) ? count($data) : $maxresult);$i++) {
-			$c = $data[$i];
-			$html .= 
-			"<li class='list-case'><a href='#' data-caseid='{$c['caseid']}'>
-				".((!$c['closed']) ? "<i title='Active Case' class='fa fa-file-text-o fa-fw fa-lg'></i>" : "<i title='Closed Case' class='fa fa-file-o fa-fw fa-lg'></i>")."
-				<span class='label {$c['label']} pull-right'>{$c['casetype']}</span>
-				<span>#{$c['caseid']} : <i>{$c['casedesc']}</i></span></a>
-			</li>";
-		}
-		$html .= '</ul>';
 		
-		echo $html;
+		for ($i=0;$i<((count($data) < $maxresult) ? count($data) : $maxresult);$i++) {
+			$ret['cases'][] = $data[$i];
+		}
+		
+		echo json_encode($ret);
 	}
 	
-	function renderTaskList() {
-		global $DB, $USER;
-		
-		$html = '<ul id="taskListing" class="nav nav-pills nav-stacked">';
-		// USER ACTIVITIES
-		$rs = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Activity' as object_type, pmat_id activityid, max(pmat_name) activityname, 
-		sum(case when pmf_id is not null then 1 else 0 end) totalcount,
-		sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount,
-		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
-		min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
-		from fcpmworkflow join fcpmactivity on pmwf_id = pmat_pmwfid and pmat_type = 'USER'
-		left join fcpmcaseflow on pmf_obj_type = 'PM_Activity' and pmat_id = pmf_obj_id and pmf_end_date is null
-		where pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = :0)
-		group by pmwf_id, pmat_id
-		order by 2,4", array($USER->userid), PDO::FETCH_ASSOC);
-		
-		// INTERMEDIATE EVENTS SHOW AS TASK
-		$rs2 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Event' as object_type, pmev_id eventid, max(pmev_name) eventname, 
-		sum(case when pmf_id is not null then 1 else 0 end) totalcount,
-		sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount,
-		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
-		min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
-		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y'
-		left join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmev_id = pmf_obj_id and pmf_end_date is null
-		where pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = :0)
-		group by pmwf_id, pmev_id
-		order by 2,4", array($USER->userid), PDO::FETCH_ASSOC);
-		
-		$rs = array_merge($rs, $rs2);
-		$data = array();
-		foreach ($rs as $row) {
-			if (!isset($data[$row['workflowid']])) {
-				$data[$row['workflowid']] = array(
-					'id' => $row['workflowid'],
-					'name' => $row['workflowname'],
-					'totalpendingcount' => 0,
-					'totaloverduecount' => 0,
-					'activities' => array(),
-					'events' => array(),
-				);
-			}
-			if ($row['object_type'] == 'PM_Activity') {
-				$data[$row['workflowid']]['activities'][$row['activityid']] = array(
-					'id' => $row['activityid'],
-					'name' => $row['activityname'],
-					'totalpendingcount' => $row['totalpendingcount'],
-					'totaloverduecount' => $row['totaloverduecount'],
-				);
-			}
-			else if ($row['object_type'] == 'PM_Event') {
-				$data[$row['workflowid']]['events'][$row['eventid']] = array(
-					'id' => $row['eventid'],
-					'name' => $row['eventname'],
-					'totalpendingcount' => $row['totalpendingcount'],
-					'totaloverduecount' => $row['totaloverduecount'],
-				);
-			}
-			$data[$row['workflowid']]['totalpendingcount'] += $row['totalpendingcount'];
-			$data[$row['workflowid']]['totaloverduecount'] += $row['totaloverduecount'];
-		}
-		
-		foreach ($data as $wfid=>$d) {
-			$expand = true;
-			$pendingBadge = ($d['totalpendingcount'] > 0) ? "<span ".($d['totaloverduecount'] > 0 ? "class='badge pull-right urgent' title='{$d['totaloverduecount']} overdue task(s)'" : "class='badge pull-right normal'").">{$d['totalpendingcount']}</span>" : "";
-			$html .= "<li class='list-workflow'>
-						<a href='#collapse{$wfid}' data-toggle='collapse'>
-							<span class='fa fa-chevron-left fa-lg list-icon-collapse pull-right'></span>
-							<span class='fa fa-chevron-down fa-lg list-icon-expand pull-right'></span>
-							{$pendingBadge}
-							<i title='Workflow' class='fa fa-sitemap fa-fw fa-lg'></i>
-							<span>{$d['name']}</span>
 
-						</a>
-						<ul id='collapse{$wfid}' class='nav nav-pills nav-stacked collapse ".($expand ? 'in' : '')."'>";
-			foreach ($d['activities'] as $atvid=>$a){
-				$pendingBadge = ($a['totalpendingcount'] > 0) ? "<span ".($a['totaloverduecount'] > 0 ? "class='badge pull-right urgent ' title='{$a['totaloverduecount']} overdue task(s)'" : "class='badge pull-right normal'").">{$a['totalpendingcount']}</span>" : "";
-				$html .= "<li class='list-activity'>
-					<a href='#' data-atid='{$a['id']}'>{$pendingBadge}<i title='User Activity' class='fa fa-tasks fa-fw fa-lg'></i> <span>{$a['name']}</span></a>
-				</li>";
-			}
-			foreach ($d['events'] as $evid=>$e){
-				$pendingBadge = ($e['totalpendingcount'] > 0) ? "<span ".($e['totaloverduecount'] > 0 ? "class='badge pull-right urgent ' title='{$e['totaloverduecount']} overdue task(s)'" : "class='badge pull-right normal'").">{$e['totalpendingcount']}</span>" : "";
-				$html .= "<li class='list-event'>
-					<a href='#' data-evid='{$e['id']}'>{$pendingBadge}<i title='Intermediate Event' class='fa fa-play-circle fa-fw fa-lg'></i> <span>{$e['name']}</span></a>
-				</li>";
-			}
-			$html .= "</ul></li>";
-		}
-		$html .="</ul>";
-		
-		echo $html;
-	}
 	
 	function renderTopBar($taskid, $tasktype, $fid = false, &$caseid = false) {
 		global $DB;
 		$rs = false;
 		if ($fid) {
-			if ($tasktype == 'evid') {
+			if ($tasktype == 'PM_Event') {
 				$rs = $DB->getRow("select *
 				from fcpmevent join fcpmworkflow on pmev_pmwfid = pmwf_id 
 				join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmf_obj_id = pmev_id
@@ -300,7 +297,7 @@ class PMTask {
 			}
 		}
 		else if ($taskid) {
-			if ($tasktype == 'evid') {
+			if ($tasktype == 'PM_Event') {
 				$rs = $DB->getRow("select *
 				from fcpmevent join fcpmworkflow on pmev_pmwfid = pmwf_id where pmev_id = :0", array($taskid), PDO::FETCH_ASSOC);
 			}
@@ -317,7 +314,7 @@ class PMTask {
 			
 			$html = 
 			"<div id='taskTopBar'>
-				<ul id='taskTopBarPath' class='page-breadcrumb breadcrumb pull-left' >";
+				<ul id='taskTopBarPath' class='breadcrumb pull-left' >";
 			
 			if (!empty($rs['pmwf_id'])) {
 				$html .= 
@@ -326,16 +323,16 @@ class PMTask {
 						{$rs['pmwf_name']}
 					</li>";
 				
-				if ($tasktype == 'evid') {
+				if ($tasktype == 'PM_Event') {
 					$html .= 
 					"<li>
-						<i title='Intermediate Event' class='fa fa-play-circle fa-fw fa-lg'></i> {$rs['pmev_name']}
+						<a href='caseFlowList?id={$rs['pmev_id']}&type=PM_Event'><i title='Intermediate Event' class='fa fa-play-circle-o fa-fw fa-lg'></i> {$rs['pmev_name']}</a>
 					</li>";
 				}
 				else {
 					$html .= 
 					"<li>
-						<i title='User Activity' class='fa fa-tasks fa-fw fa-lg'></i> {$rs['pmat_name']}
+						<a href='caseFlowList?id={$rs['pmat_id']}&type=PM_Activity'><i title='User Activity' class='fa fa-pencil-square-o fa-fw fa-lg'></i> {$rs['pmat_name']}</a>
 					</li>";
 				}
 			}
@@ -346,19 +343,12 @@ class PMTask {
 				$s = $DB->getRow("select pmct_table, pmct_desc_col, pmct_key_col from fcpmcasetype where pmct_code=:0", array($rs['pmc_casetype']), PDO::FETCH_ASSOC);
 				if ($s) $cd = $DB->getOne("select {$s['pmct_desc_col']} from {$s['pmct_table']} where {$s['pmct_key_col']} = :0", array($rs['pmc_casekey']));
 				if ($cd) $casedesc = $cd;
-				if (!empty($rs['pmf_id'])) {
-					$html .= 
-						"<li>
-							<i title='Task' class='fa fa-pencil-square-o fa-fw fa-lg'></i>#{$rs['pmc_id']} : <i>{$casedesc}</i>
-						</li>";
-				}
-				else {
-					$html .= 
-						"<li>
-						".(($rs['pmc_closed'] == 'Y') ? "<i title='Closed Case' class='fa fa-file-o fa-fw fa-lg'></i>" : "<i title='Active Case' class='fa fa-file-text-o fa-fw fa-lg'></i>")."
-							#{$rs['pmc_id']} : <i>{$casedesc}</i>
-						</li>";
-				}
+				$html .= 
+					"<li>
+					".(($rs['pmc_closed'] == 'Y') ? "<i title='Closed Case' class='fa fa-file-o fa-fw fa-lg'></i>" : "<i title='Active Case' class='fa fa-file-text-o fa-fw fa-lg'></i>")."
+						#{$rs['pmc_id']} : <i>{$casedesc}</i>
+					</li>";
+				
 			}
 			
 			$html .= "</ul>";
@@ -366,11 +356,15 @@ class PMTask {
 			$html .= "<div id='taskTopBarActionDiv' class='pull-right'>";
 			if (!empty($rs['pmc_id'])) {
 				if (!empty($rs['pmf_id'])) $html .= $this->showTaskUrgency($rs['pmf_id']);
+				$html .= "<div class='btn-group btn-group-sm'>";
 				$html .= $this->showCaseIntermediateEvent($rs['pmc_id']);
 				$html .= $this->showCommentButton($rs['pmc_id'], (!empty($rs['pmf_id'])) ? $rs['pmf_id'] : false);
 				$html .= $this->showFlagButton($rs['pmc_id']);
+				$html .= "</div>";
+	
+				
 			}
-			$html .= "</div><div class='cb'></div></div>";
+			$html .= "</div><div class='clearfix'></div></div>";
 			echo $html;
 			
 		}
@@ -388,13 +382,12 @@ class PMTask {
 		$html = '';
 		$evRS = $DB->getAll("select * from fcpmcaseflow join fcpmevent on pmf_obj_id = pmev_id and pmf_obj_type = 'PM_Event' 
 				where pmf_pmcid = :0 and pmf_end_date is null and 
-				(pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = :1)) and 
-				pmev_type = 'INTERMEDIATE' order by pmev_name", array($pmcid, $USER->userid), PDO::FETCH_ASSOC);
+				pmev_type = 'INTERMEDIATE' order by pmev_name", array($pmcid), PDO::FETCH_ASSOC);
 		
 		if ($evRS) { // has active intermediate event
 			$html = "<form id='eventForm' method='post'><input id='eventInp' type='hidden' name='event_action_manual' /></form>
 					<div class='btn-group action-event'>
-						<button type='button' class='btn btn-default dropdown-toggle btn-sm' data-toggle='dropdown'>Event 
+						<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>Event 
 							<span class='caret'></span>
 						</button>
 						<ul class='dropdown-menu pull-right' role='menu'>";
@@ -421,9 +414,11 @@ $(function () {
 	
 	function renderCaseScreen() {
 		global $HTML, $GLOBAL, $DB;
-		$HTML->showFooter = false;
-		$HTML->addCSS('css/css.php?c=PMTask&css=task.css');
-		$smarty = $this->initSmarty('header.nh.html');
+		
+		if (!empty($GLOBAL['PMTask_taskid'])) unset($GLOBAL['PMTask_taskid']);
+		if (!empty($GLOBAL['PMTask_tasktype'])) unset($GLOBAL['PMTask_tasktype']);
+		
+		$smarty = $this->initSmarty();
 		if (!empty($_REQUEST['caseid'])) {
 			$GLOBAL['PMTask_caseid'] = $_REQUEST['caseid'];
 		}
@@ -440,47 +435,11 @@ $(function () {
 		}
 	}
 	
-	function renderCaseFlowList() {
-		global $HTML, $GLOBAL, $DB;
-		$HTML->showFooter = false;
-		$HTML->addCSS('css/css.php?c=PMTask&css=task.css');
-		$smarty = $this->initSmarty('header.nh.html');
-		if (!empty($_REQUEST['atid'])) {
-			$GLOBAL['PMTask_taskid'] = $_REQUEST['atid'];
-			$GLOBAL['PMTask_tasktype'] = 'atid';
-		}
-		if (!empty($_REQUEST['evid'])) {
-			$GLOBAL['PMTask_taskid'] = $_REQUEST['evid'];
-			$GLOBAL['PMTask_tasktype'] = 'evid';
-		}
-		if (empty($GLOBAL['PMTask_taskid']) || empty($GLOBAL['PMTask_tasktype'])) return;
-		
-		$this->renderTopBar($GLOBAL['PMTask_taskid'], $GLOBAL['PMTask_tasktype']);
-		if ($GLOBAL['PMTask_tasktype'] == 'evid') {
-			if (!empty($_POST['event_action'])) {
-				$performed = null;
-				$toPerform = (!empty($_POST['dboform_pmtask_caseflow_list_event_list_cb'])) ? $_POST['dboform_pmtask_caseflow_list_event_list_cb'] : array();
-				foreach ($toPerform as $p) {
-					parse_str($p, $keys);
-					$case = new PM_Case($keys['pmf_pmcid']);
-					$ok = $case->performFlow($keys['pmf_id'], true);
-					if ($ok) $performed = $ok;
-				}
-				if ($performed) {
-					// echo "<script>window.top.location = 'Home'</script>"; //temp
-				}
-			}
-			dbo_include('pmtask_caseflow_list_event');
-		}
-		else dbo_include('pmtask_caseflow_list');
-	}
 
-	
 	function renderActivityPerform() {
 		global $HTML, $GLOBAL, $DB;
-		$HTML->showFooter = false;
-		$HTML->addCSS('css/css.php?c=PMTask&css=task.css');
-		$smarty = $this->initSmarty('header.nh.html');
+
+		$smarty = $this->initSmarty();
 		if (!empty($_REQUEST['fid'])) {
 			$GLOBAL['PMTask_flowid'] = $_REQUEST['fid'];
 		}
@@ -491,9 +450,11 @@ $(function () {
 		
 		if ($caseid) {
 			$case = new PM_Case($caseid);
+			$currid = $case->activeFlow[$GLOBAL['PMTask_flowid']]['pmf_obj_id'];
+			$currtype = $case->activeFlow[$GLOBAL['PMTask_flowid']]['pmf_obj_type'];
 			$performed = $case->performFlow($GLOBAL['PMTask_flowid'], true);
 			if ($performed) {
-				// echo "<script>window.top.location = 'Home'</script>"; //temp
+				redirect($this->classurl."/caseFlowList?id={$currid}&type={$currtype}");
 			}
 		}
 		else return;
@@ -540,50 +501,53 @@ $(function () {
 		static $commentButtonCount;
 		if ($commentButtonCount) ++$commentButtonCount;
 		else $commentButtonCount = 1;
+		
+		$classurl = WEB_HREF.'/'.__CLASS__;
+		
 		$comm = $DB->getRow("select count(*) total_comment, sum(case when pmcr_id is null then 1 else 0 end) unread_comment from fcpmcasecomment 
 		left join fcpmcasecommentread on pmcc_id = pmcr_pmccid and pmcr_read_by = :1 where pmcc_pmcid=:0", array($pmcid, $USER->userid));
 		if ($comm['unread_comment'] > 0) $commtitle = "{$comm['unread_comment']} unread comment(s)";
 		else if ($comm['total_comment'] > 0) $commtitle = "{$comm['total_comment']} comment(s)";
 		else $commtitle = "Post Comment";
 		$buttonid  = "commentButton_{$commentButtonCount}";
-		$ret = "<span id='{$buttonid}' class='fa fa-comments fa-border action action-comment"
+		
+		$ret = "<button id='{$buttonid}' class='btn action action-comment"
 			.(($comm['total_comment'] > 0) ? ' hascomment'.(($comm['unread_comment'] > 0) ? ' unread' : '') : '')
-			."' title='{$commtitle}' data-caseid='{$pmcid}' data-flowid='{$pmfid}' data-commid=''></span>";
+			."' title='{$commtitle}' data-caseid='{$pmcid}' data-flowid='{$pmfid}' data-commid=''>
+				<span class='btn-label icon fa fa-comments'></span>
+			</button>";
 		
 		if ($commentButtonCount == 1) { 
 			$ret .=
 			"<script type='text/javascript'>
 			$(function () {
 				$('.action-comment').click(function (e) {
+					e.preventDefault();
 					e.stopPropagation();
 					var \$this = $(this),
 						caseid = \$this.data('caseid'),
 						flowid = \$this.data('flowid'),
 						lastcommentid = \$this.data('commid');
-					window.top.toggleLoading(true, function () {
-						\$popupDiv = $('<div id=\"commentDiv\"></div>').load('renderCommentList?caseid='+caseid+'&flowid='+flowid, function () {
-							var \$thisDiv = $(this);
-							window.top.toggleLoading(false, function () {
-								window.top.popupContent(\$thisDiv, '<span class=\"fa fa-comments fa-lg\"></span> Comments', '500px', function () {
-									var \$firstUnread = \$thisDiv.find('.comment.unread').first();
+					
+					var \$modal = createEmptyModal('commentListModal');
+					ajaxRenderHTML('{$classurl}/ajaxRenderCommentList?caseid='+caseid+'&flowid='+flowid, {}, \$modal.find('.modal-content'), 'html', function () {
+						$(window.document).one('hidden.bs.modal', '#'+\$modal.attr('id') ,function () {
+							\$modal.remove();
+						}).one('shown.bs.modal', '#'+\$modal.attr('id'), function () {
+							var \$firstUnread = $(this).find('.comment.unread').first();
 									if (\$firstUnread.length > 0) {
-										$('.content-box',window.top.document).animate({scrollTop: \$firstUnread.offset().top}, '400', 'swing', function() { 
-											$.ajax({
-												url : 'readComment',
-												data : {
+										\$modal.animate({scrollTop: \$firstUnread.offset().top}, '400', 'swing', function() { 
+											ajaxGetJSON('{$classurl}/ajaxReadComment', {
 													'caseid' : caseid,
-													'tillcommid' : \$thisDiv.find('.comment.unread').last().data('commid')
-												},
-												dataType : 'json',
-												success : function(data) {
-												}
-											})
+													'tillcommid' : $(this).find('.comment.unread').last().data('commid')
+											}, function () {
+												\$this.removeClass('unread');
+											});
 										});
 									}
-								});
-							});
 						})
-					})
+						\$modal.modal('show');
+					});
 				})
 			})
 			</script>";
@@ -620,16 +584,17 @@ $(function () {
 		global $USER;
 		$createdDate = new DateTime($row['pmcc_created_date']);
 		
+		$senderimage = getUserAvatarImage($row['pmcc_created_by']);
 		$html = 
 		"<div class='comment".(($row['read_status'] == 'unread') ? ' unread' : '')."' data-commid='{$row['pmcc_id']}' data-parentid='{$row['pmcc_parentid']}'>
-			<span class='comment-avatar glyphicon glyphicon-user' title=\"{$row['pmcc_created_name']}\"></span>
+			<img src='{$senderimage}' alt=\"{$row['pmcc_created_name']}\" title=\"{$row['pmcc_created_name']}\" class='comment-avatar'>
 			<div class='comment-body'>
 				<div class='comment-text'>
 					<div class='comment-heading'>
-						<a href='javascript:void(0)' title='{$row['pmcc_created_by']}' ".
-						(($USER->userid == $row['pmcc_created_by']) ? "class='self'" : "")." >{$row['pmcc_created_name']}".
-						(($USER->userid == $row['pmcc_created_by']) ? " (Me)" : "")
-						."</a><span title='{$createdDate->format('d-M-Y g:i:s A')}'>".time_different_string($row['pmcc_created_date'])."</span>
+						<a href='javascript:void(0)' title='{$row['pmcc_created_by']}' >
+							{$row['pmcc_created_name']}".(($USER->userid == $row['pmcc_created_by']) ? " (Me)" : "").
+						"	<span title='{$createdDate->format('d-M-Y g:i:s A')}'>".time_different_string($row['pmcc_created_date'])."</span>
+						</a>
 					</div>".nl2br(htmlentities($row['pmcc_comment']))."
 				</div>
 				<div class='comment-footer'>
@@ -644,17 +609,17 @@ $(function () {
 		}
 		$html .=
 			"<div class='comment-reply-area clearfix'>
-				<textarea class='comment-reply-textarea' placeholder='Reply comment'></textarea>
+				<textarea rows='1' class='form-control expanding-input-target comment-reply-textarea' placeholder='Reply comment'></textarea>
 				<div style='margin-top: 10px;'>
 					<button class='btn btn-sm btn-primary pull-right comment-reply-button' data-parentid='{$row['pmcc_id']}'>Reply</button>
-					<button type='button' class='close pull-right comment-reply-close' >&times;</button>
+					<button class='btn btn-sm pull-right comment-reply-close'>Cancel</button>
 				</div>
 			</div>
 		</div>";
 		return $html;
 	}
 	
-	function renderCommentList() {
+	function ajaxRenderCommentList() {
 		global $HTML, $GLOBAL, $DB;
 		if (!empty($_REQUEST['caseid'])) {
 			$GLOBAL['PMTask_comment_caseid'] = $_REQUEST['caseid'];
@@ -668,21 +633,22 @@ $(function () {
 		
 		$data = $this->getCommentData($GLOBAL['PMTask_comment_caseid'], null, $lastcommid);
 		$treedata = arr2tree($data, 'pmcc_id', 'pmcc_parentid', 'REPLIES');
-		$commenthtml = $pincommenthtml = '';
+		$commenthtml= '';
 		foreach ($treedata as $row) {
 			$commenthtml .= $this->renderSingleComment($row);
 		}
-		
+			
 		$smarty = $this->initSmarty(false);
 		$smarty->assign('caseid', $GLOBAL['PMTask_comment_caseid']);
 		$smarty->assign('flowid', $GLOBAL['PMTask_comment_flowid']);
 		$smarty->assign('lastcommid', $lastcommid);
 		$smarty->assign('comments', $commenthtml);
-		$smarty->assign('pincomments', $pincommenthtml);
+		$smarty->assign('classurl', $this->classurl);
+		
 		$smarty->display('comment.html');
 	}
 	
-	function createNewComment() {
+	function ajaxCreateNewComment() {
 		global $DB, $USER, $GLOBAL;
 		$txt = !empty($_REQUEST['comment']) ?  $_REQUEST['comment'] : '';
 		$parentid = !empty($_REQUEST['parentid']) ?  $_REQUEST['parentid'] : null;
@@ -725,14 +691,14 @@ $(function () {
 		}
 	}
 	
-	function readComment() {
+	function ajaxReadComment() {
 		global $DB, $USER;
 		$caseid = !empty($_REQUEST['caseid']) ?  $_REQUEST['caseid'] : false;
 		$tillcommid = !empty($_REQUEST['tillcommid']) ?  $_REQUEST['tillcommid'] : false;
 		$now = new DateTime();
 		if ($caseid && $tillcommid) {
 			$toreadid = $DB->getCol("select pmcc_id from fcpmcasecomment left join fcpmcasecommentread on pmcc_id = pmcr_pmccid and pmcr_read_by = :2
-			where pmcc_pmcid=:0 and pmcc_id <= :1 order by pmcc_id", array($caseid, $tillcommid, $USER->userid));
+			where pmcc_pmcid=:0 and pmcc_id <= :1 and pmcr_id is null order by pmcc_id", array($caseid, $tillcommid, $USER->userid));
 			foreach ($toreadid as $pmccid) {
 				$data = array(
 					'pmcr_pmccid'=>$pmccid,
@@ -752,10 +718,11 @@ $(function () {
 	// case flag start
 	static $noFlagTitle = 'Flag This Case';
 	static $flagList = array(
-		'red' => array('title'=>'Red Flag', 'color'=>'#BD0404'),
-		'blue' => array('title'=>'Blue Flag', 'color'=>'rgb(105, 115, 233)'),
-		'yellow' => array('title'=>'Yellow Flag', 'color'=>'#DDC40B'),
-		'green' => array('title'=>'Green Flag', 'color'=>'#6CD825'),
+		'red' => array('title'=>'Red Flag', 'class'=>'btn-danger'),
+		'blue' => array('title'=>'Blue Flag', 'class'=>'btn-primary'),
+		'yellow' => array('title'=>'Yellow Flag', 'class'=>'btn-warning'),
+		'green' => array('title'=>'Green Flag', 'class'=>'btn-success'),
+		'lightblue' => array('title'=>'Light Blue Flag', 'class'=>'btn-info'),
 	);
 
 	static function showFlagButton($pmcid) {
@@ -765,12 +732,19 @@ $(function () {
 		else $flagButtonCount = 1;
 		$noFlagTitle = self::$noFlagTitle;
 		$flagList = self::$flagList;
+		$classurl = WEB_HREF.'/'.__CLASS__;
+		
 		$rs = $DB->getRow("select * from fcpmcaseflag where pmcf_pmcid = :0 and pmcf_flag_by = :1", array($pmcid, $USER->userid), PDO::FETCH_ASSOC);
 		if (empty($rs['pmcf_flag_type'])) $flagType = '';
 		else $flagType = $rs['pmcf_flag_type'];
 		$buttonID = "flagButton_{$flagButtonCount}";
-		$ret = "<span id='{$buttonID}' class='fa fa-flag fa-border action action-flag' data-caseid='{$pmcid}' data-flag='{$flagType}' "
-		.((!empty($flagList[$flagType])) ? "style='background-color:{$flagList[$flagType]['color']}' title='{$flagList[$flagType]['title']}'" : "title='{$noFlagTitle}'")."></span>";
+
+		$ret = 
+		"<button id='{$buttonID}' class='btn action action-flag".
+		((!empty($flagList[$flagType])) ? " {$flagList[$flagType]['class']}' title='{$flagList[$flagType]['title']}'" : "' title='{$noFlagTitle}'").
+		" data-caseid='{$pmcid}' data-flag='{$flagType}' >
+			<span class='btn-label icon fa fa-flag'></span>
+		</button>";
 		
 		if ($flagButtonCount == 1) {
 			$ret .= 
@@ -779,6 +753,7 @@ $(function () {
 					var flagList = ".json_encode($flagList).";
 					var noFlagText = \"".$noFlagTitle."\";
 					$('.action-flag').click(function (e) {
+						e.preventDefault();
 						e.stopPropagation();
 						var \$this = $(this),
 							caseid = \$this.data('caseid'),
@@ -795,19 +770,15 @@ $(function () {
 							}
 							if (i == flagtype) useNext = true;
 						}
+						
 						if (useNext) nextFlagType = null;
-						$.ajax({
-							url : 'flagCase',
-							data : {
+						ajaxGetJSON('{$classurl}/ajaxFlagCase', {
 								'caseid' : caseid,
 								'flagtype' : nextFlagType
-							},
-							dataType : 'json',
-							success : function(ret) {
-								if (ret) \$this.data('flag',ret).css('background-color', flagList[ret].color).attr('title', flagList[ret].title);
-								else \$this.data('flag','').css('background-color', '').attr('title', noFlagText);
-							}
-						})
+						}, function (ret) {
+							if (flagtype) \$this.data('flag','').removeClass(flagList[flagtype].class).attr('title', noFlagText);
+							if (ret) \$this.data('flag',ret).addClass(flagList[ret].class).attr('title', flagList[ret].title);
+						});
 					})
 				})
 			</script>";
@@ -816,7 +787,7 @@ $(function () {
 		return $ret;
 	}
 	
-	function flagCase() {
+	function ajaxFlagCase() {
 		global $DB, $USER;
 		$caseid = !empty($_REQUEST['caseid']) ? $_REQUEST['caseid'] : false;
 		$flag = !empty($_REQUEST['flagtype']) ? $_REQUEST['flagtype'] : null;
@@ -887,6 +858,25 @@ $(function () {
 
 		echo json_encode($ret);
 	}
+	
+	
+	// testing
+	
+	function simulateStart() {
+		$s = new PM_Event(1);
+		$s->start(153, 'jobsheet');
+	}
+	
+	function runAllTimer() { // temp
+		global $DB;
+		$DB->showSQL=true;
+		$dueArr = $DB->getArray("select * from fcpmcaseflow where pmf_end_date is null and pmf_timer_due_date <= now()");
+		foreach($dueArr as $d) {
+			$case = new PM_Case($d['pmf_pmcid']);
+			$case->performFlow($d['pmf_id'], false, true);
+		}
+	}
+	
 	
 }
 ?>

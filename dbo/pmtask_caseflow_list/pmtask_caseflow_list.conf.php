@@ -8,7 +8,7 @@ $dbo->table = 'fcpmcaseflow';
 $dbo->key = array('pmf_id');
 $dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
 	where pmf_obj_id = 5 and pmf_obj_type = \'PM_Activity\' and pmf_end_date is null
-	and (pmf_specific_userid is null or (pmf_specific_userid is not null and pmf_specific_userid = \'admin\')) order by pmf_due_date, pmf_id';
+	order by pmf_due_date, pmf_id';
 $dbo->col = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date', 'pmf_specific_userid', 'pmf_end_by', 'pmf_end_pmfid', 'pmf_from_event_gateway', 'urgency', 'actions');
 $dbo->colList = array('urgency', 'pmc_id', 'pmc_casekey', 'pmc_created_date', 'pmc_created_by', 'pmf_start_date', 'pmf_due_date', 'actions');
 $dbo->colListEdit = array();

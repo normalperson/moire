@@ -21,7 +21,13 @@ function html_header($headerTemplate='header.html'){
 		$HTML->addJS('js/script.js');
 		
 		$HTML->title = "PnD's Moire Portal";
+
+		include_once(CLASS_DIR.DS.'PMTask'.DS.'PMTask.php');
+		$PMTask = new PMTask();
+		$taskNaviHTML = $PMTask->renderNavi();
+		$Menu->additionalLI = $taskNaviHTML;
 		$HTML->smarty->assign('Menu', $Menu);
+		
 		
 		// include Widgets in Menu
 		include_once(CLASS_DIR.DS.'NotificationList'.DS.'NotificationList.php');
@@ -30,8 +36,8 @@ function html_header($headerTemplate='header.html'){
 		include_once(CLASS_DIR.DS.'Messaging'.DS.'Messaging.php');
 		$HTML->smarty->assign('Messaging', new Messaging());
 		
-		include_once(CLASS_DIR.DS.'PMTask'.DS.'PMTask.php');
-		$HTML->smarty->assign('PMTask', new PMTask());
+		$HTML->smarty->assign('PMTask', $PMTask);
+		
 		
 		$HTML->genHeader($headerTemplate);
 
