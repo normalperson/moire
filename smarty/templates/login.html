@@ -9,14 +9,10 @@
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&amp;subset=latin" rel="stylesheet" type="text/css">
 	<!-- Pixel Admin's stylesheets -->
 	<link href="css/pixeladmin/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link href="css/pixeladmin/pixel-admin.min.css" rel="stylesheet" type="text/css">
-	<link href="css/pixeladmin/pages.min.css" rel="stylesheet" type="text/css">
-	<link href="css/pixeladmin/rtl.min.css" rel="stylesheet" type="text/css">
-	<link href="css/pixeladmin/themes.min.css" rel="stylesheet" type="text/css">
-	<link href="css/login-blue.css" rel="stylesheet" type="text/css">
+	<link href="css/login-green.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/pixel-admin.min.js"></script>
+
 
   </head>
   <body>
@@ -35,7 +31,7 @@
 		</div>	  		
 	  </div>
 
-	  <div id="rightdiv" class="col-md-5">
+	  <div id="rightdiv_login" class="col-md-5">
 	  	<!-- Nav tabs -->
 		<ul class="nav nav-login">
 		  <li class="active" style="width:30%"><a href="#login" data-toggle="tab">Login</a></li>
@@ -64,11 +60,11 @@
 
 				
 				    <div class="col-md-12"  style="margin-bottom:15px">
-				    	<input type="submit" class="btn btn-lg btn-primary" value="sign in" />
+				    	<input type="submit" class="btn btn-lg btn-login " value="sign in" />
 				    
 				    </div>
 				    <div class="col-md-12">
-				    	<a href="nologin/register.php?dboid=register&dbostate=new" class="atag-login">first time registration</a>
+				    	<a href="#" id="atagforgot" class="atag-login">Forgot password?</a>
 				    </div>
 				</form>
 			</div><!-- end of row -->		   
@@ -79,7 +75,7 @@
 		  			<textarea id="message" class="form-control" rows="10" placeholder="Type your message here......"></textarea>
 		  		</div>
 		  		<div class="col-md-12">
-		  			<input type="button" class="btn btn-lg btn-primary" value="Send" />
+		  			<input type="button" class="btn btn-lg btn-login" value="Send" />
 		  		</div>
 		  	</div>
 		  </div>
@@ -125,7 +121,39 @@
 		  </div>
 		</div>
 		<div class="col-md-1">&nbsp;</div>
-	  </div>
+	  </div><!-- rightdiv_login -->
+
+	  <div id="rightdiv_forgot" class="col-md-5">	
+		<!-- Tab panes -->
+		<div class="login-content">
+		  	<div class="row">
+			  	<div class="col-md-12">
+			  		<p style="font-size:2.2em;">Reset password</p>
+			  	</div>
+			  	<div class="col-md-12">
+			  		<p>Kindly key in your email address and your new password will send to you shortly</p>
+			  	</div>
+			  	<form class="form-horizontal" role="form"  method="post" id="loginform">
+				    <div class="col-md-12" style="margin-bottom:15px">
+				      <input type="text" class="form-control input-lg" name="forgotemail" id="forgotemail" value="" placeholder="Email address"/>
+				    </div><!-- /col-md-12 -->
+
+				    <div class="col-md-12"  style="margin-bottom:15px">
+				    	<input type="submit" class="btn btn-lg btn-login " name="forgotsubmit" id="forgotsubmit" value="Reset"/>
+				    </div>
+				    
+				    <div class="col-md-12">
+				    	<a  href="#" id="ataglogin" class="atag-login" >Login</a>
+				    </div>
+				</form>
+			</div><!-- end of row -->		   
+		  </div>
+		  
+		  
+		</div>
+		
+		<div class="col-md-1">&nbsp;</div>
+	  </div><!-- rightdiv_forgot -->
 
 	</div><!-- end of row -->
 	  <div id="loginfooter" >
@@ -137,3 +165,26 @@
 
   </body>
 </html>
+<script type="text/javascript">
+$( document ).ready(function() {
+  $('#rightdiv_forgot').hide();
+});
+$('#atagforgot').click(function(event){
+  event.preventDefault();
+  $( "#rightdiv_login" ).hide( "slow", function() {
+    // Animation complete.
+	   	$('#rightdiv_forgot').show("slow", function(){
+
+	   	}); 
+  });
+});
+$('#ataglogin').click(function(event){
+  event.preventDefault();
+  $( "#rightdiv_forgot" ).hide( "slow", function() {
+    // Animation complete.
+	   	$('#rightdiv_login').show("slow", function(){
+
+	   	}); 
+  });
+});
+</script>
