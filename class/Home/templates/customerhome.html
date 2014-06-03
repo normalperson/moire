@@ -64,38 +64,12 @@
 </div>
 <!-- monthly sales and my performance -->
 <div class="row">
-	<!-- monthly sales -->
 	<div class="col-md-6">
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				<div>TOTAL ORDER BY CATEGORY
-					<div class="pull-right pointer" id="fullcalendarview">
-					View my pass orders
-					<span class="glyphicon glyphicon-circle-arrow-right"></span>
-					</div>
-				</div>					
-			</div>
-		    <div class="panel-body">
-		       <div id="custorder" style="height:400px"></div>
-		    </div>
-		</div>		
+		{$Home->renderJobByCategory()}	
 	</div>
 
-	<!-- monthly sales -->
 	<div class="col-md-6">
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				<div>CASE PENDING ON MY ACTION
-					<div class="pull-right pointer" id="fullcalendarview">
-					View cases
-					<span class="glyphicon glyphicon-circle-arrow-right"></span>
-					</div>
-				</div>					
-			</div>
-		    <div class="panel-body">
-		       <div id="custpendingaction" style="height:400px"></div>
-		    </div>
-		</div>		
+		{$Home->renderTaskPendingAction()}		
 	</div>
 
 </div>
@@ -104,19 +78,7 @@
 <div class="row">	
 	<!-- myperformance -->
 	<div class="col-md-12">
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				<div>PAST 12 MONTH ORDER
-					<div class="pull-right pointer" id="fullcalendarview">
-					View all orders
-					<span class="glyphicon glyphicon-circle-arrow-right"></span>
-					</div>
-				</div>					
-			</div>
-		    <div class="panel-body">
-		       <div id="custpassorder" style="height:400px"></div>
-		    </div>		    
-		</div>		
+		{$Home->renderPassOrder()}		
 	</div>
 
 </div>
