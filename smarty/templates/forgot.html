@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<title>Login</title>
+</head>
+<body>
+<table class="container" align="center">
+	<tr>
+		<td rowspan="2" class="leftspace">&nbsp;</td>
+		<td class="banner">&nbsp;</td>
+		<td rowspan="2" class="formContainer">
+			<div class="loginFormContainer">
+				<form method="post" id="forgotForm">
+					<table id="forgotTable">
+						<caption>Reset password</caption>
+						<tr>
+							<td class="captionContainer">Email</td>
+							<td class="inputContainer"><input type="text" name="forgotemail" id="forgotemail" value=""/></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div id="submitContainerForgot">
+									<input type="submit" name="forgotsubmit" id="forgotsubmit" value="Reset"/>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<div id="forgotMessage">
+						{$loginMessage}
+					</div>
+					<div id="helpContainer">
+						<a href="/{$APP}/login.php">Login</a>
+					</div>
+				</form>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="message">
+			{$contents}
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3" class="copyright">
+			<hr>
+			<p>&copy;{$year} Phi Orion</p>
+		</td>
+	</tr>
+</table>
+</div>
+<script type="text/javascript" defer="defer">
+(function(){
+	if(document.getElementById('username')) document.getElementById('username').focus();
+}());
+</script>
+</body>
+</html>
