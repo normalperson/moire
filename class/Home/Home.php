@@ -114,6 +114,7 @@ class Home{
 		$html = $smarty->fetch('customercontribution.html');
 		return $html;	
 	}
+	/*for customer screen*/
 	function getTotalOrderByCustomer($custid,$thismonth='N'){
 		
 		$datefilter = " and js_request_date between date_trunc('month', current_date) and current_date + interval '1' day ";
@@ -127,11 +128,23 @@ class Home{
 		return $total;
 
 	}
+	/*same with pending job?*/
 	function getJobPendingAction(){
 		// check with yow		
 	}
 	function getActiveJob(){
 		// check with yow		
+	}
+	/* for admin screen(Artist) */
+	function getJobCompletedByArtist(){
+		// cannot get from mjobsheet right?
+		// js_assignto will change time to time right?
+
+	}
+	function getPendingJob(){
+		// cannot get from mjobsheet right?
+		// js_assignto will change time to time right?
+
 	}
 	function engtest(){
 		$smarty = $this->initSmarty();
