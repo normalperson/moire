@@ -123,6 +123,7 @@ div.dbo_theme_pixeladmin .button:hover {
 	background-repeat: repeat-x;
 }
 
+
 /* list */
 div.dbo_theme_pixeladmin td.dbo_container_list{
 }
@@ -681,7 +682,7 @@ div.dbo_theme_pixeladmin td.dbo_container_search th.caption div.mandatory:after,
 div.dbo_theme_pixeladmin td.dbo_container_new{
 }
 
-div.dbo_theme_pixeladmin td.dbo_container_new table.dbo_new tr > * {
+div.dbo_theme_pixeladmin td.dbo_container_new table.dbo_new > tbody > tr > * {
 	padding-bottom: 15px;
 }
 
@@ -757,6 +758,12 @@ table.checkbox_container > tbody > tr > td label:after {
 table.checkbox_container > tbody > tr > td,
 table.checkbox_container > tbody > tr > td {
   margin-top: 0;
+}
+
+
+
+div.dbo_theme_pixeladmin table.radio_container td {
+	padding : 0;
 }
 
 /*tab control*/
