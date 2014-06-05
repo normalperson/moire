@@ -7,7 +7,6 @@ class AppMenu extends Menu{
 	
 	var $additionalLI;
 	
-	
 	function __construct(){
 		parent::__construct();
 		$this->class = isset($_GET['webc'])?$_GET['webc']:false;

@@ -17,6 +17,13 @@ class PMFunc{
 	function testEng($flowid,$o){
 		echo '1234';
 	}
+	function testnew() {
+		echo 123456;
+		if (!empty($_POST['PROCEED'])) {
+			return array('casekey'=>144, 'casetype'=>'jobsheet');
+		}
+		echo "<form method='post'><input type='submit' value='MOVE' name='PROCEED' /></form>";
+	}
 	function reqVerification($flowid,$o){
 		$_GET['dboid']='reqverification';
 		$_GET['js_id']=$flowid;

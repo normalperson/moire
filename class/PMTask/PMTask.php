@@ -18,12 +18,39 @@ class PMTask {
 		return $smarty;
 	}
 
+	function renderDropDown() {
+		global $DB, $USER, $GLOBAL;
+		
+		$rs = $DB->getArray("select pmev_name, pmev_id, pmev_start_function 
+		from fcpmevent where pmev_type = 'START' order by pmev_name", array(), PDO::FETCH_ASSOC);
+		
+		if ($rs) {
+			$html = 
+			"<li class='nav-icon-btn nav-icon-btn-default dropdown'>
+				<a href='javascript:void(0)' class='dropdown-toggle' data-toggle='dropdown'>
+					<i class='nav-icon fa fa-plus'></i>
+					<span class='small-screen-text'>Create New</span>
+				</a>
+				<ul class='dropdown-menu'>";
+			foreach ($rs as $r) {
+				$html .= "<li><a href='{$this->classurl}/startEvent?id={$r['pmev_id']}&type=PM_Event'>{$r['pmev_name']}</a></li>";
+			}
+			$html .= 
+				"</ul>
+			</li>";
+
+			return $html;
+		}
+	}
+	
 	function renderNavi($skipUL = true) {
 		global $DB, $USER, $GLOBAL;
 		
-
+		
+		
 		// USER ACTIVITIES
-		$rs = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Activity' as object_type, pmat_id activityid, max(pmat_name) activityname, 
+		$rs1 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Activity' as object_type, pmat_id activityid, 
+		max(pmat_name) activityname, 
 		sum(case when pmf_id is not null then 1 else 0 end) totalcount,
 		sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount,
 		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
@@ -34,17 +61,19 @@ class PMTask {
 		order by 2,4", array(), PDO::FETCH_ASSOC);
 		
 		// INTERMEDIATE EVENTS SHOW AS TASK
-		$rs2 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Event' as object_type, pmev_id eventid, max(pmev_name) eventname, 
+		$rs2 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Event' as object_type, pmev_id eventid, pmev_type eventtype,
+		max(pmev_name) eventname, 
 		sum(case when pmf_id is not null then 1 else 0 end) totalcount,
 		sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount,
 		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
 		min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
-		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y'
+		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and ((pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y')
+		or pmev_type = 'START')
 		left join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmev_id = pmf_obj_id and pmf_end_date is null
-		group by pmwf_id, pmev_id
-		order by 2,4", array(), PDO::FETCH_ASSOC);
+		group by pmwf_id, pmev_id, pmev_type
+		order by 2, pmev_type desc, 4", array(), PDO::FETCH_ASSOC);
 		
-		$rs = array_merge($rs, $rs2);
+		$rs = array_merge($rs1, $rs2);
 		$data = array();
 		$totalpending = 0;
 		$totaldue = 0;
@@ -57,6 +86,7 @@ class PMTask {
 					'totaloverduecount' => 0,
 					'activities' => array(),
 					'events' => array(),
+					'start' => array(),
 				);
 			}
 			if ($row['object_type'] == 'PM_Activity') {
@@ -67,12 +97,18 @@ class PMTask {
 					'totaloverduecount' => $row['totaloverduecount'],
 				);
 			}
-			else if ($row['object_type'] == 'PM_Event') {
+			else if ($row['object_type'] == 'PM_Event' && $row['eventtype'] == 'INTERMEDIATE') {
 				$data[$row['workflowid']]['events'][$row['eventid']] = array(
 					'id' => $row['eventid'],
 					'name' => $row['eventname'],
 					'totalpendingcount' => $row['totalpendingcount'],
 					'totaloverduecount' => $row['totaloverduecount'],
+				);
+			}
+			else if ($row['object_type'] == 'PM_Event' && $row['eventtype'] == 'START') {
+				$data[$row['workflowid']]['start'][$row['eventid']] = array(
+					'id' => $row['eventid'],
+					'name' => $row['eventname'],
 				);
 			}
 			$data[$row['workflowid']]['totalpendingcount'] += $row['totalpendingcount'];
@@ -84,6 +120,18 @@ class PMTask {
 		foreach ($data as $wfid=>$d) {
 			$currhtml = "";
 			$focusWF = false;
+			
+			foreach ($d['start'] as $sid=>$s) {
+				$focusThis = $this->showingTask('PM_Event', $s['id']);
+				if ($focusThis) $focusWF = true;
+				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
+								<a tabindex='-1' href='{$this->classurl}/startEvent?id={$s['id']}&type=PM_Event'>
+									<i class='menu-icon fa fa-plus' title='Start Event'></i>
+									<span class='mm-text'>{$s['name']}</span>
+								</a>
+							</li>";
+			}
+			
 			foreach ($d['activities'] as $atvid=>$a){
 				$focusThis = $this->showingTask('PM_Activity', $a['id']);
 				if ($focusThis) $focusWF = true;
@@ -160,6 +208,21 @@ class PMTask {
 		return false;
 	}
 	
+	function startEvent() {
+		global $HTML, $GLOBAL, $DB;
+		$smarty = $this->initSmarty();
+		if (!empty($_REQUEST['id'])) {
+			$GLOBAL['PMTask_taskid'] = $_REQUEST['id'];
+			$GLOBAL['PMTask_tasktype'] = 'PM_Event';
+		}
+		$ev = new PM_Event($GLOBAL['PMTask_taskid']);
+		$case = $ev->start();
+		if ($case) {
+			// case created
+			redirect(APP_HREF);
+		}
+	}
+	
 	function caseFlowList() {
 		global $HTML, $GLOBAL, $DB;
 		$smarty = $this->initSmarty();
@@ -170,6 +233,10 @@ class PMTask {
 		}
 		
 		if (empty($GLOBAL['PMTask_taskid']) || empty($GLOBAL['PMTask_tasktype'])) return;
+		if ($GLOBAL['PMTask_tasktype'] == 'PM_Event') {
+			$ev = new PM_Event($GLOBAL['PMTask_taskid']);
+			if ($ev->type == 'START') redirect($this->classurl."/startEvent");
+		}
 		
 		$this->renderTopBar($GLOBAL['PMTask_taskid'], $GLOBAL['PMTask_tasktype']);
 		if ($GLOBAL['PMTask_tasktype'] == 'PM_Event') {
