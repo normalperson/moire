@@ -2,6 +2,10 @@ body {
 	font-family: "Segoe UI","Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+button.close {
+	font-family : "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 .widget-notifications .notification.UNREAD {
 	background-color: #5E756A;
 }
@@ -78,6 +82,8 @@ body {
 	-webkit-animation: colorblink 0.5s  infinite alternate; /* Chrome, Safari, Opera */
 	animation: colorblink 0.5s  infinite alternate;
 }
+
+
 /* Chrome, Safari, Opera */
 @-webkit-keyframes colorblink
 {

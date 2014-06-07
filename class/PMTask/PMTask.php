@@ -18,12 +18,47 @@ class PMTask {
 		return $smarty;
 	}
 
+	function renderDropDown() {
+		global $DB, $USER, $GLOBAL;
+
+		$rs = $DB->getArray("select pmev_name, pmev_id, pmwf_name
+		from fcpmevent join fcpmworkflow on pmwf_id=pmev_pmwfid where pmev_type = 'START' and pmev_start_function is not null 
+		order by pmwf_name, pmev_name", array(), PDO::FETCH_ASSOC);
+
+		if ($rs) {
+			$html = 
+			"<li class='nav-icon-btn nav-icon-btn-default dropdown'>
+				<a href='javascript:void(0)' class='dropdown-toggle' data-toggle='dropdown'>
+					<i class='nav-icon fa fa-plus'></i>
+					<span class='small-screen-text'>Create New</span>
+				</a>
+				<ul class='dropdown-menu'>";
+			$wfname = "";
+			$cnt = 0;
+			foreach ($rs as $r) {
+				if ($wfname != $r['pmwf_name']) {
+					if ($cnt > 0) $html .= "<li role='presentation' class='divider'></li>";
+					$html .= "<li role='presentation' class='dropdown-header'>{$r['pmwf_name']}</li>";
+					$wfname = $r['pmwf_name'];
+				}
+				$html .= "<li><a href='{$this->classurl}/startEvent?id={$r['pmev_id']}&type=PM_Event'>{$r['pmev_name']}</a></li>";
+			}
+			$html .= 
+				"</ul>
+			</li>";
+
+			return $html;
+		}
+	}
+
 	function renderNavi($skipUL = true) {
 		global $DB, $USER, $GLOBAL;
 
 
+
 		// USER ACTIVITIES
-		$rs = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Activity' as object_type, pmat_id activityid, max(pmat_name) activityname, 
+		$rs1 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Activity' as object_type, pmat_id activityid, 
+		max(pmat_name) activityname, 
 		sum(case when pmf_id is not null then 1 else 0 end) totalcount,
 		sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount,
 		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
@@ -34,17 +69,19 @@ class PMTask {
 		order by 2,4", array(), PDO::FETCH_ASSOC);
 
 		// INTERMEDIATE EVENTS SHOW AS TASK
-		$rs2 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Event' as object_type, pmev_id eventid, max(pmev_name) eventname, 
+		$rs2 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Event' as object_type, pmev_id eventid, pmev_type eventtype,
+		max(pmev_name) eventname, 
 		sum(case when pmf_id is not null then 1 else 0 end) totalcount,
 		sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount,
 		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
 		min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
-		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y'
+		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and ((pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y')
+		or (pmev_type = 'START' and pmev_start_function is not null))
 		left join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmev_id = pmf_obj_id and pmf_end_date is null
-		group by pmwf_id, pmev_id
-		order by 2,4", array(), PDO::FETCH_ASSOC);
+		group by pmwf_id, pmev_id, pmev_type
+		order by 2, pmev_type desc, 4", array(), PDO::FETCH_ASSOC);
 
-		$rs = array_merge($rs, $rs2);
+		$rs = array_merge($rs1, $rs2);
 		$data = array();
 		$totalpending = 0;
 		$totaldue = 0;
@@ -57,6 +94,7 @@ class PMTask {
 					'totaloverduecount' => 0,
 					'activities' => array(),
 					'events' => array(),
+					'start' => array(),
 				);
 			}
 			if ($row['object_type'] == 'PM_Activity') {
@@ -67,12 +105,18 @@ class PMTask {
 					'totaloverduecount' => $row['totaloverduecount'],
 				);
 			}
-			else if ($row['object_type'] == 'PM_Event') {
+			else if ($row['object_type'] == 'PM_Event' && $row['eventtype'] == 'INTERMEDIATE') {
 				$data[$row['workflowid']]['events'][$row['eventid']] = array(
 					'id' => $row['eventid'],
 					'name' => $row['eventname'],
 					'totalpendingcount' => $row['totalpendingcount'],
 					'totaloverduecount' => $row['totaloverduecount'],
+				);
+			}
+			else if ($row['object_type'] == 'PM_Event' && $row['eventtype'] == 'START') {
+				$data[$row['workflowid']]['start'][$row['eventid']] = array(
+					'id' => $row['eventid'],
+					'name' => $row['eventname'],
 				);
 			}
 			$data[$row['workflowid']]['totalpendingcount'] += $row['totalpendingcount'];
@@ -84,6 +128,18 @@ class PMTask {
 		foreach ($data as $wfid=>$d) {
 			$currhtml = "";
 			$focusWF = false;
+
+			foreach ($d['start'] as $sid=>$s) {
+				$focusThis = $this->showingTask('PM_Event', $s['id']);
+				if ($focusThis) $focusWF = true;
+				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
+								<a tabindex='-1' href='{$this->classurl}/startEvent?id={$s['id']}&type=PM_Event'>
+									<i class='menu-icon fa fa-plus' title='Start Event'></i>
+									<span class='mm-text'>{$s['name']}</span>
+								</a>
+							</li>";
+			}
+
 			foreach ($d['activities'] as $atvid=>$a){
 				$focusThis = $this->showingTask('PM_Activity', $a['id']);
 				if ($focusThis) $focusWF = true;
@@ -160,6 +216,22 @@ class PMTask {
 		return false;
 	}
 
+	function startEvent() {
+		global $HTML, $GLOBAL, $DB;
+		$smarty = $this->initSmarty();
+		if (!empty($_REQUEST['id'])) {
+			$GLOBAL['PMTask_taskid'] = $_REQUEST['id'];
+			$GLOBAL['PMTask_tasktype'] = 'PM_Event';
+		}
+		$ev = new PM_Event($GLOBAL['PMTask_taskid']);
+		$this->renderTopBar($ev->id, 'PM_Event');
+		$case = $ev->start();
+		if ($case) {
+			// case created
+			redirect(APP_HREF);
+		}
+	}
+
 	function caseFlowList() {
 		global $HTML, $GLOBAL, $DB;
 		$smarty = $this->initSmarty();
@@ -170,6 +242,10 @@ class PMTask {
 		}
 
 		if (empty($GLOBAL['PMTask_taskid']) || empty($GLOBAL['PMTask_tasktype'])) return;
+		if ($GLOBAL['PMTask_tasktype'] == 'PM_Event') {
+			$ev = new PM_Event($GLOBAL['PMTask_taskid']);
+			if ($ev->type == 'START') redirect($this->classurl."/startEvent");
+		}
 
 		$this->renderTopBar($GLOBAL['PMTask_taskid'], $GLOBAL['PMTask_tasktype']);
 		if ($GLOBAL['PMTask_tasktype'] == 'PM_Event') {
@@ -324,10 +400,18 @@ class PMTask {
 					</li>";
 
 				if ($tasktype == 'PM_Event') {
-					$html .= 
-					"<li>
-						<a href='caseFlowList?id={$rs['pmev_id']}&type=PM_Event'><i title='Intermediate Event' class='fa fa-play-circle-o fa-fw fa-lg'></i> {$rs['pmev_name']}</a>
-					</li>";
+					if ($rs['pmev_type'] == 'START') {
+						$html .= 
+						"<li>
+							<a href='startEvent?id={$rs['pmev_id']}&type=PM_Event'><i title='Start Event' class='fa fa-plus fa-fw fa-lg'></i> {$rs['pmev_name']}</a>
+						</li>";
+					}
+					else {
+						$html .= 
+						"<li>
+							<a href='caseFlowList?id={$rs['pmev_id']}&type=PM_Event'><i title='Intermediate Event' class='fa fa-play-circle-o fa-fw fa-lg'></i> {$rs['pmev_name']}</a>
+						</li>";
+					}
 				}
 				else {
 					$html .= 
@@ -657,28 +741,11 @@ $(function () {
 		$lastcommid = !empty($_REQUEST['lastcommid']) ?  $_REQUEST['lastcommid'] : null;
 
 		if ($txt && $caseid) {
-			/*create new function*/
-			$now = new DateTime();
-			$data = array(
-				'pmcc_pmcid' => $caseid,
-				'pmcc_pmfid' => $flowid,
-				'pmcc_parentid' => $parentid,
-				'pmcc_created_date' => $now->format('Y-m-d H:i:s'),
-				'pmcc_created_by' => $USER->userid,
-				'pmcc_comment' => $txt,
-				'pmcc_delete' => 'N',
-			);
-			$ok = $DB->doInsert('fcpmcasecomment', $data);
-			$pmccid = $DB->lastInsertId('fcpmcasecomment_pmcc_id_seq');
-			$data2 = array(
-				'pmcr_pmccid'=>$pmccid,
-				'pmcr_read_by'=>$USER->userid,
-				'pmcr_read_date'=>$now->format('Y-m-d H:i:s'),
-			);
-			$ok = $DB->doInsert('fcpmcasecommentread', $data2);
-			/*create new function*/
-			$data = $this->getCommentData($caseid, $lastcommid, $lastcommid);
+			$caseobj = new PM_Case($caseid);
+			$pmccid = $caseobj->insertComment($parentid, $txt, $flowid);
+			if ($pmccid) $caseobj->readComment($pmccid);
 
+			$data = $this->getCommentData($caseid, $lastcommid, $lastcommid);
 			$treedata = arr2tree($data, 'pmcc_id', 'pmcc_parentid', 'REPLIES');
 			$commenthtml = '';
 			foreach ($treedata as $row) {
@@ -699,17 +766,12 @@ $(function () {
 		$tillcommid = !empty($_REQUEST['tillcommid']) ?  $_REQUEST['tillcommid'] : false;
 		$now = new DateTime();
 		if ($caseid && $tillcommid) {
+			$caseobj = new PM_Case($caseid);
 			$toreadid = $DB->getCol("select pmcc_id from fcpmcasecomment left join fcpmcasecommentread on pmcc_id = pmcr_pmccid and pmcr_read_by = :2
 			where pmcc_pmcid=:0 and pmcc_id <= :1 and pmcr_id is null order by pmcc_id", array($caseid, $tillcommid, $USER->userid));
 			foreach ($toreadid as $pmccid) {
-				$data = array(
-					'pmcr_pmccid'=>$pmccid,
-					'pmcr_read_by'=>$USER->userid,
-					'pmcr_read_date'=>$now->format('Y-m-d H:i:s'),
-				);
-				$ok = $DB->doInsert('fcpmcasecommentread', $data);
+				$caseobj->readComment($pmccid);
 			}
-
 			echo json_encode($toreadid);
 		}
 	}
@@ -817,68 +879,5 @@ $(function () {
 		}
 	}
 	// case flag end
-
-
-	function jobinfo(){
-		global $HTML;
-
-		$HTML->showFooter = false;
-		html_header('header.nh.html');
-		dbo_include('jobinfo');	
-	}
-	function jobcolor(){
-		global $HTML;
-
-		$HTML->showFooter = false;
-		html_header('header.nh.html');
-		dbo_include('jobcolor');	
-	}
-	function jobother(){
-		global $HTML;
-
-		$HTML->showFooter = false;
-		html_header('header.nh.html');
-		dbo_include('jobother');	
-	}
-	function getCartonInfo(){
-		global $DB;
-
-		// include document class
-		require_once(CORE_DIR.DS.'inc'.DS.'Document.inc.php');		
-
-		$carid = $_POST['carid'];
-
-		// get image location
-		$doc = new Document();
-		$imageinfo = $doc->getSingleDocInfo($carid,'car_id');
-
-
-		$sql = "select * from mcartonvariable where carv_carid = :0";
-		$var = $DB->GetArray($sql,array($carid), PDO::FETCH_ASSOC);
-
-		$ret = array('imageinfo' => $imageinfo, 'var' => $var);
-
-		echo json_encode($ret);
-	}
-
-
-	// testing
-
-	function simulateStart() {
-		$s = new PM_Event(1);
-		$s->start(153, 'jobsheet');
-	}
-
-	function runAllTimer() { // temp
-		global $DB;
-		$DB->showSQL=true;
-		$dueArr = $DB->getArray("select * from fcpmcaseflow where pmf_end_date is null and pmf_timer_due_date <= now()");
-		foreach($dueArr as $d) {
-			$case = new PM_Case($d['pmf_pmcid']);
-			$case->performFlow($d['pmf_id'], false, true);
-		}
-	}
-
-
 }
 ?>
