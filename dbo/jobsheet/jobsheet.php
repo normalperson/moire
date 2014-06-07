@@ -20,7 +20,7 @@ function getCarton(carid, tbody, jobid){
 	$('#'+tbody).append(newrow);
 
 	$.ajax({
-		url: "getCartonInfo",
+		url: "<?php echo WEB_HREF.'/PMFunc/getCartonInfo';?>",
 		type: "post",
 		async:false,
 		dataType: 'json',
@@ -85,7 +85,7 @@ function dbo_jobsheet_customize(&$dbo){
 
 function dbo_jobsheet_custom_new($table, $cols){
 
-	global $DB;
+	global $DB,$JOBARRAY;
 	$ret = array();
 	//$DB->showsql = true;
 
@@ -147,10 +147,9 @@ function dbo_jobsheet_custom_new($table, $cols){
 				);
 			$ok = $DB->doInsert('mjscartonvalue', $cartondata);			
 		}
-		// insert flow
-
-		// insert remark
-
+		$JOBARRAY = array('casekey' => $jobid,
+			              'casetype' => 'jobsheet',
+			              'comment' => $remark);
 		
 
 	}

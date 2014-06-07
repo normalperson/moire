@@ -6,12 +6,7 @@ class AppMenu extends Menu{
 	var $treeRS;
 
 	var $additionalLI;
-<<<<<<< HEAD
 
-
-=======
-	
->>>>>>> 4e1413d33bee8e110a1ac08cb801f26bb637c709
 	function __construct(){
 		parent::__construct();
 		$this->class = isset($_GET['webc'])?$_GET['webc']:false;
