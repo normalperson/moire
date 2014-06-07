@@ -7,6 +7,20 @@ function getUserAvatarImage($userid) {
 	return $imgfile;
 	
 }
+function getHighestPriorityCat($catstring){
+	if($catstring == '') return 'Cat string cannot be empty';
+
+	global $DB;
+
+
+	$sql = "select jcl_id from mjobcatlookup
+			where jcl_id in ($catstring)
+			order by jcl_sequence desc
+			limit 1";
+
+	return $DB->GetOne($sql,null, PDO::FETCH_ASSOC);
+
+}
 
 
 

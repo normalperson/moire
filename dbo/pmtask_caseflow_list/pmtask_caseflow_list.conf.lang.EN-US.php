@@ -28,6 +28,10 @@ $dbo->cols['pmf_token_pmgwid']->caption->set('default', 'pmf_token_pmgwid', 'tex
 $dbo->cols['pmf_token_return_pmgwid']->caption->set('default', 'pmf_token_return_pmgwid', 'text');
 $dbo->cols['urgency']->caption->set('default', ' ', 'text');
 $dbo->cols['actions']->caption->set('default', 'Actions', 'text');
+$dbo->cols['pmf_specific_userid']->caption->set('default', 'pmf_specific_userid', 'text');
+$dbo->cols['pmf_end_by']->caption->set('default', 'pmf_end_by', 'text');
+$dbo->cols['pmf_end_pmfid']->caption->set('default', 'pmf_end_pmfid', 'text');
+$dbo->cols['pmf_from_event_gateway']->caption->set('default', 'pmf_from_event_gateway', 'text');
 
 $dbo->titleList = ' ';
 $dbo->titleDetail = 'Detail';
@@ -40,7 +44,9 @@ $dbo->text->editCancel = 'Cancel';
 $dbo->text->editSubmit = 'Submit';
 $dbo->text->newCancel = 'Cancel';
 $dbo->text->newSubmit = 'Submit';
+$dbo->text->listSubmit = 'Submit';
 $dbo->text->detailCancel = 'Back';
+$dbo->text->detailDelete = 'Delete';
 $dbo->text->defaultMessageAfterNew = 'Record created.';
 $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';

@@ -9,8 +9,8 @@ function dbo_cartonsetup_customize(&$dbo){
 
 
 function dbo_cartonsetup_custom_new($table, $cols){
-	// include document class
-	require_once(CORE_DIR.DS.'inc'.DS.'Document.inc.php');		
+	// include image class
+	require_once(INCLUDE_DIR.DS.'Image.inc.php');		
 
 	global $DB, $DETAIL_SETUP;
 	$ret = array();
@@ -40,19 +40,12 @@ function dbo_cartonsetup_custom_new($table, $cols){
 		if (!$newid) $ret[] = 'Error retrieving last ID';
 		else {
 			$newfilename = $newid;	
-			// move file
-			$except = array("jpg", "jpeg", "gif", "png","JPG", "JPEG", "GIF", "PNG");
-			$imp = implode('|', $except);
-			$imgregexp = '/^.*\.('.$imp.')$/i';
+			$img = new Image();
 
-			$setting = array('accept_file_types' => $imgregexp);
-			$doc = new Document($setting);
+			$fileinfo = $img->saveImage($image, $filelocation,$newfilename);
 
-
-			$fileinfo = $doc->moveSingleImage($filelocation, $newfilename,$image,$newid,'car_id');
 			if(!$fileinfo) $ret[] = $doc->error; 
 			else{
-				$status = $doc->singleDocIns($newid,'car_id',$fileinfo['filename'],$fileinfo['filesize'],$fileinfo['extension']);	
 
 				if (!empty($_POST['detail'])) {
 				

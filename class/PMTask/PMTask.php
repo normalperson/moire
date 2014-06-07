@@ -657,6 +657,7 @@ $(function () {
 		$lastcommid = !empty($_REQUEST['lastcommid']) ?  $_REQUEST['lastcommid'] : null;
 
 		if ($txt && $caseid) {
+			/*create new function*/
 			$now = new DateTime();
 			$data = array(
 				'pmcc_pmcid' => $caseid,
@@ -675,6 +676,7 @@ $(function () {
 				'pmcr_read_date'=>$now->format('Y-m-d H:i:s'),
 			);
 			$ok = $DB->doInsert('fcpmcasecommentread', $data2);
+			/*create new function*/
 			$data = $this->getCommentData($caseid, $lastcommid, $lastcommid);
 
 			$treedata = arr2tree($data, 'pmcc_id', 'pmcc_parentid', 'REPLIES');
