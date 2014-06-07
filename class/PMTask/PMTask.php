@@ -422,7 +422,7 @@ class PMTask {
 			}
 						
 			if (!empty($rs['pmc_id'])) {
-			
+				$cd = false;
 				$casedesc = "{$rs['pmc_casetype']}::{$rs['pmc_casekey']}";
 				$s = $DB->getRow("select pmct_table, pmct_desc_col, pmct_key_col from fcpmcasetype where pmct_code=:0", array($rs['pmc_casetype']), PDO::FETCH_ASSOC);
 				if ($s) $cd = $DB->getOne("select {$s['pmct_desc_col']} from {$s['pmct_table']} where {$s['pmct_key_col']} = :0", array($rs['pmc_casekey']));
