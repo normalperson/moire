@@ -10,6 +10,68 @@
 		</div>					
 	</div>
     <div class="panel-body">
-       <div id="custpassorder" style="height:400px"></div>
+       <div id="passorder" style="height:400px"></div>
     </div>		    
 </div>
+{literal}
+<script type="text/javascript">
+$( document ).ready(function() {
+ $('#passorder').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Pass 12 month order'
+            },
+            subtitle: {
+                text: 'by quantity and value'
+            },
+            xAxis: {
+                categories: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Order'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Value',
+                data: [490.9, 711.5, 1065.4, 1291.2, 1441.0, 1756.0, 1351.6, 1482.5, 2161.4, 1941.1, 951.6, 541.4]
+    
+            }, {
+                name: 'Quantity',
+                data: [83, 78, 98, 93, 106, 84, 105, 104, 91, 83, 106, 92]
+    
+            }]
+        });
+});
+</script>
+{/literal}

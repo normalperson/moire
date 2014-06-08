@@ -25,33 +25,32 @@ class PMFunc{
 		echo "<form method='post'><input type='submit' value='MOVE' name='PROCEED' /></form>";
 	}
 	function reqVerification($flowid,$o){
+		global $FLOWDECISION,$REMARK;
 		$_GET['dboid']='reqverification';
 		$_GET['js_id']=$flowid;
 		$_GET['dbostate']='edit';
 		dbo_include('reqverification');
+
+		if($FLOWDECISION) {
+			return true;
+			#$o->
+		}
 		
-		//$this->viewJobInfo($o->casekey);
 	}
 	function viewJobInfo($caseobj){
 		global $DB;
-		$jsid = $caseobj->casekey;
-		$smarty = $this->initSmarty();
-		$sql = "select * from mcarton";
-		$carton = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
-		$smarty->assign('carton',$carton);
-		$smarty->assign('jsid',$jsid);
-		$smarty->display('viewjob.html');
+		$_GET['dboid']='jobsheet';
+		$_GET['dbostate']='detail';
+		$_GET['js_id']=$caseobj->casekey;
+		dbo_include('jobsheet');
 	}
 	function pendingRevert($flowid,$o){
 		global $DB;
-		$smarty = $this->initSmarty();
-		$jsid = $o->casekey;
-		$sql = "select * from mcarton";
-		$carton = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
-		$smarty->assign('carton',$carton);
-		$smarty->assign('jsid',$jsid);
-		$smarty->display('editjob.html');
-
+		$_GET['dboid']='jobsheet';
+		$_GET['dbostate']='edit';
+		$_GET['js_id']=$caseobj->casekey;
+		dbo_include('jobsheet');
+		
 	}
 	function pendingAcknowledge($flowid,$o){
 		global $DB;

@@ -71,6 +71,10 @@ class moireJob{
 
 		echo json_encode($ret);
 	}
+	function showDBO(){
+		html_header();
+		dbo_include('reqverification');
+	}
 	
 	
 }

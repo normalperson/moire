@@ -13,3 +13,45 @@
        <div id="myperformance" style="height:400px"></div>
     </div>
 </div>		
+{literal}
+<script type="text/javascript">
+$( document ).ready(function() {
+	$('#myperformance').highcharts({
+	    chart: {
+	        plotBackgroundColor: null,
+	        plotBorderWidth: null,
+	        plotShadow: false
+	    },
+	    title: {
+	        text: 'My performance'
+	    },
+	    tooltip: {
+		    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	    },
+	    plotOptions: {
+	        pie: {
+	            allowPointSelect: true,
+	            cursor: 'pointer',
+	            dataLabels: {
+	                enabled: false
+	            },
+	            showInLegend: true
+	        }
+	    },
+	    series: [{
+	        type: 'pie',
+	        name: 'My performance',
+	        data: [
+	            ['Verified within SLA',   75.0],
+	            {
+	                name: 'Exceed SLA',
+	                y: 25.0,
+	                sliced: true,
+	                selected: true
+	            }
+	        ]
+	    }]
+	});
+});	
+</script>
+{/literal}

@@ -15,4 +15,40 @@
        </div>
     </div>
 </div>		
+<script type="text/javascript">
+$( document ).ready(function() {
+	$('#artistperformance').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Artist performance'
+        },
+        xAxis: {
+            categories: ['Artist1', 'Artist2', 'Artist3', 'Artist4', 'Artist5']
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Case performance by each artist'
+            }
+        },
+        legend: {
+            reversed: true
+        },
+        plotOptions: {
+            series: {
+                stacking: 'normal'
+            }
+        },
+            series: [{
+            name: 'Exceed SLA',
+            data: [2, 3, 4, 7, 0]
+        }, {
+            name: 'Comply with SLA',
+            data: [10, 7, 14, 2, 2]
+        }]
+    });
+});
+</script>
 

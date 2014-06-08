@@ -65,11 +65,11 @@
 <!-- monthly sales and my performance -->
 <div class="row">
 	<div class="col-md-6">
-		{$Home->renderJobByCategory()}	
+		{$Home->renderJobByCategory('TOTAL ORDER MTD', 'Total Order', 'Order by category')}	
 	</div>
 
 	<div class="col-md-6">
-		{$Home->renderTaskPendingAction()}		
+		{$Home->renderTaskPendingAction('CUSTOMER')}		
 	</div>
 
 </div>
