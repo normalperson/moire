@@ -742,7 +742,7 @@ $(function () {
 		
 		if ($txt && $caseid) {
 			$caseobj = new PM_Case($caseid);
-			$pmccid = ($parentid) $caseobj->replyComment($parentid, $txt, $flowid) ? $caseobj->insertComment($txt, $flowid);
+			$pmccid = ($parentid) ? $caseobj->replyComment($parentid, $txt, $flowid) : $caseobj->insertComment($txt, $flowid);
 			if ($pmccid) $caseobj->readComment($pmccid);
 
 			$data = $this->getCommentData($caseid, $lastcommid, $lastcommid);
