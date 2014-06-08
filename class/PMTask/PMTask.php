@@ -531,7 +531,6 @@ $(function () {
 		
 		$caseid = false;
 		$this->renderTopBar(null, null, $GLOBAL['PMTask_flowid'], $caseid);
-		
 		if ($caseid) {
 			$case = new PM_Case($caseid);
 			$currid = $case->activeFlow[$GLOBAL['PMTask_flowid']]['pmf_obj_id'];
