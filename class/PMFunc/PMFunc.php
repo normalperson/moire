@@ -27,7 +27,7 @@ class PMFunc{
 	function reqVerification($flowid,$o){
 		global $FLOWDECISION,$REMARK;
 		$_GET['dboid']='reqverification';
-		$_GET['js_id']=$flowid;
+		$_GET['js_id']=$o->casekey;
 		$_GET['dbostate']='edit';
 		dbo_include('reqverification');
 
@@ -50,7 +50,7 @@ class PMFunc{
 		$_GET['dbostate']='edit';
 		$_GET['js_id']=$caseobj->casekey;
 		dbo_include('jobsheet');
-		
+
 	}
 	function pendingAcknowledge($flowid,$o){
 		global $DB;
