@@ -98,7 +98,7 @@ $dbo->layoutNew = '2;
 1;
 1;
 1;';
-$dbo->theme = 'metro';
+$dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
 $dbo->pageLinkCount = 7;
 $dbo->recordPerPage = 10;

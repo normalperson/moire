@@ -1375,7 +1375,8 @@ CREATE TABLE fcpmconnector (
     pmcn_to_id integer,
     pmcn_order integer,
     pmcn_type character varying(32),
-    pmcn_ruid integer
+    pmcn_ruid integer,
+    pmcn_ruid_result character varying(12) DEFAULT 'true'::character varying
 );
 
 
@@ -1960,6 +1961,47 @@ ALTER SEQUENCE fcusersession_us_id_seq OWNED BY fcusersession.us_id;
 
 
 --
+-- Name: martistskill; Type: TABLE; Schema: pnd; Owner: pnd; Tablespace: 
+--
+
+CREATE TABLE martistskill (
+    ma_id integer NOT NULL,
+    ma_usruserid character varying(50),
+    ma_jclid integer
+);
+
+
+ALTER TABLE pnd.martistskill OWNER TO pnd;
+
+--
+-- Name: COLUMN martistskill.ma_jclid; Type: COMMENT; Schema: pnd; Owner: pnd
+--
+
+COMMENT ON COLUMN martistskill.ma_jclid IS 'foreign key to mjobcatlookup';
+
+
+--
+-- Name: martistskill_ma_id_seq; Type: SEQUENCE; Schema: pnd; Owner: pnd
+--
+
+CREATE SEQUENCE martistskill_ma_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pnd.martistskill_ma_id_seq OWNER TO pnd;
+
+--
+-- Name: martistskill_ma_id_seq; Type: SEQUENCE OWNED BY; Schema: pnd; Owner: pnd
+--
+
+ALTER SEQUENCE martistskill_ma_id_seq OWNED BY martistskill.ma_id;
+
+
+--
 -- Name: mcarton; Type: TABLE; Schema: pnd; Owner: pnd; Tablespace: 
 --
 
@@ -2010,6 +2052,163 @@ ALTER TABLE pnd.mcartonvariable OWNER TO pnd;
 --
 
 COMMENT ON COLUMN mcartonvariable.carv_carid IS 'foreign key to mcarton car_id';
+
+
+--
+-- Name: mcustmachine; Type: TABLE; Schema: pnd; Owner: pnd; Tablespace: 
+--
+
+CREATE TABLE mcustmachine (
+    mc_id integer NOT NULL,
+    mc_orgid integer,
+    mc_pressmanufacturer character varying(200),
+    mc_pressyearbuilt character varying(50),
+    mc_pressmodel character varying(200),
+    mc_presswidth character varying(50),
+    mc_presstype character varying(200),
+    mc_pressspeed character varying(50),
+    mc_presscylinderrepeat character varying(50),
+    mc_inkmanufacturer character varying(200),
+    mc_inkcommercialname character varying(200),
+    mc_inktype character varying(50),
+    mc_inktypeother character varying(200),
+    mc_inkviscosity character varying(50),
+    mc_inkvicosityother character varying(200),
+    mc_inkprintingunit_1 character varying(50),
+    mc_inkprintingunit_2 character varying(50),
+    mc_inkprintingunit_3 character varying(50),
+    mc_inkprintingunit_4 character varying(50),
+    mc_inkprintingunit_5 character varying(50),
+    mc_inkvisocity_1 character varying(50),
+    mc_inkvisocity_2 character varying(50),
+    mc_inkvisocity_3 character varying(50),
+    mc_inkvisocity_4 character varying(50),
+    mc_inkvisocity_5 character varying(50),
+    mc_inkph_1 character varying(50),
+    mc_inkph_2 character varying(50),
+    mc_inkph_3 character varying(50),
+    mc_inkph_4 character varying(50),
+    mc_inkph_5 character varying(50),
+    mc_inkdensity_1 character varying(50),
+    mc_inkdensity_2 character varying(50),
+    mc_inkdensity_3 character varying(50),
+    mc_inkdensity_4 character varying(50),
+    mc_inkdensity_5 character varying(50),
+    mc_platemanufacturer character varying(200),
+    mc_platecommercialname character varying(200),
+    mc_platetype character varying(50),
+    mc_platedurometer character varying(50),
+    mc_platethickness character varying(50),
+    mc_platerelief character varying(50),
+    mc_mountingtapemanufacturer character varying(200),
+    mc_mountingtapename character varying(200),
+    mc_mountingtapedensity character varying(50),
+    mc_mountingtapthickness character varying(50),
+    mc_mountingcarrierthickness character varying(50),
+    mc_mountingcushionmanufacturer character varying(200),
+    mc_mountingcushonname character varying(200),
+    mc_mountingdensity character varying(50),
+    mc_mountingcushionthickness character varying(50),
+    mc_cimplevel_1 character varying(50),
+    mc_cimplevel_2 character varying(50),
+    mc_cimplevel_3 character varying(50),
+    mc_cimplevel_4 character varying(50),
+    mc_cimplevel_5 character varying(50),
+    mc_cimpsubstrate_1 character varying(50),
+    mc_cimpsubstrate_2 character varying(50),
+    mc_cimpsubstrate_3 character varying(50),
+    mc_cimpsubstrate_4 character varying(50),
+    mc_cimpsubstrate_5 character varying(50),
+    mc_cimpanlox_1 character varying(50),
+    mc_cimpanlox_2 character varying(50),
+    mc_cimpanlox_3 character varying(50),
+    mc_cimpanlox_4 character varying(50),
+    mc_cimpanlox_5 character varying(50),
+    mc_aniloxmanufacturer character varying(200),
+    mc_aniloxtype character varying(50),
+    mc_aniloxengravingangle character varying(50),
+    mc_aniloxinking character varying(200),
+    mc_aniloxprintingunit_1 character varying(50),
+    mc_aniloxprintingunit_2 character varying(50),
+    mc_aniloxprintingunit_3 character varying(50),
+    mc_aniloxprintingunit_4 character varying(50),
+    mc_aniloxprintingunit_5 character varying(50),
+    mc_aniloxmanufacturer_1 character varying(50),
+    mc_aniloxmanufacturer_2 character varying(50),
+    mc_aniloxmanufacturer_3 character varying(50),
+    mc_aniloxmanufacturer_4 character varying(50),
+    mc_aniloxmanufacturer_5 character varying(50),
+    mc_aniloxtype_1 character varying(50),
+    mc_aniloxtype_2 character varying(50),
+    mc_aniloxtype_3 character varying(50),
+    mc_aniloxtype_4 character varying(50),
+    mc_aniloxtype_5 character varying(50),
+    mc_aniloxengravingangle_1 character varying(50),
+    mc_aniloxengravingangle_2 character varying(50),
+    mc_aniloxengravingangle_3 character varying(50),
+    mc_aniloxengravingangle_4 character varying(50),
+    mc_aniloxengravingangle_5 character varying(50),
+    mc_aniloxinking_1 character varying(50),
+    mc_aniloxinking_2 character varying(50),
+    mc_aniloxinking_3 character varying(50),
+    mc_aniloxinking_4 character varying(50),
+    mc_aniloxinking_5 character varying(50),
+    mc_aniloxcellcount_1 character varying(50),
+    mc_aniloxcellcount_2 character varying(50),
+    mc_aniloxcellcount_3 character varying(50),
+    mc_aniloxcellcount_4 character varying(50),
+    mc_aniloxcellcount_5 character varying(50),
+    mc_aniloxvolumn_1 character varying(50),
+    mc_aniloxvolumn_2 character varying(50),
+    mc_aniloxvolumn_3 character varying(50),
+    mc_aniloxvolumn_4 character varying(50),
+    mc_aniloxvolumn_5 character varying(50),
+    mc_aniloxdoration_1 character varying(50),
+    mc_aniloxdoration_2 character varying(50),
+    mc_aniloxdoration_3 character varying(50),
+    mc_aniloxdoration_4 character varying(50),
+    mc_aniloxdoration_5 character varying(50),
+    mc_aniloxdoctoring_1 character varying(50),
+    mc_aniloxdoctoring_2 character varying(50),
+    mc_aniloxdoctoring_3 character varying(50),
+    mc_aniloxdoctoring_4 character varying(50),
+    mc_aniloxdoctoring_5 character varying(50),
+    mc_aniloxcontainment_1 character varying(50),
+    mc_aniloxcontainment_2 character varying(50),
+    mc_aniloxcontainment_3 character varying(50),
+    mc_aniloxcontainment_4 character varying(50),
+    mc_aniloxcontainment_5 character varying(50),
+    mc_substratemanufacturer character varying(200),
+    mc_substratename character varying(200),
+    mc_substratetype character varying(50),
+    mc_substratedyna character varying(50),
+    mc_substrateweight character varying(50),
+    mc_substrateflute character varying(50),
+    mc_substratethickness character varying(50)
+);
+
+
+ALTER TABLE pnd.mcustmachine OWNER TO pnd;
+
+--
+-- Name: mcustmachine_mc_id_seq; Type: SEQUENCE; Schema: pnd; Owner: pnd
+--
+
+CREATE SEQUENCE mcustmachine_mc_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pnd.mcustmachine_mc_id_seq OWNER TO pnd;
+
+--
+-- Name: mcustmachine_mc_id_seq; Type: SEQUENCE OWNED BY; Schema: pnd; Owner: pnd
+--
+
+ALTER SEQUENCE mcustmachine_mc_id_seq OWNED BY mcustmachine.mc_id;
 
 
 --
@@ -2125,7 +2324,8 @@ CREATE TABLE mjobsheet (
     js_status character varying(100),
     js_completiondate timestamp with time zone,
     js_assignto character varying(50),
-    js_carid integer
+    js_carid integer,
+    js_decision character varying(50)
 );
 
 
@@ -5365,10 +5565,24 @@ ALTER TABLE ONLY fcusersession ALTER COLUMN us_id SET DEFAULT nextval('fcuserses
 
 
 --
+-- Name: ma_id; Type: DEFAULT; Schema: pnd; Owner: pnd
+--
+
+ALTER TABLE ONLY martistskill ALTER COLUMN ma_id SET DEFAULT nextval('martistskill_ma_id_seq'::regclass);
+
+
+--
 -- Name: car_id; Type: DEFAULT; Schema: pnd; Owner: pnd
 --
 
 ALTER TABLE ONLY mcarton ALTER COLUMN car_id SET DEFAULT nextval('mcarton_car_id_seq'::regclass);
+
+
+--
+-- Name: mc_id; Type: DEFAULT; Schema: pnd; Owner: pnd
+--
+
+ALTER TABLE ONLY mcustmachine ALTER COLUMN mc_id SET DEFAULT nextval('mcustmachine_mc_id_seq'::regclass);
 
 
 --
@@ -6476,18 +6690,23 @@ SELECT pg_catalog.setval('fclookup_lu_id_seq', 110, true);
 COPY fcmenu (mn_id, mn_code, mn_parentid, mn_title, mn_status, mn_order, mn_url, mn_webflag, mn_class, mn_classlist, mn_func, mn_funclist, mn_param, mn_pmscode, mn_icon_class) FROM stdin;
 1	HEADERMENU	0	Top Menu	ACTIVE	0		Y	\N	\N	\N	\N	\N	\N	\N
 69	MENU	6	Menu Setup	ACTIVE	4400	\N	Y	Setting	\N	menusetup	\N	\N	\N	\N
-82	USERSETTING	6	User Setting	ACTIVE	2000	\N	Y	\N	\N	\N	\N	\N	\N	\N
-49	USERSETUP	82	User Setup	ACTIVE	4210	\N	Y	Setting		usersetting			\N	\N
 50	PERMSETUP	82	Permission Setup	ACTIVE	4230	\N	Y	Setting		permsetting			\N	\N
 51	ROLESETUP	82	Role Setup	ACTIVE	4220	\N	Y	Setting		rolesetting			\N	\N
 83	LOOKUPSETUP	6	Lookup Setup	ACTIVE	2000	\N	Y	Setting	\N	lookupSetup	\N	\N	\N	\N
-84	JOBCATSETUP	6	Job category setup	ACTIVE	3000	\N	Y	Setting	\N	jobcatsetup	\N	\N	\N	\N
-85	CARTONSETUP	6	Carton setup	ACTIVE	3000	\N	Y	Setting	\N	cartonSetup	\N	\N	\N	\N
 88	SVHOME	1	Home (Supervisor)	ACTIVE	1000	\N	Y	Home	\N	supervisorhome	\N	\N	SUPHOME	fa fa-home
 86	QCHOME	1	Home (QC)	ACTIVE	1000	\N	Y	Home	\N	qchome	\N	\N	QCHOME	fa fa-home
 87	ARTHOME	1	Home (Artist)	ACTIVE	1000	\N	Y	Home	\N	artisthome	\N	\N	ARTHOME	fa fa-home
 90	CUSTHOME	1	Home(Customer)	ACTIVE	1000	\N	Y	Home	\N	customerhome	\N	\N	CUSTHOME	fa fa-home
 6	SETTING	1	Setting	ACTIVE	9000	\N	N	\N	\N	\N	\N	\N	MENU_SETTING	fa fa-wrench
+91	ADMINSETUP	6	Admin Setup	ACTIVE	1000	\N	N	\N	\N	\N	\N	\N	\N	\N
+92	ARTISTSETUP	91	Artist setup	ACTIVE	3000	\N	Y	Setting	\N	artistsetup	\N	\N	\N	\N
+49	USERSETUP	82	POSB User Setup	ACTIVE	4210	\N	Y	Setting		usersetting			\N	\N
+85	CARTONSETUP	91	Carton setup	ACTIVE	2000	\N	Y	Setting	\N	cartonSetup	\N	\N	\N	\N
+84	JOBCATSETUP	91	Job category setup	ACTIVE	1000	\N	Y	Setting	\N	jobcatsetup	\N	\N	\N	\N
+82	USERSETTING	6	POSB User Setting	ACTIVE	2000	\N	Y	\N	\N	\N	\N	\N	\N	\N
+95	MACHINESETUP	91	Customer machine setting	ACTIVE	6000	\N	Y	Setting	\N	machinesetup	\N	\N	\N	\N
+94	CUSTOMERSETUP	91	Customer setup	ACTIVE	5000	\N	Y	Setting	\N	orgsetup	\N	\N	\N	\N
+93	PNDUSERSETUP	91	User setting	ACTIVE	4000	\N	Y	Setting	\N	pndusersetting	\N	\N	\N	\N
 \.
 
 
@@ -6495,7 +6714,7 @@ COPY fcmenu (mn_id, mn_code, mn_parentid, mn_title, mn_status, mn_order, mn_url,
 -- Name: fcmenu_mn_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: shine
 --
 
-SELECT pg_catalog.setval('fcmenu_mn_id_seq', 90, true);
+SELECT pg_catalog.setval('fcmenu_mn_id_seq', 95, true);
 
 
 --
@@ -6765,9 +6984,14 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 314	67	1	PM_Activity	313	1	2014-05-31 17:05:23+08	2014-06-01 13:38:26+08	DONE	\N	2014-06-01 13:38:26+08	admin	314	N	2014-06-01 13:38:26+08	2014-06-01 13:53:27+08	2
 334	67	1	PM_Gateway	314	2	2014-06-01 13:38:26+08	2014-06-01 13:38:26+08	DONE	\N	2014-06-01 13:38:26+08	admin	334	N	\N	\N	\N
 339	67	4	PM_Activity	338	15	2014-06-01 14:44:58+08	2014-06-01 15:35:39+08	DONE	\N	2014-06-01 15:35:39+08	admin	339	N	2014-06-01 15:35:39+08	2014-06-01 15:44:58+08	\N
+346	69	1	PM_Activity	345	1	2014-06-07 22:04:24+08	\N	\N	\N	2014-06-08 17:18:56+08	\N	\N	N	2014-06-08 17:18:56+08	2014-06-08 17:48:56+08	5
+351	69	7	PM_Activity	346	27	2014-06-08 17:18:56+08	\N	\N	\N	2014-06-08 17:18:56+08	\N	\N	N	\N	\N	\N
 340	67	5	PM_Activity	339	17	2014-06-01 15:35:39+08	\N	\N	\N	2014-06-04 23:26:29+08	\N	\N	N	2014-06-01 17:55:30+08	2014-06-01 18:15:30+08	1
 345	69	1	PM_Event	\N	\N	2014-06-07 22:04:24+08	2014-06-07 22:04:24+08	DONE	\N	2014-06-07 22:04:24+08	admin	345	N	\N	\N	\N
-346	69	1	PM_Activity	345	1	2014-06-07 22:04:24+08	\N	\N	\N	2014-06-07 22:09:00+08	\N	\N	N	2014-06-07 22:09:00+08	2014-06-07 22:34:24+08	\N
+349	69	7	PM_Activity	346	27	2014-06-08 16:00:08+08	\N	\N	\N	2014-06-08 16:00:08+08	\N	\N	N	\N	\N	\N
+347	69	7	PM_Activity	346	27	2014-06-08 11:42:42+08	\N	\N	\N	2014-06-08 11:42:42+08	\N	\N	N	\N	\N	\N
+348	69	7	PM_Activity	346	27	2014-06-08 12:24:39+08	\N	\N	\N	2014-06-08 12:24:39+08	\N	\N	N	\N	\N	\N
+350	69	7	PM_Activity	346	27	2014-06-08 16:31:24+08	\N	\N	\N	2014-06-08 16:31:24+08	\N	\N	N	\N	\N	\N
 \.
 
 
@@ -6775,7 +6999,7 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 -- Name: fcpmcaseflow_pmf_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 346, true);
+SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 351, true);
 
 
 --
@@ -6806,40 +7030,40 @@ jobsheet	jobsheet	mjobsheet	js_id	js_title	viewJobInfo
 -- Data for Name: fcpmconnector; Type: TABLE DATA; Schema: pnd; Owner: pnd
 --
 
-COPY fcpmconnector (pmcn_id, pmcn_from_type, pmcn_from_id, pmcn_to_type, pmcn_to_id, pmcn_order, pmcn_type, pmcn_ruid) FROM stdin;
-19	PM_Gateway	5	PM_Activity	10	2	NORMAL	\N
-23	PM_Gateway	5	PM_Activity	6	1	NORMAL	\N
-1	PM_Event	1	PM_Activity	1	1	NORMAL	\N
-14	PM_Event	2	PM_Gateway	4	1	NORMAL	\N
-2	PM_Activity	1	PM_Gateway	1	1	NORMAL	\N
-15	PM_Gateway	4	PM_Activity	4	1	NORMAL	\N
-16	PM_Gateway	4	PM_Activity	10	2	NORMAL	\N
-5	PM_Gateway	2	PM_Event	2	1	NORMAL	\N
-17	PM_Activity	4	PM_Activity	5	1	NORMAL	\N
-6	PM_Gateway	2	PM_Event	3	2	NORMAL	\N
-7	PM_Activity	2	PM_Activity	1	1	NORMAL	\N
-18	PM_Activity	5	PM_Gateway	5	1	NORMAL	\N
-8	PM_Event	3	PM_Activity	8	1	NORMAL	\N
-9	PM_Activity	8	PM_Gateway	3	1	NORMAL	\N
-10	PM_Gateway	3	PM_Event	2	1	NORMAL	\N
-20	PM_Activity	10	PM_Activity	5	1	NORMAL	\N
-11	PM_Gateway	3	PM_Event	4	2	NORMAL	\N
-12	PM_Event	4	PM_Activity	9	1	NORMAL	\N
-21	PM_Activity	11	PM_Event	5	1	NORMAL	\N
-13	PM_Activity	9	PM_Gateway	2	1	NORMAL	\N
-22	PM_Activity	12	PM_Event	5	1	NORMAL	\N
-24	PM_Activity	6	PM_Gateway	6	1	NORMAL	\N
-25	PM_Gateway	6	PM_Event	6	1	NORMAL	\N
-26	PM_Gateway	6	PM_Activity	1	2	NORMAL	\N
-3	PM_Gateway	1	PM_Activity	2	2	NORMAL	\N
-4	PM_Gateway	1	PM_Gateway	2	1	NORMAL	\N
-27	PM_Event	7	PM_Activity	7	1	NORMAL	\N
-28	PM_Activity	7	PM_Event	5	1	NORMAL	\N
-29	PM_Event	8	PM_Activity	11	1	NORMAL	\N
-30	PM_Event	9	PM_Activity	12	1	NORMAL	\N
-31	PM_Event	10	PM_Activity	11	1	NORMAL	\N
-32	PM_Event	11	PM_Activity	13	1	NORMAL	\N
-33	PM_Activity	13	PM_Event	6	1	NORMAL	\N
+COPY fcpmconnector (pmcn_id, pmcn_from_type, pmcn_from_id, pmcn_to_type, pmcn_to_id, pmcn_order, pmcn_type, pmcn_ruid, pmcn_ruid_result) FROM stdin;
+19	PM_Gateway	5	PM_Activity	10	2	NORMAL	\N	true
+23	PM_Gateway	5	PM_Activity	6	1	NORMAL	\N	true
+1	PM_Event	1	PM_Activity	1	1	NORMAL	\N	true
+14	PM_Event	2	PM_Gateway	4	1	NORMAL	\N	true
+2	PM_Activity	1	PM_Gateway	1	1	NORMAL	\N	true
+15	PM_Gateway	4	PM_Activity	4	1	NORMAL	\N	true
+16	PM_Gateway	4	PM_Activity	10	2	NORMAL	\N	true
+5	PM_Gateway	2	PM_Event	2	1	NORMAL	\N	true
+17	PM_Activity	4	PM_Activity	5	1	NORMAL	\N	true
+6	PM_Gateway	2	PM_Event	3	2	NORMAL	\N	true
+7	PM_Activity	2	PM_Activity	1	1	NORMAL	\N	true
+18	PM_Activity	5	PM_Gateway	5	1	NORMAL	\N	true
+8	PM_Event	3	PM_Activity	8	1	NORMAL	\N	true
+9	PM_Activity	8	PM_Gateway	3	1	NORMAL	\N	true
+10	PM_Gateway	3	PM_Event	2	1	NORMAL	\N	true
+20	PM_Activity	10	PM_Activity	5	1	NORMAL	\N	true
+11	PM_Gateway	3	PM_Event	4	2	NORMAL	\N	true
+12	PM_Event	4	PM_Activity	9	1	NORMAL	\N	true
+21	PM_Activity	11	PM_Event	5	1	NORMAL	\N	true
+13	PM_Activity	9	PM_Gateway	2	1	NORMAL	\N	true
+22	PM_Activity	12	PM_Event	5	1	NORMAL	\N	true
+24	PM_Activity	6	PM_Gateway	6	1	NORMAL	\N	true
+25	PM_Gateway	6	PM_Event	6	1	NORMAL	\N	true
+26	PM_Gateway	6	PM_Activity	1	2	NORMAL	\N	true
+3	PM_Gateway	1	PM_Activity	2	2	NORMAL	\N	true
+4	PM_Gateway	1	PM_Gateway	2	1	NORMAL	\N	true
+27	PM_Event	7	PM_Activity	7	1	NORMAL	\N	true
+28	PM_Activity	7	PM_Event	5	1	NORMAL	\N	true
+29	PM_Event	8	PM_Activity	11	1	NORMAL	\N	true
+30	PM_Event	9	PM_Activity	12	1	NORMAL	\N	true
+31	PM_Event	10	PM_Activity	11	1	NORMAL	\N	true
+32	PM_Event	11	PM_Activity	13	1	NORMAL	\N	true
+33	PM_Activity	13	PM_Event	6	1	NORMAL	\N	true
 \.
 
 
@@ -7091,7 +7315,7 @@ artist1	2cabffd3c7cb40ae6541b7f10a640b41190ccb27	2014-04-30 13:05:53.973+08	Arti
 artist2	09c04a14fff8cbd7d0235da2c01bfd31d7826824	2014-04-30 13:06:14.614+08	Artist 2	artist2@gmail.com	\N	\N	\N	\N	\N	ACTIVE	\N
 supervisor	0f4d09e43d208d5e9222322fbc7091ceea1a78c3	2014-04-30 19:09:48.659+08	supervisor	supervisor@gmail.com	2014-04-30 19:37:44+08	2014-04-30 19:36:54+08	\N	\N	a:0:{}	ACTIVE	\N
 qc	d6426af04235d59336c5b6b08f61240cbb6b0f66	2014-04-30 19:10:06.929+08	qc	qc@gmail.com	2014-04-30 19:36:48+08	2014-04-30 19:36:04+08	\N	\N	a:0:{}	ACTIVE	\N
-admin	d033e22ae348aeb5660fc2140aec35850c4da997	2013-08-15 09:55:18.85+08	Administrator	\N	2014-06-07 22:10:17+08	2014-06-07 17:11:12+08	2014-05-13 06:00:56+08	ADMIN	a:7:{s:7:"dbosess";a:5:{s:8:"jobsheet";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:1:"7";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}s:11:"jobcatsetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:11:"cartonsetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"346";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}}s:9:"dboconfig";a:0:{}s:13:"PMTask_taskid";s:1:"1";s:15:"PMTask_tasktype";s:8:"PM_Event";s:21:"PMTask_comment_caseid";s:2:"69";s:21:"PMTask_comment_flowid";s:3:"346";s:13:"PMTask_flowid";s:3:"346";}	ACTIVE	\N
+admin	d033e22ae348aeb5660fc2140aec35850c4da997	2013-08-15 09:55:18.85+08	Administrator	\N	2014-06-08 19:12:58+08	2014-06-07 17:11:12+08	2014-05-13 06:00:56+08	ADMIN	a:7:{s:7:"dbosess";a:9:{s:8:"jobsheet";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:9;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}s:11:"jobcatsetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:11:"cartonsetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"346";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:8:"jobother";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:4:"menu";a:4:{s:6:"lastid";a:1:{s:5:"mn_id";s:2:"93";}s:4:"sort";a:0:{}s:6:"search";a:9:{s:7:"mn_code";s:0:"";s:8:"mn_title";s:0:"";s:9:"mn_status";s:0:"";s:10:"mn_webflag";s:0:"";s:8:"mn_order";s:0:"";s:10:"mn_pmscode";s:0:"";s:7:"mn_func";s:0:"";s:8:"mn_class";s:0:"";s:11:"mn_parentid";s:0:"";}s:5:"state";s:4:"list";}s:12:"machinesetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:6:"lookup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}}s:9:"dboconfig";a:0:{}s:13:"PMTask_taskid";s:1:"1";s:15:"PMTask_tasktype";s:8:"PM_Event";s:21:"PMTask_comment_caseid";s:2:"69";s:21:"PMTask_comment_flowid";s:3:"346";s:13:"PMTask_flowid";s:3:"346";}	ACTIVE	\N
 \.
 
 
@@ -7707,6 +7931,21 @@ SELECT pg_catalog.setval('fcusersession_us_id_seq', 486, true);
 
 
 --
+-- Data for Name: martistskill; Type: TABLE DATA; Schema: pnd; Owner: pnd
+--
+
+COPY martistskill (ma_id, ma_usruserid, ma_jclid) FROM stdin;
+\.
+
+
+--
+-- Name: martistskill_ma_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
+--
+
+SELECT pg_catalog.setval('martistskill_ma_id_seq', 1, false);
+
+
+--
 -- Data for Name: mcarton; Type: TABLE DATA; Schema: pnd; Owner: pnd
 --
 
@@ -7757,6 +7996,21 @@ y.3	mm	40
 
 
 --
+-- Data for Name: mcustmachine; Type: TABLE DATA; Schema: pnd; Owner: pnd
+--
+
+COPY mcustmachine (mc_id, mc_orgid, mc_pressmanufacturer, mc_pressyearbuilt, mc_pressmodel, mc_presswidth, mc_presstype, mc_pressspeed, mc_presscylinderrepeat, mc_inkmanufacturer, mc_inkcommercialname, mc_inktype, mc_inktypeother, mc_inkviscosity, mc_inkvicosityother, mc_inkprintingunit_1, mc_inkprintingunit_2, mc_inkprintingunit_3, mc_inkprintingunit_4, mc_inkprintingunit_5, mc_inkvisocity_1, mc_inkvisocity_2, mc_inkvisocity_3, mc_inkvisocity_4, mc_inkvisocity_5, mc_inkph_1, mc_inkph_2, mc_inkph_3, mc_inkph_4, mc_inkph_5, mc_inkdensity_1, mc_inkdensity_2, mc_inkdensity_3, mc_inkdensity_4, mc_inkdensity_5, mc_platemanufacturer, mc_platecommercialname, mc_platetype, mc_platedurometer, mc_platethickness, mc_platerelief, mc_mountingtapemanufacturer, mc_mountingtapename, mc_mountingtapedensity, mc_mountingtapthickness, mc_mountingcarrierthickness, mc_mountingcushionmanufacturer, mc_mountingcushonname, mc_mountingdensity, mc_mountingcushionthickness, mc_cimplevel_1, mc_cimplevel_2, mc_cimplevel_3, mc_cimplevel_4, mc_cimplevel_5, mc_cimpsubstrate_1, mc_cimpsubstrate_2, mc_cimpsubstrate_3, mc_cimpsubstrate_4, mc_cimpsubstrate_5, mc_cimpanlox_1, mc_cimpanlox_2, mc_cimpanlox_3, mc_cimpanlox_4, mc_cimpanlox_5, mc_aniloxmanufacturer, mc_aniloxtype, mc_aniloxengravingangle, mc_aniloxinking, mc_aniloxprintingunit_1, mc_aniloxprintingunit_2, mc_aniloxprintingunit_3, mc_aniloxprintingunit_4, mc_aniloxprintingunit_5, mc_aniloxmanufacturer_1, mc_aniloxmanufacturer_2, mc_aniloxmanufacturer_3, mc_aniloxmanufacturer_4, mc_aniloxmanufacturer_5, mc_aniloxtype_1, mc_aniloxtype_2, mc_aniloxtype_3, mc_aniloxtype_4, mc_aniloxtype_5, mc_aniloxengravingangle_1, mc_aniloxengravingangle_2, mc_aniloxengravingangle_3, mc_aniloxengravingangle_4, mc_aniloxengravingangle_5, mc_aniloxinking_1, mc_aniloxinking_2, mc_aniloxinking_3, mc_aniloxinking_4, mc_aniloxinking_5, mc_aniloxcellcount_1, mc_aniloxcellcount_2, mc_aniloxcellcount_3, mc_aniloxcellcount_4, mc_aniloxcellcount_5, mc_aniloxvolumn_1, mc_aniloxvolumn_2, mc_aniloxvolumn_3, mc_aniloxvolumn_4, mc_aniloxvolumn_5, mc_aniloxdoration_1, mc_aniloxdoration_2, mc_aniloxdoration_3, mc_aniloxdoration_4, mc_aniloxdoration_5, mc_aniloxdoctoring_1, mc_aniloxdoctoring_2, mc_aniloxdoctoring_3, mc_aniloxdoctoring_4, mc_aniloxdoctoring_5, mc_aniloxcontainment_1, mc_aniloxcontainment_2, mc_aniloxcontainment_3, mc_aniloxcontainment_4, mc_aniloxcontainment_5, mc_substratemanufacturer, mc_substratename, mc_substratetype, mc_substratedyna, mc_substrateweight, mc_substrateflute, mc_substratethickness) FROM stdin;
+\.
+
+
+--
+-- Name: mcustmachine_mc_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
+--
+
+SELECT pg_catalog.setval('mcustmachine_mc_id_seq', 1, false);
+
+
+--
 -- Data for Name: mjobcat; Type: TABLE DATA; Schema: pnd; Owner: pnd
 --
 
@@ -7804,9 +8058,9 @@ SELECT pg_catalog.setval('mjobcatlookup_jcl_id_seq', 8, true);
 -- Data for Name: mjobsheet; Type: TABLE DATA; Schema: pnd; Owner: pnd
 --
 
-COPY mjobsheet (js_id, js_orgid, js_ctid, js_request_date, js_request_by, js_title, js_model, js_description, js_material_provided, js_color_1, js_color_2, js_color_3, js_color_4, js_color_5, js_angle_1, js_angle_2, js_angle_3, js_angle_4, js_angle_5, js_bleeding, js_bleeding_remark, js_distortion, js_distortion_value, js_diecut_ind, js_diecut_no, js_trapping_size, js_barcodetype, js_barcodenumber, js_primcat, js_status, js_completiondate, js_assignto, js_carid) FROM stdin;
-7	\N	1	2014-06-07 18:57:35.447+08	\N	\N	\N	job1	\N	1111	1111	1111	1111	1111	1111	1111	1111	1111	1111	0	1111	X	1111.0000	Y	\N	11.0000	22	33	6	\N	\N	\N	38
-9	\N	1	2014-06-07 22:04:24.919+08	\N	\N	\N	new job in queue 111	\N	1	1	1	1	121	1	1	1	1	1	0	123	X	\N	Y	\N	111.0000	222	111	6	\N	\N	\N	38
+COPY mjobsheet (js_id, js_orgid, js_ctid, js_request_date, js_request_by, js_title, js_model, js_description, js_material_provided, js_color_1, js_color_2, js_color_3, js_color_4, js_color_5, js_angle_1, js_angle_2, js_angle_3, js_angle_4, js_angle_5, js_bleeding, js_bleeding_remark, js_distortion, js_distortion_value, js_diecut_ind, js_diecut_no, js_trapping_size, js_barcodetype, js_barcodenumber, js_primcat, js_status, js_completiondate, js_assignto, js_carid, js_decision) FROM stdin;
+7	\N	1	2014-06-07 18:57:35.447+08	\N	\N	\N	job1	\N	1111	1111	1111	1111	1111	1111	1111	1111	1111	1111	0	1111	X	1111.0000	Y	\N	11.0000	22	33	6	\N	\N	\N	38	\N
+9	\N	1	2014-06-07 22:04:24.919+08	\N	\N	\N	new job in queue 111	\N	1	1	1	1	121	1	1	1	1	1	0	123	X	\N	Y	\N	111.0000	222	111	6	\N	\N	\N	38	\N
 \.
 
 
@@ -11677,11 +11931,27 @@ ALTER TABLE ONLY fclookup
 
 
 --
+-- Name: const_martistskill_prikey; Type: CONSTRAINT; Schema: pnd; Owner: pnd; Tablespace: 
+--
+
+ALTER TABLE ONLY martistskill
+    ADD CONSTRAINT const_martistskill_prikey PRIMARY KEY (ma_id);
+
+
+--
 -- Name: const_mcarton_prikey; Type: CONSTRAINT; Schema: pnd; Owner: pnd; Tablespace: 
 --
 
 ALTER TABLE ONLY mcarton
     ADD CONSTRAINT const_mcarton_prikey PRIMARY KEY (car_id);
+
+
+--
+-- Name: const_mcustmachine_prikey; Type: CONSTRAINT; Schema: pnd; Owner: pnd; Tablespace: 
+--
+
+ALTER TABLE ONLY mcustmachine
+    ADD CONSTRAINT const_mcustmachine_prikey PRIMARY KEY (mc_id);
 
 
 --

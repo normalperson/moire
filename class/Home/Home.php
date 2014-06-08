@@ -63,48 +63,63 @@ class Home{
 		$smarty->assign('Home', $this);		
 		$smarty->display('customerhome.html');
 	}
-	function renderJobByCategory($userid=''){
-		global $USER;
+	function renderJobByCategory($paneltitle='JOB BY CATEGORY', $charttitle = 'Total Job', $chartsubtitle='Job by category',$userid=''){
+		global $USER,$HTML;
 		if (trim($userid) == '') $userid = $USER->userid;
 
+		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
+		$smarty->assign('paneltitle',$paneltitle );
+		$smarty->assign('charttitle',$charttitle );
+		$smarty->assign('chartsubtitle',$chartsubtitle );		
 		$html = $smarty->fetch('jobbycategory.html');
 		return $html;
 
 	}
 	function renderPassOrder($custid=''){
+		global $HTML;
+		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
 		$html = $smarty->fetch('passorder.html');
 		return $html;		
 	}
-	function renderTaskPendingAction($userid=''){
-		global $USER;
+	function renderTaskPendingAction($usertype='', $userid=''){
+		global $USER,$HTML;
 		if (trim($userid) == '') $userid = $USER->userid;
 
+		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
+		$smarty->assign('usertype',$usertype );
 		$html = $smarty->fetch('taskpendingaction.html');
 		return $html;
 
 	}
 	function renderMyPerformance($userid=''){
-		global $USER;
+		global $USER,$HTML;
 		if (trim($userid) == '') $userid = $USER->userid;
 
+		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
 		$html = $smarty->fetch('myperformance.html');
 		return $html;
 	}
 	function renderMonthlySalesByCat(){
+		global $HTML;
+		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
 		$html = $smarty->fetch('monthlysalesbycat.html');
 		return $html;
 	}
 	function renderArtistPerformance(){
+		global $HTML;
+		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
 		$html = $smarty->fetch('artistperformance.html');
 		return $html;
 	}
 	function renderForcastVsActual(){
+		global $HTML;
+		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
 		$html = $smarty->fetch('forcastvsactual.html');
 		return $html;

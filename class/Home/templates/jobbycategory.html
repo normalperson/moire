@@ -1,6 +1,6 @@
 <div class="panel panel-success panel-dark">
 	<div class="panel-heading">
-		<div>JOB BY CATEGORY
+		<div>{$paneltitle}
 			<div class="panel-heading-controls">
 
 				<div class="panel-heading-icon">
@@ -11,9 +11,76 @@
 		</div>					
 	</div>
     <div class="panel-body">
-       <div id="custorder" style="height:400px">
+       <div id="jobbycategory" style="height:400px">
 
        </div>
     </div>
 </div>		
+<script type="text/javascript">
+var v_title = '{$charttitle}';
+var v_subtitle = '{$chartsubtitle}';
+$( document ).ready(function() {
 
+    $('#jobbycategory').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: v_title
+        },
+        subtitle: {
+            text: v_subtitle
+        },
+        xAxis: {
+            categories: ['Trapping', 'Barcode', 'Color Sep', 'MC', 'Artwork'],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Quantity ',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' item'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 100,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'April 2014',
+            data: [50, 75, 38, 14, 90]
+        }, {
+            name: 'May 2014',
+            data: [20, 21, 93, 17, 50]
+        }, {
+            name: 'June 2014',
+            data: [39, 47, 120, 11, 14]
+        }]
+    });  
+});
+</script>

@@ -1,18 +1,24 @@
 <script type="text/javascript">
-function populateInput(obj,elemt,value){
-	
+function populateInput(obj,elemt,value,readonly){
+	console.log('readonly = '+readonly);
 	if(value==0){
 		// create the html element
 		$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']" ><span class="input-group-addon">'+obj.carv_unit+'</span></div>');
 	}else{
-		$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
+		if(readonly){
+			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
+		}else{
+			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
+
+		}
 	}		
 
 	// append to data div
 	elemt.append($element);
 }
-function getCarton(carid, tbody, jobid){
+function getCarton(carid, tbody, jobid,readonly){
 	jobid= typeof jobid !== 'undefined' ? jobid : 0;
+	readonly= typeof readonly !== 'undefined' ? readonly : false;
 
 	if($('#cartonimage').length > 0) $('#cartonimage').remove(); // remove the image if there is
 	// design the new row
@@ -43,7 +49,7 @@ function getCarton(carid, tbody, jobid){
 			for(var i=0;i<data.variable.length;i++){
 				//populateInput(data.variable[i],$('#cartonvalue'));
 				if(data.boxsize == 0)	populateInput(data.variable[i],$('#cartonvalue'),0);
-				else populateInput(data.variable[i],$('#cartonvalue'),data.boxsize[i]);
+				else populateInput(data.variable[i],$('#cartonvalue'),data.boxsize[i],readonly);
 			}
 		},
 		error: function (){
@@ -66,8 +72,14 @@ $( document ).ready(function() {
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'jobsheet.conf.php');
 require_once(DOC_DIR.DS.'inc'.DS.'appFunc.php');
 
-function displayCarton($col, $colVal, $data=array(), $html=null){
+function displayCartonEdit($col, $colVal, $data=array(), $html=null){
 	$str = "<script>getCarton(".$colVal.",'dbotab_jobsheet_edit_tbody_1',".$data['js_id'].")</script>";
+	$html .= $str;
+
+	return $html;
+}
+function displayCartonDetail($col, $colVal, $data=array(), $html=null){
+	$str = "<script>getCarton(".$colVal.",'dbotab_jobsheet_detail_tbody_1',".$data['js_id'].",true)</script>";
 	$html .= $str;
 
 	return $html;
@@ -81,6 +93,7 @@ function showinfo($col, $colVal, $data=array(), $html=null){
 # customization
 function dbo_jobsheet_customize(&$dbo){
 	$dbo->newModifier = 'dbo_jobsheet_custom_new';
+	$dbo->editModifier = 'dbo_jobsheet_custom_edit';
 }
 
 function dbo_jobsheet_custom_new($table, $cols){
@@ -152,6 +165,17 @@ function dbo_jobsheet_custom_new($table, $cols){
 			              'comment' => $remark);
 		
 
+	}
+	return $ret;
+}
+
+// yet to modify
+function dbo_jobsheet_custom_edit($table, $cols, $wheres){
+	global $DB;
+	$ret = array();
+	$ok = $DB->doUpdate($table, $cols, $wheres);
+	if(!$ok){
+		$ret[] = $DB->lastError;
 	}
 	return $ret;
 }
