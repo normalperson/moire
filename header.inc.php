@@ -12,8 +12,8 @@ function html_header($headerTemplate='header.html'){
 		$HTML->addCSS('css/'.$THEME.'/widgets.min.css');
 		$HTML->addCSS('css/'.$THEME.'/rtl.min.css');
 		$HTML->addCSS('css/'.$THEME.'/themes.min.css');
-		$HTML->addCSS('css/'.$THEME.'/custom.css');
 		$HTML->addCSS('css/'.$THEME.'/dbo.css');
+		$HTML->addCSS('css/'.$THEME.'/custom.css');
 		$HTML->addJS('js/jquery-2.1.1.min.js');
 		$HTML->addJS('js/bootstrap.min.js');
 		$HTML->addJS('js/pixel-admin.min.js');

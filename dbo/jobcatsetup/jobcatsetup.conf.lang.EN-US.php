@@ -4,7 +4,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dbo->cols['jcl_id']->caption->set('default', 'ID', 'text');
 $dbo->cols['jcl_title']->caption->set('default', 'Title', 'text');
 $dbo->cols['jcl_requiretime']->caption->set('default', 'Require time (minutes)', 'text');
-$dbo->cols['jcl_sequence']->caption->set('default', 'Sequence', 'text');
+$dbo->cols['jcl_sequence']->caption->set('default', 'Priority', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
@@ -17,6 +17,9 @@ $dbo->text->editCancel = 'Cancel';
 $dbo->text->editSubmit = 'Save';
 $dbo->text->newCancel = 'Cancel';
 $dbo->text->newSubmit = 'Save';
+$dbo->text->listSubmit = 'Submit';
+$dbo->text->detailCancel = 'Cancel';
+$dbo->text->detailDelete = 'Delete';
 $dbo->text->defaultMessageAfterNew = 'Record created.';
 $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';

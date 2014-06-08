@@ -2,6 +2,7 @@
 define('ANONYMOUS', true);
 define('LOGINPAGE', true);
 require_once(dirname(__FILE__).'/init.inc.php');
+
 if(!empty($_POST['username'])){
 	$ok = $User->login($_POST['username'], $_POST['password']);
 	if($ok){

@@ -6,7 +6,7 @@ class PMTask {
 	function __construct() {
 		$this->classurl = WEB_HREF.'/'.__CLASS__;
 	}
-	
+
 	function initSmarty($headerTmpl = "header.html"){
 		$smarty = new Smarty();
 		$smarty->caching = false;
@@ -20,11 +20,11 @@ class PMTask {
 
 	function renderDropDown() {
 		global $DB, $USER, $GLOBAL;
-		
+
 		$rs = $DB->getArray("select pmev_name, pmev_id, pmwf_name
 		from fcpmevent join fcpmworkflow on pmwf_id=pmev_pmwfid where pmev_type = 'START' and pmev_start_function is not null 
 		order by pmwf_name, pmev_name", array(), PDO::FETCH_ASSOC);
-		
+
 		if ($rs) {
 			$html = 
 			"<li class='nav-icon-btn nav-icon-btn-default dropdown'>
@@ -50,12 +50,12 @@ class PMTask {
 			return $html;
 		}
 	}
-	
+
 	function renderNavi($skipUL = true) {
 		global $DB, $USER, $GLOBAL;
-		
-		
-		
+
+
+
 		// USER ACTIVITIES
 		$rs1 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Activity' as object_type, pmat_id activityid, 
 		max(pmat_name) activityname, 
@@ -67,7 +67,7 @@ class PMTask {
 		left join fcpmcaseflow on pmf_obj_type = 'PM_Activity' and pmat_id = pmf_obj_id and pmf_end_date is null
 		group by pmwf_id, pmat_id
 		order by 2,4", array(), PDO::FETCH_ASSOC);
-		
+
 		// INTERMEDIATE EVENTS SHOW AS TASK
 		$rs2 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Event' as object_type, pmev_id eventid, pmev_type eventtype,
 		max(pmev_name) eventname, 
@@ -80,7 +80,7 @@ class PMTask {
 		left join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmev_id = pmf_obj_id and pmf_end_date is null
 		group by pmwf_id, pmev_id, pmev_type
 		order by 2, pmev_type desc, 4", array(), PDO::FETCH_ASSOC);
-		
+
 		$rs = array_merge($rs1, $rs2);
 		$data = array();
 		$totalpending = 0;
@@ -128,7 +128,7 @@ class PMTask {
 		foreach ($data as $wfid=>$d) {
 			$currhtml = "";
 			$focusWF = false;
-			
+
 			foreach ($d['start'] as $sid=>$s) {
 				$focusThis = $this->showingTask('PM_Event', $s['id']);
 				if ($focusThis) $focusWF = true;
@@ -139,7 +139,7 @@ class PMTask {
 								</a>
 							</li>";
 			}
-			
+
 			foreach ($d['activities'] as $atvid=>$a){
 				$focusThis = $this->showingTask('PM_Activity', $a['id']);
 				if ($focusThis) $focusWF = true;
@@ -166,11 +166,11 @@ class PMTask {
 								</a>
 							</li>";
 			}
-			
+
 			$pendingBadge = ($d['totalpendingcount'] > 0) ? "<span ".($d['totaloverduecount'] > 0 ? 
 				"class='label label-danger' title='{$d['totaloverduecount']} overdue task(s)'" : 
 				"class='label label-warning'").">{$d['totalpendingcount']}</span>" : "";
-			
+
 			$html .= "<li class='mm-dropdown ".(($focusWF) ? 'open active' : '')."'>
 						<a tabindex='-1' href='#'>
 							<span class='mm-text'>{$d['name']}</span>
@@ -184,7 +184,7 @@ class PMTask {
 		$pendingBadge = ($totalpending > 0) ? "<span ".($totaldue > 0 ? 
 					"class='label label-danger' title='{$totaldue} overdue task(s)'" : 
 					"class='label label-warning'").">{$totalpending}</span>" : "";
-		
+
 		$html = "<li class='mm-dropdown mm-dropdown-root ".((!empty($_GET['webc']) && $_GET['webc'] == __CLASS__) ? 'open active' : '')."'>
 					<a href='#'>
 						<i class='menu-icon fa fa-tasks'></i>
@@ -194,17 +194,17 @@ class PMTask {
 						{$html}
 					</ul>
 				</li>";
-		
+
 		if (!$skipUL) $html = "<ul id='taskListing' class='navigation'>{$html}</ul>";
-		
+
 		return $html;
 	}
-	
+
 	function showingTask($type, $id) {
 		global $GLOBAL;
 		$class = isset($_GET['webc'])?$_GET['webc']:false;
 		$function = isset($_GET['webf'])?$_GET['webf']:false;
-		
+
 		if ($class == __CLASS__) {
 			if (!empty($_GET['id']) && !empty($_GET['type'])) {
 				if ($_GET['id']==$id && $_GET['type']==$type) return true;
@@ -215,7 +215,7 @@ class PMTask {
 		}
 		return false;
 	}
-	
+
 	function startEvent() {
 		global $HTML, $GLOBAL, $DB;
 		$smarty = $this->initSmarty();
@@ -231,7 +231,7 @@ class PMTask {
 			redirect(APP_HREF);
 		}
 	}
-	
+
 	function caseFlowList() {
 		global $HTML, $GLOBAL, $DB;
 		$smarty = $this->initSmarty();
@@ -240,13 +240,13 @@ class PMTask {
 			$GLOBAL['PMTask_taskid'] = $_REQUEST['id'];
 			$GLOBAL['PMTask_tasktype'] = $_REQUEST['type'];
 		}
-		
+
 		if (empty($GLOBAL['PMTask_taskid']) || empty($GLOBAL['PMTask_tasktype'])) return;
 		if ($GLOBAL['PMTask_tasktype'] == 'PM_Event') {
 			$ev = new PM_Event($GLOBAL['PMTask_taskid']);
 			if ($ev->type == 'START') redirect($this->classurl."/startEvent");
 		}
-		
+
 		$this->renderTopBar($GLOBAL['PMTask_taskid'], $GLOBAL['PMTask_tasktype']);
 		if ($GLOBAL['PMTask_tasktype'] == 'PM_Event') {
 			if (!empty($_POST['event_action'])) {
@@ -266,7 +266,7 @@ class PMTask {
 		}
 		else dbo_include('pmtask_caseflow_list');
 	}
-	
+
 	var $caseTypeLabel = array(
 		'label-primary',
 		'label-success',
@@ -281,7 +281,7 @@ class PMTask {
 		else $caseSearchCount = 1;
 		$id = "caseSearchInp_{$caseSearchCount}";
 		$html = "<li><form class='navbar-form pull-left' onsubmit='return false;'><input id='{$id}' type='text' class='form-control' placeholder='Search Case'></form></li>";
-		
+
 		$html .=
 		"<script type='text/javascript'>
 		(function () {
@@ -315,9 +315,9 @@ class PMTask {
 		})()
 		</script>";
 		return $html;
-	
+
 	}
-	
+
 	function ajaxCaseSearch() {
 		global $DB;
 		$query = $_REQUEST['q'];
@@ -343,16 +343,16 @@ class PMTask {
 				if (count($data) >= 10) break;
 			}
 		}
-		
+
 		for ($i=0;$i<((count($data) < $maxresult) ? count($data) : $maxresult);$i++) {
 			$ret['cases'][] = $data[$i];
 		}
-		
+
 		echo json_encode($ret);
 	}
-	
 
-	
+
+
 	function renderTopBar($taskid, $tasktype, $fid = false, &$caseid = false) {
 		global $DB;
 		$rs = false;
@@ -387,18 +387,18 @@ class PMTask {
 		}
 		if ($rs) {
 			if (!empty($rs['pmc_id'])) $caseid = $rs['pmc_id'];
-			
+
 			$html = 
 			"<div id='taskTopBar'>
 				<ul id='taskTopBarPath' class='breadcrumb pull-left' >";
-			
+
 			if (!empty($rs['pmwf_id'])) {
 				$html .= 
 					"<li>
 						<i title='Workflow' class='fa fa-sitemap fa-fw fa-lg'></i>
 						{$rs['pmwf_name']}
 					</li>";
-				
+
 				if ($tasktype == 'PM_Event') {
 					if ($rs['pmev_type'] == 'START') {
 						$html .= 
@@ -420,7 +420,7 @@ class PMTask {
 					</li>";
 				}
 			}
-						
+
 			if (!empty($rs['pmc_id'])) {
 				$cd = false;
 				$casedesc = "{$rs['pmc_casetype']}::{$rs['pmc_casekey']}";
@@ -432,11 +432,11 @@ class PMTask {
 					".(($rs['pmc_closed'] == 'Y') ? "<i title='Closed Case' class='fa fa-file-o fa-fw fa-lg'></i>" : "<i title='Active Case' class='fa fa-file-text-o fa-fw fa-lg'></i>")."
 						#{$rs['pmc_id']} : <i>{$casedesc}</i>
 					</li>";
-				
+
 			}
-			
+
 			$html .= "</ul>";
-			
+
 			$html .= "<div id='taskTopBarActionDiv' class='pull-right'>";
 			if (!empty($rs['pmc_id'])) {
 				if (!empty($rs['pmf_id'])) $html .= $this->showTaskUrgency($rs['pmf_id']);
@@ -445,29 +445,29 @@ class PMTask {
 				$html .= $this->showCommentButton($rs['pmc_id'], (!empty($rs['pmf_id'])) ? $rs['pmf_id'] : false);
 				$html .= $this->showFlagButton($rs['pmc_id']);
 				$html .= "</div>";
-	
-				
+
+
 			}
 			$html .= "</div><div class='clearfix'></div></div>";
 			echo $html;
-			
+
 		}
 	}
-	
+
 	static function showCaseIntermediateEvent($pmcid) {
 		global $DB, $USER;
-		
+
 		if (!empty($_POST['event_action_manual'])) {
 			$pmfid = $_POST['event_action_manual'];
 			$case = new PM_Case($pmcid);
 			$ok = $case->performFlow($pmfid, true);
 		}
-		
+
 		$html = '';
 		$evRS = $DB->getAll("select * from fcpmcaseflow join fcpmevent on pmf_obj_id = pmev_id and pmf_obj_type = 'PM_Event' 
 				where pmf_pmcid = :0 and pmf_end_date is null and 
 				pmev_type = 'INTERMEDIATE' order by pmev_name", array($pmcid), PDO::FETCH_ASSOC);
-		
+
 		if ($evRS) { // has active intermediate event
 			$html = "<form id='eventForm' method='post'><input id='eventInp' type='hidden' name='event_action_manual' /></form>
 					<div class='btn-group action-event'>
@@ -480,7 +480,7 @@ class PMTask {
 			}
 			$html .= 	"</ul>
 					</div>";
-			
+
 			$html .=
 "<script type='text/javascript'>
 $(function () {
@@ -495,20 +495,20 @@ $(function () {
 		}
 		return $html;
 	}
-	
+
 	function renderCaseScreen() {
 		global $HTML, $GLOBAL, $DB;
-		
+
 		if (!empty($GLOBAL['PMTask_taskid'])) unset($GLOBAL['PMTask_taskid']);
 		if (!empty($GLOBAL['PMTask_tasktype'])) unset($GLOBAL['PMTask_tasktype']);
-		
+
 		$smarty = $this->initSmarty();
 		if (!empty($_REQUEST['caseid'])) {
 			$GLOBAL['PMTask_caseid'] = $_REQUEST['caseid'];
 		}
 		if (empty($GLOBAL['PMTask_caseid'])) return;
 		$this->renderTopBar(null, null, null, $GLOBAL['PMTask_caseid']);
-		
+
 		$case = new PM_Case($GLOBAL['PMTask_caseid']);
 		if ($case->data['pmct_caseinfo_function']) {
 			$func = new PMFunc();
@@ -518,7 +518,7 @@ $(function () {
 			else echo "'{$case->data['pmct_caseinfo_function']}' does not exist in PMFunc class";
 		}
 	}
-	
+
 
 	function renderActivityPerform() {
 		global $HTML, $GLOBAL, $DB;
@@ -528,7 +528,7 @@ $(function () {
 			$GLOBAL['PMTask_flowid'] = $_REQUEST['fid'];
 		}
 		if (empty($GLOBAL['PMTask_flowid'])) return;
-		
+
 		$caseid = false;
 		$this->renderTopBar(null, null, $GLOBAL['PMTask_flowid'], $caseid);
 		if ($caseid) {
@@ -549,7 +549,7 @@ $(function () {
 		static $urgencyDivCount;
 		if ($urgencyDivCount) ++$urgencyDivCount;
 		else $urgencyDivCount = 1;
-		
+
 		$overdue = false;
 		$title = "";
 		if ($startdate === false) {
@@ -565,9 +565,9 @@ $(function () {
 		else {
 			$str = time_different_string($startdate);
 			$title = "Task started $str";
-			
+
 		}
-		
+
 		$divid = "urgencyDiv_{$urgencyDivCount}";
 		$ret = "<div id='{$divid}' class='urgency ".(($overdue) ? 'overdue' : 'normal')."' data-toggle='tooltip' data-placement='bottom' title='{$title}'></div>";
 		if ($urgencyDivCount == 1) {
@@ -577,29 +577,29 @@ $(function () {
 		}
 		return $ret;
 	}
-	
+
 	// case comment start 
 	static function showCommentButton($pmcid, $pmfid = false) {
 		global $DB, $USER;
 		static $commentButtonCount;
 		if ($commentButtonCount) ++$commentButtonCount;
 		else $commentButtonCount = 1;
-		
+
 		$classurl = WEB_HREF.'/'.__CLASS__;
-		
+
 		$comm = $DB->getRow("select count(*) total_comment, sum(case when pmcr_id is null then 1 else 0 end) unread_comment from fcpmcasecomment 
 		left join fcpmcasecommentread on pmcc_id = pmcr_pmccid and pmcr_read_by = :1 where pmcc_pmcid=:0", array($pmcid, $USER->userid));
 		if ($comm['unread_comment'] > 0) $commtitle = "{$comm['unread_comment']} unread comment(s)";
 		else if ($comm['total_comment'] > 0) $commtitle = "{$comm['total_comment']} comment(s)";
 		else $commtitle = "Post Comment";
 		$buttonid  = "commentButton_{$commentButtonCount}";
-		
+
 		$ret = "<button id='{$buttonid}' class='btn action action-comment"
 			.(($comm['total_comment'] > 0) ? ' hascomment'.(($comm['unread_comment'] > 0) ? ' unread' : '') : '')
 			."' title='{$commtitle}' data-caseid='{$pmcid}' data-flowid='{$pmfid}' data-commid=''>
 				<span class='btn-label icon fa fa-comments'></span>
 			</button>";
-		
+
 		if ($commentButtonCount == 1) { 
 			$ret .=
 			"<script type='text/javascript'>
@@ -635,13 +635,13 @@ $(function () {
 			})
 			</script>";
 		}
-		
+
 		return $ret;
 	}
-	
+
 	function getCommentData($caseid, $afterCommID = null, &$lastCommID = null) {
 		global $DB, $USER;
-	
+
 		if (!$afterCommID) {
 			$data = $DB->getArray("select a.*, case when b.usr_name is not null then b.usr_name when pmcc_created_by is not null then pmcc_created_by
 			else 'Anonymous' end pmcc_created_name, case when pmcr_id is null then 'unread' else 'read' end read_status
@@ -656,17 +656,17 @@ $(function () {
 			left join fcpmcasecommentread on pmcr_pmccid = pmcc_id and pmcr_read_by = :1
 			where pmcc_pmcid = :0 and pmcc_id > :2 order by pmcc_id", array($caseid, $USER->userid, $afterCommID), PDO::FETCH_ASSOC);
 		}
-		
+
 		$lastrow = end($data);
 		if (!empty($lastrow)) $lastCommID = $lastrow['pmcc_id'];
-		
+
 		return $data;
 	}
-	
+
 	function renderSingleComment($row, $renderReplies = true) {
 		global $USER;
 		$createdDate = new DateTime($row['pmcc_created_date']);
-		
+
 		$senderimage = getUserAvatarImage($row['pmcc_created_by']);
 		$html = 
 		"<div class='comment".(($row['read_status'] == 'unread') ? ' unread' : '')."' data-commid='{$row['pmcc_id']}' data-parentid='{$row['pmcc_parentid']}'>
@@ -684,7 +684,7 @@ $(function () {
 					<a href='javascript:void(0)' class='comment-reply'>Reply</a>
 				</div>
 			</div>";
-		
+
 		if ($renderReplies && !empty($row['REPLIES'])) {
 			foreach ($row['REPLIES'] as $r) {
 				$html .= $this->renderSingleComment($r);
@@ -701,7 +701,7 @@ $(function () {
 		</div>";
 		return $html;
 	}
-	
+
 	function ajaxRenderCommentList() {
 		global $HTML, $GLOBAL, $DB;
 		if (!empty($_REQUEST['caseid'])) {
@@ -713,24 +713,24 @@ $(function () {
 		if (empty($GLOBAL['PMTask_comment_caseid'])) return;
 		if (!isset($GLOBAL['PMTask_comment_flowid'])) $GLOBAL['PMTask_comment_flowid'] = null;
 		$lastcommid = null;
-		
+
 		$data = $this->getCommentData($GLOBAL['PMTask_comment_caseid'], null, $lastcommid);
 		$treedata = arr2tree($data, 'pmcc_id', 'pmcc_parentid', 'REPLIES');
 		$commenthtml= '';
 		foreach ($treedata as $row) {
 			$commenthtml .= $this->renderSingleComment($row);
 		}
-			
+
 		$smarty = $this->initSmarty(false);
 		$smarty->assign('caseid', $GLOBAL['PMTask_comment_caseid']);
 		$smarty->assign('flowid', $GLOBAL['PMTask_comment_flowid']);
 		$smarty->assign('lastcommid', $lastcommid);
 		$smarty->assign('comments', $commenthtml);
 		$smarty->assign('classurl', $this->classurl);
-		
+
 		$smarty->display('comment.html');
 	}
-	
+
 	function ajaxCreateNewComment() {
 		global $DB, $USER, $GLOBAL;
 		$txt = !empty($_REQUEST['comment']) ?  $_REQUEST['comment'] : '';
@@ -738,7 +738,7 @@ $(function () {
 		$caseid = !empty($_REQUEST['caseid']) ?  $_REQUEST['caseid'] : false;
 		$flowid = !empty($_REQUEST['flowid']) ?  $_REQUEST['flowid'] : null;
 		$lastcommid = !empty($_REQUEST['lastcommid']) ?  $_REQUEST['lastcommid'] : null;
-		
+
 		if ($txt && $caseid) {
 			$caseobj = new PM_Case($caseid);
 			$pmccid = ($parentid) ? $caseobj->replyComment($parentid, $txt, $flowid) : $caseobj->insertComment($txt, $flowid);
@@ -750,7 +750,7 @@ $(function () {
 			foreach ($treedata as $row) {
 				$commenthtml .= $this->renderSingleComment($row);
 			}
-			
+
 			echo json_encode(array(
 				'result'=>true,
 				'lastcommid'=>$lastcommid,
@@ -758,7 +758,7 @@ $(function () {
 			));
 		}
 	}
-	
+
 	function ajaxReadComment() {
 		global $DB, $USER;
 		$caseid = !empty($_REQUEST['caseid']) ?  $_REQUEST['caseid'] : false;
@@ -775,9 +775,9 @@ $(function () {
 		}
 	}
 	// case comment end
-	
-	
-	
+
+
+
 	// case flag start
 	static $noFlagTitle = 'Flag This Case';
 	static $flagList = array(
@@ -796,7 +796,7 @@ $(function () {
 		$noFlagTitle = self::$noFlagTitle;
 		$flagList = self::$flagList;
 		$classurl = WEB_HREF.'/'.__CLASS__;
-		
+
 		$rs = $DB->getRow("select * from fcpmcaseflag where pmcf_pmcid = :0 and pmcf_flag_by = :1", array($pmcid, $USER->userid), PDO::FETCH_ASSOC);
 		if (empty($rs['pmcf_flag_type'])) $flagType = '';
 		else $flagType = $rs['pmcf_flag_type'];
@@ -808,7 +808,7 @@ $(function () {
 		" data-caseid='{$pmcid}' data-flag='{$flagType}' >
 			<span class='btn-label icon fa fa-flag'></span>
 		</button>";
-		
+
 		if ($flagButtonCount == 1) {
 			$ret .= 
 			"<script type='text/javascript'>
@@ -846,15 +846,15 @@ $(function () {
 				})
 			</script>";
 		}
-		
+
 		return $ret;
 	}
-	
+
 	function ajaxFlagCase() {
 		global $DB, $USER;
 		$caseid = !empty($_REQUEST['caseid']) ? $_REQUEST['caseid'] : false;
 		$flag = !empty($_REQUEST['flagtype']) ? $_REQUEST['flagtype'] : null;
-		
+
 		if ($caseid) {
 			if (!empty(self::$flagList[$flag])) {
 				$now = new DateTime();

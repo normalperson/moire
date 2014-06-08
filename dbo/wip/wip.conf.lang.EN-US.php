@@ -36,6 +36,7 @@ $dbo->cols['js_assignto']->caption->set('default', 'js_assignto', 'text');
 $dbo->cols['decision']->caption->set('default', 'Decision', 'text');
 $dbo->cols['remark']->caption->set('default', 'Remark', 'text');
 $dbo->cols['artwork']->caption->set('default', 'Artwork', 'text');
+$dbo->cols['widthheight']->caption->set('default', 'Width and height', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

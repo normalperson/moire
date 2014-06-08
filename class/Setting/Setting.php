@@ -185,6 +185,11 @@ class Setting{
 		html_header();
 		$dbo = dbo_include('menu');	
 	}
+	function showDBO(){
+		html_header();
+		$dbo = dbo_include('jobsheet');	
+
+	}
 	
 }
 

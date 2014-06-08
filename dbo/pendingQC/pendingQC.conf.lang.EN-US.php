@@ -35,15 +35,22 @@ $dbo->cols['js_completiondate']->caption->set('default', 'js_completiondate', 't
 $dbo->cols['js_assignto']->caption->set('default', 'js_assignto', 'text');
 $dbo->cols['decision']->caption->set('default', 'Decision', 'text');
 $dbo->cols['remark']->caption->set('default', 'Remark', 'text');
-$dbo->cols['artwork']->caption->set('default', 'Finished artwork', 'text');
+$dbo->cols['artwork']->caption->set('default', 'Artist finished artwork', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
 $dbo->titleNew = 'New Record';
 $dbo->titleEdit = 'QC verification';
 $dbo->titleSearch = 'Search Record';
+$dbo->text->searchCancel = 'Reset';
+$dbo->text->searchSubmit = 'Search';
 $dbo->text->editCancel = 'Cancel';
 $dbo->text->editSubmit = 'Save';
+$dbo->text->newCancel = 'Cancel';
+$dbo->text->newSubmit = 'Submit';
+$dbo->text->listSubmit = 'Submit';
+$dbo->text->detailCancel = 'Cancel';
+$dbo->text->detailDelete = 'Delete';
 $dbo->text->defaultMessageAfterNew = 'Record created.';
 $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';

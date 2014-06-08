@@ -25,33 +25,32 @@ class PMFunc{
 		echo "<form method='post'><input type='submit' value='MOVE' name='PROCEED' /></form>";
 	}
 	function reqVerification($flowid,$o){
+		global $FLOWDECISION,$REMARK;
 		$_GET['dboid']='reqverification';
 		$_GET['js_id']=$flowid;
 		$_GET['dbostate']='edit';
 		dbo_include('reqverification');
+
+		if($FLOWDECISION) {
+			return true;
+			#$o->
+		}
 		
-		//$this->viewJobInfo($o->casekey);
 	}
 	function viewJobInfo($caseobj){
 		global $DB;
-		$jsid = $caseobj->casekey;
-		$smarty = $this->initSmarty();
-		$sql = "select * from mcarton";
-		$carton = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
-		$smarty->assign('carton',$carton);
-		$smarty->assign('jsid',$jsid);
-		$smarty->display('viewjob.html');
+		$_GET['dboid']='jobsheet';
+		$_GET['dbostate']='detail';
+		$_GET['js_id']=$caseobj->casekey;
+		dbo_include('jobsheet');
 	}
 	function pendingRevert($flowid,$o){
 		global $DB;
-		$smarty = $this->initSmarty();
-		$jsid = $o->casekey;
-		$sql = "select * from mcarton";
-		$carton = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
-		$smarty->assign('carton',$carton);
-		$smarty->assign('jsid',$jsid);
-		$smarty->display('editjob.html');
-
+		$_GET['dboid']='jobsheet';
+		$_GET['dbostate']='edit';
+		$_GET['js_id']=$caseobj->casekey;
+		dbo_include('jobsheet');
+		
 	}
 	function pendingAcknowledge($flowid,$o){
 		global $DB;
@@ -90,6 +89,41 @@ class PMFunc{
 		
 		// $this->viewJobInfo($o->casekey);
 
+	}
+	function newJob(){
+		global $JOBARRAY;
+		$_GET['dboid']='jobsheet';
+		$_GET['dbostate']='new';
+		dbo_include('jobsheet');
+		return $JOBARRAY;
+	}
+	function getCartonInfo(){
+		require_once(INCLUDE_DIR.DS.'Image.inc.php'); // include image class
+		global $DB;
+
+		$value = 0;
+		$carid = $_POST['carid'];
+		$jobid = $_POST['jobid'];
+
+		
+		// get image location
+		$img = new Image();
+		$imageinfo = $img->getImage('boxtype',$carid);
+
+
+		$sql = "select * from mcartonvariable where carv_carid = :0";
+		$var = $DB->GetArray($sql,array($carid), PDO::FETCH_ASSOC);
+
+		if($jobid != 0){
+			$sql = "select * from mjscartonvalue
+					where carval_carid = :0
+					and carval_jsid = :1";
+			$value = $DB->GetArray($sql,array($carid,$jobid), PDO::FETCH_ASSOC);				
+		}
+
+		$ret = array('imageinfo' => $imageinfo, 'variable' => $var, 'boxsize' => $value);
+
+		echo json_encode($ret);
 	}
 	
 	function testActivity($flowid, $o) {

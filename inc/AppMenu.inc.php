@@ -4,16 +4,16 @@ class AppMenu extends Menu{
 	var $function;
 	var $url;
 	var $treeRS;
-	
+
 	var $additionalLI;
-	
+
 	function __construct(){
 		parent::__construct();
 		$this->class = isset($_GET['webc'])?$_GET['webc']:false;
 		$this->function = isset($_GET['webf'])?$_GET['webf']:false;
 		$this->loadMenu();
 	}
-	
+
 	function loadMenu() {
 		global $DB, $USER;
 		$menuRS = $DB->GetArray("select * from fcmenu where mn_status = 'ACTIVE' order by mn_order", false, PDO::FETCH_ASSOC);
@@ -31,7 +31,7 @@ class AppMenu extends Menu{
 			}
 		}
 	}
-	
+
 	function render(){
 		if (!$this->treeRS) {
 			$this->loadMenu();
@@ -39,7 +39,7 @@ class AppMenu extends Menu{
 		}
 		$this->rendermenuonleft($this->treeRS);
 	}
-	
+
 	function renderBootstrapNavi($menuRS, $lvl = 0, $prependLi = array()) {
 		if ($lvl === 0) echo "<ul class='nav navbar-nav'>";
 		else echo "<ul class='dropdown-menu'>";
@@ -49,18 +49,18 @@ class AppMenu extends Menu{
 		foreach ($menuRS as $r) {
 			$anchorclass = "without-link";
 			$url = $this->getURL($r);
-			
+
 			if (!$url) $url = "javascript:void(0)";
 			else $anchorclass = "with-link";
-			
+
 			$liclass = $this->isActiveMenu($r) ? ' active' : '';
-			
+
 			if ($r['__CHILDREN']) {
 				if ($lvl === 0) {
 					echo "<li class='dropdown $liclass'><a href='$url' class='dropdown-toggle $anchorclass' data-toggle='dropdown'>{$r['mn_title']} <span class='caret'></span></a>";
 				}
 				else echo "<li class='dropdown dropdown-submenu'><a href='$url' class='dropdown-toggle $anchorclass' data-toggle='dropdown'>{$r['mn_title']}</a>";
-				
+
 				$prependLi = array();
 				if ($url != "javascript:void(0)") {
 					$prependLi[] = "<li><a href='$url' class='$anchorclass'>{$r['mn_title']}</a></li>";
@@ -87,18 +87,18 @@ class AppMenu extends Menu{
 		foreach ($menuRS as $r) {
 			$anchorclass = "without-link";
 			$url = $this->getURL($r);
-			
+
 			if (!$url) $url = "#";
 			else $anchorclass = "with-link";
 			$liclass = $this->isActiveMenu($r) ? 'active' : '';
-			
+
 			if ($r['__CHILDREN']) {
 				if ($liclass) $liclass .= ' open';
 				if ($lvl === 0) {
 					echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i>  <span class='mm-text'>{$r['mn_title']}</span> </a>";
 				}
 				else echo "<li class='$liclass'><a href='$url'><span class='mm-text'> {$r['mn_title']} </span> </a>";
-				
+
 				$prependLi = array();
 				if ($url != "#") {
 					$prependLi[] = "<li class='$liclass'><a tabindex='-1' href='$url'> <span class='mm-text'> {$r['mn_title']} </span> </a></li>";
@@ -113,32 +113,32 @@ class AppMenu extends Menu{
 				else echo "<li class='$liclass'><a tabindex='-1' href='$url'><span class='mm-text'>  {$r['mn_title']} </span></a></li>";
 			}
 		}
-		
+
 		if ($lvl === 0 && $this->additionalLI) {
 			echo $this->additionalLI;
 		}
 		echo "</ul>";
 
 	}
-	
+
 	function isActiveMenu($rs) {
 		$classList = array($rs['mn_class']);
 		if($rs['mn_classlist']) $classList = array_merge($classList, array_filter(array_map('trim', explode(',', $rs['mn_classlist']))));
-		
+
 		$funcList = array($rs['mn_func']);
 		if($rs['mn_funclist']) $funcList = array_merge($funcList, array_filter(array_map('trim', explode(',', $rs['mn_funclist']))));
-		
+
 		if (in_array($this->class, $classList) && in_array($this->function, $funcList)) {
 			return true;
 		}
-		
+
 		foreach ($rs['__CHILDREN'] as $i=>$j) {
 			$check = $this->isActiveMenu($j);
 			if ($check) return true;
 		}
 		return false;
 	}
-	
+
 	function getURL($r) {
 		$url = false;
 		if ($r['mn_webflag'] == 'Y' && !empty($r['mn_class']) && !empty($r['mn_func']))  {
@@ -153,7 +153,7 @@ class AppMenu extends Menu{
 		}
 		return $url;
 	}
-	
+
 	function getDefaultPage($rs = false) {
 		$r = ($rs) ?  $rs : (($this->treeRS) ? $this->treeRS : false);
 		foreach ($r as $i=>$p) {
@@ -163,13 +163,13 @@ class AppMenu extends Menu{
 		}
 		return false;
 	}
-	
+
 	function genUserAvatar() {
 		global $DB, $USER;
 		$imgfile = getUserAvatarImage($USER->userid);
 		return "<img src='{$imgfile}' alt=\"{$USER->name}\" />";
 	}
-	
+
 	function genClock($source = 'CLIENT', $useJSTime = false) {
 		global $LOCALE;
 		static $clockCount;
@@ -186,7 +186,7 @@ class AppMenu extends Menu{
 		else $now = 
 		"var now = moment();
 		var tzname = now.format('(Z) zz')";
-		
+
 		$html = "<li id='{$id}'><a href='javascript:void(0)'><span></span></a></li>";
 		$js = 
 "<script type='text/javascript'>
@@ -205,7 +205,7 @@ $(function () {
 
 		return $html.$js;
 	}
-	
-	
+
+
 }
 ?>

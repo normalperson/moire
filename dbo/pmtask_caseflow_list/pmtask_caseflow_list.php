@@ -13,7 +13,7 @@ function dbo_pmtask_caseflow_list_customize(&$dbo){
 function showurgency($colname, $currval, $rs, $html) {
 
 	return PMTask::showTaskUrgency($rs['pmf_id'], $rs['pmf_start_date'], $rs['pmf_due_date']);
-	
+
 }
 
 function showcaselink($colname, $currval, $rs, $html) {

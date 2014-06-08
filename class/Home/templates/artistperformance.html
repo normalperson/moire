@@ -1,0 +1,54 @@
+<div class="panel panel-success panel-dark">
+	<div class="panel-heading">
+		<div>ARTIST PERFORMANCE
+			<div class="panel-heading-controls">
+				<div class="panel-heading-icon">
+					View online time report
+					<i class="fa  fa-angle-double-right"></i>
+				</div>
+			</div>
+		</div>					
+	</div>
+    <div class="panel-body">
+       <div id="artistperformance" style="height:400px">
+
+       </div>
+    </div>
+</div>		
+<script type="text/javascript">
+$( document ).ready(function() {
+	$('#artistperformance').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Artist performance'
+        },
+        xAxis: {
+            categories: ['Artist1', 'Artist2', 'Artist3', 'Artist4', 'Artist5']
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Case performance by each artist'
+            }
+        },
+        legend: {
+            reversed: true
+        },
+        plotOptions: {
+            series: {
+                stacking: 'normal'
+            }
+        },
+            series: [{
+            name: 'Exceed SLA',
+            data: [2, 3, 4, 7, 0]
+        }, {
+            name: 'Comply with SLA',
+            data: [10, 7, 14, 2, 2]
+        }]
+    });
+});
+</script>
+

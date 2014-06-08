@@ -76,10 +76,10 @@ function quote($str) {
 
 function time_different_string($to, $from = false, $full = false, $nowtext = 'just now') {
     $now = ($from) ? (($from instanceof DateTime) ? $from : new DateTime($from)) : new DateTime;
-	
+
     $ago = ($to instanceof DateTime) ? $to : new DateTime($to);
     $diff = $now->diff($ago);
-	
+
     $diff->w = floor($diff->d / 7);
     $diff->d -= $diff->w * 7;
 

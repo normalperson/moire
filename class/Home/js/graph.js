@@ -62,6 +62,70 @@ $(function () {
             }]
         });
     }
+
+    if($('#artistjob').length > 0){
+        $('#artistjob').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Monthly job'
+            },
+            subtitle: {
+                text: 'my job by category'
+            },
+            xAxis: {
+                categories: ['Trapping', 'Barcode', 'Color Sep', 'MC', 'Artwork'],
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Quantity ',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' item'
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -40,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor || '#FFFFFF'),
+                shadow: true
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'April 2014',
+                data: [50, 75, 38, 14, 90]
+            }, {
+                name: 'May 2014',
+                data: [20, 21, 93, 17, 50]
+            }, {
+                name: 'June 2014',
+                data: [39, 47, 120, 11, 14]
+            }]
+        });
+    }
 	
     
     if($('#myperformance').length > 0){
@@ -103,6 +167,41 @@ $(function () {
         });
     }
 
+    if($('#artistperformance').length > 0){
+         $('#artistperformance').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Artist performance'
+            },
+            xAxis: {
+                categories: ['Artist1', 'Artist2', 'Artist3', 'Artist4', 'Artist5']
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Case performance by each artist'
+                }
+            },
+            legend: {
+                reversed: true
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal'
+                }
+            },
+                series: [{
+                name: 'Exceed SLA',
+                data: [2, 3, 4, 7, 0]
+            }, {
+                name: 'Comply with SLA',
+                data: [10, 7, 14, 2, 2]
+            }]
+        });
+    }
+
     if($('#pendingjob').length > 0){
         $('#pendingjob').highcharts({
             chart: {
@@ -137,9 +236,8 @@ $(function () {
             series: [{
                 name: 'Job',
                 data: [
-                    ['Checking(New case)', 15],
-                    ['Checking(Reverted case)', 25],
-                    ['Upload to customer', 3]
+                    ['Pending acknowledgement', 2],
+                    ['Work in progress', 2]
                 ],
                 dataLabels: {
                     enabled: true,
@@ -361,11 +459,8 @@ $(function () {
             },
             xAxis: { 
                 categories: [
-                    'Trapping',
-                    'Barcode',
-                    'Color Sep',
-                    'MC',
-                    'Artwork'
+                    'Pending customer resolution',
+                    'Pending customer acceptance'
                 ]
             },
             yAxis: {
@@ -389,8 +484,8 @@ $(function () {
                 }
             },
             series: [{
-                name: "Category",
-                data: [1, 0, 5, 1, 1]
+                name: "Workflow",
+                data: [1, 0]
             }]
         });
     }

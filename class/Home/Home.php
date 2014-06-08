@@ -8,14 +8,13 @@ class Home{
 		global $HTML, $GLOBAL, $DB, $USER;
 		
 	}
-	function initSmarty($headerTmpl = "header.html"){
+	function initSmarty(){
 		$smarty = new Smarty();
 		$smarty->caching = false;
 		$smarty->setTemplateDir(dirname(__FILE__).DS.'templates');
 		$smarty->setCompileDir(DOC_DIR.DS.'smarty'.DS.'templates_c');
 		$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
 		$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
-		html_header($headerTmpl);
 		return $smarty;
 	}
 	function alljob(){
@@ -32,45 +31,193 @@ class Home{
 	}
 	function qchome(){
 		global $HTML;
-		
-		$HTML->addJS('js/highchart/highcharts.js');
-		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		html_header();		
 		$smarty = $this->initSmarty();
+		$smarty->assign('Home', $this);	
 		$smarty->display('qchome.html');
-		$HTML->addJS('js/js.php?c=Home&js=graph');
+		
 		
 	}
 	function artisthome(){
 		global $HTML;
-		$HTML->addJS('js/highchart/highcharts.js');
-		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		html_header();
 		$smarty = $this->initSmarty();
+		$smarty->assign('Home', $this);	
 		$smarty->display('artisthome.html');
-		$HTML->addJS('js/js.php?c=Home&js=graph');
+
 	}
 	function supervisorhome(){
 		global $HTML;
-		$HTML->addJS('js/highchart/highcharts.js');
-		$HTML->addJS('js/highchart/highcharts-more.js');
-		$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		html_header();
 		$smarty = $this->initSmarty();
+		$smarty->assign('Home', $this);		
 		$smarty->display('supervisorhome.html');
-		$HTML->addJS('js/js.php?c=Home&js=graph');
+		
 
 	}
 	function customerhome(){
 		global $HTML;
 		
-		//$HTML->addJS('js/highchart/highcharts.js');
-		//$HTML->addCSS('css/css.php?c=Home&css=home.css');
+		html_header();
 		$smarty = $this->initSmarty();
+		$smarty->assign('Home', $this);		
 		$smarty->display('customerhome.html');
-		$HTML->addJS('js/js.php?c=Home&js=graph');
+	}
+	function renderJobByCategory($paneltitle='JOB BY CATEGORY', $charttitle = 'Total Job', $chartsubtitle='Job by category',$userid=''){
+		global $USER,$HTML;
+		if (trim($userid) == '') $userid = $USER->userid;
+
+		$HTML->addJS('js/highcharts.js');
+		$smarty = $this->initSmarty();
+		$smarty->assign('paneltitle',$paneltitle );
+		$smarty->assign('charttitle',$charttitle );
+		$smarty->assign('chartsubtitle',$chartsubtitle );		
+		$html = $smarty->fetch('jobbycategory.html');
+		return $html;
+
+	}
+	function renderPassOrder($custid=''){
+		global $HTML;
+		$HTML->addJS('js/highcharts.js');
+		$smarty = $this->initSmarty();
+		$html = $smarty->fetch('passorder.html');
+		return $html;		
+	}
+	function renderTaskPendingAction($usertype='', $userid=''){
+		global $USER,$HTML;
+		if (trim($userid) == '') $userid = $USER->userid;
+
+		$HTML->addJS('js/highcharts.js');
+		$smarty = $this->initSmarty();
+		$smarty->assign('usertype',$usertype );
+		$html = $smarty->fetch('taskpendingaction.html');
+		return $html;
+
+	}
+	function renderMyPerformance($userid=''){
+		global $USER,$HTML;
+		if (trim($userid) == '') $userid = $USER->userid;
+
+		$HTML->addJS('js/highcharts.js');
+		$smarty = $this->initSmarty();
+		$html = $smarty->fetch('myperformance.html');
+		return $html;
+	}
+	function renderMonthlySalesByCat(){
+		global $HTML;
+		$HTML->addJS('js/highcharts.js');
+		$smarty = $this->initSmarty();
+		$html = $smarty->fetch('monthlysalesbycat.html');
+		return $html;
+	}
+	function renderArtistPerformance(){
+		global $HTML;
+		$HTML->addJS('js/highcharts.js');
+		$smarty = $this->initSmarty();
+		$html = $smarty->fetch('artistperformance.html');
+		return $html;
+	}
+	function renderForcastVsActual(){
+		global $HTML;
+		$HTML->addJS('js/highcharts.js');
+		$smarty = $this->initSmarty();
+		$html = $smarty->fetch('forcastvsactual.html');
+		return $html;
+	}
+	function renderCustomerContribution(){
+		$smarty = $this->initSmarty();
+		$html = $smarty->fetch('customercontribution.html');
+		return $html;	
+	}
+	/*for customer screen*/
+	function getTotalOrderByCustomer($custid,$thismonth='N'){
+		
+		$datefilter = " and js_request_date between date_trunc('month', current_date) and current_date + interval '1' day ";
+
+		$sql = "select count(*) from mjobsheet
+			where js_orgid = :0";
+
+		if($thismonth == 'Y') $sql .= $datefilter;
+
+		$total = $DB->GetOne($sql,array($custid), PDO::FETCH_ASSOC);
+		return $total;
+
+	}
+	/*same with pending job?*/
+	function getJobPendingAction(){
+		// check with yow		
+	}
+	function getActiveJob(){
+		// check with yow		
+	}
+	/* for admin screen(Artist) */
+	function getJobCompletedByArtist(){
+		// cannot get from mjobsheet right?
+		// js_assignto will change time to time right?
+
+	}
+	function getPendingJob(){
+		// cannot get from mjobsheet right?
+		// js_assignto will change time to time right?
+
 	}
 	function engtest(){
 		$smarty = $this->initSmarty();
 		$smarty->display('engtest.html');
 
+	}
+	function viewJobInfo(){
+		global $DB;
+		$smarty = $this->initSmarty();
+		$sql = "select * from mcarton";
+		$carton = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
+		$jsid = $_GET['jsid'];
+		$smarty->assign('carton',$carton);		
+		$smarty->assign('jsid',$jsid);
+		$smarty->assign('createcase','Y');
+		
+		$smarty->display('viewjob.html');
+	}
+	function jobinfo(){
+		global $HTML;
+
+		$HTML->showPageTime = false;
+		html_header('header.nh.html');
+		dbo_include('jobinfo');	
+	}
+	function jobcolor(){
+		global $HTML;
+
+		$HTML->showPageTime = false;
+		html_header('header.nh.html');
+		dbo_include('jobcolor');	
+	}
+	function jobother(){
+		global $HTML;
+		
+		$HTML->showPageTime = false;
+		html_header('header.nh.html');
+		dbo_include('jobother');	
+	}
+	function getCartonInfo(){
+		global $DB;
+
+		// include document class
+		require_once(CORE_DIR.DS.'inc'.DS.'Document.inc.php');		
+
+		$carid = $_POST['carid'];
+
+		// get image location
+		$doc = new Document();
+		$imageinfo = $doc->getSingleDocInfo($carid,'car_id');
+
+
+		$sql = "select * from mcartonvariable where carv_carid = :0";
+		$var = $DB->GetArray($sql,array($carid), PDO::FETCH_ASSOC);
+
+		$ret = array('imageinfo' => $imageinfo, 'var' => $var);
+
+		echo json_encode($ret);
 	}
 }
 

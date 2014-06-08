@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__).'/../../init.inc.php');
-require_once(dirname(__FILE__).'/../../inc/appFunc.php');
+require_once(dirname(__FILE__).'/../../inc/appFunc.php'); // include application function
+require_once(INCLUDE_DIR.DS.'Image.inc.php'); // include image class
 class moireJob{
 
 	function __construct(){
@@ -19,14 +20,8 @@ class moireJob{
 		return $smarty;
 	}
 	function newjob(){
-		global $DB;
-		$smarty = $this->initSmarty();
-
-		$sql = "select * from mcarton";
-		$carton = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
-
-		$smarty->assign('carton',$carton);
-		$smarty->display('newjob.html');
+		html_header();
+		dbo_include('jobsheet');	
 	}
 	function jobinfo(){
 		global $HTML;
@@ -52,22 +47,33 @@ class moireJob{
 	function getCartonInfo(){
 		global $DB;
 
-		// include document class
-		require_once(CORE_DIR.DS.'inc'.DS.'Document.inc.php');		
-
+		$value = 0;
 		$carid = $_POST['carid'];
+		$jobid = $_POST['jobid'];
 
+		
 		// get image location
-		$doc = new Document();
-		$imageinfo = $doc->getSingleDocInfo($carid,'car_id');
+		$img = new Image();
+		$imageinfo = $img->getImage('boxtype',$carid);
 
 
 		$sql = "select * from mcartonvariable where carv_carid = :0";
 		$var = $DB->GetArray($sql,array($carid), PDO::FETCH_ASSOC);
 
-		$ret = array('imageinfo' => $imageinfo, 'var' => $var);
+		if($jobid != 0){
+			$sql = "select * from mjscartonvalue
+					where carval_carid = :0
+					and carval_jsid = :1";
+			$value = $DB->GetArray($sql,array($carid,$jobid), PDO::FETCH_ASSOC);				
+		}
+
+		$ret = array('imageinfo' => $imageinfo, 'variable' => $var, 'boxsize' => $value);
 
 		echo json_encode($ret);
+	}
+	function showDBO(){
+		html_header();
+		dbo_include('reqverification');
 	}
 	
 	

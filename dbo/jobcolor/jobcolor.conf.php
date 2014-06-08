@@ -42,6 +42,7 @@ $dbo->layout = 'One';
 $dbo->width = '100%';
 $dbo->pageLinkCount = 7;
 $dbo->recordPerPage = 10;
+$dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
 $dbo->lang = 'EN-US';
@@ -246,7 +247,8 @@ $dbo->cols['js_bleeding']->option->default = '0
 5
 7
 10
-15';
+15
+20';
 $dbo->cols['js_bleeding']->option->defaultMethod = 'text';
 $dbo->cols['js_bleeding']->option->searchMethod = 'text';
 $dbo->cols['js_bleeding']->option->listMethod = 'text';

@@ -12,7 +12,7 @@ null as "__map_mcartonvariable__carv_unit__",
 \'\' as file
 from mcarton a';
 $dbo->col = array('car_id', 'car_name', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', 'file');
-$dbo->colList = array('car_name', '__map_mcartonvariable__carv_carid__');
+$dbo->colList = array('car_name');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
@@ -40,10 +40,11 @@ $dbo->titleDetail = 'Detail';
 $dbo->titleNew = 'New Record';
 $dbo->titleEdit = 'Edit Record';
 $dbo->titleSearch = 'Search Record';
-$dbo->theme = 'metro';
+$dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
 $dbo->pageLinkCount = 7;
 $dbo->recordPerPage = 10;
+$dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
 $dbo->lang = 'EN-US';
