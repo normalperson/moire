@@ -8,6 +8,7 @@ function dbo_reqverification_customize(&$dbo){
 
 
 function dbo_reqverification_custom_edit($table, $cols, $wheres){
+
   global $DB,$FLOWDECISION,$REMARK;
   $ret = array();
   $REMARK = $cols['remark'];

@@ -226,10 +226,7 @@ class PMTask {
 		$ev = new PM_Event($GLOBAL['PMTask_taskid']);
 		$this->renderTopBar($ev->id, 'PM_Event');
 		$case = $ev->start();
-		if ($case) {
-			// case created
-			redirect(APP_HREF);
-		}
+		if ($case) redirect('?');
 	}
 
 	function caseFlowList() {

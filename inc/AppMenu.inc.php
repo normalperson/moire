@@ -97,7 +97,7 @@ class AppMenu extends Menu{
 				if ($lvl === 0) {
 					echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i>  <span class='mm-text'>{$r['mn_title']}</span> </a>";
 				}
-				else echo "<li class='$liclass'><a href='$url'><span class='mm-text'> {$r['mn_title']} </span> </a>";
+				else echo "<li class='mm-dropdown $liclass'><a href='$url'><span class='mm-text'> {$r['mn_title']} </span> </a>";
 
 				$prependLi = array();
 				if ($url != "#") {
