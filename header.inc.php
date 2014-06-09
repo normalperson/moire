@@ -17,6 +17,8 @@ function html_header($headerTemplate='header.html'){
 		$HTML->addJS('js/jquery-2.1.1.min.js');
 		$HTML->addJS('js/bootstrap.min.js');
 		$HTML->addJS('js/pixel-admin.min.js');
+		$HTML->addJS('js/jquery.ui.draggable.min.js');
+		$HTML->addJS('js/jquery.ui.droppable.min.js');
 		$HTML->addJS('js/moment.min.js');
 		$HTML->addJS('js/script.js');
 		
