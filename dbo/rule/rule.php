@@ -6,13 +6,13 @@ function dbo_rule_customize(&$dbo){
 	
 }
 
-function showRuleEditor($c, $currval, $rs, $html) {
+
+function showRuleEditor($col, $currval, $rs, $html, $dbo) {
 	$editor = new RuleBuilder();
 	$rule = false;
-	if (!empty($rs['ru_id'])) {
-		$rule = new Rule($rs['ru_id']);
-	}
-	return $editor->genEditor('dbo_rule_'.(($rs) ? 'edit' : 'new').'_ru_data', $rule);
+	if (!empty($rs['ru_id'])) $rule = new Rule($rs['ru_id']);
+	$inputname = $dbo->genPrefix($dbo->state).$col;
+	return $editor->genEditor($inputname, $rule);
 }
 
 # final rendering

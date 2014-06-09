@@ -17,7 +17,7 @@ div.dbo_theme_pixeladmin > table td, table th{
 }
 
 div.dbo_theme_pixeladmin .value {
-	padding-right : 5px;
+	padding-right : 50px;
 }
 
 div.dbo_theme_pixeladmin .form_button > * {
@@ -40,9 +40,7 @@ div.dbo_theme_pixeladmin div.value_container input[type="url"],
 div.dbo_theme_pixeladmin div.value_container select,
 div.dbo_theme_pixeladmin div.value_container textarea
  {
-	display: block;
 	width: 100%;
-	height: 32px;
 	padding: 6px 12px;
 	font-size: 13px;
 	line-height: 1.42857143;
@@ -57,16 +55,31 @@ div.dbo_theme_pixeladmin div.value_container textarea
 	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
+div.dbo_theme_pixeladmin div.value_container input[type="text"],
+div.dbo_theme_pixeladmin div.value_container input[type="password"],
+div.dbo_theme_pixeladmin div.value_container input[type="search"],
+div.dbo_theme_pixeladmin div.value_container input[type="date"], 
+div.dbo_theme_pixeladmin div.value_container input[type="datetime-local"], 
+div.dbo_theme_pixeladmin div.value_container input[type="month"], 
+div.dbo_theme_pixeladmin div.value_container input[type="time"], 
+div.dbo_theme_pixeladmin div.value_container input[type="week"],
+div.dbo_theme_pixeladmin div.value_container input[type="color"], 
+div.dbo_theme_pixeladmin div.value_container input[type="email"], 
+div.dbo_theme_pixeladmin div.value_container input[type="number"], 
+div.dbo_theme_pixeladmin div.value_container input[type="tel"], 
+div.dbo_theme_pixeladmin div.value_container input[type="url"],
+div.dbo_theme_pixeladmin div.value_container select
+{
+	display: block;
+	height: 32px;
+}
+
 div.dbo_theme_pixeladmin div.value_container input[type="radio"] {
 	margin-right : 10px;
 }
 
 div.dbo_theme_pixeladmin div.value_container label {
 	font-weight : normal;
-}
-
-div.dbo_theme_pixeladmin div.value_container textarea {
-	height: auto;
 }
 
 div.dbo_theme_pixeladmin div.value_container input[type="text"]:focus,
