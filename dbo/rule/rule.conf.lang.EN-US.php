@@ -6,6 +6,7 @@ $dbo->cols['ru_name']->caption->set('default', 'Name', 'text');
 $dbo->cols['ru_true_msg']->caption->set('default', 'If True', 'text');
 $dbo->cols['ru_false_msg']->caption->set('default', 'If False', 'text');
 $dbo->cols['ru_data']->caption->set('default', 'Setup', 'text');
+$dbo->cols['testselect']->caption->set('default', 'testselect', 'text');
 
 $dbo->titleList = 'List Rule';
 $dbo->titleDetail = 'Detail';
