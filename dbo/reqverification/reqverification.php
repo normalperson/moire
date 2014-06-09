@@ -1,6 +1,16 @@
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'reqverification.conf.php');
 
+function defaultTime($col, $colVal, $data=array(), $html=null){
+  global $DB;
+  //vd($html);
+  //dbo_reqverification_edit_js_manrequiretime
+  $defminutes = $DB->GetOne("select getreqtimebyjob(".$data['js_id'].")");
+  $html .= "<script>$('#dbo_reqverification_edit_js_requiretime').val(".$defminutes.");</script>";
+
+  return $html;
+}
+
 # customization
 function dbo_reqverification_customize(&$dbo){
   $dbo->editModifier = 'dbo_reqverification_custom_edit';
@@ -28,10 +38,6 @@ function dbo_reqverification_custom_edit($table, $cols, $wheres){
 $dbo->render();
 ?>
 <script type="text/javascript">
-$('#dbo_reqverification_editform > fieldset > legend').css({'background-color': '#D8D8D8',
-                                                            'padding-left': '8px'});
-/*$('#dbo_reqverification_edit_cancel').css('display','none');
-$('#dbo_reqverification_edit_submit').css('display','none');*/
 $( document ).ready(function() {
   $('#dbo_reqverification_edit_js_assignto').attr('disabled','disabled')
                                             .css("background-color","#E6E6E6");

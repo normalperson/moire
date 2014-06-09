@@ -65,6 +65,12 @@ $( document ).ready(function() {
 			getCarton($this.val(),'dbotab_jobsheet_new_tbody_1');				
 		}
 	});
+	$('#dbo_jobsheet_edit_js_carid').change(function(){
+		$this = $(this);	
+		if($this.val()!= 'default'){		
+			getCarton($this.val(),'dbotab_jobsheet_edit_tbody_1');				
+		}
+	});
 });
 
 </script>
@@ -162,7 +168,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 		}
 		$JOBARRAY = array('casekey' => $jobid,
 			              'casetype' => 'jobsheet',
-			              'comment' => $remark);
+			              'comment' => trim($remark));
 		
 
 	}
@@ -171,11 +177,62 @@ function dbo_jobsheet_custom_new($table, $cols){
 
 // yet to modify
 function dbo_jobsheet_custom_edit($table, $cols, $wheres){
-	global $DB;
+	global $DB,$REMARK,$FLOWDECISION;
 	$ret = array();
+	$jobid = $wheres["js_id"];
+	// handle file upload if empty 
+	if($cols['attachment']['name'] == "") {
+		/*$ret = "Attachement cannot be empty";
+		return $ret;*/
+		unset($cols['attachment']);
+	}
+	else{
+		unset($cols['attachment']);
+		// validate rar or zip format
+		// upload the the right place...
+	}
+
+	$REMARK = $cols['remark']; // get the remark and insert after insert queue
+	unset($cols['remark']); // unset remark
+	unset($cols['info']); // unset image info
+
+	$cartonarr = $_POST['carcode']; // get the carton array
+	$cartonid = $cols['js_carid']; // get the carton id selected by user
+	// category handling part 1
+	$cols['js_primcat'] = getHighestPriorityCat($cols['jobcategory']);
+	$catstring = $cols['jobcategory'];
+	unset($cols['jobcategory']);
+
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
 		$ret[] = $DB->lastError;
+		$FLOWDECISION = false;
+	}else{
+		// category handling part 2
+		$catarr = explode(",",$catstring);
+		// delete the existing category
+		$sql = "delete from mjobcat where jc_jsid = :0 ";
+		$ok = $DB->Execute($sql,array($jobid));
+		foreach ($catarr as $key => $value) {
+			// insert into mjobcat
+			$data = array('jc_jsid' => $jobid, 'jc_jclid' => $value);
+			$ok = $DB->doInsert('mjobcat', $data);
+		}
+		// delete existing job info
+		$sql = "delete from mjscartonvalue where carval_jsid = :0";
+		$ok = $DB->Execute($sql,array($jobid));
+		foreach ($cartonarr as $key => $value) {
+			$cartondata = array(
+				'caval_value' => $value,
+				'carval_carcode' => $key,
+				'carval_carid' => $cartonid,
+				'carval_jsid' => $jobid
+				);
+			$ok = $DB->doInsert('mjscartonvalue', $cartondata);			
+		}
+
+		$FLOWDECISION=true;
+		
 	}
 	return $ret;
 }
