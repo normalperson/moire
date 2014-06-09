@@ -35,7 +35,7 @@ $dbo->canListNew = false;
 $dbo->canNewGroup = array();
 $dbo->canEditGroup = array();
 $dbo->canDeleteGroup = array();
-$dbo->showSearch = true;
+$dbo->showSearch = false;
 $dbo->newModifier = 'dbo_artistsetup_custom_new';
 $dbo->editModifier = 'dbo_artistsetup_custom_edit';
 $dbo->deleteModifier = 'dbo_artistsetup_custom_delete';
@@ -55,7 +55,7 @@ $dbo->lang = 'EN-US';
 $dbo->render = array();
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
-$dbo->whereSQL = 'usr_userid in (\'fong1\', \'danny@phiorion.com\', \'fong4\', \'yys1988@gmail.com\', \'yow@phiorion.com\', \'fong2\', \'lampard7824@gmail.com\', \'admin2\', \'nick\', \'admin\', \'qc\', \'supervisor\', \'natasha\', \'esp@phiorion.com\', \'fred\', \'severus\', \'customer\', \'superman@gmail.com\', \'harry\', \'hongyee@phiorion.com\', \'thor@gmail.com\', \'tony\', \'fong@phiorion.com\', \'artist2\', \'fong3\', \'artist1\', \'albus\')';
+$dbo->whereSQL = 'usr_userid in (\'danny@phiorion.com\', \'yys1988@gmail.com\', \'yow@phiorion.com\', \'lampard7824@gmail.com\', \'admin2\', \'artist1\', \'nick\', \'albus\', \'admin\', \'qc\', \'supervisor\', \'natasha\', \'esp@phiorion.com\', \'fred\', \'severus\', \'customer\', \'superman@gmail.com\', \'harry\', \'hongyee@phiorion.com\', \'thor@gmail.com\', \'tony\', \'fong@phiorion.com\', \'artist2\')';
 
 $dbo->cols['usr_userid'] = new DBO_COL('usr_userid', 'varchar', '-1', '54');
 $dbo->cols['usr_userid']->inputTypeDefault = 'text';

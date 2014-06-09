@@ -36,6 +36,13 @@ $dbo->cols['js_assignto']->caption->set('default', 'js_assignto', 'text');
 $dbo->cols['decision']->caption->set('default', 'Decision', 'text');
 $dbo->cols['remark']->caption->set('default', 'Remark', 'text');
 $dbo->cols['artwork']->caption->set('default', 'Artist finished artwork', 'text');
+$dbo->cols['js_orgid']->caption->set('default', 'js_orgid', 'text');
+$dbo->cols['js_color_5']->caption->set('default', 'js_color_5', 'text');
+$dbo->cols['js_angle_5']->caption->set('default', 'js_angle_5', 'text');
+$dbo->cols['js_carid']->caption->set('default', 'js_carid', 'text');
+$dbo->cols['js_decision']->caption->set('default', 'Decision', 'text');
+$dbo->cols['js_width']->caption->set('default', 'js_width', 'text');
+$dbo->cols['js_height']->caption->set('default', 'js_height', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
