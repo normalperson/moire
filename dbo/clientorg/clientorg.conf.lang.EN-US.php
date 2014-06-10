@@ -10,7 +10,7 @@ $dbo->cols['org_address']->caption->set('default', 'Address', 'text');
 $dbo->cols['org_contactno']->caption->set('default', 'Contact No.', 'text');
 $dbo->cols['org_status']->caption->set('default', 'Status', 'text');
 $dbo->cols['org_type']->caption->set('default', 'org_type', 'text');
-$dbo->cols['org_external']->caption->set('default', 'org_external', 'text');
+$dbo->cols['org_external']->caption->set('default', 'External', 'text');
 $dbo->cols['org_lccode']->caption->set('default', 'org_lccode', 'text');
 
 $dbo->titleList = 'List Record';
