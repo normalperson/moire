@@ -35,20 +35,104 @@ class DocManUI {
 		return $html;
 
 	}
+	function singleFileDownload($filelocation,$displayname){
+		if(!is_file($filelocation)) return 'It is not a file';
+		// make sure it's a file before doing anything!
+
+		// required for IE
+		if(ini_get('zlib.output_compression')) { ini_set('zlib.output_compression', 'Off');	}
+
+		// get the file mime type using the file extension
+		switch(strtolower(substr(strrchr($filelocation, '.'), 1))) {
+			case 'pdf': $mime = 'application/pdf'; break;
+			case 'zip': $mime = 'application/zip'; break;
+			case 'jpeg':
+			case 'jpg': $mime = 'image/jpg'; break;
+			default: $mime = 'application/force-download';
+		}
+		header('Pragma: public'); 	// required
+		header('Expires: 0');		// no cache
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Last-Modified: '.gmdate ('D, d M Y H:i:s', filemtime ($filelocation)).' GMT');
+		header('Cache-Control: private',false);
+		header('Content-Type: '.$mime);
+		header('Content-Disposition: attachment; filename="'.basename($displayname).'"');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Length: '.filesize($filelocation));	// provide file size
+		header('Connection: close');
+		readfile($filelocation);		// push it out
+		exit();
+
+
+	}
+	function generateFileName($docid,$reftype){
+		global $DB;
+		$sql = "select * from fcdoc where fd_id = :0";
+		$data = $DB->GetRow($sql,array($docid), PDO::FETCH_ASSOC);
+		$filelocation = FILEUPLOAD_DIR.DS.APP.DS.$reftype.DS.$docid.".".$data['fd_file_ext'];
+		$filename = $data['fd_file_name'];
+
+		return array('filelocation' => $filelocation, 'filename' => $filename);
+
+	}	
+	function multiFileDownload($filelist,$reftype){
+		$files = array();
+		// generate files array
+		foreach ($filelist as $key => $value) {
+			$file = $this->generateFileName($value,$reftype);
+			array_push($files,$file);
+		}
+		static $zipCount;
+		if($zipCount) ++$zipCount;
+		else $zipCount = 1;
+		$zipname="MOIREZIP_".$zipCount;
+
+		$zip = new ZipArchive;
+		$zip->open($zipname, ZipArchive::CREATE);
+		foreach ($files as $singlefile) {
+		  if(is_file($singlefile['filelocation'])){
+		  	//explode(DS, $singlefile['filelocation']);
+		  	$tmp = explode(DS, $singlefile['filelocation']);
+            $newfilename = end($tmp);     
+		  	$zip->addFile($singlefile['filelocation'],'/MOIRE/'.$newfilename);
+		  }
+		}
+		$zip->close();
+		header('Pragma: public'); 	// required
+		header('Expires: 0');		// no cache
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Last-Modified: '.gmdate ('D, d M Y H:i:s', filemtime ($zipname)).' GMT');
+		header('Cache-Control: private',false);
+		header('Content-Type: application/zip');
+		header('Content-Disposition: attachment; filename="'.$zipname.'"');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Length: '.filesize($zipname));	// provide file size
+		header('Connection: close');
+		readfile($zipname);
+		unlink($zipname);
+		exit();
+
+
+	}
 	function download(){
-		print 'inside download in UI';
-		vd($_POST);
-		// user $_REQUEST
 		$listofdoc = $_REQUEST['docid'];
 		$reftype = $_REQUEST['reftype'];
 
+		
+		if( in_array('0', $listofdoc) )	array_shift($listofdoc);
+
 		// if only 1 no zip..
-		header('Content-Type: application/zip');
-header('Content-disposition: attachment; filename=filename.zip');
-header('Content-Length: ' . filesize($zipfilename));
-readfile($zipname);
+		if(count($listofdoc) <= 1){
+			// generate the file name
+			$fileinfo = $this->generateFileName($listofdoc[0],$reftype);
+			$this->singleFileDownload($fileinfo['filelocation'],$fileinfo['filename']);
+		}else{
+			$this->multiFileDownload($listofdoc,$reftype);				
+		}
+
 
 		// if more than 1 then zip..
+
 
 
 	}

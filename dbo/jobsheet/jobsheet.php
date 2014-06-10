@@ -78,6 +78,7 @@ $( document ).ready(function() {
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'jobsheet.conf.php');
 require_once(DOC_DIR.DS.'inc'.DS.'appFunc.php');
 require_once(CORE_DIR.DS.'inc'.DS.'DocumentManager.inc.php');
+require_once(CLASS_DIR.DS.'DocManUI'.DS.'DocManUI.php');
 
 function displayCartonEdit($col, $colVal, $data=array(), $html=null){
 	$str = "<script>getCarton(".$colVal.",'dbotab_jobsheet_edit_tbody_1',".$data['js_id'].")</script>";
@@ -93,6 +94,12 @@ function displayCartonDetail($col, $colVal, $data=array(), $html=null){
 }
 function showinfo($col, $colVal, $data=array(), $html=null){
 	$html = '<img src="..'.DS.'..'.DS.'image'.DS.'info'.DS.'attachementinfo.png" alt="..." class="img-responsive img-thumbnail ">';
+
+	return $html;
+}
+function showFileHistory($col, $colVal, $data=array(), $html=null){
+	$docUI = new DocManUI();
+	$html = $docUI->getFileList($data['js_id'],'js_id');
 
 	return $html;
 }
@@ -171,7 +178,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 
 		// upload the the right place...
 		$doc = new DocumentManager();
-		$doc->saveMultipleFile($attachment,$jobid,'js_id');
+		$doc->saveMultipleFile($attachment,$jobid,'js_id','New job file upload');
 
 
 		

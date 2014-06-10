@@ -5,7 +5,7 @@ require_once(CLASS_DIR.DS.'DocManUI'.DS.'DocManUI.php');
 
 
 $docUI = new DocManUI();
-$html = $docUI->getFileList('34','car_id');
+$html = $docUI->getFileList('31','js_id');
 
 html_header();
 echo $html;
