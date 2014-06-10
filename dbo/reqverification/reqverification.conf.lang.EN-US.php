@@ -55,7 +55,6 @@ $dbo->cols['js_width']->caption->set('default', 'js_width', 'text');
 $dbo->cols['js_height']->caption->set('default', 'js_height', 'text');
 $dbo->cols['js_manrequiretime']->caption->set('default', 'Required Time <br> (In minutes)', 'text');
 $dbo->cols['js_requiretime']->caption->set('default', 'Required time', 'text');
-
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Job Detail';
 $dbo->titleNew = 'New Record';
