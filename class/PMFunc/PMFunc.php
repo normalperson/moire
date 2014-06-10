@@ -25,13 +25,16 @@ class PMFunc{
 		echo "<form method='post'><input type='submit' value='MOVE' name='PROCEED' /></form>";
 	}
 	function reqVerification($flowid,$o){
-		global $FLOWDECISION,$REMARK;
+		global $FLOWDECISION,$REMARK,$DB;
 		$_GET['dboid']='reqverification';
 		$_GET['js_id']=$o->casekey;
 		$_GET['dbostate']='edit';
 		dbo_include('reqverification');
 
 		if(isset($FLOWDECISION) && $FLOWDECISION==true) {
+			// insert comment
+			if(trim($REMARK) != '')	$o->insertComment($REMARK, $flowid);
+
 			return true;
 		}
 		
@@ -101,7 +104,7 @@ class PMFunc{
 	function pendingCust($flowid,$o){
 		global $FLOWDECISION,$REMARK;
 		$_GET['dboid']='customeracceptance';
-		$_GET['js_id']=$flowid;
+		$_GET['js_id']=$o->casekey;
 		$_GET['dbostate']='edit';
 		dbo_include('customeracceptance');
 		
@@ -114,7 +117,7 @@ class PMFunc{
 
 	}
 	function newJob(){
-		global $JOBARRAY;
+		global $JOBARRAY,$DB;
 		$_GET['dboid']='jobsheet';
 		$_GET['dbostate']='new';
 		dbo_include('jobsheet');

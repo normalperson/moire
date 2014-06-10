@@ -24,6 +24,7 @@ $dbo->cols['last_synchronized_date']->caption->set('default', 'last_synchronized
 $dbo->cols['record_synchronized']->caption->set('default', 'record_synchronized', 'text');
 $dbo->cols['cloud_refid']->caption->set('default', 'cloud_refid', 'text');
 $dbo->cols['mn_pmscode']->caption->set('default', 'Permission Code', 'text');
+$dbo->cols['mn_icon_class']->caption->set('default', 'Icon class', 'text');
 
 $dbo->titleList = 'List Menu';
 $dbo->titleDetail = 'Detail';
@@ -36,7 +37,9 @@ $dbo->text->editCancel = 'Cancel';
 $dbo->text->editSubmit = 'Save';
 $dbo->text->newCancel = 'Cancel';
 $dbo->text->newSubmit = 'Save';
+$dbo->text->listSubmit = 'Submit';
 $dbo->text->detailCancel = 'Back';
+$dbo->text->detailDelete = 'Delete';
 $dbo->text->defaultMessageAfterNew = 'Record created.';
 $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';

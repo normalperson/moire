@@ -29,7 +29,6 @@ function dbo_reqverification_custom_edit($table, $cols, $wheres){
     $FLOWDECISION = false;
   }else{
     $FLOWDECISION = true;
-    // insert remark
   }
   return $ret;
 }

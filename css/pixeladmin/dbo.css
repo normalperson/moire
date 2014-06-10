@@ -3,6 +3,26 @@ div.dbo_theme_pixeladmin{
 	width:90%;
 	margin:auto;
 }
+/*error message*/
+pre.dbo_error_new,
+pre.dbo_error_edit, 
+pre.dbo_error_delete {
+  background: #f2dede;
+  border-color: #ebccd1;
+  color: #b94a48;
+  background-size: 20px 20px;
+}
+/*info message*/
+div.dbo_after_new_message,
+div.dbo_after_edit_message,
+div.dbo_after_delete_message {
+  background: #d9edf7;
+  border-color: #bce8f1;
+  color: #3a87ad;
+  background-size: 20px 20px;
+  padding: 10px;
+}
+
 /*Apply to all the table */
 div.dbo_theme_pixeladmin >  table {
 	width:100%;

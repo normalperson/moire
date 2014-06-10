@@ -187,7 +187,7 @@ class Setting{
 	}
 	function showDBO(){
 		html_header();
-		$dbo = dbo_include('reqverification');	
+		$dbo = dbo_include('customeracceptance');	
 
 	}
 	function orgsetup(){
