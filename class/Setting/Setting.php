@@ -187,7 +187,7 @@ class Setting{
 	}
 	function showDBO(){
 		html_header();
-		$dbo = dbo_include('customeracceptance');	
+		$dbo = dbo_include('jobsheet');	
 
 	}
 	function orgsetup(){

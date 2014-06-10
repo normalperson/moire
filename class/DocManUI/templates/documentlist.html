@@ -60,6 +60,7 @@
     	var docid = [];
     	var $form = $('<form>').attr({'action':downloadurl, 'method':'post'});
 
+    	$('<input type="hidden" name="reftype" value="'+reftype+'"').appendTo($form);
     	$allcheckboxes.filter(':checked').each(function(){
     		$('<input type="hidden" name="docid[]" value="'+$(this).val()+'"/>').appendTo($form);
     	});

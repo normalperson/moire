@@ -77,6 +77,7 @@ $( document ).ready(function() {
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'jobsheet.conf.php');
 require_once(DOC_DIR.DS.'inc'.DS.'appFunc.php');
+require_once(CORE_DIR.DS.'inc'.DS.'DocumentManager.inc.php');
 
 function displayCartonEdit($col, $colVal, $data=array(), $html=null){
 	$str = "<script>getCarton(".$colVal.",'dbotab_jobsheet_edit_tbody_1',".$data['js_id'].")</script>";
@@ -124,15 +125,16 @@ function dbo_jobsheet_custom_new($table, $cols){
 
 	*/
 	// handle file upload if empty 
-	if($cols['attachment']['name'] == "") {
+	if(!empty($cols['attachment']['name'])) {
 		/*$ret = "Attachement cannot be empty";
 		return $ret;*/
 		unset($cols['attachment']);
 	}
 	else{
-		unset($cols['attachment']);
+		$attachment = json_decode($cols['attachment'],true);
 		// validate rar or zip format
-		// upload the the right place...
+
+		unset($cols['attachment']); 
 	}
 	
 	$remark = $cols['remark']; // get the remark and insert after insert queue
@@ -166,6 +168,13 @@ function dbo_jobsheet_custom_new($table, $cols){
 				);
 			$ok = $DB->doInsert('mjscartonvalue', $cartondata);			
 		}
+
+		// upload the the right place...
+		$doc = new DocumentManager();
+		$doc->saveMultipleFile($attachment,$jobid,'js_id');
+
+
+		
 		$JOBARRAY = array('casekey' => $jobid,
 			              'casetype' => 'jobsheet',
 			              'comment' => trim($remark));

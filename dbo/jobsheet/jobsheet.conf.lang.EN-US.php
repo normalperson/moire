@@ -51,6 +51,10 @@ $dbo->cols['js_diecut_no']->caption->set('default', 'js_diecut_no', 'text');
 $dbo->cols['info']->caption->set('default', 'Note:', 'text');
 $dbo->cols['js_carid']->caption->set('default', 'Carton type', 'text');
 $dbo->cols['jobcategory']->caption->set('default', 'Category', 'text');
+$dbo->cols['js_decision']->caption->set('default', 'js_decision', 'text');
+$dbo->cols['js_width']->caption->set('default', 'js_width', 'text');
+$dbo->cols['js_height']->caption->set('default', 'js_height', 'text');
+$dbo->cols['js_manrequiretime']->caption->set('default', 'js_manrequiretime', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

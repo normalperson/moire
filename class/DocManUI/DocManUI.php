@@ -29,7 +29,7 @@ class DocManUI {
 		$smarty->assign('id',$id);
 		$smarty->assign('downloadurl',WEB_HREF.'/DocManUI/download');
 		$smarty->assign('docinfo',$docinfo);
-		
+	
 		$html = $smarty->fetch('documentlist.html');
 
 		return $html;
@@ -39,6 +39,18 @@ class DocManUI {
 		print 'inside download in UI';
 		vd($_POST);
 		// user $_REQUEST
+		$listofdoc = $_REQUEST['docid'];
+		$reftype = $_REQUEST['reftype'];
+
+		// if only 1 no zip..
+		header('Content-Type: application/zip');
+header('Content-disposition: attachment; filename=filename.zip');
+header('Content-Length: ' . filesize($zipfilename));
+readfile($zipname);
+
+		// if more than 1 then zip..
+
+
 	}
 	
 	function processDropzone() {
