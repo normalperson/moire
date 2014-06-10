@@ -4,11 +4,14 @@ class DBO_InputType_TextareaAutosize extends DBO_InputType{
 		global $HTML;
 		$ret = "";
 		extract($param);
+		$size = $dbo->cols[$col]->size;
+		
 		$ret = $HTML->genTextarea($name, $value, $ext);
+		
 		$ret .= 
 "<script type='text/javascript'>
 (function () {
-	$('#{$name}').autosize();
+	$('#{$name}')".(($size) ? ".attr('rows', {$size})" : "").".autosize();
 })();
 </script>";
 		
