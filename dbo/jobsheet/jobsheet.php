@@ -77,8 +77,8 @@ $( document ).ready(function() {
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'jobsheet.conf.php');
 require_once(DOC_DIR.DS.'inc'.DS.'appFunc.php');
-require_once(CORE_DIR.DS.'inc'.DS.'DocumentManager.inc.php');
 require_once(CLASS_DIR.DS.'DocManUI'.DS.'DocManUI.php');
+require_once(CORE_DIR.DS.'inc'.DS.'DocumentManager.inc.php');
 
 function displayCartonEdit($col, $colVal, $data=array(), $html=null){
 	$str = "<script>getCarton(".$colVal.",'dbotab_jobsheet_edit_tbody_1',".$data['js_id'].")</script>";
@@ -197,20 +197,22 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$ret = array();
 	$jobid = $wheres["js_id"];
 	// handle file upload if empty 
-	if($cols['attachment']['name'] == "") {
+	if(!empty($cols['attachment']['name'])) {
 		/*$ret = "Attachement cannot be empty";
 		return $ret;*/
 		unset($cols['attachment']);
 	}
 	else{
-		unset($cols['attachment']);
+		$attachment = json_decode($cols['attachment'],true);
 		// validate rar or zip format
-		// upload the the right place...
+
+		unset($cols['attachment']); 
 	}
 
 	$REMARK = $cols['remark']; // get the remark and insert after insert queue
 	unset($cols['remark']); // unset remark
 	unset($cols['info']); // unset image info
+	unset($cols['filehistory']);
 
 	$cartonarr = $_POST['carcode']; // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
@@ -246,6 +248,11 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 				);
 			$ok = $DB->doInsert('mjscartonvalue', $cartondata);			
 		}
+
+		// upload the the right place...
+		$doc = new DocumentManager();
+		$doc->saveMultipleFile($attachment,$jobid,'js_id','Edit job file');
+
 
 		$FLOWDECISION=true;
 		

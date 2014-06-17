@@ -75,7 +75,7 @@ class DocManUI {
 		return array('filelocation' => $filelocation, 'filename' => $filename);
 
 	}	
-	function multiFileDownload($filelist,$reftype){
+	function multiFileDownload($filelist,$reftype,$destination='DEFAULT/'){
 		$files = array();
 		// generate files array
 		foreach ($filelist as $key => $value) {
@@ -94,7 +94,7 @@ class DocManUI {
 		  	//explode(DS, $singlefile['filelocation']);
 		  	$tmp = explode(DS, $singlefile['filelocation']);
             $newfilename = end($tmp);     
-		  	$zip->addFile($singlefile['filelocation'],'/MOIRE/'.$newfilename);
+		  	$zip->addFile($singlefile['filelocation'],$destination.$newfilename);
 		  }
 		}
 		$zip->close();
@@ -117,7 +117,7 @@ class DocManUI {
 	function download(){
 		$listofdoc = $_REQUEST['docid'];
 		$reftype = $_REQUEST['reftype'];
-
+		$destination = strtoupper (APP);
 		
 		if( in_array('0', $listofdoc) )	array_shift($listofdoc);
 
@@ -127,7 +127,7 @@ class DocManUI {
 			$fileinfo = $this->generateFileName($listofdoc[0],$reftype);
 			$this->singleFileDownload($fileinfo['filelocation'],$fileinfo['filename']);
 		}else{
-			$this->multiFileDownload($listofdoc,$reftype);				
+			$this->multiFileDownload($listofdoc,$reftype,$destination);				
 		}
 
 
@@ -137,20 +137,22 @@ class DocManUI {
 
 	}
 	
+	
 	function processDropzone() {
-		$tmpfile = dirname($_FILES['file']['tmp_name']).DS.'dz_tmp_'.basename($_FILES['file']['tmp_name']);
-		
-		rename($_FILES['file']['tmp_name'], $tmpfile);
-		$_FILES['file']['tmp_name'] = $tmpfile;
-		echo json_encode($_FILES['file']);
-		
-		// clean up old upload files
-		$time  = time();
-		$oldtmpfiles = glob(dirname($_FILES['file']['tmp_name']).DS.'dz_tmp_*');
-		foreach ($oldtmpfiles as $file) {
-			if(is_file($file))
-				if($time - filemtime($file) >= 60*60) // 1 hour
-					unlink($file);
+		if (!empty($_FILES)) {
+			$tmpfile = dirname($_FILES['file']['tmp_name']).DS.'dz_tmp_'.basename($_FILES['file']['tmp_name']);
+			rename($_FILES['file']['tmp_name'], $tmpfile);
+			$_FILES['file']['tmp_name'] = $tmpfile;
+			echo json_encode($_FILES['file']);
+			
+			// clean up old tmp upload files
+			$time  = time();
+			$oldtmpfiles = glob(dirname($_FILES['file']['tmp_name']).DS.'dz_tmp_*');
+			foreach ($oldtmpfiles as $file) {
+				if(is_file($file))
+					if($time - filemtime($file) >= 60*60) // 1 hour
+						unlink($file);
+			}
 		}
 	}
 	
