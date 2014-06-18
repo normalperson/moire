@@ -112,7 +112,7 @@ function dbo_jobsheet_customize(&$dbo){
 
 function dbo_jobsheet_custom_new($table, $cols){
 
-	global $DB,$JOBARRAY;
+	global $DB,$JOBARRAY,$USER;
 	$ret = array();
 	//$DB->showsql = true;
 
@@ -154,6 +154,8 @@ function dbo_jobsheet_custom_new($table, $cols){
 	
 	$cartonarr = $_POST['carcode']; // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
+	// customer org id
+	$cols['js_orgid'] = $USER->orgid; // get customer org id
 	$ok = $DB->doInsert($table, $cols);
 	$jobid = $DB->lastInsertId('mjobsheet_js_id_seq');
 	if(!$ok){

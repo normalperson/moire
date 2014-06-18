@@ -6,7 +6,14 @@
 				<!-- Stat panel bg icon -->
 				<i class="fa fa-check-square-o bg-icon"></i>
 				<!-- Extra large text -->
-				<span class="text-xlg"><strong>1124</strong></span><br>
+				<span class="text-xlg">
+					<strong>
+						<a href="showJobList?page=supervisor">
+						{$Home->getTotalJob()}
+						</a>
+					</strong>
+				</span>
+					<br>
 				<!-- Big text -->
 				<span class="text-bg">Jobs</span><br>
 				<!-- Small text -->
@@ -20,8 +27,16 @@
 			<div class="stat-cell bg-warning valign-middle">
 				<!-- Stat panel bg icon -->
 				<i class="fa fa-info bg-icon"></i>
-				<!-- Extra large text -->
-				<span class="text-xlg"><strong>21</strong></span><br>
+				<!-- Extra large text -->				
+				<span class="text-xlg">
+					<strong>
+<!-- 		  			  Activity name   : "Requirement verification"
+		                  Activity ID : 1 -->		
+						<a href="{$Home->getFlowUrl(1,'PM_Activity')}">
+							{$Home->getActivityData(1,'totalcount')}
+						</a>
+					</strong>
+				</span><br>
 				<!-- Big text -->
 				<span class="text-bg">Jobs</span><br>
 				<!-- Small text -->
@@ -36,11 +51,19 @@
 				<!-- Stat panel bg icon -->
 				<i class="fa fa-gavel bg-icon"></i>
 				<!-- Extra large text -->
-				<span class="text-xlg"><strong>31</strong></span><br>
+				<span class="text-xlg">
+					<strong>
+<!-- 		  			  Activity name   : "Work in progress "
+		                  Activity ID : 4 -->		
+						<a href="{$Home->getFlowUrl(4,'PM_Activity')}">
+							{$Home->getActivityData(4,'totalcount')}
+						</a>
+					</strong>
+				</span><br>
 				<!-- Big text -->
 				<span class="text-bg">Jobs</span><br>
 				<!-- Small text -->
-				<span class="text-sm">pending acknowledgement</span>
+				<span class="text-sm">work in progress</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
 	</div>
@@ -51,11 +74,20 @@
 				<!-- Stat panel bg icon -->
 				<i class="fa fa-bar-chart-o bg-icon"></i>
 				<!-- Extra large text -->
-				<span class="text-xlg"><strong>64</strong></span><br>
+				<span class="text-xlg">
+					<strong>
+<!-- 		  			  Activity name   : "Pending acceptance"
+		                  Activity ID : 6 -->		
+						<a href="{$Home->getFlowUrl(6,'PM_Activity')}">
+							{$Home->getActivityData(6,'totalcount')}
+						</a>
+					</strong>
+				</span>
+					<br>
 				<!-- Big text -->
 				<span class="text-bg">Jobs</span><br>
 				<!-- Small text -->
-				<span class="text-sm">work in progress</span>
+				<span class="text-sm">pending customer acceptance</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
 	</div>			

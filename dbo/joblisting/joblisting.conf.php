@@ -1,28 +1,32 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
-$dboID = 'jobsheet';
+$dboID = 'joblisting';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
-$dbo->sql = 'select mjobsheet.*, \'\' attachment, \'\' remark, \'\' info, \'\' filehistory,cast(jobcategory as varchar) as jobcategory from mjobsheet left join (
+$dbo->sql = 'select mjobsheet.*, pmc_id, \'\' filehistory,
+cast(jobcategory as varchar) as jobcategory 
+from mjobsheet 
+join fcpmcase on js_id = pmc_casekey
+left join (
 select string_agg(jc_jclid::char,\', \' order by jc_jclid) jobcategory,jc_jsid from mjobcat
 group by jc_jsid) a on js_id = a.jc_jsid';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'attachment', 'remark', 'info', 'filehistory', 'jobcategory');
-$dbo->colList = array('js_description', 'js_ctid', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_primcat');
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'pmc_id', 'filehistory', 'jobcategory');
+$dbo->colList = array('pmc_id', 'js_description', 'js_primcat', 'jobcategory', 'js_request_date', 'js_orgid');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'attachment', 'remark', 'filehistory');
-$dbo->colNew = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'attachment', 'info', 'remark');
-$dbo->colEdit = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'attachment', 'info', 'remark', 'filehistory');
-$dbo->colSearch = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
+$dbo->colDetail = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
+$dbo->colNew = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid');
+$dbo->colEdit = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
+$dbo->colSearch = array('pmc_id', 'js_request_date', 'js_description', 'js_primcat');
 $dbo->colExport = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colSort = array();
-$dbo->canSearch = false;
-$dbo->canNew = true;
-$dbo->canEdit = true;
+$dbo->canSearch = true;
+$dbo->canNew = false;
+$dbo->canEdit = false;
 $dbo->canDelete = false;
 $dbo->canDetail = true;
 $dbo->canListEdit = false;
@@ -31,11 +35,12 @@ $dbo->canNewGroup = array();
 $dbo->canEditGroup = array();
 $dbo->canDeleteGroup = array();
 $dbo->showSearch = true;
-$dbo->titleList = 'List Record';
-$dbo->titleDetail = 'Detail';
+$dbo->titleList = 'Job List';
+$dbo->titleDetail = 'Job Detail';
 $dbo->titleNew = 'New Job';
-$dbo->titleEdit = 'Edit Record';
-$dbo->titleSearch = 'Search Record';
+$dbo->titleEdit = 'Edit Job';
+$dbo->titleSearch = 'Search Job';
+$dbo->layoutSearch = '1|1';
 $dbo->layoutDetail = '5;
 5;
 5;
@@ -93,7 +98,7 @@ $dbo->layoutEdit = '5;
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
 $dbo->pageLinkCount = 7;
-$dbo->recordPerPage = 10;
+$dbo->recordPerPage = 50;
 $dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
@@ -490,7 +495,7 @@ $dbo->cols['js_barcodenumber']->option->detailMethod = 'text';
 $dbo->cols['js_barcodenumber']->option->newMethod = 'text';
 $dbo->cols['js_barcodenumber']->option->editMethod = 'text';
 $dbo->cols['js_primcat'] = new DBO_COL('js_primcat', 'int4', '4', '-1');
-$dbo->cols['js_primcat']->inputTypeDefault = 'text';
+$dbo->cols['js_primcat']->inputTypeDefault = 'select';
 $dbo->cols['js_primcat']->searchMode = 'exact';
 $dbo->cols['js_primcat']->capContClassDefault = array();
 $dbo->cols['js_primcat']->valContClassDefault = array();
@@ -570,11 +575,12 @@ $dbo->cols['remark']->option->detailMethod = 'text';
 $dbo->cols['remark']->option->newMethod = 'text';
 $dbo->cols['remark']->option->editMethod = 'text';
 $dbo->cols['js_orgid'] = new DBO_COL('js_orgid', 'int4', '4', '-1');
-$dbo->cols['js_orgid']->inputTypeDefault = 'checkbox';
+$dbo->cols['js_orgid']->inputTypeDefault = 'select';
 $dbo->cols['js_orgid']->searchMode = 'exact';
 $dbo->cols['js_orgid']->capContClassDefault = array();
 $dbo->cols['js_orgid']->valContClassDefault = array();
-$dbo->cols['js_orgid']->option->defaultMethod = 'text';
+$dbo->cols['js_orgid']->option->default = 'select org_id,org_name from fcorg';
+$dbo->cols['js_orgid']->option->defaultMethod = 'sql';
 $dbo->cols['js_orgid']->option->searchMethod = 'text';
 $dbo->cols['js_orgid']->option->listMethod = 'text';
 $dbo->cols['js_orgid']->option->detailMethod = 'text';
@@ -718,6 +724,17 @@ $dbo->cols['filehistory']->option->listMethod = 'text';
 $dbo->cols['filehistory']->option->detailMethod = 'text';
 $dbo->cols['filehistory']->option->newMethod = 'text';
 $dbo->cols['filehistory']->option->editMethod = 'text';
+$dbo->cols['pmc_id'] = new DBO_COL('pmc_id', 'int4', '4', '-1');
+$dbo->cols['pmc_id']->inputTypeDefault = 'text';
+$dbo->cols['pmc_id']->searchMode = 'exact';
+$dbo->cols['pmc_id']->capContClassDefault = array();
+$dbo->cols['pmc_id']->valContClassDefault = array();
+$dbo->cols['pmc_id']->option->defaultMethod = 'text';
+$dbo->cols['pmc_id']->option->searchMethod = 'text';
+$dbo->cols['pmc_id']->option->listMethod = 'text';
+$dbo->cols['pmc_id']->option->detailMethod = 'text';
+$dbo->cols['pmc_id']->option->newMethod = 'text';
+$dbo->cols['pmc_id']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;
@@ -733,8 +750,8 @@ $dbo->saveDir = dirname(dirname(__FILE__));
 $dbo->run();
 
 /*
-$dbo->newModifier = 'dbo_jobsheet_custom_new';
-function dbo_jobsheet_custom_new($table, $cols){
+$dbo->newModifier = 'dbo_joblisting_custom_new';
+function dbo_joblisting_custom_new($table, $cols){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -744,8 +761,8 @@ function dbo_jobsheet_custom_new($table, $cols){
 	return $ret;
 }
 
-$dbo->editModifier = 'dbo_jobsheet_custom_edit';
-function dbo_jobsheet_custom_edit($table, $cols, $wheres){
+$dbo->editModifier = 'dbo_joblisting_custom_edit';
+function dbo_joblisting_custom_edit($table, $cols, $wheres){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -755,12 +772,12 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	return $ret;
 }
 
-$dbo->searchModifier = 'dbo_jobsheet_custom_search';
-function dbo_jobsheet_custom_search(&$search){
+$dbo->searchModifier = 'dbo_joblisting_custom_search';
+function dbo_joblisting_custom_search(&$search){
 }
 
-$dbo->deleteModifier = 'dbo_jobsheet_custom_delete';
-function dbo_jobsheet_custom_delete($table, $wheres){
+$dbo->deleteModifier = 'dbo_joblisting_custom_delete';
+function dbo_joblisting_custom_delete($table, $wheres){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);
@@ -770,7 +787,7 @@ function dbo_jobsheet_custom_delete($table, $wheres){
 	return $ret;
 }
 
-function dbo_jobsheet_display_modifier($col, $colVal, $data=array(), $html=null){
+function dbo_joblisting_display_modifier($col, $colVal, $data=array(), $html=null){
 }
 */
 ?>
