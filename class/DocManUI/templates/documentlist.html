@@ -1,0 +1,77 @@
+<div id="{$id}">
+<div class="pull-right">
+	<button class="btn btn-primary disabled docdownload"  name="docdownload" disabled="disabled">Download</button>
+</div>
+<table class="table table-striped doctable">
+	<thead>
+		<tr>
+			<th>
+				<label class="px-single" style="margin: 2px 3px 0 0"><input type="checkbox" value="0" class="px checkall"><span class="lbl"></span></label>
+			</th>
+			<th>Created date</th>
+			<th>Created by</th>
+			<th>File description</th>
+			<th>File name</th>
+			<th>File ext.</th>
+			<th>File size</th>
+		</tr>
+	</thead>
+	<tbody>
+		{foreach from=$docinfo item="di"}			
+		<tr>
+			<td><label class="px-single" style="margin: 2px 3px 0 0">
+				<input type="checkbox" name="fid[]" value="{$di.fd_id}" class="px"><span class="lbl"></span></label>
+			</td>
+			<td>{$di.fd_created_date|date_format}</td>
+			<td>{$di.fd_created_by}</td>
+			<td>{$di.fd_description}</td>
+			<td>{$di.fd_file_name}</td>
+			<td>{$di.fd_file_ext}</td>
+			<td>{$di.fd_file_size}</td>
+		</tr>
+		{/foreach}
+	</tbody>
+</table>
+</div>
+<script type="text/javascript">
+(function(){
+	var container = $('#{$id}'),
+		$button = container.find('button.docdownload'),
+	    $allcheckboxes = container.find('input:checkbox'),
+	    downloadurl = '{$downloadurl}',
+	    reftype = '{$reftype}';
+{literal}
+   	container.find('.checkall').on('click', function () {
+    	$allcheckboxes.prop('checked',this.checked);
+    });
+
+    $allcheckboxes.change(function(){
+    	if($allcheckboxes.filter(':checked').length > 0){
+	 		$button.attr("disabled",false)
+	 		       .removeClass('disabled');
+	 	}else{
+	 		$button.attr( 'disabled', true )
+	 		       .addClass('disabled');
+	 	}
+    });
+
+    $button.click(function(){
+    	console.log('Download url = '+downloadurl);
+    	var docid = [];
+    	var $form = $('<form>').attr({'action':downloadurl, 'method':'post'});
+
+    	$('<input type="hidden" name="reftype" value="'+reftype+'"/>').appendTo($form);
+    	$allcheckboxes.filter(':checked').each(function(){
+    		$('<input type="hidden" name="docid[]" value="'+$(this).val()+'"/>').appendTo($form);
+    	});
+
+    	$form.submit();
+    });
+
+})();
+{/literal}
+
+
+
+
+</script>

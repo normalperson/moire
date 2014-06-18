@@ -79,6 +79,7 @@ class AppMenu extends Menu{
 		echo "</ul>";
 	}
 	function rendermenuonleft($menuRS, $lvl = 0, $prependLi = array()) {
+/*		vd($menuRS);*/
 		if ($lvl === 0) echo "<ul class='navigation'>";
 		else echo "<ul>";
 		foreach ($prependLi as $li) {
@@ -97,7 +98,7 @@ class AppMenu extends Menu{
 				if ($lvl === 0) {
 					echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i>  <span class='mm-text'>{$r['mn_title']}</span> </a>";
 				}
-				else echo "<li class='mm-dropdown $liclass'><a href='$url'><span class='mm-text'> {$r['mn_title']} </span> </a>";
+				else echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i> <span class='mm-text'> {$r['mn_title']} </span> </a>";
 
 				$prependLi = array();
 				if ($url != "#") {
@@ -110,7 +111,7 @@ class AppMenu extends Menu{
 				if ($lvl === 0) {
 					if ($anchorclass != 'without-link') echo "<li class='$liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i><span class='mm-text'> {$r['mn_title']}  </span></a></li>";
 				}
-				else echo "<li class='$liclass'><a tabindex='-1' href='$url'><span class='mm-text'>  {$r['mn_title']} </span></a></li>";
+				else echo "<li class='$liclass'><a tabindex='-1' href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i> <span class='mm-text'>  {$r['mn_title']} </span></a></li>";
 			}
 		}
 

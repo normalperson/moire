@@ -25,15 +25,17 @@ class PMFunc{
 		echo "<form method='post'><input type='submit' value='MOVE' name='PROCEED' /></form>";
 	}
 	function reqVerification($flowid,$o){
-		global $FLOWDECISION,$REMARK;
+		global $FLOWDECISION,$REMARK,$DB;
 		$_GET['dboid']='reqverification';
 		$_GET['js_id']=$o->casekey;
 		$_GET['dbostate']='edit';
 		dbo_include('reqverification');
 
-		if($FLOWDECISION) {
+		if(isset($FLOWDECISION) && $FLOWDECISION==true) {
+			// insert comment
+			if(trim($REMARK) != '')	$o->insertComment($REMARK, $flowid);
+
 			return true;
-			#$o->
 		}
 		
 	}
@@ -45,12 +47,19 @@ class PMFunc{
 		dbo_include('jobsheet');
 	}
 	function pendingRevert($flowid,$o){
-		global $DB;
+		global $DB,$REMARK,$FLOWDECISION;
 		$_GET['dboid']='jobsheet';
 		$_GET['dbostate']='edit';
-		$_GET['js_id']=$caseobj->casekey;
+		$_GET['js_id']=$o->casekey;
 		dbo_include('jobsheet');
-		
+
+		if(isset($FLOWDECISION) && $FLOWDECISION==true) {
+			// insert comment
+			if(trim($REMARK) != '')	$o->insertComment($REMARK, $flowid);
+
+			return true;
+		}
+
 	}
 	function pendingAcknowledge($flowid,$o){
 		global $DB;
@@ -64,34 +73,51 @@ class PMFunc{
 
 	}
 	function wip($flowid, $o){
+		global $FLOWDECISION,$REMARK;
 		$_GET['dboid']='wip';
-		$_GET['js_id']=$flowid;
+		$_GET['js_id']=$o->casekey;
 		$_GET['dbostate']='edit';
 		dbo_include('wip');
-		
-		// $this->viewJobInfo($o->casekey);
 
+		if(isset($FLOWDECISION) && $FLOWDECISION==true) {
+			// insert comment
+			if(trim($REMARK) != '')	$o->insertComment($REMARK, $flowid);
+
+			return true;
+		}
 	}
 	function pendingQC($flowid, $o){
+		global $FLOWDECISION,$REMARK;
 		$_GET['dboid']='pendingQC';
-		$_GET['js_id']=$flowid;
+		$_GET['js_id']=$o->casekey;
 		$_GET['dbostate']='edit';
 		dbo_include('pendingQC');
 		
-		// $this->viewJobInfo($o->casekey);
+		if(isset($FLOWDECISION) && $FLOWDECISION==true) {
+			// insert comment
+			if(trim($REMARK) != '')	$o->insertComment($REMARK, $flowid);
+
+			return true;
+		}
 
 	}
 	function pendingCust($flowid,$o){
+		global $FLOWDECISION,$REMARK;
 		$_GET['dboid']='customeracceptance';
-		$_GET['js_id']=$flowid;
+		$_GET['js_id']=$o->casekey;
 		$_GET['dbostate']='edit';
 		dbo_include('customeracceptance');
 		
-		// $this->viewJobInfo($o->casekey);
+		if(isset($FLOWDECISION) && $FLOWDECISION==true) {
+			// insert comment
+			if(trim($REMARK) != '')	$o->insertComment($REMARK, $flowid);
+
+			return true;
+		}
 
 	}
 	function newJob(){
-		global $JOBARRAY;
+		global $JOBARRAY,$DB;
 		$_GET['dboid']='jobsheet';
 		$_GET['dbostate']='new';
 		dbo_include('jobsheet');

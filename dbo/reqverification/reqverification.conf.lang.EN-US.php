@@ -49,9 +49,14 @@ $dbo->cols['js_diecut_no']->caption->set('default', 'js_diecut_no', 'text');
 $dbo->cols['info']->caption->set('default', 'Note:', 'text');
 $dbo->cols['js_carid']->caption->set('default', 'js_carid', 'text');
 $dbo->cols['jobcategory']->caption->set('default', 'Category', 'text');
-
+$dbo->cols['js_decision']->caption->set('default', 'Decision', 'text');
+$dbo->cols['decision']->caption->set('default', 'decision', 'text');
+$dbo->cols['js_width']->caption->set('default', 'js_width', 'text');
+$dbo->cols['js_height']->caption->set('default', 'js_height', 'text');
+$dbo->cols['js_manrequiretime']->caption->set('default', 'Required Time <br> (In minutes)', 'text');
+$dbo->cols['js_requiretime']->caption->set('default', 'Required time', 'text');
 $dbo->titleList = 'List Record';
-$dbo->titleDetail = 'Detail';
+$dbo->titleDetail = 'Job Detail';
 $dbo->titleNew = 'New Record';
 $dbo->titleEdit = 'Decision';
 $dbo->titleSearch = 'Search Record';
