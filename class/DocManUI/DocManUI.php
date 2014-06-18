@@ -9,12 +9,11 @@ class DocManUI{
 	
 	function processDropzone() {
 		$tmpfile = dirname($_FILES['file']['tmp_name']).DS.'dz_tmp_'.basename($_FILES['file']['tmp_name']);
-		
 		rename($_FILES['file']['tmp_name'], $tmpfile);
 		$_FILES['file']['tmp_name'] = $tmpfile;
 		echo json_encode($_FILES['file']);
 		
-		// clean up old upload files
+		// clean up old tmp upload files
 		$time  = time();
 		$oldtmpfiles = glob(dirname($_FILES['file']['tmp_name']).DS.'dz_tmp_*');
 		foreach ($oldtmpfiles as $file) {

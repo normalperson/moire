@@ -219,8 +219,8 @@ class PMTask {
 	function startEvent() {
 		global $HTML, $GLOBAL, $DB;
 		$smarty = $this->initSmarty();
-		if (!empty($_REQUEST['id'])) {
-			$GLOBAL['PMTask_taskid'] = $_REQUEST['id'];
+		if (!empty($_GET['id'])) {
+			$GLOBAL['PMTask_taskid'] = $_GET['id'];
 			$GLOBAL['PMTask_tasktype'] = 'PM_Event';
 		}
 		$ev = new PM_Event($GLOBAL['PMTask_taskid']);
