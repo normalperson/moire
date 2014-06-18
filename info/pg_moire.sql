@@ -53,6 +53,23 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = pnd, pg_catalog;
 
 --
+-- Name: cleanqueue(); Type: FUNCTION; Schema: pnd; Owner: pnd
+--
+
+CREATE FUNCTION cleanqueue() RETURNS void
+    LANGUAGE plpgsql STRICT
+    AS $$
+BEGIN
+    delete from fcpmcase;
+    delete from fcpmcaseflow;
+    delete from mjobsheet;
+END;
+$$;
+
+
+ALTER FUNCTION pnd.cleanqueue() OWNER TO pnd;
+
+--
 -- Name: generatedata(); Type: FUNCTION; Schema: pnd; Owner: pnd
 --
 
@@ -357,6 +374,27 @@ $_$;
 
 
 ALTER FUNCTION pnd.get_random_integer(integer, integer) OWNER TO pnd;
+
+--
+-- Name: getreqtimebyjob(integer); Type: FUNCTION; Schema: pnd; Owner: pnd
+--
+
+CREATE FUNCTION getreqtimebyjob(integer) RETURNS integer
+    LANGUAGE plpgsql STRICT
+    AS $_$
+DECLARE
+    jobid ALIAS FOR $1;
+    totalminutes integer;
+BEGIN
+    select sum(jcl_requiretime) into totalminutes from mjobcat join mjobcatlookup on jc_jclid = jcl_id
+    where jc_jsid = jobid;
+
+    return totalminutes;
+END;
+$_$;
+
+
+ALTER FUNCTION pnd.getreqtimebyjob(integer) OWNER TO pnd;
 
 SET search_path = pnd_bk03june2014, pg_catalog;
 
@@ -1375,8 +1413,7 @@ CREATE TABLE fcpmconnector (
     pmcn_to_id integer,
     pmcn_order integer,
     pmcn_type character varying(32),
-    pmcn_ruid integer,
-    pmcn_ruid_result character varying(12) DEFAULT 'true'::character varying
+    pmcn_rule character varying(20)
 );
 
 
@@ -2325,7 +2362,10 @@ CREATE TABLE mjobsheet (
     js_completiondate timestamp with time zone,
     js_assignto character varying(50),
     js_carid integer,
-    js_decision character varying(50)
+    js_decision character varying(50),
+    js_width character varying(50),
+    js_height character varying(50),
+    js_requiretime integer
 );
 
 
@@ -6326,6 +6366,40 @@ COPY fcdoc (fd_id, fd_created_date, fd_created_by, fd_refid, fd_reftype, fd_desc
 38	2014-06-07 15:36:52.274+08		41	car_id	\N	osc_2_joint_1.png	png		12726.0000
 39	2014-06-07 15:36:52.275+08		41	car_id	\N	osc_2_joint_2.png	png		11909.0000
 40	2014-06-07 15:36:52.276+08		41	car_id	\N	osc_2_joint_3.png	png		12580.0000
+41	2014-06-10 17:53:00.942+08	\N	42	js_id	\N	rar1	rar		33080.0000
+42	2014-06-10 17:53:16.653+08	\N	43	js_id	\N	rar1	rar	\N	33080.0000
+43	2014-06-10 17:53:27.744+08	\N	43	js_id	\N	rar2	rar	\N	33080.0000
+44	2014-06-10 18:05:44.866+08	admin	27	js_id	\N	osc_3.png	png		10688.0000
+45	2014-06-10 18:05:44.866+08	admin	27	js_id	\N	rsc_2_joint.png	png		13436.0000
+46	2014-06-10 18:08:47.337+08	admin	28	js_id	\N	osc_3.png	png		10688.0000
+47	2014-06-10 18:08:47.337+08	admin	28	js_id	\N	rsc_2_joint.png	png		13436.0000
+48	2014-06-10 18:10:33.782+08	admin	29	js_id	\N	osc_3.png	png		10688.0000
+49	2014-06-10 18:10:33.782+08	admin	29	js_id	\N	rsc_2_joint.png	png		13436.0000
+50	2014-06-10 18:24:45.941+08	admin	50	new_id	\N	hsc.png	png		10963.0000
+51	2014-06-10 18:24:45.968+08	admin	50	new_id	\N	ind_6.png	png		13315.0000
+52	2014-06-10 18:24:45.969+08	admin	50	new_id	\N	osc_2_joint_3.png	png		12580.0000
+53	2014-06-10 18:24:45.971+08	admin	50	new_id	\N	osc_3.png	png		10688.0000
+54	2014-06-10 18:25:03.981+08	admin	30	js_id	\N	osc_3.png	png		10688.0000
+55	2014-06-10 18:25:03.981+08	admin	30	js_id	\N	rsc_2_joint.png	png		13436.0000
+56	2014-06-10 18:26:56.048+08	admin	31	js_id	\N	osc_3.png	png		10688.0000
+57	2014-06-10 18:26:56.048+08	admin	31	js_id	\N	rsc_2_joint.png	png		13436.0000
+58	2014-06-10 19:05:26.862+08	admin	32	js_id	\N	newjoberror.rar	rar		63047.0000
+59	2014-06-10 21:09:22.433+08	admin	33	js_id	New job file upload	newjoberror.rar	rar		63047.0000
+60	2014-06-10 21:09:22.433+08	admin	33	js_id	New job file upload	accountwebsite.rar	rar		129.0000
+61	2014-06-10 22:44:42.107+08	admin	34	js_id	New job file upload	hsc.png	png		10963.0000
+62	2014-06-10 22:44:42.107+08	admin	34	js_id	New job file upload	ind_6.png	png		13315.0000
+63	2014-06-10 23:06:08.402+08	admin	34	js_id	Artwork job done	osc_3.png	png		10688.0000
+64	2014-06-10 23:06:08.402+08	admin	34	js_id	Artwork job done	rsc.png	png		10260.0000
+65	2014-06-10 23:20:47.905+08	admin	34	js_id	Artwork job done	osc_3.png	png		10688.0000
+66	2014-06-10 23:21:42.452+08	admin	35	js_id	New job file upload	osc_2_joint_3.png	png		12580.0000
+67	2014-06-10 23:21:42.452+08	admin	35	js_id	New job file upload	osc_3.png	png		10688.0000
+68	2014-06-10 23:22:41.616+08	admin	35	js_id	Edit job file	hsc - Copy.png	png		10963.0000
+69	2014-06-10 23:22:41.616+08	admin	35	js_id	Edit job file	five_panel.png	png		12095.0000
+70	2014-06-11 20:47:02.736+08	admin	36	js_id	New job file upload	ind_9.png	png		7062.0000
+71	2014-06-11 20:47:02.736+08	admin	36	js_id	New job file upload	osc_2.png	png		9354.0000
+72	2014-06-11 20:47:02.736+08	admin	36	js_id	New job file upload	osc_2_joint_3.png	png		12580.0000
+73	2014-06-11 20:47:02.736+08	admin	36	js_id	New job file upload	rsc.png	png		10260.0000
+74	2014-06-11 20:50:04.312+08	admin	35	js_id	Artwork job done	rsc.png	png		10260.0000
 \.
 
 
@@ -6333,7 +6407,7 @@ COPY fcdoc (fd_id, fd_created_date, fd_created_by, fd_refid, fd_reftype, fd_desc
 -- Name: fcdoc_fd_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcdoc_fd_id_seq', 40, true);
+SELECT pg_catalog.setval('fcdoc_fd_id_seq', 74, true);
 
 
 --
@@ -6689,24 +6763,25 @@ SELECT pg_catalog.setval('fclookup_lu_id_seq', 110, true);
 
 COPY fcmenu (mn_id, mn_code, mn_parentid, mn_title, mn_status, mn_order, mn_url, mn_webflag, mn_class, mn_classlist, mn_func, mn_funclist, mn_param, mn_pmscode, mn_icon_class) FROM stdin;
 1	HEADERMENU	0	Top Menu	ACTIVE	0		Y	\N	\N	\N	\N	\N	\N	\N
-69	MENU	6	Menu Setup	ACTIVE	4400	\N	Y	Setting	\N	menusetup	\N	\N	\N	\N
-50	PERMSETUP	82	Permission Setup	ACTIVE	4230	\N	Y	Setting		permsetting			\N	\N
-51	ROLESETUP	82	Role Setup	ACTIVE	4220	\N	Y	Setting		rolesetting			\N	\N
-83	LOOKUPSETUP	6	Lookup Setup	ACTIVE	2000	\N	Y	Setting	\N	lookupSetup	\N	\N	\N	\N
 88	SVHOME	1	Home (Supervisor)	ACTIVE	1000	\N	Y	Home	\N	supervisorhome	\N	\N	SUPHOME	fa fa-home
 86	QCHOME	1	Home (QC)	ACTIVE	1000	\N	Y	Home	\N	qchome	\N	\N	QCHOME	fa fa-home
 87	ARTHOME	1	Home (Artist)	ACTIVE	1000	\N	Y	Home	\N	artisthome	\N	\N	ARTHOME	fa fa-home
 90	CUSTHOME	1	Home(Customer)	ACTIVE	1000	\N	Y	Home	\N	customerhome	\N	\N	CUSTHOME	fa fa-home
-6	SETTING	1	Setting	ACTIVE	9000	\N	N	\N	\N	\N	\N	\N	MENU_SETTING	fa fa-wrench
-91	ADMINSETUP	6	Admin Setup	ACTIVE	1000	\N	N	\N	\N	\N	\N	\N	\N	\N
-92	ARTISTSETUP	91	Artist setup	ACTIVE	3000	\N	Y	Setting	\N	artistsetup	\N	\N	\N	\N
-49	USERSETUP	82	POSB User Setup	ACTIVE	4210	\N	Y	Setting		usersetting			\N	\N
-85	CARTONSETUP	91	Carton setup	ACTIVE	2000	\N	Y	Setting	\N	cartonSetup	\N	\N	\N	\N
-84	JOBCATSETUP	91	Job category setup	ACTIVE	1000	\N	Y	Setting	\N	jobcatsetup	\N	\N	\N	\N
-82	USERSETTING	6	POSB User Setting	ACTIVE	2000	\N	Y	\N	\N	\N	\N	\N	\N	\N
-95	MACHINESETUP	91	Customer machine setting	ACTIVE	6000	\N	Y	Setting	\N	machinesetup	\N	\N	\N	\N
-94	CUSTOMERSETUP	91	Customer setup	ACTIVE	5000	\N	Y	Setting	\N	orgsetup	\N	\N	\N	\N
-93	PNDUSERSETUP	91	User setting	ACTIVE	4000	\N	Y	Setting	\N	pndusersetting	\N	\N	\N	\N
+95	MACHINESETUP	91	Customer machine setting	ACTIVE	6000	\N	Y	Setting	\N	machinesetup	\N	\N	ADMINSETTING	fa fa-database
+94	CUSTOMERSETUP	91	Customer setup	ACTIVE	5000	\N	Y	Setting	\N	orgsetup	\N	\N	ADMINSETTING	fa fa-smile-o
+93	PNDUSERSETUP	91	User setting	ACTIVE	4000	\N	Y	Setting	\N	pndusersetting	\N	\N	ADMINSETTING	fa fa-user
+96	RULESETUP	6	Rule Setting	ACTIVE	3500	\N	Y	Rulebuilder	\N	setup	\N	\N	POSBMENU	fa fa-cogs
+69	MENU	6	Menu Setup	ACTIVE	4400	\N	Y	Setting	\N	menusetup	\N	\N	POSBMENU	fa fa-sitemap
+50	PERMSETUP	82	Permission Setup	ACTIVE	4230	\N	Y	Setting		permsetting			POSBMENU	fa fa-cogs
+51	ROLESETUP	82	Role Setup	ACTIVE	4220	\N	Y	Setting		rolesetting			POSBMENU	fa fa-cogs
+83	LOOKUPSETUP	6	Lookup Setup	ACTIVE	2000	\N	Y	Setting	\N	lookupSetup	\N	\N	POSBMENU	fa fa-cogs
+6	SETTING	1	Setting	ACTIVE	9000	\N	N	\N	\N	\N	\N	\N	POSBMENU	fa fa-wrench
+92	ARTISTSETUP	91	Artist setup	ACTIVE	3000	\N	Y	Setting	\N	artistsetup	\N	\N	ADMINSETTING	fa fa-graduation-cap 
+91	ADMINSETUP	1	Admin Setup	ACTIVE	5000	\N	N	\N	\N	\N	\N	\N	ADMINSETTING	fa fa-wrench
+82	USERSETTING	6	POSB User Setting	ACTIVE	2000	\N	Y	\N	\N	\N	\N	\N	POSBMENU	fa fa-user
+85	CARTONSETUP	91	Carton setup	ACTIVE	2000	\N	Y	Setting	\N	cartonSetup	\N	\N	ADMINSETTING	fa fa-dropbox
+84	JOBCATSETUP	91	Job category setup	ACTIVE	1000	\N	Y	Setting	\N	jobcatsetup	\N	\N	ADMINSETTING	fa fa-code-fork
+49	USERSETUP	82	POSB User Setup	ACTIVE	4210	\N	Y	Setting		usersetting			POSBMENU	fa fa-user
 \.
 
 
@@ -6714,7 +6789,7 @@ COPY fcmenu (mn_id, mn_code, mn_parentid, mn_title, mn_status, mn_order, mn_url,
 -- Name: fcmenu_mn_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: shine
 --
 
-SELECT pg_catalog.setval('fcmenu_mn_id_seq', 95, true);
+SELECT pg_catalog.setval('fcmenu_mn_id_seq', 96, true);
 
 
 --
@@ -6736,7 +6811,7 @@ COPY fcorg (org_id, org_type, org_external, org_name, org_parentid, org_primaryi
 6	\N	Y	Darun	0	\N	\N	\N	ACTIVE	\N
 7	\N	Y	Harta	0	\N	\N	\N	ACTIVE	\N
 8	\N	Y	Genting 	0	\N	\N	\N	ACTIVE	\N
-1	\N	Y	PND	0	\N	\N	\N	ACTIVE	MYWP
+1	\N	N	PND	0	\N	\N	\N	ACTIVE	MYWP
 \.
 
 
@@ -6759,6 +6834,8 @@ QCHOME	View QC home
 ARTHOME	View artist home
 SUPHOME	View supervisor home
 CUSTHOME	View customer home
+ADMINSETTING	View Admin Setting
+POSBMENU	For POSB Admin
 \.
 
 
@@ -6767,18 +6844,18 @@ CUSTHOME	View customer home
 --
 
 COPY fcpmactivity (pmat_id, pmat_pmwfid, pmat_pmslid, pmat_name, pmat_type, pmat_function, pmat_sla_interval, pmat_sla_workinghours_only, pmat_show_caseinfo) FROM stdin;
-1	1	\N	Requirement verification	USER	reqVerification	\N	N	Y
-4	1	\N	Work in progress 	USER	wip	\N	N	Y
-2	1	\N	Pending resolution 	USER	pendingRevert	\N	N	N
 7	1	\N	Notify Manager On Late Requirement Verification	SCRIPT	\N	\N	N	N
 8	1	\N	Notify Supervisor On Late Job Acknowledgement	SCRIPT	\N	\N	N	N
-9	1	\N	Reassign Artist	USER	\N	\N	N	N
-10	1	\N	Rework in progress	USER	\N	\N	N	N
-5	1	\N	Pending check (QC)	USER	pendingQC	\N	N	Y
 11	1	\N	Notify Supervisor and Manager On Late WIP	SCRIPT	\N	\N	N	N
 12	1	\N	Notify Supervisor and Manager On Late QC Check	SCRIPT	\N	\N	N	N
-6	1	\N	Pending acceptance	USER	pendingCust	\N	N	Y
 13	1	\N	Auto Accept	SCRIPT	\N	\N	N	N
+2	1	1	Pending resolution 	USER	pendingRevert	\N	N	N
+9	1	2	Reassign Artist	USER	\N	\N	N	N
+1	1	2	Requirement verification	USER	reqVerification	PT30M	N	Y
+4	1	3	Work in progress 	USER	wip	[[REQTIMEART]]	N	Y
+5	1	4	Pending check (QC)	USER	pendingQC	[[REQTIMEQC]]	N	Y
+6	1	1	Pending acceptance	USER	pendingCust	PT24H	N	Y
+10	1	3	Rework in progress	USER	wip	\N	N	Y
 \.
 
 
@@ -6794,10 +6871,19 @@ SELECT pg_catalog.setval('fcpmactivity_pmat_id_seq', 13, true);
 --
 
 COPY fcpmcase (pmc_id, pmc_created_date, pmc_created_by, pmc_casekey, pmc_casetype, pmc_parentid, pmc_pmwfid, pmc_start_pmevid, pmc_start_date, pmc_end_pmevid, pmc_end_date, pmc_closed) FROM stdin;
-64	2014-05-23 00:21:02+08	admin	152	jobsheet	\N	1	1	2014-05-23 00:21:02+08	\N	\N	N
-67	2014-05-31 17:05:23+08	admin	153	jobsheet	\N	1	1	2014-05-31 17:05:23+08	\N	\N	N
-66	2014-05-31 16:46:25+08	admin	151	jobsheet	\N	1	1	2014-05-31 16:46:25+08	6	2014-06-01 13:38:11+08	Y
-69	2014-06-07 22:04:24+08	admin	9	jobsheet	\N	1	1	2014-06-07 22:04:24+08	\N	\N	N
+82	2014-06-10 13:56:31+08	admin	23	jobsheet	\N	1	1	2014-06-10 13:56:31+08	\N	\N	N
+83	2014-06-10 17:32:03+08	admin	25	jobsheet	\N	1	1	2014-06-10 17:32:03+08	\N	\N	N
+84	2014-06-10 17:32:52+08	admin	26	jobsheet	\N	1	1	2014-06-10 17:32:52+08	\N	\N	N
+85	2014-06-10 18:05:44+08	admin	27	jobsheet	\N	1	1	2014-06-10 18:05:44+08	\N	\N	N
+86	2014-06-10 18:08:47+08	admin	28	jobsheet	\N	1	1	2014-06-10 18:08:47+08	\N	\N	N
+87	2014-06-10 18:10:33+08	admin	29	jobsheet	\N	1	1	2014-06-10 18:10:33+08	\N	\N	N
+88	2014-06-10 18:25:04+08	admin	30	jobsheet	\N	1	1	2014-06-10 18:25:04+08	\N	\N	N
+89	2014-06-10 18:26:56+08	admin	31	jobsheet	\N	1	1	2014-06-10 18:26:56+08	\N	\N	N
+90	2014-06-10 19:05:26+08	admin	32	jobsheet	\N	1	1	2014-06-10 19:05:26+08	\N	\N	N
+91	2014-06-10 21:09:22+08	admin	33	jobsheet	\N	1	1	2014-06-10 21:09:22+08	\N	\N	N
+92	2014-06-10 22:44:42+08	admin	34	jobsheet	\N	1	1	2014-06-10 22:44:42+08	\N	\N	N
+93	2014-06-10 23:21:42+08	admin	35	jobsheet	\N	1	1	2014-06-10 23:21:42+08	\N	\N	N
+94	2014-06-11 20:47:02+08	admin	36	jobsheet	\N	1	1	2014-06-11 20:47:02+08	\N	\N	N
 \.
 
 
@@ -6805,7 +6891,7 @@ COPY fcpmcase (pmc_id, pmc_created_date, pmc_created_by, pmc_casekey, pmc_casety
 -- Name: fcpmcase_pmc_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcase_pmc_id_seq', 69, true);
+SELECT pg_catalog.setval('fcpmcase_pmc_id_seq', 94, true);
 
 
 --
@@ -6864,6 +6950,54 @@ COPY fcpmcasecomment (pmcc_id, pmcc_pmcid, pmcc_parentid, pmcc_created_date, pmc
 114	66	\N	2014-06-01 00:47:55+08	admin	super ool\r\n	\N	\N	\N	N	312
 115	67	101	2014-06-01 15:33:53+08	admin	gagfdfd	\N	\N	\N	N	339
 117	69	\N	2014-06-07 22:04:24+08	\N	1234	\N	\N	\N	N	\N
+118	70	\N	2014-06-09 09:39:07+08	admin	\N	\N	\N	\N	N	12341
+119	69	\N	2014-06-09 09:39:21+08	admin	hahahhaa	\N	\N	\N	N	346
+120	71	\N	2014-06-09 16:19:43+08	admin	\N	\N	\N	\N	N	1234
+121	72	\N	2014-06-09 16:23:45+08	admin	\N	\N	\N	\N	N	222
+122	72	\N	2014-06-09 16:55:17+08	admin	\N	\N	\N	\N	N	368
+123	71	\N	2014-06-09 17:32:45+08	admin	Go rework	\N	\N	\N	N	375
+124	74	\N	2014-06-09 17:33:55+08	admin	\N	\N	\N	\N	N	12314
+125	74	\N	2014-06-09 17:37:31+08	admin	1234	\N	\N	\N	N	387
+126	74	\N	2014-06-09 17:46:43+08	admin	End1234	\N	\N	\N	N	389
+127	74	\N	2014-06-09 17:48:14+08	admin	Forward to customer	\N	\N	\N	N	398
+128	74	\N	2014-06-09 17:48:35+08	admin	Go back to requirement verification	\N	\N	\N	N	400
+129	75	\N	2014-06-09 18:13:56+08	admin	\N	\N	\N	\N	N	1234
+130	76	\N	2014-06-09 22:30:38+08	admin	Remark work in progress	\N	\N	\N	N	421
+131	76	\N	2014-06-09 22:31:11+08	admin	Forward to customer	\N	\N	\N	N	422
+132	76	\N	2014-06-09 22:31:42+08	admin	Customer accept	\N	\N	\N	N	424
+133	78	\N	2014-06-09 22:43:48+08	admin	WIP	\N	\N	\N	N	435
+134	78	\N	2014-06-09 22:44:11+08	admin	Should go back to requirement verification	\N	\N	\N	N	439
+135	76	\N	2014-06-09 22:51:47+08	admin	1234	\N	\N	\N	N	448
+136	77	\N	2014-06-09 22:54:04+08	admin	Forward to customer	\N	\N	\N	N	462
+137	77	\N	2014-06-09 22:54:14+08	admin	Accept	\N	\N	\N	N	464
+138	77	\N	2014-06-09 22:55:38+08	admin	123	\N	\N	\N	N	472
+139	77	\N	2014-06-09 22:55:46+08	admin	1234	\N	\N	\N	N	473
+140	77	\N	2014-06-09 22:55:59+08	admin	1234	\N	\N	\N	N	475
+141	78	\N	2014-06-09 22:59:26+08	admin	试试华语	\N	\N	\N	N	478
+142	78	\N	2014-06-09 22:59:57+08	admin	forward to customer	\N	\N	\N	N	481
+143	78	\N	2014-06-10 09:58:02+08	admin	go end	\N	\N	\N	N	483
+144	79	\N	2014-06-10 10:05:32+08	admin	123	\N	\N	\N	N	494
+145	79	\N	2014-06-10 10:11:24+08	admin	accept	\N	\N	\N	N	496
+146	79	\N	2014-06-10 10:13:17+08	admin	123	\N	\N	\N	N	505
+147	79	\N	2014-06-10 10:14:56+08	admin	2134	\N	\N	\N	N	507
+148	80	\N	2014-06-10 10:20:26+08	admin	\N	\N	\N	\N	N	123141
+149	80	\N	2014-06-10 10:26:44+08	admin	有问题	\N	\N	\N	N	511
+150	82	\N	2014-06-10 13:56:32+08	admin	Test remark	\N	\N	\N	N	\N
+151	82	\N	2014-06-10 13:56:47+08	admin	1234	\N	\N	\N	N	519
+152	83	\N	2014-06-10 17:32:03+08	admin	124	\N	\N	\N	N	\N
+153	84	\N	2014-06-10 17:32:52+08	admin	124	\N	\N	\N	N	\N
+154	85	\N	2014-06-10 18:05:44+08	admin	124	\N	\N	\N	N	\N
+155	86	\N	2014-06-10 18:08:47+08	admin	124	\N	\N	\N	N	\N
+156	87	\N	2014-06-10 18:10:33+08	admin	124	\N	\N	\N	N	\N
+157	88	\N	2014-06-10 18:25:04+08	admin	124	\N	\N	\N	N	\N
+158	89	\N	2014-06-10 18:26:56+08	admin	124	\N	\N	\N	N	\N
+159	90	\N	2014-06-10 19:05:26+08	admin	1234	\N	\N	\N	N	\N
+160	91	\N	2014-06-10 21:09:22+08	admin	2 var	\N	\N	\N	N	\N
+161	92	\N	2014-06-10 22:44:51+08	admin	12341	\N	\N	\N	N	545
+162	92	\N	2014-06-10 23:20:47+08	admin	123	\N	\N	\N	N	551
+163	93	\N	2014-06-10 23:21:52+08	admin	1241	\N	\N	\N	N	554
+164	93	\N	2014-06-11 20:48:54+08	admin	REmark during requirement verification	\N	\N	\N	N	557
+165	93	\N	2014-06-11 20:50:52+08	admin	aakaka	\N	\N	\N	N	569
 \.
 
 
@@ -6871,7 +7005,7 @@ COPY fcpmcasecomment (pmcc_id, pmcc_pmcid, pmcc_parentid, pmcc_created_date, pmc
 -- Name: fcpmcasecomment_pmcc_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcasecomment_pmcc_id_seq', 117, true);
+SELECT pg_catalog.setval('fcpmcasecomment_pmcc_id_seq', 165, true);
 
 
 --
@@ -6901,6 +7035,27 @@ COPY fcpmcasecommentread (pmcr_id, pmcr_pmccid, pmcr_read_by, pmcr_read_date) FR
 143	117	\N	2014-06-07 22:05:05+08
 144	117	\N	2014-06-07 22:05:14+08
 145	117	admin	2014-06-07 22:08:45+08
+146	119	admin	2014-06-09 09:39:21+08
+147	121	admin	2014-06-09 16:52:32+08
+148	124	admin	2014-06-09 17:37:39+08
+149	125	admin	2014-06-09 17:37:39+08
+150	126	admin	2014-06-09 17:48:41+08
+151	127	admin	2014-06-09 17:48:41+08
+152	128	admin	2014-06-09 17:48:41+08
+153	129	admin	2014-06-09 18:25:55+08
+154	130	admin	2014-06-09 22:30:46+08
+155	131	admin	2014-06-09 22:31:23+08
+156	132	admin	2014-06-09 22:48:46+08
+157	133	admin	2014-06-09 22:59:08+08
+158	134	admin	2014-06-09 22:59:08+08
+159	135	admin	2014-06-09 22:59:33+08
+160	141	admin	2014-06-09 22:59:40+08
+161	148	admin	2014-06-10 10:26:59+08
+162	149	admin	2014-06-10 10:26:59+08
+163	150	admin	2014-06-10 13:56:36+08
+164	161	admin	2014-06-10 22:46:57+08
+165	163	admin	2014-06-11 20:49:36+08
+166	164	admin	2014-06-11 20:49:36+08
 \.
 
 
@@ -6908,7 +7063,7 @@ COPY fcpmcasecommentread (pmcr_id, pmcr_pmccid, pmcr_read_by, pmcr_read_date) FR
 -- Name: fcpmcasecommentread_pmcr_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcasecommentread_pmcr_id_seq', 145, true);
+SELECT pg_catalog.setval('fcpmcasecommentread_pmcr_id_seq', 166, true);
 
 
 --
@@ -6939,59 +7094,62 @@ SELECT pg_catalog.setval('fcpmcaseflag_pmcf_id_seq', 38, true);
 --
 
 COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_prev_pmcnid, pmf_start_date, pmf_end_date, pmf_end_status, pmf_due_date, pmf_last_perform_date, pmf_end_by, pmf_end_pmfid, pmf_from_event_gateway, pmf_last_timer_check_date, pmf_timer_due_date, pmf_timer_due_count) FROM stdin;
-289	64	1	PM_Event	\N	\N	2014-05-23 00:21:02+08	2014-05-23 00:21:02+08	DONE	\N	2014-05-23 00:21:02+08	admin	289	N	\N	\N	\N
-335	67	2	PM_Gateway	334	4	2014-06-01 13:38:26+08	2014-06-01 13:38:26+08	DONE	\N	2014-06-01 13:38:26+08	admin	335	N	\N	\N	\N
-341	67	12	PM_Activity	340	30	2014-06-01 17:55:30+08	2014-06-01 17:55:30+08	DONE	\N	2014-06-01 17:55:30+08	admin	341	N	\N	\N	\N
-305	64	5	PM_Activity	304	17	2014-05-23 00:37:04+08	2014-05-23 00:37:13+08	DONE	\N	2014-05-23 00:37:13+08	admin	305	N	2014-05-23 00:37:13+08	2014-05-23 00:57:04+08	\N
-312	66	1	PM_Activity	311	1	2014-05-31 16:46:26+08	2014-06-01 01:24:07+08	DONE	\N	2014-06-01 01:24:07+08	admin	312	N	2014-06-01 01:24:07+08	2014-06-01 01:47:01+08	1
-306	64	5	PM_Gateway	305	18	2014-05-23 00:37:13+08	2014-05-23 00:37:14+08	DONE	\N	2014-05-23 00:37:13+08	admin	306	N	\N	\N	\N
-319	66	1	PM_Gateway	312	2	2014-06-01 01:24:07+08	2014-06-01 01:24:07+08	DONE	\N	2014-06-01 01:24:07+08	admin	319	N	\N	\N	\N
-307	64	6	PM_Activity	306	23	2014-05-23 00:37:14+08	2014-05-23 00:38:26+08	INTERRUPT	\N	2014-05-23 00:38:26+08	admin	307	N	2014-05-23 00:38:26+08	2014-05-23 00:37:14+08	1
-329	66	5	PM_Activity	324	17	2014-06-01 13:27:42+08	2014-06-01 13:32:06+08	DONE	\N	2014-06-01 13:32:05+08	admin	329	N	2014-06-01 13:32:05+08	2014-06-01 13:47:42+08	\N
-310	64	13	PM_Activity	307	32	2014-05-23 00:38:26+08	2014-05-23 00:38:26+08	DONE	\N	2014-05-23 00:38:26+08	admin	310	N	\N	\N	\N
-311	66	1	PM_Event	\N	\N	2014-05-31 16:46:25+08	2014-05-31 16:46:26+08	DONE	\N	2014-05-31 16:46:25+08	admin	311	N	\N	\N	\N
-313	67	1	PM_Event	\N	\N	2014-05-31 17:05:23+08	2014-05-31 17:05:23+08	DONE	\N	2014-05-31 17:05:23+08	admin	313	N	\N	\N	\N
-320	66	2	PM_Gateway	319	4	2014-06-01 01:24:07+08	2014-06-01 01:24:07+08	DONE	\N	2014-06-01 01:24:07+08	admin	320	N	\N	\N	\N
-297	64	7	PM_Activity	290	27	2014-05-23 00:35:30+08	2014-05-23 00:35:30+08	DONE	\N	2014-05-23 00:35:30+08	admin	297	N	\N	\N	\N
-298	64	5	PM_Event	297	28	2014-05-23 00:35:30+08	2014-05-23 00:35:30+08	END	\N	2014-05-23 00:35:30+08	admin	298	N	\N	\N	\N
-315	66	7	PM_Activity	312	27	2014-06-01 01:17:01+08	2014-06-01 01:17:01+08	DONE	\N	2014-06-01 01:17:01+08	admin	315	N	\N	\N	\N
-290	64	1	PM_Activity	289	1	2014-05-23 00:21:02+08	2014-05-23 00:36:11+08	DONE	\N	2014-05-23 00:36:11+08	admin	290	N	2014-05-23 00:36:11+08	2014-05-23 01:05:30+08	3
-316	66	5	PM_Event	315	28	2014-06-01 01:17:01+08	2014-06-01 01:17:01+08	END	\N	2014-06-01 01:17:01+08	admin	316	N	\N	\N	\N
-299	64	1	PM_Gateway	290	2	2014-05-23 00:36:11+08	2014-05-23 00:36:11+08	DONE	\N	2014-05-23 00:36:11+08	admin	299	N	\N	\N	\N
-300	64	2	PM_Gateway	299	4	2014-05-23 00:36:11+08	2014-05-23 00:36:11+08	DONE	\N	2014-05-23 00:36:11+08	admin	300	N	\N	\N	\N
-327	67	7	PM_Activity	314	27	2014-06-01 13:23:27+08	2014-06-01 13:23:27+08	DONE	\N	2014-06-01 13:23:27+08	admin	327	N	\N	\N	\N
-302	64	3	PM_Event	300	6	2014-05-23 00:36:11+08	2014-05-23 00:36:54+08	INTERRUPT	\N	2014-05-23 00:36:11+08	admin	301	Y	2014-05-23 00:36:11+08	2014-05-23 01:06:11+08	\N
-301	64	2	PM_Event	300	5	2014-05-23 00:36:11+08	2014-05-23 00:36:54+08	DONE	\N	2014-05-23 00:36:54+08	admin	301	Y	\N	\N	\N
-317	67	7	PM_Activity	314	27	2014-06-01 01:17:06+08	2014-06-01 01:17:06+08	DONE	\N	2014-06-01 01:17:06+08	admin	317	N	\N	\N	\N
-303	64	4	PM_Gateway	301	14	2014-05-23 00:36:54+08	2014-05-23 00:36:54+08	DONE	\N	2014-05-23 00:36:54+08	admin	303	N	\N	\N	\N
-337	67	3	PM_Event	335	6	2014-06-01 13:38:26+08	2014-06-01 14:44:58+08	INTERRUPT	\N	2014-06-01 13:38:26+08	admin	336	Y	2014-06-01 13:38:26+08	2014-06-01 14:08:26+08	\N
-318	67	5	PM_Event	317	28	2014-06-01 01:17:06+08	2014-06-01 01:17:06+08	END	\N	2014-06-01 01:17:06+08	admin	318	N	\N	\N	\N
-328	67	5	PM_Event	327	28	2014-06-01 13:23:27+08	2014-06-01 13:23:27+08	END	\N	2014-06-01 13:23:27+08	admin	328	N	\N	\N	\N
-304	64	4	PM_Activity	303	15	2014-05-23 00:36:54+08	2014-05-23 00:37:04+08	DONE	\N	2014-05-23 00:37:04+08	admin	304	N	2014-05-23 00:37:04+08	2014-05-23 01:36:54+08	\N
-322	66	3	PM_Event	320	6	2014-06-01 01:24:07+08	2014-06-01 01:27:53+08	INTERRUPT	\N	2014-06-01 01:24:07+08	admin	321	Y	2014-06-01 01:24:07+08	2014-06-01 01:54:07+08	\N
-330	66	5	PM_Gateway	329	18	2014-06-01 13:32:06+08	2014-06-01 13:32:06+08	DONE	\N	2014-06-01 13:32:06+08	admin	330	N	\N	\N	\N
-321	66	2	PM_Event	320	5	2014-06-01 01:24:07+08	2014-06-01 01:27:53+08	DONE	\N	2014-06-01 01:27:53+08	admin	321	Y	\N	\N	\N
-323	66	4	PM_Gateway	321	14	2014-06-01 01:27:53+08	2014-06-01 01:27:53+08	DONE	\N	2014-06-01 01:27:53+08	admin	323	N	\N	\N	\N
-336	67	2	PM_Event	335	5	2014-06-01 13:38:26+08	2014-06-01 14:44:58+08	DONE	\N	2014-06-01 14:44:58+08	admin	336	Y	\N	\N	\N
-342	67	5	PM_Event	341	22	2014-06-01 17:55:30+08	2014-06-01 17:55:30+08	END	\N	2014-06-01 17:55:30+08	admin	342	N	\N	\N	\N
-331	66	6	PM_Activity	330	23	2014-06-01 13:32:06+08	2014-06-01 13:38:10+08	DONE	\N	2014-06-01 13:38:10+08	admin	331	N	2014-06-01 13:38:10+08	2014-06-02 13:32:06+08	\N
-338	67	4	PM_Gateway	336	14	2014-06-01 14:44:58+08	2014-06-01 14:44:58+08	DONE	\N	2014-06-01 14:44:58+08	admin	338	N	\N	\N	\N
-332	66	6	PM_Gateway	331	24	2014-06-01 13:38:10+08	2014-06-01 13:38:10+08	DONE	\N	2014-06-01 13:38:10+08	admin	332	N	\N	\N	\N
-333	66	6	PM_Event	332	25	2014-06-01 13:38:10+08	2014-06-01 13:38:11+08	END	\N	2014-06-01 13:38:11+08	admin	333	N	\N	\N	\N
-325	66	11	PM_Activity	324	29	2014-06-01 13:19:51+08	2014-06-01 13:19:51+08	DONE	\N	2014-06-01 13:19:51+08	admin	325	N	\N	\N	\N
-324	66	4	PM_Activity	323	15	2014-06-01 01:27:53+08	2014-06-01 13:27:42+08	DONE	\N	2014-06-01 13:27:42+08	admin	324	N	2014-06-01 13:19:51+08	2014-06-01 14:19:51+08	1
-326	66	5	PM_Event	325	21	2014-06-01 13:19:51+08	2014-06-01 13:19:51+08	END	\N	2014-06-01 13:19:51+08	admin	326	N	\N	\N	\N
-314	67	1	PM_Activity	313	1	2014-05-31 17:05:23+08	2014-06-01 13:38:26+08	DONE	\N	2014-06-01 13:38:26+08	admin	314	N	2014-06-01 13:38:26+08	2014-06-01 13:53:27+08	2
-334	67	1	PM_Gateway	314	2	2014-06-01 13:38:26+08	2014-06-01 13:38:26+08	DONE	\N	2014-06-01 13:38:26+08	admin	334	N	\N	\N	\N
-339	67	4	PM_Activity	338	15	2014-06-01 14:44:58+08	2014-06-01 15:35:39+08	DONE	\N	2014-06-01 15:35:39+08	admin	339	N	2014-06-01 15:35:39+08	2014-06-01 15:44:58+08	\N
-346	69	1	PM_Activity	345	1	2014-06-07 22:04:24+08	\N	\N	\N	2014-06-08 17:18:56+08	\N	\N	N	2014-06-08 17:18:56+08	2014-06-08 17:48:56+08	5
-351	69	7	PM_Activity	346	27	2014-06-08 17:18:56+08	\N	\N	\N	2014-06-08 17:18:56+08	\N	\N	N	\N	\N	\N
-340	67	5	PM_Activity	339	17	2014-06-01 15:35:39+08	\N	\N	\N	2014-06-04 23:26:29+08	\N	\N	N	2014-06-01 17:55:30+08	2014-06-01 18:15:30+08	1
-345	69	1	PM_Event	\N	\N	2014-06-07 22:04:24+08	2014-06-07 22:04:24+08	DONE	\N	2014-06-07 22:04:24+08	admin	345	N	\N	\N	\N
-349	69	7	PM_Activity	346	27	2014-06-08 16:00:08+08	\N	\N	\N	2014-06-08 16:00:08+08	\N	\N	N	\N	\N	\N
-347	69	7	PM_Activity	346	27	2014-06-08 11:42:42+08	\N	\N	\N	2014-06-08 11:42:42+08	\N	\N	N	\N	\N	\N
-348	69	7	PM_Activity	346	27	2014-06-08 12:24:39+08	\N	\N	\N	2014-06-08 12:24:39+08	\N	\N	N	\N	\N	\N
-350	69	7	PM_Activity	346	27	2014-06-08 16:31:24+08	\N	\N	\N	2014-06-08 16:31:24+08	\N	\N	N	\N	\N	\N
+518	82	1	PM_Event	\N	\N	2014-06-10 13:56:31+08	2014-06-10 13:56:32+08	DONE	\N	2014-06-10 13:56:31+08	admin	518	N	\N	\N	\N
+547	92	2	PM_Gateway	546	4	2014-06-10 22:44:51+08	2014-06-10 22:44:51+08	DONE	\N	2014-06-10 22:44:51+08	admin	547	N	\N	\N	\N
+551	92	4	PM_Activity	550	15	2014-06-10 22:56:01+08	2014-06-10 23:20:47+08	DONE	2014-06-11 01:36:01+08	2014-06-10 23:20:47+08	admin	551	N	2014-06-10 23:20:47+08	2014-06-10 23:56:01+08	\N
+519	82	1	PM_Activity	518	1	2014-06-10 13:56:32+08	2014-06-10 13:56:47+08	DONE	2014-06-10 14:26:32+08	2014-06-10 13:56:45+08	admin	519	N	2014-06-10 13:56:45+08	2014-06-10 14:26:32+08	\N
+520	82	1	PM_Gateway	519	2	2014-06-10 13:56:47+08	2014-06-10 13:56:48+08	DONE	\N	2014-06-10 13:56:47+08	admin	520	N	\N	\N	\N
+549	92	3	PM_Event	547	6	2014-06-10 22:44:51+08	2014-06-10 22:56:00+08	INTERRUPT	\N	2014-06-10 22:44:51+08	admin	548	Y	2014-06-10 22:44:51+08	2014-06-10 23:14:51+08	\N
+521	82	2	PM_Gateway	520	4	2014-06-10 13:56:48+08	2014-06-10 13:56:48+08	DONE	\N	2014-06-10 13:56:48+08	admin	521	N	\N	\N	\N
+522	82	2	PM_Event	521	5	2014-06-10 13:56:48+08	\N	\N	\N	\N	\N	\N	Y	\N	\N	\N
+566	93	4	PM_Activity	565	15	2014-06-11 20:49:48+08	2014-06-11 20:50:04+08	DONE	2014-06-11 23:29:48+08	2014-06-11 20:50:04+08	admin	566	N	2014-06-11 20:50:04+08	2014-06-11 21:49:48+08	\N
+523	82	3	PM_Event	521	6	2014-06-10 13:56:48+08	\N	\N	\N	2014-06-10 13:56:48+08	\N	\N	Y	2014-06-10 13:56:48+08	2014-06-10 14:26:48+08	\N
+524	83	1	PM_Event	\N	\N	2014-06-10 17:32:03+08	2014-06-10 17:32:03+08	DONE	\N	2014-06-10 17:32:03+08	admin	524	N	\N	\N	\N
+525	83	1	PM_Activity	524	1	2014-06-10 17:32:03+08	\N	\N	2014-06-10 18:02:03+08	\N	\N	\N	N	\N	2014-06-10 18:02:03+08	\N
+526	84	1	PM_Event	\N	\N	2014-06-10 17:32:52+08	2014-06-10 17:32:52+08	DONE	\N	2014-06-10 17:32:52+08	admin	526	N	\N	\N	\N
+527	84	1	PM_Activity	526	1	2014-06-10 17:32:52+08	\N	\N	2014-06-10 18:02:52+08	\N	\N	\N	N	\N	2014-06-10 18:02:52+08	\N
+528	85	1	PM_Event	\N	\N	2014-06-10 18:05:44+08	2014-06-10 18:05:44+08	DONE	\N	2014-06-10 18:05:44+08	admin	528	N	\N	\N	\N
+529	85	1	PM_Activity	528	1	2014-06-10 18:05:44+08	\N	\N	2014-06-10 18:35:44+08	\N	\N	\N	N	\N	2014-06-10 18:35:44+08	\N
+530	86	1	PM_Event	\N	\N	2014-06-10 18:08:47+08	2014-06-10 18:08:47+08	DONE	\N	2014-06-10 18:08:47+08	admin	530	N	\N	\N	\N
+531	86	1	PM_Activity	530	1	2014-06-10 18:08:47+08	\N	\N	2014-06-10 18:38:47+08	\N	\N	\N	N	\N	2014-06-10 18:38:47+08	\N
+532	87	1	PM_Event	\N	\N	2014-06-10 18:10:33+08	2014-06-10 18:10:33+08	DONE	\N	2014-06-10 18:10:33+08	admin	532	N	\N	\N	\N
+533	87	1	PM_Activity	532	1	2014-06-10 18:10:33+08	\N	\N	2014-06-10 18:40:33+08	\N	\N	\N	N	\N	2014-06-10 18:40:33+08	\N
+534	88	1	PM_Event	\N	\N	2014-06-10 18:25:04+08	2014-06-10 18:25:04+08	DONE	\N	2014-06-10 18:25:04+08	admin	534	N	\N	\N	\N
+535	88	1	PM_Activity	534	1	2014-06-10 18:25:04+08	\N	\N	2014-06-10 18:55:04+08	\N	\N	\N	N	\N	2014-06-10 18:55:04+08	\N
+536	89	1	PM_Event	\N	\N	2014-06-10 18:26:56+08	2014-06-10 18:26:56+08	DONE	\N	2014-06-10 18:26:56+08	admin	536	N	\N	\N	\N
+537	89	1	PM_Activity	536	1	2014-06-10 18:26:56+08	\N	\N	2014-06-10 18:56:56+08	\N	\N	\N	N	\N	2014-06-10 18:56:56+08	\N
+538	90	1	PM_Event	\N	\N	2014-06-10 19:05:26+08	2014-06-10 19:05:26+08	DONE	\N	2014-06-10 19:05:26+08	admin	538	N	\N	\N	\N
+540	91	1	PM_Event	\N	\N	2014-06-10 21:09:22+08	2014-06-10 21:09:22+08	DONE	\N	2014-06-10 21:09:22+08	admin	540	N	\N	\N	\N
+548	92	2	PM_Event	547	5	2014-06-10 22:44:51+08	2014-06-10 22:56:00+08	DONE	\N	2014-06-10 22:56:00+08	admin	548	Y	\N	\N	\N
+542	90	7	PM_Activity	539	27	2014-06-10 22:40:10+08	\N	\N	\N	2014-06-10 22:40:10+08	\N	\N	N	\N	\N	\N
+552	92	5	PM_Activity	551	17	2014-06-10 23:20:47+08	\N	\N	2014-06-11 00:13:47+08	2014-06-10 23:20:53+08	\N	\N	N	2014-06-10 23:20:53+08	2014-06-10 23:40:47+08	\N
+550	92	4	PM_Gateway	548	14	2014-06-10 22:56:01+08	2014-06-10 22:56:01+08	DONE	\N	2014-06-10 22:56:01+08	admin	550	N	\N	\N	\N
+543	91	7	PM_Activity	541	27	2014-06-10 22:40:13+08	\N	\N	\N	2014-06-10 22:40:13+08	\N	\N	N	\N	\N	\N
+553	93	1	PM_Event	\N	\N	2014-06-10 23:21:42+08	2014-06-10 23:21:42+08	DONE	\N	2014-06-10 23:21:42+08	admin	553	N	\N	\N	\N
+539	90	1	PM_Activity	538	1	2014-06-10 19:05:26+08	\N	\N	2014-06-10 19:35:26+08	2014-06-10 22:43:09+08	\N	\N	N	2014-06-10 22:43:09+08	2014-06-10 23:10:10+08	1
+544	92	1	PM_Event	\N	\N	2014-06-10 22:44:42+08	2014-06-10 22:44:42+08	DONE	\N	2014-06-10 22:44:42+08	admin	544	N	\N	\N	\N
+557	93	1	PM_Activity	556	7	2014-06-10 23:22:41+08	2014-06-11 20:48:54+08	DONE	2014-06-10 23:52:41+08	2014-06-11 20:48:54+08	admin	557	N	2014-06-11 20:48:54+08	2014-06-11 21:17:11+08	1
+561	93	1	PM_Gateway	557	2	2014-06-11 20:48:54+08	2014-06-11 20:48:55+08	DONE	\N	2014-06-11 20:48:54+08	admin	561	N	\N	\N	\N
+545	92	1	PM_Activity	544	1	2014-06-10 22:44:42+08	2014-06-10 22:44:51+08	DONE	2014-06-10 23:14:42+08	2014-06-10 22:44:51+08	admin	545	N	2014-06-10 22:44:51+08	2014-06-10 23:14:42+08	\N
+554	93	1	PM_Activity	553	1	2014-06-10 23:21:42+08	2014-06-10 23:21:52+08	DONE	2014-06-10 23:51:42+08	2014-06-10 23:21:52+08	admin	554	N	2014-06-10 23:21:52+08	2014-06-10 23:51:42+08	\N
+546	92	1	PM_Gateway	545	2	2014-06-10 22:44:51+08	2014-06-10 22:44:51+08	DONE	\N	2014-06-10 22:44:51+08	admin	546	N	\N	\N	\N
+555	93	1	PM_Gateway	554	2	2014-06-10 23:21:52+08	2014-06-10 23:21:53+08	DONE	\N	2014-06-10 23:21:52+08	admin	555	N	\N	\N	\N
+569	93	6	PM_Activity	568	23	2014-06-11 20:50:37+08	2014-06-11 20:50:52+08	DONE	2014-06-12 20:50:37+08	2014-06-11 20:50:52+08	admin	569	N	2014-06-11 20:50:52+08	2014-06-12 20:50:37+08	\N
+562	93	2	PM_Gateway	561	4	2014-06-11 20:48:55+08	2014-06-11 20:48:55+08	DONE	\N	2014-06-11 20:48:55+08	admin	562	N	\N	\N	\N
+556	93	2	PM_Activity	555	3	2014-06-10 23:21:53+08	2014-06-10 23:22:41+08	DONE	\N	2014-06-10 23:22:41+08	admin	556	N	\N	\N	\N
+558	94	1	PM_Event	\N	\N	2014-06-11 20:47:03+08	2014-06-11 20:47:03+08	DONE	\N	2014-06-11 20:47:02+08	admin	558	N	\N	\N	\N
+564	93	3	PM_Event	562	6	2014-06-11 20:48:55+08	2014-06-11 20:49:48+08	INTERRUPT	\N	2014-06-11 20:48:55+08	admin	563	Y	2014-06-11 20:48:55+08	2014-06-11 21:18:55+08	\N
+570	93	6	PM_Gateway	569	24	2014-06-11 20:50:52+08	2014-06-11 20:50:52+08	DONE	\N	2014-06-11 20:50:52+08	admin	570	N	\N	\N	\N
+560	93	7	PM_Activity	557	27	2014-06-11 20:47:11+08	\N	\N	\N	2014-06-11 20:47:11+08	\N	\N	N	\N	\N	\N
+563	93	2	PM_Event	562	5	2014-06-11 20:48:55+08	2014-06-11 20:49:48+08	DONE	\N	2014-06-11 20:49:48+08	admin	563	Y	\N	\N	\N
+567	93	5	PM_Activity	566	17	2014-06-11 20:50:04+08	2014-06-11 20:50:37+08	DONE	2014-06-11 21:43:04+08	2014-06-11 20:50:37+08	admin	567	N	2014-06-11 20:50:37+08	2014-06-11 21:10:04+08	\N
+565	93	4	PM_Gateway	563	14	2014-06-11 20:49:48+08	2014-06-11 20:49:48+08	DONE	\N	2014-06-11 20:49:48+08	admin	565	N	\N	\N	\N
+568	93	5	PM_Gateway	567	18	2014-06-11 20:50:37+08	2014-06-11 20:50:37+08	DONE	\N	2014-06-11 20:50:37+08	admin	568	N	\N	\N	\N
+573	91	7	PM_Activity	541	27	2014-06-13 22:37:08+08	\N	\N	\N	2014-06-13 22:37:08+08	\N	\N	N	\N	\N	\N
+571	93	6	PM_Event	570	25	2014-06-11 20:50:52+08	2014-06-11 20:50:52+08	END	\N	2014-06-11 20:50:52+08	admin	571	N	\N	\N	\N
+559	94	1	PM_Activity	558	1	2014-06-11 20:47:03+08	\N	\N	2014-06-11 21:17:03+08	2014-06-13 22:37:05+08	\N	\N	N	2014-06-13 22:37:05+08	2014-06-13 23:07:05+08	1
+541	91	1	PM_Activity	540	1	2014-06-10 21:09:22+08	\N	\N	2014-06-10 21:39:22+08	2014-06-13 22:37:10+08	\N	\N	N	2014-06-13 22:37:10+08	2014-06-13 23:07:08+08	2
+572	94	7	PM_Activity	559	27	2014-06-13 22:37:05+08	\N	\N	\N	2014-06-13 22:37:06+08	\N	\N	N	\N	\N	\N
 \.
 
 
@@ -6999,7 +7157,7 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 -- Name: fcpmcaseflow_pmf_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 351, true);
+SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 573, true);
 
 
 --
@@ -7022,7 +7180,7 @@ SELECT pg_catalog.setval('fcpmcaseflowassign_pmfa_id_seq', 1, false);
 --
 
 COPY fcpmcasetype (pmct_code, pmct_desc, pmct_table, pmct_key_col, pmct_desc_col, pmct_caseinfo_function) FROM stdin;
-jobsheet	jobsheet	mjobsheet	js_id	js_title	viewJobInfo
+jobsheet	jobsheet	mjobsheet	js_id	js_description	viewJobInfo
 \.
 
 
@@ -7030,40 +7188,40 @@ jobsheet	jobsheet	mjobsheet	js_id	js_title	viewJobInfo
 -- Data for Name: fcpmconnector; Type: TABLE DATA; Schema: pnd; Owner: pnd
 --
 
-COPY fcpmconnector (pmcn_id, pmcn_from_type, pmcn_from_id, pmcn_to_type, pmcn_to_id, pmcn_order, pmcn_type, pmcn_ruid, pmcn_ruid_result) FROM stdin;
-19	PM_Gateway	5	PM_Activity	10	2	NORMAL	\N	true
-23	PM_Gateway	5	PM_Activity	6	1	NORMAL	\N	true
-1	PM_Event	1	PM_Activity	1	1	NORMAL	\N	true
-14	PM_Event	2	PM_Gateway	4	1	NORMAL	\N	true
-2	PM_Activity	1	PM_Gateway	1	1	NORMAL	\N	true
-15	PM_Gateway	4	PM_Activity	4	1	NORMAL	\N	true
-16	PM_Gateway	4	PM_Activity	10	2	NORMAL	\N	true
-5	PM_Gateway	2	PM_Event	2	1	NORMAL	\N	true
-17	PM_Activity	4	PM_Activity	5	1	NORMAL	\N	true
-6	PM_Gateway	2	PM_Event	3	2	NORMAL	\N	true
-7	PM_Activity	2	PM_Activity	1	1	NORMAL	\N	true
-18	PM_Activity	5	PM_Gateway	5	1	NORMAL	\N	true
-8	PM_Event	3	PM_Activity	8	1	NORMAL	\N	true
-9	PM_Activity	8	PM_Gateway	3	1	NORMAL	\N	true
-10	PM_Gateway	3	PM_Event	2	1	NORMAL	\N	true
-20	PM_Activity	10	PM_Activity	5	1	NORMAL	\N	true
-11	PM_Gateway	3	PM_Event	4	2	NORMAL	\N	true
-12	PM_Event	4	PM_Activity	9	1	NORMAL	\N	true
-21	PM_Activity	11	PM_Event	5	1	NORMAL	\N	true
-13	PM_Activity	9	PM_Gateway	2	1	NORMAL	\N	true
-22	PM_Activity	12	PM_Event	5	1	NORMAL	\N	true
-24	PM_Activity	6	PM_Gateway	6	1	NORMAL	\N	true
-25	PM_Gateway	6	PM_Event	6	1	NORMAL	\N	true
-26	PM_Gateway	6	PM_Activity	1	2	NORMAL	\N	true
-3	PM_Gateway	1	PM_Activity	2	2	NORMAL	\N	true
-4	PM_Gateway	1	PM_Gateway	2	1	NORMAL	\N	true
-27	PM_Event	7	PM_Activity	7	1	NORMAL	\N	true
-28	PM_Activity	7	PM_Event	5	1	NORMAL	\N	true
-29	PM_Event	8	PM_Activity	11	1	NORMAL	\N	true
-30	PM_Event	9	PM_Activity	12	1	NORMAL	\N	true
-31	PM_Event	10	PM_Activity	11	1	NORMAL	\N	true
-32	PM_Event	11	PM_Activity	13	1	NORMAL	\N	true
-33	PM_Activity	13	PM_Event	6	1	NORMAL	\N	true
+COPY fcpmconnector (pmcn_id, pmcn_from_type, pmcn_from_id, pmcn_to_type, pmcn_to_id, pmcn_order, pmcn_type, pmcn_rule) FROM stdin;
+1	PM_Event	1	PM_Activity	1	1	NORMAL	\N
+14	PM_Event	2	PM_Gateway	4	1	NORMAL	\N
+2	PM_Activity	1	PM_Gateway	1	1	NORMAL	\N
+15	PM_Gateway	4	PM_Activity	4	1	NORMAL	\N
+16	PM_Gateway	4	PM_Activity	10	2	NORMAL	\N
+5	PM_Gateway	2	PM_Event	2	1	NORMAL	\N
+17	PM_Activity	4	PM_Activity	5	1	NORMAL	\N
+6	PM_Gateway	2	PM_Event	3	2	NORMAL	\N
+7	PM_Activity	2	PM_Activity	1	1	NORMAL	\N
+18	PM_Activity	5	PM_Gateway	5	1	NORMAL	\N
+8	PM_Event	3	PM_Activity	8	1	NORMAL	\N
+9	PM_Activity	8	PM_Gateway	3	1	NORMAL	\N
+10	PM_Gateway	3	PM_Event	2	1	NORMAL	\N
+20	PM_Activity	10	PM_Activity	5	1	NORMAL	\N
+11	PM_Gateway	3	PM_Event	4	2	NORMAL	\N
+12	PM_Event	4	PM_Activity	9	1	NORMAL	\N
+21	PM_Activity	11	PM_Event	5	1	NORMAL	\N
+13	PM_Activity	9	PM_Gateway	2	1	NORMAL	\N
+22	PM_Activity	12	PM_Event	5	1	NORMAL	\N
+24	PM_Activity	6	PM_Gateway	6	1	NORMAL	\N
+27	PM_Event	7	PM_Activity	7	1	NORMAL	\N
+28	PM_Activity	7	PM_Event	5	1	NORMAL	\N
+29	PM_Event	8	PM_Activity	11	1	NORMAL	\N
+30	PM_Event	9	PM_Activity	12	1	NORMAL	\N
+31	PM_Event	10	PM_Activity	11	1	NORMAL	\N
+32	PM_Event	11	PM_Activity	13	1	NORMAL	\N
+33	PM_Activity	13	PM_Event	6	1	NORMAL	\N
+4	PM_Gateway	1	PM_Gateway	2	1	NORMAL	1::true
+3	PM_Gateway	1	PM_Activity	2	2	NORMAL	1::false
+23	PM_Gateway	5	PM_Activity	6	1	NORMAL	2::false
+19	PM_Gateway	5	PM_Activity	10	2	NORMAL	2::true
+26	PM_Gateway	6	PM_Activity	1	2	NORMAL	3::false
+25	PM_Gateway	6	PM_Event	6	1	NORMAL	3::true
 \.
 
 
@@ -7082,14 +7240,14 @@ COPY fcpmevent (pmev_id, pmev_pmwfid, pmev_pmslid, pmev_name, pmev_type, pmev_ty
 3	1	\N	30 Mins Acknowledge	TIMER	\N	\N	PT30M	N	N	\N	\N	\N
 5	1	\N	Notify End	END	\N	\N	\N	N	N	\N	\N	\N
 6	1	\N	Job Close	END	\N	\N	\N	N	N	\N	\N	\N
-2	1	\N	Acknowledge Job	INTERMEDIATE	\N	\N	\N	N	Y	\N	\N	\N
-4	1	\N	Pull Back	INTERMEDIATE	\N	\N	\N	N	Y	\N	\N	\N
 8	1	\N	WIP Timer	TIMER	NONINTERRUPTING	\N	PT1H	N	N	4	Y	\N
 9	1	\N	QC Timer	TIMER	NONINTERRUPTING	\N	PT20M	N	N	5	Y	\N
 10	1	\N	RWIP Timer	TIMER	NONINTERRUPTING	\N	PT20M	N	N	10	Y	\N
 11	1	\N	Accept Timer	TIMER	INTERRUPTING	\N	P1D	N	N	6	Y	\N
 7	1	\N	Req Timer	TIMER	NONINTERRUPTING	\N	PT30M	N	N	1	N	\N
 1	1	\N	New Job	START	\N	\N	\N	N	N	\N	\N	newJob
+2	1	3	Acknowledge Job	INTERMEDIATE	\N	\N	\N	N	Y	\N	\N	\N
+4	1	2	Pull Back	INTERMEDIATE	\N	\N	\N	N	Y	\N	\N	\N
 \.
 
 
@@ -7126,6 +7284,10 @@ SELECT pg_catalog.setval('fcpmgateway_pmgw_id_seq', 6, true);
 --
 
 COPY fcpmswimlane (pmsl_id, pmsl_pmwfid, pmsl_name, pmsl_order) FROM stdin;
+1	1	Customer	100
+2	1	Supervisor	200
+3	1	Artist	300
+4	1	QC	400
 \.
 
 
@@ -7133,7 +7295,7 @@ COPY fcpmswimlane (pmsl_id, pmsl_pmwfid, pmsl_name, pmsl_order) FROM stdin;
 -- Name: fcpmswimlane_pmsl_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmswimlane_pmsl_id_seq', 1, false);
+SELECT pg_catalog.setval('fcpmswimlane_pmsl_id_seq', 4, true);
 
 
 --
@@ -7173,10 +7335,11 @@ SELECT pg_catalog.setval('fcpmworkflow_pmwf_id_seq', 1, true);
 
 COPY fcrole (rol_id, rol_name) FROM stdin;
 18	QC
-19	Supervisor
-20	artist
 14	Customer
+20	Artist
 10	admin
+22	PND Admin
+19	Supervisor
 \.
 
 
@@ -7184,7 +7347,7 @@ COPY fcrole (rol_id, rol_name) FROM stdin;
 -- Name: fcrole_rol_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcrole_rol_id_seq', 20, true);
+SELECT pg_catalog.setval('fcrole_rol_id_seq', 22, true);
 
 
 --
@@ -7231,18 +7394,28 @@ COPY fcroleperm (rp_id, rp_rolid, rp_pmscode) FROM stdin;
 137	15	MENU_HOME
 145	17	ARTHOME
 146	18	QCHOME
-147	19	SUPHOME
 148	16	ARTHOME
-149	20	ARTHOME
 150	14	REQUEST_NEWJOB
 151	14	CUSTHOME
-152	10	MENU_REPORT
-153	10	MENU_SETTING
-154	10	REQUEST_NEWJOB
-155	10	QCHOME
-156	10	ARTHOME
-157	10	SUPHOME
-158	10	CUSTHOME
+159	20	ARTHOME
+160	10	MENU_REPORT
+161	10	MENU_SETTING
+162	10	REQUEST_NEWJOB
+163	10	QCHOME
+164	10	ARTHOME
+165	10	SUPHOME
+166	10	CUSTHOME
+167	10	ADMINSETTING
+168	10	POSBMENU
+169	22	MENU_REPORT
+170	22	REQUEST_NEWJOB
+171	22	QCHOME
+172	22	ARTHOME
+173	22	SUPHOME
+174	22	CUSTHOME
+175	22	ADMINSETTING
+176	19	REQUEST_NEWJOB
+177	19	SUPHOME
 \.
 
 
@@ -7250,7 +7423,7 @@ COPY fcroleperm (rp_id, rp_rolid, rp_pmscode) FROM stdin;
 -- Name: fcroleperm_rp_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcroleperm_rp_id_seq', 158, true);
+SELECT pg_catalog.setval('fcroleperm_rp_id_seq', 177, true);
 
 
 --
@@ -7258,6 +7431,9 @@ SELECT pg_catalog.setval('fcroleperm_rp_id_seq', 158, true);
 --
 
 COPY fcrule (ru_id, ru_name, ru_true_msg, ru_false_msg, ru_data) FROM stdin;
+1	Requirement verification decision?	Assigned	Reverted	[{"oper":"&&","clausetype":"udv","clausecode":"RVDEC","clauseoper":"==","clauseval":"Assign"}]
+2	QC check decision	Revert	Forward to customer	[{"oper":"&&","clausetype":"udv","clausecode":"QCDEC","clauseoper":"==","clauseval":"Revert"}]
+3	Customer acceptance decision?	Accept	Revert	[{"oper":"&&","clausetype":"udv","clausecode":"CUSTDEC","clauseoper":"==","clauseval":"Accept"}]
 \.
 
 
@@ -7265,7 +7441,7 @@ COPY fcrule (ru_id, ru_name, ru_true_msg, ru_false_msg, ru_data) FROM stdin;
 -- Name: fcrule_ru_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcrule_ru_id_seq', 1, false);
+SELECT pg_catalog.setval('fcrule_ru_id_seq', 3, true);
 
 
 --
@@ -7291,16 +7467,11 @@ SELECT pg_catalog.setval('fcsetting_set_id_seq', 7, true);
 --
 
 COPY fcudv (udv_code, udv_name, udv_query_type, udv_query, udv_return_type, udv_result_type, udv_result_lookup_type, udv_result_lookup) FROM stdin;
-application_no	Application Number	php	'{$APPNO}'	CELL	\N	\N	\N
-applicant_name	Applicant Name	sql	select sc_applicantname from spcase where sc_applicationno='[[application_no]]'	CELL	\N	\N	\N
-lo_print_date	Print Sysdate	sql	select to_char(now(),'DD-MON-YYYY')	CELL	\N	\N	\N
-STAFF_DEPARTMENT	User Org Name	sql	select org_name from fcorg where org_id='{$USER->orgid}'	CELL	\N	\N	\N
-AMT_APPROVED	Amount Approved	sql	select trim(to_char(sc_amtapproved,'999,999,999,999,999,990.00')) from spcase where sc_applicationno='[[application_no]]'	CELL	\N	\N	\N
-INTEREST_RATE	Interest Rate	sql	select trim(to_char(sc_rate,'999,999,999,999,999,990.00')) from spcase where sc_applicationno='[[application_no]]'	CELL	\N	\N	\N
-LOAN_TENURE_MTH	Loan Tenure Month	sql	select sc_tenure from spcase where sc_applicationno='[[application_no]]'	CELL	\N	\N	\N
-INSTALMENT_AMT	Instalment Amount	sql	select  trim(to_char(sc_regularinst,'999,999,999,999,999,990.00')) from spcase where sc_applicationno='[[application_no]]'	CELL	\N	\N	\N
-TOTAL_PAYABLE	Total Payable	sql	select  trim(to_char(sc_totalpayable,'999,999,999,999,999,990.00')) from spcase where sc_applicationno='[[application_no]]'	CELL	\N	\N	\N
-APPROVED_BY	Approved By	sql	select usr_name from fcuser join spcase on usr_userid = sc_approvedby where sc_applicationno='[[application_no]]'	CELL	\N	\N	\N
+RVDEC	Requirement verification decision	sql	select js_decision from mjobsheet where js_id = {$CASEKEY}	CELL	lookup	text	Revert\r\nAssign
+QCDEC	QC check decision	sql	select js_decision from mjobsheet where js_id = {$CASEKEY}	CELL	lookup	text	Revert\r\nFTCUST
+CUSTDEC	Customer acceptance decision	sql	select js_decision from mjobsheet where js_id = {$CASEKEY}	CELL	lookup	text	Revert\r\nAccept
+REQTIMEART	Required time for artist	sql	select 'PT'||js_requiretime||'M' from mjobsheet where js_id = {$CASEKEY}	CELL	char	\N	\N
+REQTIMEQC	Required time for QC	sql	select 'PT'||(js_requiretime/3)||'M' from mjobsheet where js_id = {$CASEKEY}	CELL	char	\N	\N
 \.
 
 
@@ -7311,11 +7482,13 @@ APPROVED_BY	Approved By	sql	select usr_name from fcuser join spcase on usr_useri
 COPY fcuser (usr_userid, usr_password, usr_created, usr_name, usr_email, usr_last_active, usr_last_success_login, usr_last_fail_login, usr_group, usr_sessiondata, usr_status, usr_langcode) FROM stdin;
 admin2	d033e22ae348aeb5660fc2140aec35850c4da997	2014-01-26 15:39:57.04+08	Administrator 2	\N	2014-05-01 18:22:23+08	2014-05-01 17:54:44+08	2014-02-05 15:30:53+08	ADMIN	a:2:{s:7:"dbosess";a:4:{s:6:"ackjob";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:7:"jobinfo";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}s:4:"user";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:0:"";a:3:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}}}s:9:"dboconfig";a:1:{s:6:"ackjob";i:1;}}	ACTIVE	\N
 customer	b39f008e318efd2bb988d724a161b61c6909677f	2014-04-24 15:46:41.898+08	Customer	customer@gmail.com	2014-05-10 10:06:53+08	2014-05-09 09:56:20+08	\N	\N	a:4:{s:7:"dbosess";a:8:{s:7:"jobinfo";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"144";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"detail";}s:8:"jobcolor";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"153";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:8:"jobother";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"144";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"detail";}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:18:"customeracceptance";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"88";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:9:"pendingQC";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"86";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"93";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:3:"wip";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"89";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}}s:9:"dboconfig";a:0:{}s:11:"PMTask_atid";s:1:"5";s:13:"PMTask_flowid";s:2:"86";}	ACTIVE	\N
-artist1	2cabffd3c7cb40ae6541b7f10a640b41190ccb27	2014-04-30 13:05:53.973+08	Artist 1	artist1@gmail.com	2014-05-01 16:28:37+08	2014-05-01 14:26:26+08	\N	\N	a:0:{}	ACTIVE	\N
-artist2	09c04a14fff8cbd7d0235da2c01bfd31d7826824	2014-04-30 13:06:14.614+08	Artist 2	artist2@gmail.com	\N	\N	\N	\N	\N	ACTIVE	\N
 supervisor	0f4d09e43d208d5e9222322fbc7091ceea1a78c3	2014-04-30 19:09:48.659+08	supervisor	supervisor@gmail.com	2014-04-30 19:37:44+08	2014-04-30 19:36:54+08	\N	\N	a:0:{}	ACTIVE	\N
 qc	d6426af04235d59336c5b6b08f61240cbb6b0f66	2014-04-30 19:10:06.929+08	qc	qc@gmail.com	2014-04-30 19:36:48+08	2014-04-30 19:36:04+08	\N	\N	a:0:{}	ACTIVE	\N
-admin	d033e22ae348aeb5660fc2140aec35850c4da997	2013-08-15 09:55:18.85+08	Administrator	\N	2014-06-08 19:12:58+08	2014-06-07 17:11:12+08	2014-05-13 06:00:56+08	ADMIN	a:7:{s:7:"dbosess";a:9:{s:8:"jobsheet";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:9;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}s:11:"jobcatsetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:11:"cartonsetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"346";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:8:"jobother";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:4:"menu";a:4:{s:6:"lastid";a:1:{s:5:"mn_id";s:2:"93";}s:4:"sort";a:0:{}s:6:"search";a:9:{s:7:"mn_code";s:0:"";s:8:"mn_title";s:0:"";s:9:"mn_status";s:0:"";s:10:"mn_webflag";s:0:"";s:8:"mn_order";s:0:"";s:10:"mn_pmscode";s:0:"";s:7:"mn_func";s:0:"";s:8:"mn_class";s:0:"";s:11:"mn_parentid";s:0:"";}s:5:"state";s:4:"list";}s:12:"machinesetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:6:"lookup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}}s:9:"dboconfig";a:0:{}s:13:"PMTask_taskid";s:1:"1";s:15:"PMTask_tasktype";s:8:"PM_Event";s:21:"PMTask_comment_caseid";s:2:"69";s:21:"PMTask_comment_flowid";s:3:"346";s:13:"PMTask_flowid";s:3:"346";}	ACTIVE	\N
+admin	d033e22ae348aeb5660fc2140aec35850c4da997	2013-08-15 09:55:18.85+08	Administrator	\N	2014-06-17 15:23:29+08	2014-06-17 15:23:25+08	2014-05-13 06:00:56+08	ADMIN	a:7:{s:7:"dbosess";a:7:{s:8:"jobsheet";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:33;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"detail";}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:33;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:26:"pmtask_caseflow_list_event";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:3:"wip";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:35;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:9:"pendingQC";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:35;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:18:"customeracceptance";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:35;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}}s:13:"PMTask_taskid";s:1:"1";s:15:"PMTask_tasktype";s:11:"PM_Activity";s:9:"dboconfig";a:0:{}s:13:"PMTask_flowid";s:3:"541";s:21:"PMTask_comment_caseid";s:2:"93";s:21:"PMTask_comment_flowid";s:3:"567";}	ACTIVE	\N
+artist1	2cabffd3c7cb40ae6541b7f10a640b41190ccb27	2014-06-09 21:32:50.011+08	Artist 1	artist1@gmail.com	\N	\N	\N	\N	\N	ACTIVE	\N
+artist2	09c04a14fff8cbd7d0235da2c01bfd31d7826824	2014-06-09 21:35:00.767+08	Artist 2	artist2@gmail.com	\N	\N	\N	\N	\N	ACTIVE	\N
+Test	a94a8fe5ccb19ba61c4c0873d391e987982fbbd3	2014-06-10 11:11:07.626+08	test	test@email.com	\N	\N	\N	\N	\N	ACTIVE	\N
+Test2	2b84f621c0fd4ba8bd514c5c43ab9a897c8c014e	2014-06-10 11:14:05.766+08	Test2	Test2@email.com	\N	\N	\N	\N	\N	ACTIVE	\N
 \.
 
 
@@ -7335,6 +7508,10 @@ COPY fcuserdiary (di_id, di_created, di_created_by, di_userid, di_duedate, di_ca
 9	2014-06-04 23:23:40.801+08	admin	admin	\N	MESSAGE	Ausi is cantik	\N	READ	2014-06-04 23:23:40.801+08	\N	3
 10	2014-06-04 23:26:04.521+08	admin	admin	\N	MESSAGE	Danny is gendut!!	\N	READ	2014-06-04 23:26:04.521+08	\N	3
 11	2014-06-05 19:00:10.904+08	admin	admin	\N	MESSAGE	Dr. Tang is here	\N	READ	2014-06-05 19:00:10.904+08	\N	3
+12	2014-06-09 09:34:58.606+08	admin	admin	\N	MESSAGE	Today is moire presentation	\N	READ	2014-06-09 09:34:58.606+08	\N	3
+13	2014-06-09 09:35:41.073+08	admin	admin	\N	MESSAGE	Daniel is here!	\N	READ	2014-06-09 09:35:41.073+08	\N	3
+14	2014-06-09 13:25:46.48+08	admin	admin	\N	MESSAGE	Hi Vikki...	\N	READ	2014-06-09 13:25:46.48+08	\N	3
+15	2014-06-15 01:21:22.256+08	admin	admin	\N	MESSAGE	Hello world	\N	READ	2014-06-15 01:21:22.256+08	\N	3
 \.
 
 
@@ -7342,7 +7519,7 @@ COPY fcuserdiary (di_id, di_created, di_created_by, di_userid, di_duedate, di_ca
 -- Name: fcuserdiary_di_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcuserdiary_di_id_seq', 11, true);
+SELECT pg_catalog.setval('fcuserdiary_di_id_seq', 15, true);
 
 
 --
@@ -7863,6 +8040,14 @@ COPY fcuserlogin (ul_id, ul_userid, ul_ip, ul_success, ul_created, last_modified
 511	admin	127.0.0.1	Y	2014-06-03 12:40:53.247+08	2014-06-03 12:40:53.247+08	\N	N	\N
 512	admin	127.0.0.1	Y	2014-06-06 12:18:06.178+08	2014-06-06 12:18:06.178+08	\N	N	\N
 513	admin	127.0.0.1	Y	2014-06-07 17:11:12.735+08	2014-06-07 17:11:12.735+08	\N	N	\N
+514	admin	127.0.0.1	Y	2014-06-10 15:41:10.638+08	2014-06-10 15:41:10.638+08	\N	N	\N
+515	admin	127.0.0.1	Y	2014-06-10 16:37:07.829+08	2014-06-10 16:37:07.829+08	\N	N	\N
+516	admin	127.0.0.1	Y	2014-06-11 20:45:23.434+08	2014-06-11 20:45:23.434+08	\N	N	\N
+517	admin	127.0.0.1	Y	2014-06-12 20:56:27.182+08	2014-06-12 20:56:27.182+08	\N	N	\N
+518	admin	127.0.0.1	Y	2014-06-13 11:59:26.789+08	2014-06-13 11:59:26.789+08	\N	N	\N
+519	admin	127.0.0.1	Y	2014-06-13 22:36:55.495+08	2014-06-13 22:36:55.495+08	\N	N	\N
+520	admin	127.0.0.1	Y	2014-06-15 01:21:00.515+08	2014-06-15 01:21:00.515+08	\N	N	\N
+521	admin	127.0.0.1	Y	2014-06-17 15:23:24.99+08	2014-06-17 15:23:24.99+08	\N	N	\N
 \.
 
 
@@ -7870,7 +8055,7 @@ COPY fcuserlogin (ul_id, ul_userid, ul_ip, ul_success, ul_created, last_modified
 -- Name: fcuserlogin_ul_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcuserlogin_ul_id_seq', 513, true);
+SELECT pg_catalog.setval('fcuserlogin_ul_id_seq', 521, true);
 
 
 --
@@ -7899,8 +8084,9 @@ COPY fcuserorgrole (uor_id, uor_usrid, uor_orgid, uor_rolid, uor_seq) FROM stdin
 33	customer	1	14	1
 36	supervisor	1	19	1
 37	qc	1	18	1
-38	artist1	1	20	1
-39	artist2	1	20	1
+40	artist1	1	20	1
+41	artist2	1	20	1
+50	Test	1	20	1
 \.
 
 
@@ -7908,7 +8094,7 @@ COPY fcuserorgrole (uor_id, uor_usrid, uor_orgid, uor_rolid, uor_seq) FROM stdin
 -- Name: fcuserorgrole_uor_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcuserorgrole_uor_id_seq', 39, true);
+SELECT pg_catalog.setval('fcuserorgrole_uor_id_seq', 50, true);
 
 
 --
@@ -7919,7 +8105,7 @@ COPY fcusersession (us_id, us_sessid, us_userid, us_ip, us_active, us_created, u
 408	1kkbhl72fl7lktmld4p5d10os0	ironman@gmail.com	127.0.0.1	Y	2014-02-17 15:31:34.882+08	2014-02-17 15:31:34+08	\N
 457	72dfg6tbh1jd98eifhla9r25i6	admin2	127.0.0.1	Y	2014-05-01 17:54:44.645+08	2014-05-01 17:54:44+08	\N
 458	h68n7hesc822jhi1caneg5ghl0	customer	127.0.0.1	Y	2014-05-09 09:56:20.674+08	2014-05-09 09:56:20+08	\N
-486	0ofmg5bmtcjfu9ag9eeaj06tj1	admin	127.0.0.1	Y	2014-06-07 17:11:14.363+08	2014-06-07 17:11:14+08	\N
+494	oo7mg5sqnn7r3ldi1pa5s0tsj4	admin	127.0.0.1	Y	2014-06-17 15:23:25.493+08	2014-06-17 15:23:25+08	\N
 \.
 
 
@@ -7927,7 +8113,7 @@ COPY fcusersession (us_id, us_sessid, us_userid, us_ip, us_active, us_created, u
 -- Name: fcusersession_us_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcusersession_us_id_seq', 486, true);
+SELECT pg_catalog.setval('fcusersession_us_id_seq', 494, true);
 
 
 --
@@ -7935,6 +8121,17 @@ SELECT pg_catalog.setval('fcusersession_us_id_seq', 486, true);
 --
 
 COPY martistskill (ma_id, ma_usruserid, ma_jclid) FROM stdin;
+1	artist1	5
+2	artist1	6
+3	artist2	5
+4	artist1	2
+5	artist1	7
+6	Test	5
+7	Test	6
+8	Test	2
+9	Test2	5
+10	Test2	6
+11	Test2	2
 \.
 
 
@@ -7942,7 +8139,7 @@ COPY martistskill (ma_id, ma_usruserid, ma_jclid) FROM stdin;
 -- Name: martistskill_ma_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('martistskill_ma_id_seq', 1, false);
+SELECT pg_catalog.setval('martistskill_ma_id_seq', 11, true);
 
 
 --
@@ -7953,6 +8150,7 @@ COPY mcarton (car_id, car_name) FROM stdin;
 38	Five panel
 39	HSC
 40	OSC 2
+41	New carton
 \.
 
 
@@ -7960,7 +8158,7 @@ COPY mcarton (car_id, car_name) FROM stdin;
 -- Name: mcarton_car_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('mcarton_car_id_seq', 40, true);
+SELECT pg_catalog.setval('mcarton_car_id_seq', 41, true);
 
 
 --
@@ -7992,6 +8190,10 @@ x.5	mm	40
 y.1	mm	40
 y.2	mm	40
 y.3	mm	40
+x1	mm	41
+x2	mm	41
+x3	mm	41
+y1	mm	41
 \.
 
 
@@ -8000,6 +8202,7 @@ y.3	mm	40
 --
 
 COPY mcustmachine (mc_id, mc_orgid, mc_pressmanufacturer, mc_pressyearbuilt, mc_pressmodel, mc_presswidth, mc_presstype, mc_pressspeed, mc_presscylinderrepeat, mc_inkmanufacturer, mc_inkcommercialname, mc_inktype, mc_inktypeother, mc_inkviscosity, mc_inkvicosityother, mc_inkprintingunit_1, mc_inkprintingunit_2, mc_inkprintingunit_3, mc_inkprintingunit_4, mc_inkprintingunit_5, mc_inkvisocity_1, mc_inkvisocity_2, mc_inkvisocity_3, mc_inkvisocity_4, mc_inkvisocity_5, mc_inkph_1, mc_inkph_2, mc_inkph_3, mc_inkph_4, mc_inkph_5, mc_inkdensity_1, mc_inkdensity_2, mc_inkdensity_3, mc_inkdensity_4, mc_inkdensity_5, mc_platemanufacturer, mc_platecommercialname, mc_platetype, mc_platedurometer, mc_platethickness, mc_platerelief, mc_mountingtapemanufacturer, mc_mountingtapename, mc_mountingtapedensity, mc_mountingtapthickness, mc_mountingcarrierthickness, mc_mountingcushionmanufacturer, mc_mountingcushonname, mc_mountingdensity, mc_mountingcushionthickness, mc_cimplevel_1, mc_cimplevel_2, mc_cimplevel_3, mc_cimplevel_4, mc_cimplevel_5, mc_cimpsubstrate_1, mc_cimpsubstrate_2, mc_cimpsubstrate_3, mc_cimpsubstrate_4, mc_cimpsubstrate_5, mc_cimpanlox_1, mc_cimpanlox_2, mc_cimpanlox_3, mc_cimpanlox_4, mc_cimpanlox_5, mc_aniloxmanufacturer, mc_aniloxtype, mc_aniloxengravingangle, mc_aniloxinking, mc_aniloxprintingunit_1, mc_aniloxprintingunit_2, mc_aniloxprintingunit_3, mc_aniloxprintingunit_4, mc_aniloxprintingunit_5, mc_aniloxmanufacturer_1, mc_aniloxmanufacturer_2, mc_aniloxmanufacturer_3, mc_aniloxmanufacturer_4, mc_aniloxmanufacturer_5, mc_aniloxtype_1, mc_aniloxtype_2, mc_aniloxtype_3, mc_aniloxtype_4, mc_aniloxtype_5, mc_aniloxengravingangle_1, mc_aniloxengravingangle_2, mc_aniloxengravingangle_3, mc_aniloxengravingangle_4, mc_aniloxengravingangle_5, mc_aniloxinking_1, mc_aniloxinking_2, mc_aniloxinking_3, mc_aniloxinking_4, mc_aniloxinking_5, mc_aniloxcellcount_1, mc_aniloxcellcount_2, mc_aniloxcellcount_3, mc_aniloxcellcount_4, mc_aniloxcellcount_5, mc_aniloxvolumn_1, mc_aniloxvolumn_2, mc_aniloxvolumn_3, mc_aniloxvolumn_4, mc_aniloxvolumn_5, mc_aniloxdoration_1, mc_aniloxdoration_2, mc_aniloxdoration_3, mc_aniloxdoration_4, mc_aniloxdoration_5, mc_aniloxdoctoring_1, mc_aniloxdoctoring_2, mc_aniloxdoctoring_3, mc_aniloxdoctoring_4, mc_aniloxdoctoring_5, mc_aniloxcontainment_1, mc_aniloxcontainment_2, mc_aniloxcontainment_3, mc_aniloxcontainment_4, mc_aniloxcontainment_5, mc_substratemanufacturer, mc_substratename, mc_substratetype, mc_substratedyna, mc_substrateweight, mc_substrateflute, mc_substratethickness) FROM stdin;
+1	2	Facture1	1958	Model 1	1230	Stack	100	1000	Ink manufacturer	Ink manufacturer commercial name	Water Based	1234	Auto	1233	Ink Printing Unit 1	Ink PU2	Ink PU3	Ink PU4	Ink PU5	Ink Vis1	Ink Vis2	Ink Vis3	Ink Vis4	Ink Vis5	Ink ph1	Ink ph2	Ink ph3	Ink ph4	Ink ph5	Ink des1	Ink des2	Ink des3	Ink des4	Ink des5	Plate manufacturer	plate commercial name	Solid, Liquid	plate durometer	123	123	Mounting manufacturer	Mounting manufacturer comercial name	Mountting Density	11	22	Mounting carrier manufacturer	Mounting carrier manufacturer commercial name	Mounting carrier manufacturer density	123	CI imp lvl 1	CI imp lvl 2	CI imp lvl 3	CI imp lvl 4	CI imp lvl 5	11	22	33	44	55	123	123	123	123	13	Doctor manufacturer	Laser Engraved Ceramic	N	N	1	2	3	4	5	1	2	3	4	5	11	2	3	4	5	1	2	3	4	5	1	2	5	3	4	1	2	3	4	5	1	2	3	4	5	1	2	3	4	5	1	2	3	4	5	1	2	3	4	5	Subrate manufacturer	Subrate manufacturer 11	Film	2	2	11	11
 \.
 
 
@@ -8007,7 +8210,7 @@ COPY mcustmachine (mc_id, mc_orgid, mc_pressmanufacturer, mc_pressyearbuilt, mc_
 -- Name: mcustmachine_mc_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('mcustmachine_mc_id_seq', 1, false);
+SELECT pg_catalog.setval('mcustmachine_mc_id_seq', 1, true);
 
 
 --
@@ -8021,6 +8224,79 @@ COPY mjobcat (jc_id, jc_jsid, jc_jclid) FROM stdin;
 16	9	5
 17	9	6
 18	9	2
+19	10	5
+20	10	6
+21	10	2
+22	11	5
+23	11	6
+24	11	2
+28	13	5
+29	13	6
+30	13	1
+31	\N	5
+32	\N	2
+47	12	5
+48	12	6
+49	12	2
+50	12	7
+51	14	5
+52	14	6
+53	14	2
+54	15	5
+58	17	5
+59	17	7
+63	18	5
+64	18	6
+65	18	2
+66	18	7
+67	18	8
+68	18	3
+69	18	4
+70	18	1
+71	16	5
+72	16	6
+73	16	2
+74	19	5
+75	19	6
+76	19	2
+77	20	5
+78	20	6
+79	20	2
+80	21	5
+81	21	6
+82	21	2
+83	22	5
+84	22	6
+85	22	2
+86	23	5
+87	23	6
+88	23	2
+91	25	5
+92	25	6
+93	26	5
+94	26	6
+95	27	5
+96	27	6
+97	28	5
+98	28	6
+99	29	5
+100	29	6
+101	30	5
+102	30	6
+103	31	5
+104	31	6
+105	32	5
+106	32	6
+107	33	5
+108	33	6
+109	33	2
+110	34	5
+111	34	6
+114	35	5
+115	35	6
+116	36	5
+117	36	6
+118	36	2
 \.
 
 
@@ -8028,7 +8304,7 @@ COPY mjobcat (jc_id, jc_jsid, jc_jclid) FROM stdin;
 -- Name: mjobcat_jc_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('mjobcat_jc_id_seq', 18, true);
+SELECT pg_catalog.setval('mjobcat_jc_id_seq', 118, true);
 
 
 --
@@ -8058,9 +8334,20 @@ SELECT pg_catalog.setval('mjobcatlookup_jcl_id_seq', 8, true);
 -- Data for Name: mjobsheet; Type: TABLE DATA; Schema: pnd; Owner: pnd
 --
 
-COPY mjobsheet (js_id, js_orgid, js_ctid, js_request_date, js_request_by, js_title, js_model, js_description, js_material_provided, js_color_1, js_color_2, js_color_3, js_color_4, js_color_5, js_angle_1, js_angle_2, js_angle_3, js_angle_4, js_angle_5, js_bleeding, js_bleeding_remark, js_distortion, js_distortion_value, js_diecut_ind, js_diecut_no, js_trapping_size, js_barcodetype, js_barcodenumber, js_primcat, js_status, js_completiondate, js_assignto, js_carid, js_decision) FROM stdin;
-7	\N	1	2014-06-07 18:57:35.447+08	\N	\N	\N	job1	\N	1111	1111	1111	1111	1111	1111	1111	1111	1111	1111	0	1111	X	1111.0000	Y	\N	11.0000	22	33	6	\N	\N	\N	38	\N
-9	\N	1	2014-06-07 22:04:24.919+08	\N	\N	\N	new job in queue 111	\N	1	1	1	1	121	1	1	1	1	1	0	123	X	\N	Y	\N	111.0000	222	111	6	\N	\N	\N	38	\N
+COPY mjobsheet (js_id, js_orgid, js_ctid, js_request_date, js_request_by, js_title, js_model, js_description, js_material_provided, js_color_1, js_color_2, js_color_3, js_color_4, js_color_5, js_angle_1, js_angle_2, js_angle_3, js_angle_4, js_angle_5, js_bleeding, js_bleeding_remark, js_distortion, js_distortion_value, js_diecut_ind, js_diecut_no, js_trapping_size, js_barcodetype, js_barcodenumber, js_primcat, js_status, js_completiondate, js_assignto, js_carid, js_decision, js_width, js_height, js_requiretime) FROM stdin;
+34	\N	1	2014-06-10 22:44:42.107+08	\N	\N	\N	Try 2 picture	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	1.0000	Y	\N	\N	\N	\N	6	\N	\N	artist1	38	Assign	100	200	160
+36	\N	1	2014-06-11 20:47:02.736+08	\N	\N	\N	New job	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	Y	\N	Y	\N	\N	\N	\N	6	\N	\N	\N	38	\N	\N	\N	\N
+35	\N	1	2014-06-10 23:21:42.452+08	\N	\N	\N	test customer resolution 1	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	\N	\N	\N	111.0000	222	\N	6	\N	\N	artist1	38	Accept	100	200	160
+23	\N	1	2014-06-10 13:56:31.966+08	\N	\N	\N	Go pending acceptance by artist	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	1.0000	N	\N	\N	\N	\N	6	\N	\N	artist1	38	Assign	\N	\N	190
+25	\N	1	2014-06-10 17:32:03.743+08	\N	\N	\N	Test attachement	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	1.0000	Y	\N	\N	\N	\N	6	\N	\N	\N	38	\N	\N	\N	\N
+26	\N	1	2014-06-10 17:32:52.182+08	\N	\N	\N	Test attachement 1	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	\N	Y	\N	\N	\N	\N	6	\N	\N	\N	38	\N	\N	\N	\N
+27	\N	1	2014-06-10 18:05:44.866+08	\N	\N	\N	Test attachement 2	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	1.0000	Y	\N	\N	\N	\N	6	\N	\N	\N	38	\N	\N	\N	\N
+28	\N	1	2014-06-10 18:08:47.337+08	\N	\N	\N	Test attachement 2	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	1.0000	Y	\N	\N	\N	\N	6	\N	\N	\N	38	\N	\N	\N	\N
+29	\N	1	2014-06-10 18:10:33.782+08	\N	\N	\N	Test attachement 2	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	1.0000	Y	\N	\N	\N	\N	6	\N	\N	\N	38	\N	\N	\N	\N
+30	\N	1	2014-06-10 18:25:03.981+08	\N	\N	\N	Test attachement 2	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	1.0000	Y	\N	\N	\N	\N	6	\N	\N	\N	38	\N	\N	\N	\N
+31	\N	1	2014-06-10 18:26:56.048+08	\N	\N	\N	Test attachement 2	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	1.0000	Y	\N	\N	\N	\N	6	\N	\N	\N	38	\N	\N	\N	\N
+32	\N	1	2014-06-10 19:05:26.862+08	\N	\N	\N	Upload 1 rar file	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	\N	\N	\N	\N	\N	\N	6	\N	\N	\N	38	\N	\N	\N	\N
+33	\N	1	2014-06-10 21:09:22.433+08	\N	\N	\N	multi file upload	\N	1	2	3	4	5	1	2	3	4	5	0	1234	X	123.0000	Y	\N	111.0000	222	333	6	\N	\N	\N	38	\N	\N	\N	\N
 \.
 
 
@@ -8068,7 +8355,7 @@ COPY mjobsheet (js_id, js_orgid, js_ctid, js_request_date, js_request_by, js_tit
 -- Name: mjobsheet_js_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('mjobsheet_js_id_seq', 9, true);
+SELECT pg_catalog.setval('mjobsheet_js_id_seq', 36, true);
 
 
 --
@@ -8108,6 +8395,222 @@ COPY mjscartonvalue (caval_id, caval_value, carval_carcode, carval_carid, carval
 30	6.0000	y.1	38	9
 31	77.0000	y.2	38	9
 32	8.0000	y.3	38	9
+33	1.0000	x.1	38	10
+34	1.0000	x.2	38	10
+35	1.0000	x.3	38	10
+36	1.0000	x.4	38	10
+37	1.0000	x.5	38	10
+38	1.0000	y.1	38	10
+39	1.0000	y.2	38	10
+40	1.0000	y.3	38	10
+41	1.0000	x.1	38	11
+42	2.0000	x.2	38	11
+43	3.0000	x.3	38	11
+44	4.0000	x.4	38	11
+45	5.0000	x.5	38	11
+46	66.0000	y.1	38	11
+47	7.0000	y.2	38	11
+48	8.0000	y.3	38	11
+57	22.0000	x.1	38	13
+58	2.0000	x.2	38	13
+59	3.0000	x.3	38	13
+60	4.0000	x.4	38	13
+61	5.0000	x.5	38	13
+62	6.0000	y.1	38	13
+63	7.0000	y.2	38	13
+64	8.0000	y.3	38	13
+65	2.0000	x.E	39	\N
+66	2.0000	x.L1	39	\N
+67	1.0000	x.W1	39	\N
+68	1.0000	x.L2	39	\N
+69	1.0000	x.W2	39	\N
+70	22.0000	y.T	39	\N
+71	2.0000	y.H	39	\N
+72	2.0000	y.B	39	\N
+105	2.0000	x.1	38	12
+106	1.0000	x.2	38	12
+107	21.0000	x.3	38	12
+108	1.0000	x.4	38	12
+109	2.0000	x.5	38	12
+110	1.0000	y.1	38	12
+111	12.0000	y.2	38	12
+112	1.0000	y.3	38	12
+113	12.0000	x.1	38	14
+114	123.0000	x.2	38	14
+115	31.0000	x.3	38	14
+116	12.0000	x.4	38	14
+117	12.0000	x.5	38	14
+118	1.0000	y.1	38	14
+119	1.0000	y.2	38	14
+120	1.0000	y.3	38	14
+121	1.0000	x.E	39	15
+122	1.0000	x.L1	39	15
+123	1.0000	x.W1	39	15
+124	11.0000	x.L2	39	15
+125	1.0000	x.W2	39	15
+126	1.0000	y.T	39	15
+127	1.0000	y.H	39	15
+128	1.0000	y.B	39	15
+137	1.0000	x.1	38	17
+138	2.0000	x.2	38	17
+139	3.0000	x.3	38	17
+140	4.0000	x.4	38	17
+141	5.0000	x.5	38	17
+142	6.0000	y.1	38	17
+143	7.0000	y.2	38	17
+144	8.0000	y.3	38	17
+153	3.3000	x.E	39	18
+154	4.4000	x.L1	39	18
+155	5.5000	x.W1	39	18
+156	6.6000	x.L2	39	18
+157	7.7000	x.W2	39	18
+158	8.8880	y.T	39	18
+159	9.9000	y.H	39	18
+160	10.1000	y.B	39	18
+161	1.0000	x.1	38	16
+162	2.0000	x.2	38	16
+163	3.0000	x.3	38	16
+164	4.0000	x.4	38	16
+165	5.0000	x.5	38	16
+166	6.0000	y.1	38	16
+167	7.0000	y.2	38	16
+168	8.0000	y.3	38	16
+169	1.0000	x.1	38	19
+170	1.0000	x.2	38	19
+171	21.0000	x.3	38	19
+172	312.0000	x.4	38	19
+173	1312.0000	x.5	38	19
+174	3123.0000	y.1	38	19
+175	123.0000	y.2	38	19
+176	2.0000	y.3	38	19
+177	1.0000	x.1	38	20
+178	2.0000	x.2	38	20
+179	3.0000	x.3	38	20
+180	4.0000	x.4	38	20
+181	5.0000	x.5	38	20
+182	6.0000	y.1	38	20
+183	7.0000	y.2	38	20
+184	8.0000	y.3	38	20
+185	2.0000	x.1	38	21
+186	1.0000	x.2	38	21
+187	31.0000	x.3	38	21
+188	1.0000	x.4	38	21
+189	5.0000	x.5	38	21
+190	6.0000	y.1	38	21
+191	1.0000	y.2	38	21
+192	2.0000	y.3	38	21
+193	1.0000	x.E	39	22
+194	2.0000	x.L1	39	22
+195	3.0000	x.W1	39	22
+196	4.0000	x.L2	39	22
+197	5.0000	x.W2	39	22
+198	6.0000	y.T	39	22
+199	7.0000	y.H	39	22
+200	8.0000	y.B	39	22
+201	1.0000	x.1	38	23
+202	22.0000	x.2	38	23
+203	3.0000	x.3	38	23
+204	4.0000	x.4	38	23
+205	5.0000	x.5	38	23
+206	6.0000	y.1	38	23
+207	7.0000	y.2	38	23
+208	88.0000	y.3	38	23
+217	1.0000	x.1	38	25
+218	2.0000	x.2	38	25
+219	3.0000	x.3	38	25
+220	4.0000	x.4	38	25
+221	5.0000	x.5	38	25
+222	6.0000	y.1	38	25
+223	7.0000	y.2	38	25
+224	8.0000	y.3	38	25
+225	1.0000	x.1	38	26
+226	2.0000	x.2	38	26
+227	3.0000	x.3	38	26
+228	4.0000	x.4	38	26
+229	5.0000	x.5	38	26
+230	6.0000	y.1	38	26
+231	7.0000	y.2	38	26
+232	8.0000	y.3	38	26
+233	1.0000	x.1	38	27
+234	2.0000	x.2	38	27
+235	3.0000	x.3	38	27
+236	4.0000	x.4	38	27
+237	5.0000	x.5	38	27
+238	6.0000	y.1	38	27
+239	7.0000	y.2	38	27
+240	8.0000	y.3	38	27
+241	1.0000	x.1	38	28
+242	2.0000	x.2	38	28
+243	3.0000	x.3	38	28
+244	4.0000	x.4	38	28
+245	5.0000	x.5	38	28
+246	6.0000	y.1	38	28
+247	7.0000	y.2	38	28
+248	8.0000	y.3	38	28
+249	1.0000	x.1	38	29
+250	2.0000	x.2	38	29
+251	3.0000	x.3	38	29
+252	4.0000	x.4	38	29
+253	5.0000	x.5	38	29
+254	6.0000	y.1	38	29
+255	7.0000	y.2	38	29
+256	8.0000	y.3	38	29
+257	1.0000	x.1	38	30
+258	2.0000	x.2	38	30
+259	3.0000	x.3	38	30
+260	4.0000	x.4	38	30
+261	5.0000	x.5	38	30
+262	6.0000	y.1	38	30
+263	7.0000	y.2	38	30
+264	8.0000	y.3	38	30
+265	1.0000	x.1	38	31
+266	2.0000	x.2	38	31
+267	3.0000	x.3	38	31
+268	4.0000	x.4	38	31
+269	5.0000	x.5	38	31
+270	6.0000	y.1	38	31
+271	7.0000	y.2	38	31
+272	8.0000	y.3	38	31
+273	1.0000	x.1	38	32
+274	2.0000	x.2	38	32
+275	3.0000	x.3	38	32
+276	4.0000	x.4	38	32
+277	5.0000	x.5	38	32
+278	6.0000	y.1	38	32
+279	7.0000	y.2	38	32
+280	8.0000	y.3	38	32
+281	1.0000	x.1	38	33
+282	2.0000	x.2	38	33
+283	3.0000	x.3	38	33
+284	4.0000	x.4	38	33
+285	5.0000	x.5	38	33
+286	5.0000	y.1	38	33
+287	6.0000	y.2	38	33
+288	7.0000	y.3	38	33
+289	12.0000	x.1	38	34
+290	3.0000	x.2	38	34
+291	4.0000	x.3	38	34
+292	12.0000	x.4	38	34
+293	12.0000	x.5	38	34
+294	1.0000	y.1	38	34
+295	12.0000	y.2	38	34
+296	21.0000	y.3	38	34
+305	1.0000	x.1	38	35
+306	2.0000	x.2	38	35
+307	3.0000	x.3	38	35
+308	4.0000	x.4	38	35
+309	5.0000	x.5	38	35
+310	66.0000	y.1	38	35
+311	77.0000	y.2	38	35
+312	8.0000	y.3	38	35
+313	1.0000	x.1	38	36
+314	2.0000	x.2	38	36
+315	3.0000	x.3	38	36
+316	4.0000	x.4	38	36
+317	5.0000	x.5	38	36
+318	6.0000	y.1	38	36
+319	7.0000	y.2	38	36
+320	8.0000	y.3	38	36
 \.
 
 
@@ -8115,7 +8618,7 @@ COPY mjscartonvalue (caval_id, caval_value, carval_carcode, carval_carid, carval
 -- Name: mjscartonvalue_caval_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('mjscartonvalue_caval_id_seq', 32, true);
+SELECT pg_catalog.setval('mjscartonvalue_caval_id_seq', 320, true);
 
 
 --
