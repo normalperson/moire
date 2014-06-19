@@ -364,4 +364,11 @@ function convertBytes( $value ) {
         return $qty;
     }
 }
+
+function getuserSessID($userid) {
+	global $DB;
+	$sessid = $DB->getOne("select us_sessid from fcusersession where us_userid =:0 and us_active = 'Y' order by us_id desc", array($userid));
+	return ($sessid) ? $sessid : false;
+}
+
 ?>

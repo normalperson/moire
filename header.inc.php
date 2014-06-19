@@ -24,12 +24,17 @@ function html_header($headerTemplate='header.html'){
 		
 		$HTML->title = "PnD's Moire Portal";
 
+
+		// live notification
+		$HTML->addJS('js/autobahn.min.js');
+		$HTML->addJS('js/live-notification.js');
+		
+		
 		include_once(CLASS_DIR.DS.'PMTask'.DS.'PMTask.php');
 		$PMTask = new PMTask();
 		$taskNaviHTML = $PMTask->renderNavi();
 		$Menu->additionalLI = $taskNaviHTML;
 		$HTML->smarty->assign('Menu', $Menu);
-		
 		
 		// include Widgets in Menu
 		include_once(CLASS_DIR.DS.'NotificationList'.DS.'NotificationList.php');

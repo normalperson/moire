@@ -7,7 +7,7 @@ button.close {
 }
 
 .widget-notifications .notification.UNREAD {
-	background-color: #5E756A;
+	background-color: #DDDDDD;
 }
 
 .widget-notifications .notification-ago, .widget-notifications .notification-description, .widget-notifications .notification-title {
@@ -22,7 +22,7 @@ button.close {
 }
 
 .widget-messages-alt .message.UNREAD {
-	background-color: #5E756A;
+	background-color: #DDDDDD;
 }
 .widget-messages-alt.dropdown-menu .messages-link{
 	width:49%;
@@ -114,3 +114,7 @@ button.close {
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
+
+#main-menu {
+	background : #43474b;
+}

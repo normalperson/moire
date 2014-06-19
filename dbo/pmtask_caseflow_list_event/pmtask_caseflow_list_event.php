@@ -7,8 +7,8 @@ function dbo_pmtask_caseflow_list_event_customize(&$dbo){
 	if (empty($GLOBAL['PMTask_taskid'])) die('missing event id');
 	$dbo->sql = "select a.*,b.*,'' as urgency, '' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
 	where pmf_obj_id = {$GLOBAL['PMTask_taskid']} and pmf_obj_type = 'PM_Event' and pmf_end_date is null
+	and ".PM_Case::genFlowPermWhere()."
 	order by pmf_due_date, pmf_id";
-
 }
 
 function showurgency($colname, $currval, $rs, $html) {

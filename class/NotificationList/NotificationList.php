@@ -39,7 +39,7 @@ class NotificationList {
 		$labelCount = ($reccount > $showLimit) ? $showLimit."+" : $reccount;
 		
 		$html = 
-"<li id='{$id}' data-showlimit='{$showLimit}' data-height='{$height}' class='nav-icon-btn nav-icon-btn-{$severe_class_map[$maxSevere]} dropdown'>
+"<li id='{$id}' data-showlimit='{$showLimit}' data-height='{$height}' class='nav-icon-btn nav-icon-btn-{$severe_class_map[$maxSevere]} dropdown noificationLI'>
 	<a href='javascript:void(0)' class='dropdown-toggle' data-toggle='dropdown'>".
 		(($unreadCount) ? "<span class='label'>{$unreadCount}</span>" : "").
 		"<i class='nav-icon fa fa-bullhorn'></i>
@@ -75,14 +75,17 @@ class NotificationList {
 			var \$notlist = $('#{$id}');
 			var unreadList = ".json_encode($unreadID).";
 			\$notlist
+				.bind('reload', function (e) {
+					var \$this = $(this);
+					ajaxRenderHTML('{$classurl}/ajaxRenderDropDown', {'showlimit' : \$this.data('showlimit'), 'height' : \$this.data('height')}, \$(this), 'replaceWith');
+				})
 				.on('shown.bs.dropdown', function () {
 					if (unreadList.length > 0) {
 						ajaxGetJSON('{$classurl}/ajaxUpdateNotificationStatus', {'notid' : unreadList, 'status' : 'READ'}, function (ret) {
 							if (ret) {
 								unreadList = [];
 								\$notlist.one('hidden.bs.dropdown', function () {
-									var \$this = $(this);
-									ajaxRenderHTML('{$classurl}/ajaxRenderDropDown', {'showlimit' : \$this.data('showlimit'), 'height' : \$this.data('height')}, \$(this), 'replaceWith');
+									$(this).trigger('reload');
 								})
 							}
 						});
@@ -107,7 +110,7 @@ class NotificationList {
 				var \$modal = createEmptyModal('notificationListModal');
 				ajaxRenderHTML('{$classurl}/ajaxRenderPanel', {}, \$modal.find('.modal-content'), 'html', function () {
 					\$modal.modal('show').one('hidden.bs.modal', function () {
-						ajaxRenderHTML('{$classurl}/ajaxRenderDropDown', {'showlimit' : \$notlist.data('showlimit'), 'height' : \$notlist.data('height')}, \$notlist, 'replaceWith');
+						\$notlist.trigger('reload');
 						\$modal.remove();
 					});
 				});
@@ -300,5 +303,36 @@ class NotificationList {
 		$height = $_POST['height'];
 		echo $this->renderDropDown($showlimit,$height);
 	}
+	
+	
+	static function sendNotification($recipients, $msg) {
+		global $USER, $DB;
+		if (is_string($recipients)) {
+			$recipients = explode(',',$recipients);
+			$recipients = array_map('trim', $recipients);
+			$recipients = array_filter($recipients);
+		}
+		if (is_array($recipients)) {
+			$ret = array();
+			foreach ($recipients as $r) {
+				$data = array(
+					'di_created_by'=>'*'.APP,
+					'di_userid'=>$r,
+					'di_cat'=>'NOTICE',
+					'di_status'=>'UNREAD',
+					'di_subject'=>$msg,
+				);
+				$ok = $DB->doInsert('fcuserdiary', $data);
+				if (!$ok) return false;
+				$ret[] = $DB->lastID();
+				
+				global $PUSHSOCKET;
+				if ($PUSHSOCKET) $PUSHSOCKET->send(json_encode(array('topic'=>getuserSessID($r), 'msg'=>"You've received a new notification", 'cat'=>'NOTICE')));
+			}
+			return $ret;
+		}
+		else return false;
+	}
+	
 }
 ?>

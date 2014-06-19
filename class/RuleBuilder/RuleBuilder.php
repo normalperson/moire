@@ -13,18 +13,17 @@ class RuleBuilder {
 	
 	function setup() {
 		html_header();
-		
 		include_once(CLASS_DIR.DS.'RuleBuilder'.DS.'RuleBuilder.php');
-		echo "<a href='UDV' class='btn pull-right'>Create UDV</a>";
+		echo "<a href='UDV' class='btn pull-right'>Create UDV</a><div class='clearfix'></div>";
 		dbo_include('rule');
 	}
 	
 	function UDV() {
 		html_header();
-		echo "<a href='setup' class='btn pull-right'>Create Rule</a>";
+		echo "<a href='setup' class='btn pull-right'>Create Rule</a><div class='clearfix'></div>";
 		dbo_include('udv');
 	}
-	
+
 	function genUDVCapsule($u) {
 		global $DB, $HTML;
 		
