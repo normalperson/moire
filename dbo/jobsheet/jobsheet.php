@@ -1,5 +1,8 @@
 <style type="text/css">
-#dbo_jobsheet .caption{
+#dbotab_jobsheet_detail_tbody_2 .caption{
+	display:none;
+}
+#dbotab_jobsheet_edit_tbody_2 .caption{
 	display:none;
 }
 </style>

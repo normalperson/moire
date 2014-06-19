@@ -51,7 +51,7 @@ class Home{
 		$smarty->assign('Home', $this);		
 		$smarty->display('customerhome.html');
 	}
-	function renderMonthlySalesByCat($type){
+	function renderJobByCat($type){
 		global $HTML,$DB;
 		$sql = "select * from mjobcatlookup order by jcl_title";
 		$jobcat = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
@@ -63,25 +63,27 @@ class Home{
 			$last3mth = $DB->GetRow($sql,null, PDO::FETCH_ASSOC);
 
 
-			$sql = "select js_request_dateinmth as mth,
-					coalesce(count(*),0) as total
+			$sql = "select cast(coalesce(count(*),0) as integer) as total
 					from mjobsheet
 					join mjobcatlookup on js_primcat = jcl_id
 					where js_request_Date > ( date_trunc('month', current_date) -  INTERVAL '2 MONTH')::date
 					and js_request_Date < ( date_trunc('month', current_date) + INTERVAL '1 MONTH')::date
 					and js_request_dateinmth = :0
-					and js_primcat = :1
-					group by js_request_dateinmth,jcl_title";
-			foreach ($jobcat as $key => $value) {
-				$data = $DB->GetArray($sql,array($value['jcl_id']), PDO::FETCH_ASSOC);
-				vd($value['jcl_title']);
-				vd($data);
-			}
+					and js_primcat = :1";
 
+			foreach ($last3mth as $key => $value) {
+				# code...
+				$result = array();
+				foreach ($jobcat as $jckey => $jcvalue) {
+					$result[] = $DB->GetOne($sql,array($value,$jcvalue['jcl_id']), PDO::FETCH_ASSOC);					
+				}
+				$data[] = array("name" => $value, "data" => $result);
+			}			
 		}
 		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
-		$html = $smarty->fetch('monthlysalesbycat.html');
+		$smarty->assign('data',json_encode($data)); 
+		$html = $smarty->fetch('jobbycat.html');
 		return $html;
 	}
 	function renderJobByCategory($paneltitle='JOB BY CATEGORY', $charttitle = 'Total Job', $chartsubtitle='Job by category',$type,$actvid=0){
