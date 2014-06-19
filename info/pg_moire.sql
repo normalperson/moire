@@ -2358,7 +2358,7 @@ CREATE TABLE mjobsheet (
     js_barcodetype integer,
     js_barcodenumber character varying(100),
     js_primcat integer,
-    js_status character varying(100),
+    js_status character varying(100) DEFAULT 'NEW'::character varying,
     js_completiondate timestamp with time zone,
     js_assignto character varying(50),
     js_carid integer,
@@ -7105,7 +7105,6 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 566	93	4	PM_Activity	565	15	2014-06-11 20:49:48+08	2014-06-11 20:50:04+08	DONE	2014-06-11 23:29:48+08	2014-06-11 20:50:04+08	admin	566	N	2014-06-11 20:50:04+08	2014-06-11 21:49:48+08	\N
 523	82	3	PM_Event	521	6	2014-06-10 13:56:48+08	\N	\N	\N	2014-06-10 13:56:48+08	\N	\N	Y	2014-06-10 13:56:48+08	2014-06-10 14:26:48+08	\N
 524	83	1	PM_Event	\N	\N	2014-06-10 17:32:03+08	2014-06-10 17:32:03+08	DONE	\N	2014-06-10 17:32:03+08	admin	524	N	\N	\N	\N
-525	83	1	PM_Activity	524	1	2014-06-10 17:32:03+08	\N	\N	2014-06-10 18:02:03+08	\N	\N	\N	N	\N	2014-06-10 18:02:03+08	\N
 526	84	1	PM_Event	\N	\N	2014-06-10 17:32:52+08	2014-06-10 17:32:52+08	DONE	\N	2014-06-10 17:32:52+08	admin	526	N	\N	\N	\N
 527	84	1	PM_Activity	526	1	2014-06-10 17:32:52+08	\N	\N	2014-06-10 18:02:52+08	\N	\N	\N	N	\N	2014-06-10 18:02:52+08	\N
 528	85	1	PM_Event	\N	\N	2014-06-10 18:05:44+08	2014-06-10 18:05:44+08	DONE	\N	2014-06-10 18:05:44+08	admin	528	N	\N	\N	\N
@@ -7126,6 +7125,7 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 550	92	4	PM_Gateway	548	14	2014-06-10 22:56:01+08	2014-06-10 22:56:01+08	DONE	\N	2014-06-10 22:56:01+08	admin	550	N	\N	\N	\N
 543	91	7	PM_Activity	541	27	2014-06-10 22:40:13+08	\N	\N	\N	2014-06-10 22:40:13+08	\N	\N	N	\N	\N	\N
 553	93	1	PM_Event	\N	\N	2014-06-10 23:21:42+08	2014-06-10 23:21:42+08	DONE	\N	2014-06-10 23:21:42+08	admin	553	N	\N	\N	\N
+574	83	7	PM_Activity	525	27	2014-06-18 18:10:18+08	\N	\N	\N	2014-06-18 18:10:18+08	\N	\N	N	\N	\N	\N
 539	90	1	PM_Activity	538	1	2014-06-10 19:05:26+08	\N	\N	2014-06-10 19:35:26+08	2014-06-10 22:43:09+08	\N	\N	N	2014-06-10 22:43:09+08	2014-06-10 23:10:10+08	1
 544	92	1	PM_Event	\N	\N	2014-06-10 22:44:42+08	2014-06-10 22:44:42+08	DONE	\N	2014-06-10 22:44:42+08	admin	544	N	\N	\N	\N
 557	93	1	PM_Activity	556	7	2014-06-10 23:22:41+08	2014-06-11 20:48:54+08	DONE	2014-06-10 23:52:41+08	2014-06-11 20:48:54+08	admin	557	N	2014-06-11 20:48:54+08	2014-06-11 21:17:11+08	1
@@ -7150,6 +7150,7 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 559	94	1	PM_Activity	558	1	2014-06-11 20:47:03+08	\N	\N	2014-06-11 21:17:03+08	2014-06-13 22:37:05+08	\N	\N	N	2014-06-13 22:37:05+08	2014-06-13 23:07:05+08	1
 541	91	1	PM_Activity	540	1	2014-06-10 21:09:22+08	\N	\N	2014-06-10 21:39:22+08	2014-06-13 22:37:10+08	\N	\N	N	2014-06-13 22:37:10+08	2014-06-13 23:07:08+08	2
 572	94	7	PM_Activity	559	27	2014-06-13 22:37:05+08	\N	\N	\N	2014-06-13 22:37:06+08	\N	\N	N	\N	\N	\N
+525	83	1	PM_Activity	524	1	2014-06-10 17:32:03+08	\N	\N	2014-06-10 18:02:03+08	2014-06-18 18:10:19+08	\N	\N	N	2014-06-18 18:10:19+08	2014-06-18 18:40:18+08	1
 \.
 
 
@@ -7157,7 +7158,7 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 -- Name: fcpmcaseflow_pmf_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 573, true);
+SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 574, true);
 
 
 --
@@ -7484,7 +7485,7 @@ admin2	d033e22ae348aeb5660fc2140aec35850c4da997	2014-01-26 15:39:57.04+08	Admini
 customer	b39f008e318efd2bb988d724a161b61c6909677f	2014-04-24 15:46:41.898+08	Customer	customer@gmail.com	2014-05-10 10:06:53+08	2014-05-09 09:56:20+08	\N	\N	a:4:{s:7:"dbosess";a:8:{s:7:"jobinfo";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"144";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"detail";}s:8:"jobcolor";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"153";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:8:"jobother";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"144";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"detail";}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:18:"customeracceptance";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"88";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:9:"pendingQC";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"86";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"93";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:3:"wip";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"89";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}}s:9:"dboconfig";a:0:{}s:11:"PMTask_atid";s:1:"5";s:13:"PMTask_flowid";s:2:"86";}	ACTIVE	\N
 supervisor	0f4d09e43d208d5e9222322fbc7091ceea1a78c3	2014-04-30 19:09:48.659+08	supervisor	supervisor@gmail.com	2014-04-30 19:37:44+08	2014-04-30 19:36:54+08	\N	\N	a:0:{}	ACTIVE	\N
 qc	d6426af04235d59336c5b6b08f61240cbb6b0f66	2014-04-30 19:10:06.929+08	qc	qc@gmail.com	2014-04-30 19:36:48+08	2014-04-30 19:36:04+08	\N	\N	a:0:{}	ACTIVE	\N
-admin	d033e22ae348aeb5660fc2140aec35850c4da997	2013-08-15 09:55:18.85+08	Administrator	\N	2014-06-17 15:23:29+08	2014-06-17 15:23:25+08	2014-05-13 06:00:56+08	ADMIN	a:7:{s:7:"dbosess";a:7:{s:8:"jobsheet";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:33;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"detail";}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:33;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:26:"pmtask_caseflow_list_event";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:3:"wip";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:35;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:9:"pendingQC";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:35;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:18:"customeracceptance";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:35;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}}s:13:"PMTask_taskid";s:1:"1";s:15:"PMTask_tasktype";s:11:"PM_Activity";s:9:"dboconfig";a:0:{}s:13:"PMTask_flowid";s:3:"541";s:21:"PMTask_comment_caseid";s:2:"93";s:21:"PMTask_comment_flowid";s:3:"567";}	ACTIVE	\N
+admin	d033e22ae348aeb5660fc2140aec35850c4da997	2013-08-15 09:55:18.85+08	Administrator	\N	2014-06-18 21:17:43+08	2014-06-17 15:23:25+08	2014-05-13 06:00:56+08	ADMIN	a:11:{s:7:"dbosess";a:10:{s:8:"jobsheet";a:5:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"27";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";s:4:"page";i:1;}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:25;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:26:"pmtask_caseflow_list_event";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:3:"wip";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:35;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:9:"pendingQC";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:35;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:18:"customeracceptance";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:35;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:11:"flowsummary";a:5:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";s:4:"page";i:1;}s:14:"flowsummarymtd";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:10:"joblisting";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}}s:13:"PMTask_taskid";s:2:"10";s:15:"PMTask_tasktype";s:11:"PM_Activity";s:9:"dboconfig";a:0:{}s:13:"PMTask_flowid";s:3:"525";s:21:"PMTask_comment_caseid";s:2:"93";s:21:"PMTask_comment_flowid";s:3:"567";s:4:"type";s:11:"PM_Activity";s:2:"id";s:1:"5";s:6:"actvid";s:1:"4";s:9:"actvorder";b:1;}	ACTIVE	\N
 artist1	2cabffd3c7cb40ae6541b7f10a640b41190ccb27	2014-06-09 21:32:50.011+08	Artist 1	artist1@gmail.com	\N	\N	\N	\N	\N	ACTIVE	\N
 artist2	09c04a14fff8cbd7d0235da2c01bfd31d7826824	2014-06-09 21:35:00.767+08	Artist 2	artist2@gmail.com	\N	\N	\N	\N	\N	ACTIVE	\N
 Test	a94a8fe5ccb19ba61c4c0873d391e987982fbbd3	2014-06-10 11:11:07.626+08	test	test@email.com	\N	\N	\N	\N	\N	ACTIVE	\N

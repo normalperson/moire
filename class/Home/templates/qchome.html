@@ -6,7 +6,14 @@
 				<!-- Stat panel bg icon -->
 				<i class="fa fa-check-square-o bg-icon"></i>
 				<!-- Extra large text -->
-				<span class="text-xlg"><strong>124</strong></span><br>
+				<span class="text-xlg">
+					<strong>
+						<a href="showFlowSummary?id=5&type=PM_Activity">
+							{$Home->getCompletedJob('PM_Activity',5)}
+						</a>
+					</strong>
+				</span>
+					<br>
 				<!-- Big text -->
 				<span class="text-bg">Jobs</span><br>
 				<!-- Small text -->
@@ -21,7 +28,16 @@
 				<!-- Stat panel bg icon -->
 				<i class="fa fa-info bg-icon"></i>
 				<!-- Extra large text -->
-				<span class="text-xlg"><strong>8</strong></span><br>
+				<span class="text-xlg">
+					<strong>
+<!-- 		  			  Activity name   : "Pending check (QC)"
+		                  Activity ID : 5 -->		
+						<a href="{$Home->getFlowUrl(5,'PM_Activity')}">
+							{$Home->getActivityData(5,'totalcount')}
+						</a>
+					</strong>
+				</span>
+				<br>
 				<!-- Big text -->
 				<span class="text-bg">Jobs</span><br>
 				<!-- Small text -->
@@ -36,11 +52,20 @@
 				<!-- Stat panel bg icon -->
 				<i class="fa fa-gavel bg-icon"></i>
 				<!-- Extra large text -->
-				<span class="text-xlg"><strong>2</strong></span><br>
+				<span class="text-xlg">
+					<strong>
+<!-- 		  			  Activity name   : "Rework in progress"
+		                  Activity ID     : 10 -->		
+						<a href="{$Home->getFlowUrl(10,'PM_Activity')}">
+							{$Home->getActivityData(10,'totalcount')}
+						</a>
+					</strong>
+				</span>
+				<br>
 				<!-- Big text -->
 				<span class="text-bg">Job</span><br>
 				<!-- Small text -->
-				<span class="text-sm">pending forward to customer</span>
+				<span class="text-sm">pending rework in progress</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
 	</div>		
@@ -51,11 +76,18 @@
 				<!-- Stat panel bg icon -->
 				<i class="fa fa-bar-chart-o bg-icon"></i>
 				<!-- Extra large text -->
-				<span class="text-xlg"><strong>7</strong></span><br>
+				<span class="text-xlg">
+					<strong>
+						<a href="showFlowSummaryMTD?id=5&type=PM_Activity">
+							{$Home->getQCExeedSLA()}
+						</a>
+					</strong>
+				</span>
+				<br>
 				<!-- Big text -->
 				<span class="text-bg">Jobs</span><br>
 				<!-- Small text -->
-				<span class="text-sm">exceeded SLA</span>
+				<span class="text-sm">exceeded SLA MTD</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
 	</div>	

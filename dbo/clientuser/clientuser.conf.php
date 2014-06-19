@@ -6,7 +6,8 @@ $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
 $dbo->table = 'fcuser';
 $dbo->key = array('usr_userid');
-$dbo->sql = 'select fcuser.*,\'\' userRole, \'\' as currpassword, \'\' as password1, \'\' as password2 from fcuser';
+$dbo->sql = 'select fcuser.*,\'\' userRole, \'\' as currpassword, \'\' as password1, \'\' as password2 
+from fcuser where usr_userid not in (select distinct uor_usrid from fcuserorgrole join fcrole on rol_id = uor_rolid where lower(rol_name)=\'artist\')';
 $dbo->col = array('usr_userid', 'usr_password', 'usr_created', 'usr_name', 'usr_email', 'usr_last_active', 'usr_last_success_login', 'usr_last_fail_login', 'usr_group', 'usr_sessiondata', 'usr_status', 'usr_langcode', 'userrole', 'currpassword', 'password1', 'password2');
 $dbo->colList = array('usr_userid', 'usr_name', 'usr_email', 'usr_created', 'usr_status');
 $dbo->colListEdit = array('usr_status');
@@ -48,7 +49,7 @@ $dbo->lang = 'EN-US';
 $dbo->render = array();
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
-$dbo->whereSQL = 'usr_userid in (\'fong1\', \'danny@phiorion.com\', \'fong4\', \'yys1988@gmail.com\', \'yow@phiorion.com\', \'fong2\', \'lampard7824@gmail.com\', \'admin2\', \'nick\', \'admin\', \'qc\', \'supervisor\', \'natasha\', \'esp@phiorion.com\', \'fred\', \'severus\', \'customer\', \'superman@gmail.com\', \'harry\', \'hongyee@phiorion.com\', \'thor@gmail.com\', \'tony\', \'fong@phiorion.com\', \'artist2\', \'fong3\', \'artist1\', \'albus\')';
+$dbo->whereSQL = 'usr_userid in (\'fong1\', \'danny@phiorion.com\', \'yys1988@gmail.com\', \'yow@phiorion.com\', \'lampard7824@gmail.com\', \'admin2\', \'nick\', \'qc\', \'supervisor\', \'natasha\', \'esp@phiorion.com\', \'fred\', \'severus\', \'customer\', \'superman@gmail.com\', \'harry\', \'hongyee@phiorion.com\', \'thor@gmail.com\', \'tony\', \'fong@phiorion.com\', \'artist2\', \'artist1\', \'albus\', \'admin\')';
 
 $dbo->cols['usr_userid'] = new DBO_COL('usr_userid', 'varchar', '-1', '54');
 $dbo->cols['usr_userid']->inputTypeDefault = 'text';

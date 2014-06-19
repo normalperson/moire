@@ -190,10 +190,6 @@ class Setting{
 		$dbo = dbo_include('jobsheet');	
 
 	}
-	function orgsetup(){
-		html_header();
-		$dbo = dbo_include('machinesetup');
-	}
 	function machinesetup(){
 		html_header();
 		$dbo = dbo_include('machinesetup');

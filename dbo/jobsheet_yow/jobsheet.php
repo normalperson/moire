@@ -1,8 +1,3 @@
-<style type="text/css">
-#dbo_jobsheet .caption{
-	display:none;
-}
-</style>
 <script type="text/javascript">
 function populateInput(obj,elemt,value,readonly){
 	console.log('readonly = '+readonly);
@@ -109,7 +104,6 @@ function showFileHistory($col, $colVal, $data=array(), $html=null){
 	return $html;
 }
 
-
 # customization
 function dbo_jobsheet_customize(&$dbo){
 	$dbo->newModifier = 'dbo_jobsheet_custom_new';
@@ -158,9 +152,10 @@ function dbo_jobsheet_custom_new($table, $cols){
 	$catstring = $cols['jobcategory'];
 	unset($cols['jobcategory']);
 	
-	$cols['js_orgid'] = $USER->orgid; // assign org id
 	$cartonarr = $_POST['carcode']; // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
+	// customer org id
+	$cols['js_orgid'] = $USER->orgid; // get customer org id
 	$ok = $DB->doInsert($table, $cols);
 	$jobid = $DB->lastInsertId('mjobsheet_js_id_seq');
 	if(!$ok){
@@ -185,7 +180,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 
 		// upload the the right place...
 		$doc = new DocumentManager();
-		$doc->saveMultipleFile($attachment,$jobid,'js_id');
+		$doc->saveMultipleFile($attachment,$jobid,'js_id','New job file upload');
 
 
 		
@@ -204,21 +199,22 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$ret = array();
 	$jobid = $wheres["js_id"];
 	// handle file upload if empty 
-	if($cols['attachment']['name'] == "") {
+	if(!empty($cols['attachment']['name'])) {
 		/*$ret = "Attachement cannot be empty";
 		return $ret;*/
 		unset($cols['attachment']);
 	}
 	else{
-		unset($cols['attachment']);
+		$attachment = json_decode($cols['attachment'],true);
 		// validate rar or zip format
-		// upload the the right place...
+
+		unset($cols['attachment']); 
 	}
 
 	$REMARK = $cols['remark']; // get the remark and insert after insert queue
 	unset($cols['remark']); // unset remark
 	unset($cols['info']); // unset image info
-	unset($cols['fileinfo']);
+	unset($cols['filehistory']);
 
 	$cartonarr = $_POST['carcode']; // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
@@ -254,6 +250,11 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 				);
 			$ok = $DB->doInsert('mjscartonvalue', $cartondata);			
 		}
+
+		// upload the the right place...
+		$doc = new DocumentManager();
+		$doc->saveMultipleFile($attachment,$jobid,'js_id','Edit job file');
+
 
 		$FLOWDECISION=true;
 		
