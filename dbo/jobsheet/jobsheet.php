@@ -218,7 +218,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$REMARK = $cols['remark']; // get the remark and insert after insert queue
 	unset($cols['remark']); // unset remark
 	unset($cols['info']); // unset image info
-	unset($cols['fileinfo']);
+	unset($cols['fileinfo']); // unset file info
 
 	$cartonarr = $_POST['carcode']; // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
