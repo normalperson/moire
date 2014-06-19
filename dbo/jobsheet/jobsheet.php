@@ -1,8 +1,10 @@
+<!--
 <style type="text/css">
 #dbo_jobsheet .caption{
 	display:none;
 }
 </style>
+-->
 <script type="text/javascript">
 function populateInput(obj,elemt,value,readonly){
 	console.log('readonly = '+readonly);

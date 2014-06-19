@@ -21,6 +21,7 @@ function html_header($headerTemplate='header.html'){
 		$HTML->addJS('js/jquery.ui.droppable.min.js');
 		$HTML->addJS('js/moment.min.js');
 		$HTML->addJS('js/script.js');
+		$HTML->addJS('js/init.js');
 		
 		$HTML->title = "PnD's Moire Portal";
 

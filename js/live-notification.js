@@ -15,6 +15,9 @@ $(function () {
 				else if (data.cat == 'MESSAGE') {
 					$('.messageLI').trigger('reload');
 				}
+				else if (data.cat == 'TASK') {
+					$('.tasklistingLI').trigger('reload');
+				}
 			});
 		},
 		function() {

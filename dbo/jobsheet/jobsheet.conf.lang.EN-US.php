@@ -58,6 +58,7 @@ $dbo->cols['js_manrequiretime']->caption->set('default', 'js_manrequiretime', 't
 $dbo->cols['js_requiretime']->caption->set('default', 'js_requiretime', 'text');
 $dbo->cols['filehistory']->caption->set('default', 'File history', 'text');
 $dbo->cols['filehistory']->caption->setTabCaption('default', 'FILE HISTORY', 'text');
+$dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

@@ -76,8 +76,7 @@ class PMTask {
 		sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount,
 		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
 		min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
-		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and ((pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y')
-		or (pmev_type = 'START' and pmev_start_function is not null))
+		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y'
 		join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmev_id = pmf_obj_id and pmf_end_date is null
 		where ".PM_Case::genFlowPermWhere()."
 		group by pmwf_id, pmev_id, pmev_type
@@ -98,6 +97,7 @@ class PMTask {
 		
 		$rs = array_merge($rs1, $rs2);
 		$rs = array_merge($rs, $rs3);
+		
 		$data = array();
 		$totalpending = 0;
 		$totaldue = 0;
@@ -201,7 +201,7 @@ class PMTask {
 					"class='label label-danger' title='{$totaldue} overdue task(s)'" : 
 					"class='label label-warning'").">{$totalpending}</span>" : "";
 
-		$html = "<li class='mm-dropdown mm-dropdown-root ".((!empty($_GET['webc']) && $_GET['webc'] == __CLASS__) ? 'open active' : '')."'>
+		$html = "<li class='mm-dropdown mm-dropdown-root tasklistingLI ".((!empty($_GET['webc']) && $_GET['webc'] == __CLASS__) ? 'open active' : '')."'>
 					<a href='#'>
 						<i class='menu-icon fa fa-tasks'></i>
 						<span class='mm-text mmc-dropdown-delay animated fadeIn'>Task</span>{$pendingBadge}
@@ -209,11 +209,22 @@ class PMTask {
 					<ul class='mmc-dropdown-delay animated fadeInLeft'>
 						{$html}
 					</ul>
-				</li>";
+				</li>
+				<script type='text/javascript'>
+				$('.tasklistingLI').bind('reload', function (e) {
+					var \$this = $(this);
+					ajaxRenderHTML('{$this->classurl}/ajaxRenderNavi', {}, \$this, 'replaceWith');
+				});
+				</script>";
 
 		if (!$skipUL) $html = "<ul id='taskListing' class='navigation'>{$html}</ul>";
 
 		return $html;
+	}
+	
+	function ajaxRenderNavi() {
+		echo $this->renderNavi();
+	
 	}
 
 	function showingTask($type, $id) {
@@ -551,10 +562,12 @@ $(function () {
 		$userlist = array();
 		$assign = $DB->getArray("select * from fcpmcaseflowassign where pmfa_pmfid = :0", array($data['pmf_id']), PDO::FETCH_ASSOC);
 		foreach ($assign as $a) {
+			$where = array();
+			$where[] = ($a['pmfa_userid']) ? 'uor_usrid = '.$DB->quote($a['pmfa_userid']) : '1=1';
+			$where[] = ($a['pmfa_orgid']) ? 'uor_orgid = '.$DB->quote($a['pmfa_orgid']) : '1=1';
+			$where[] = ($a['pmfa_rolid']) ? 'uor_rolid = '.$DB->quote($a['pmfa_rolid']) : '1=1';
 			$userlist = array_merge($userlist, $DB->getCol("select uor_usrid from fcuserorgrole 
-			where (:0 is null or uor_usrid = :0) and 
-			(:1 is null or uor_orgid = :1) and 
-			(:2 is null or uor_rolid = :2)", array($a['pmfa_userid'], $a['pmfa_orgid'], $a['pmfa_rolid'])));
+			where ".implode(' and ',$where)));
 		}
 		if ($PUSHSOCKET) {
 			foreach ($userlist as $user) {
