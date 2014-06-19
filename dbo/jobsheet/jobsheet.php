@@ -1,4 +1,3 @@
-<!--
 <style type="text/css">
 #dbotab_jobsheet_detail_tbody_2 .caption{
 	display:none;
@@ -7,7 +6,6 @@
 	display:none;
 }
 </style>
--->
 <script type="text/javascript">
 function populateInput(obj,elemt,value,readonly){
 	console.log('readonly = '+readonly);
