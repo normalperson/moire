@@ -23,7 +23,7 @@ class Messaging {
 		
 		
 		$html = 
-"<li id='{$id}' data-showlimit='{$showLimit}' data-height='{$height}' class='nav-icon-btn nav-icon-btn-success dropdown'>
+"<li id='{$id}' data-showlimit='{$showLimit}' data-height='{$height}' class='nav-icon-btn nav-icon-btn-success dropdown messageLI'>
 	<a href='javascript:void(0)' class='dropdown-toggle' data-toggle='dropdown'>".
 		(($unreadCount) ? "<span class='label'>{$unreadCount}</span>" : "").
 		"<i class='nav-icon fa fa-envelope'></i>
@@ -42,7 +42,7 @@ class Messaging {
 				<img src='{$senderimage}' alt=\"{$displaysender}\" title=\"{$displaysender}\" class='message-avatar'>
 				<a href='javascript:void(0)' class='message-subject'>{$row['di_subject']}</a>
 				<div class='message-description' >
-					from <a href='javascript:void(0)'>{$displaysender}</a>
+					from  <a href='javascript:void(0)'>{$displaysender}</a>
 					&nbsp;·&nbsp;
 					<span title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</span>
 				</div>
@@ -60,14 +60,17 @@ class Messaging {
 			var \$msglist = $('#{$id}');
 			var unreadList = ".json_encode($unreadID).";
 			\$msglist
+				.bind('reload', function (e) {
+					var \$this = $(this);
+					ajaxRenderHTML('{$classurl}/ajaxRenderDropDown', {'showlimit' : \$this.data('showlimit'), 'height' : \$this.data('height')}, \$(this), 'replaceWith');
+				})
 				.on('shown.bs.dropdown', function () {
 					if (unreadList.length > 0) {
 						ajaxGetJSON('{$classurl}/ajaxUpdateMessageStatus', {'msgid' : unreadList, 'status' : 'READ'}, function (ret) {
 							if (ret) {
 								unreadList = [];
 								\$msglist.one('hidden.bs.dropdown', function () {
-									var \$this = $(this);
-									ajaxRenderHTML('{$classurl}/ajaxRenderDropDown', {'showlimit' : \$this.data('showlimit'), 'height' : \$this.data('height')}, \$(this), 'replaceWith');
+									$(this).trigger('reload');
 								})
 							}
 						});
@@ -92,7 +95,7 @@ class Messaging {
 				var \$modal = createEmptyModal('messageListModal');
 				ajaxRenderHTML('{$classurl}/ajaxRenderPanel', {}, \$modal.find('.modal-content'), 'html', function () {
 					\$modal.modal('show').one('hidden.bs.modal', function () {
-						ajaxRenderHTML('{$classurl}/ajaxRenderDropDown', {'showlimit' : \$msglist.data('showlimit'), 'height' : \$msglist.data('height')}, \$msglist, 'replaceWith');
+						\$msglist.trigger('reload');
 						\$modal.remove();
 					});
 				});
@@ -102,7 +105,7 @@ class Messaging {
 				var \$modal = createEmptyModal('messageComposeModal');
 				ajaxRenderHTML('{$classurl}/ajaxRenderCompose', {}, \$modal.find('.modal-content'), 'html', function () {
 					\$modal.modal('show').one('hidden.bs.modal', function () {
-						ajaxRenderHTML('{$classurl}/ajaxRenderDropDown', {'showlimit' : \$msglist.data('showlimit'), 'height' : \$msglist.data('height')}, \$msglist, 'replaceWith');
+						\$msglist.trigger('reload');
 						\$modal.remove();
 					});
 				});
@@ -186,6 +189,8 @@ class Messaging {
 				$ok = $DB->doInsert('fcuserdiary', $data);
 				if (!$ok) return false;
 				$ret[] = $DB->lastID();
+				global $PUSHSOCKET;
+				if ($PUSHSOCKET) $PUSHSOCKET->send(json_encode(array('topic'=>getuserSessID($r), 'msg'=>"You've received a new message", 'cat'=>'MESSAGE')));
 			}
 			return $ret;
 		}
@@ -235,7 +240,7 @@ class Messaging {
 				<img src='{$senderimage}' alt=\"{$displaysender}\" title=\"{$displaysender}\" class='message-avatar'>
 				<span class='message-subject'>{$row['di_subject']}</span>
 				<div class='message-description' >
-					from <a href='javascript:void(0)'>{$displaysender}</a>
+					from  <a href='javascript:void(0)'>{$displaysender}</a>
 					&nbsp;·&nbsp;
 					<span title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</span>
 				</div>
@@ -357,7 +362,7 @@ class Messaging {
 				<img src='{$senderimage}' alt=\"{$displaysender}\" title=\"{$displaysender}\" class='message-avatar'>
 				<span class='message-subject'>{$row['di_subject']}</span>
 				<div class='message-description' >
-					from <a href='javascript:void(0)'>{$displaysender}</a>
+					from  <a href='javascript:void(0)'>{$displaysender}</a>
 					&nbsp;·&nbsp;
 					<span title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</span>
 				</div>

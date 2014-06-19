@@ -22,7 +22,9 @@ class PMTask {
 		global $DB, $USER, $GLOBAL;
 
 		$rs = $DB->getArray("select pmev_name, pmev_id, pmwf_name
-		from fcpmevent join fcpmworkflow on pmwf_id=pmev_pmwfid where pmev_type = 'START' and pmev_start_function is not null 
+		from fcpmevent join fcpmworkflow on pmwf_id=pmev_pmwfid 
+		left join fcpmswimlane on pmsl_id = pmev_pmslid
+		where pmev_type = 'START' and pmev_start_function is not null and ".PM_Case::genObjectPermWhere()."
 		order by pmwf_name, pmev_name", array(), PDO::FETCH_ASSOC);
 
 		if ($rs) {
@@ -54,8 +56,6 @@ class PMTask {
 	function renderNavi($skipUL = true) {
 		global $DB, $USER, $GLOBAL;
 
-
-
 		// USER ACTIVITIES
 		$rs1 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Activity' as object_type, pmat_id activityid, 
 		max(pmat_name) activityname, 
@@ -64,7 +64,8 @@ class PMTask {
 		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
 		min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
 		from fcpmworkflow join fcpmactivity on pmwf_id = pmat_pmwfid and pmat_type = 'USER'
-		left join fcpmcaseflow on pmf_obj_type = 'PM_Activity' and pmat_id = pmf_obj_id and pmf_end_date is null
+		join fcpmcaseflow on pmf_obj_type = 'PM_Activity' and pmat_id = pmf_obj_id and pmf_end_date is null
+		where ".PM_Case::genFlowPermWhere()."
 		group by pmwf_id, pmat_id
 		order by 2,4", array(), PDO::FETCH_ASSOC);
 
@@ -77,11 +78,26 @@ class PMTask {
 		min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
 		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and ((pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y')
 		or (pmev_type = 'START' and pmev_start_function is not null))
-		left join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmev_id = pmf_obj_id and pmf_end_date is null
+		join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmev_id = pmf_obj_id and pmf_end_date is null
+		where ".PM_Case::genFlowPermWhere()."
 		group by pmwf_id, pmev_id, pmev_type
 		order by 2, pmev_type desc, 4", array(), PDO::FETCH_ASSOC);
 
+		// START EVENTS SHOW AS TASK
+		$rs3 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Event' as object_type, pmev_id eventid, pmev_type eventtype,
+		max(pmev_name) eventname, 
+		0 totalcount,
+		0 totalpendingcount,
+		0 totaloverduecount,
+		null earliestduedate
+		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and pmev_type = 'START' and pmev_start_function is not null
+		left join fcpmswimlane on pmev_pmslid = pmsl_id
+		where ".PM_Case::genObjectPermWhere()."
+		group by pmwf_id, pmev_id, pmev_type
+		order by 2, pmev_type desc, 4", array(), PDO::FETCH_ASSOC);
+		
 		$rs = array_merge($rs1, $rs2);
+		$rs = array_merge($rs, $rs3);
 		$data = array();
 		$totalpending = 0;
 		$totaldue = 0;
@@ -217,10 +233,11 @@ class PMTask {
 	}
 
 	function startEvent() {
+		ob_start();
 		global $HTML, $GLOBAL, $DB;
 		$smarty = $this->initSmarty();
-		if (!empty($_REQUEST['id'])) {
-			$GLOBAL['PMTask_taskid'] = $_REQUEST['id'];
+		if (!empty($_GET['id'])) {
+			$GLOBAL['PMTask_taskid'] = $_GET['id'];
 			$GLOBAL['PMTask_tasktype'] = 'PM_Event';
 		}
 		$ev = new PM_Event($GLOBAL['PMTask_taskid']);
@@ -230,6 +247,7 @@ class PMTask {
 	}
 
 	function caseFlowList() {
+		ob_start();
 		global $HTML, $GLOBAL, $DB;
 		$smarty = $this->initSmarty();
 
@@ -463,12 +481,13 @@ class PMTask {
 		$html = '';
 		$evRS = $DB->getAll("select * from fcpmcaseflow join fcpmevent on pmf_obj_id = pmev_id and pmf_obj_type = 'PM_Event' 
 				where pmf_pmcid = :0 and pmf_end_date is null and 
-				pmev_type = 'INTERMEDIATE' order by pmev_name", array($pmcid), PDO::FETCH_ASSOC);
+				pmev_type = 'INTERMEDIATE' and  ".PM_Case::genFlowPermWhere()."
+				order by pmev_name", array($pmcid), PDO::FETCH_ASSOC);
 
 		if ($evRS) { // has active intermediate event
 			$html = "<form id='eventForm' method='post'><input id='eventInp' type='hidden' name='event_action_manual' /></form>
 					<div class='btn-group action-event'>
-						<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>Event 
+						<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>Action 
 							<span class='caret'></span>
 						</button>
 						<ul class='dropdown-menu pull-right' role='menu'>";
@@ -518,6 +537,7 @@ $(function () {
 
 
 	function renderActivityPerform() {
+		ob_start();
 		global $HTML, $GLOBAL, $DB;
 
 		$smarty = $this->initSmarty();

@@ -29,8 +29,8 @@ class PMFunc{
 		$_GET['dboid']='reqverification';
 		$_GET['js_id']=$o->casekey;
 		$_GET['dbostate']='edit';
+		
 		dbo_include('reqverification');
-
 		if(isset($FLOWDECISION) && $FLOWDECISION==true) {
 			// insert comment
 			if(trim($REMARK) != '')	$o->insertComment($REMARK, $flowid);
@@ -161,6 +161,11 @@ class PMFunc{
 		echo "<form method='post'><input type='submit' value='MOVE' name='PROCEED' /></form>";
 	}	
 	function testScript() {
+		return true;
+	}
+	
+	
+	function notifyLateReqVerification() {
 		return true;
 	}
 }
