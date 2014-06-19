@@ -190,7 +190,11 @@ class Messaging {
 				if (!$ok) return false;
 				$ret[] = $DB->lastID();
 				global $PUSHSOCKET;
-				if ($PUSHSOCKET) $PUSHSOCKET->send(json_encode(array('topic'=>getuserSessID($r), 'msg'=>"You've received a new message", 'cat'=>'MESSAGE')));
+				if ($PUSHSOCKET) {	
+					if ($sessid = getuserSessID($r)) {
+						$PUSHSOCKET->send(json_encode(array('topic'=>$sessid, 'msg'=>"You've received a new message", 'cat'=>'MESSAGE')));
+					}
+				}
 			}
 			return $ret;
 		}

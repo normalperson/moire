@@ -243,7 +243,13 @@ class PMTask {
 		$ev = new PM_Event($GLOBAL['PMTask_taskid']);
 		$this->renderTopBar($ev->id, 'PM_Event');
 		$case = $ev->start();
-		if ($case) redirect('?');
+		if ($case) {
+			$flowarr = array_keys($case->activeFlow);
+			foreach ($flowarr as $fid) {
+				$this->notifyNextUsers($case->activeFlow[$fid]);
+			}
+			redirect('?');
+		}
 	}
 
 	function caseFlowList() {
@@ -270,8 +276,16 @@ class PMTask {
 				foreach ($toPerform as $p) {
 					parse_str($p, $keys);
 					$case = new PM_Case($keys['pmf_pmcid']);
+					$flowarr_before = array_keys($case->activeFlow);
 					$ok = $case->performFlow($keys['pmf_id'], true);
-					if ($ok) $performed = $ok;
+					if ($ok) {
+						$flowarr_after = array_keys($case->activeFlow);
+						$flowarr_diff = array_diff($flowarr_after, $flowarr_before);
+						foreach ($flowarr_diff as $fid) {
+							$this->notifyNextUsers($case->activeFlow[$fid]);
+						}
+						$performed = $ok;
+					}
 				}
 				if ($performed) {
 					redirect($this->classurl."/caseFlowList?id={$GLOBAL['PMTask_taskid']}&type={$GLOBAL['PMTask_tasktype']}");
@@ -322,9 +336,6 @@ class PMTask {
 				minLength : 1,
 				select: function(event, ui) {
 					document.location = '{$this->classurl}/renderCaseScreen?caseid='+this.value;
-				},
-				error : function () {
-					alert(123);
 				}
 			});
 		})()
@@ -535,6 +546,27 @@ $(function () {
 		}
 	}
 
+	function notifyNextUsers($data) {
+		global $DB,$PUSHSOCKET;
+		$userlist = array();
+		$assign = $DB->getArray("select * from fcpmcaseflowassign where pmfa_pmfid = :0", array($data['pmf_id']), PDO::FETCH_ASSOC);
+		foreach ($assign as $a) {
+			$userlist = array_merge($userlist, $DB->getCol("select uor_usrid from fcuserorgrole 
+			where (:0 is null or uor_usrid = :0) and 
+			(:1 is null or uor_orgid = :1) and 
+			(:2 is null or uor_rolid = :2)", array($a['pmfa_userid'], $a['pmfa_orgid'], $a['pmfa_rolid'])));
+		}
+		if ($PUSHSOCKET) {
+			foreach ($userlist as $user) {
+				if ($sessid = getuserSessID($user)) {
+					$PUSHSOCKET->send(json_encode(array(
+						'topic'=>$sessid, 
+						'msg'=>"You've received a new task", 
+						'cat'=>'TASK')));
+				}
+			}
+		}
+	}
 
 	function renderActivityPerform() {
 		ob_start();
@@ -550,10 +582,16 @@ $(function () {
 		$this->renderTopBar(null, null, $GLOBAL['PMTask_flowid'], $caseid);
 		if ($caseid) {
 			$case = new PM_Case($caseid);
+			$flowarr_before = array_keys($case->activeFlow);
 			$currid = $case->activeFlow[$GLOBAL['PMTask_flowid']]['pmf_obj_id'];
 			$currtype = $case->activeFlow[$GLOBAL['PMTask_flowid']]['pmf_obj_type'];
 			$performed = $case->performFlow($GLOBAL['PMTask_flowid'], true);
 			if ($performed) {
+				$flowarr_after = array_keys($case->activeFlow);
+				$flowarr_diff = array_diff($flowarr_after, $flowarr_before);
+				foreach ($flowarr_diff as $fid) {
+					$this->notifyNextUsers($case->activeFlow[$fid]);
+				}
 				redirect($this->classurl."/caseFlowList?id={$currid}&type={$currtype}");
 			}
 		}

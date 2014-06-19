@@ -327,7 +327,11 @@ class NotificationList {
 				$ret[] = $DB->lastID();
 				
 				global $PUSHSOCKET;
-				if ($PUSHSOCKET) $PUSHSOCKET->send(json_encode(array('topic'=>getuserSessID($r), 'msg'=>"You've received a new notification", 'cat'=>'NOTICE')));
+				if ($PUSHSOCKET) {
+					if ($sessid = getuserSessID($r)) {
+						$PUSHSOCKET->send(json_encode(array('topic'=>$sessid, 'msg'=>"You've received a new notification", 'cat'=>'NOTICE')));
+					}
+				}
 			}
 			return $ret;
 		}
