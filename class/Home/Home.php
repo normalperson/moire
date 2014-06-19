@@ -51,9 +51,16 @@ class Home{
 		$smarty->assign('Home', $this);		
 		$smarty->display('customerhome.html');
 	}
-	function renderJobByCategory($paneltitle='JOB BY CATEGORY', $charttitle = 'Total Job', $chartsubtitle='Job by category',$userid=''){
+	function renderJobByCategory($paneltitle='JOB BY CATEGORY', $charttitle = 'Total Job', $chartsubtitle='Job by category',$type,$actvid=0){
 		global $USER,$HTML;
 		if (trim($userid) == '') $userid = $USER->userid;
+
+		$sql = "select * from mjobcatlookup order by jcl_title";
+		$jobcat = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
+
+		if($type == 'supervisor'){
+			//$sql = "select count(*) from mjobsheet";
+		}
 
 		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
