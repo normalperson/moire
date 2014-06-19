@@ -30,7 +30,7 @@ class Pusher implements WampServerInterface {
     }
 	
     public function onUnSubscribe(ConnectionInterface $conn, $topic) {
-		var_dump($conn);
+		
     }
     public function onOpen(ConnectionInterface $conn) {
     }
