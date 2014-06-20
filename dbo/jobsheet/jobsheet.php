@@ -131,6 +131,13 @@ function showPercentageDet($col, $colVal, $data=array(), $html=null){
 
 	return $newhtml;
 }
+function showRequiredMinute($col, $colVal, $data=array(), $html=null){
+	$html = '<div class="note note-info">
+				<h4 class="note-title" id="requiredmin">0 minutes</h4>
+				<small>Note:Supervisor has the right to override the time.</small>
+			</div>';
+	return $html;
+}
 
 
 # customization
@@ -188,6 +195,11 @@ function dbo_jobsheet_custom_new($table, $cols){
 	$cols['js_orgid'] = $USER->orgid; // assign org id
 	$cartonarr = $_POST['carcode']; // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
+
+	$cols['js_request_by'] = $USER->userid; // store the userid
+
+	unset($cols['js_requiretime']); // unset the requiretime (finalize by supervisor)
+
 	$ok = $DB->doInsert($table, $cols);
 	$jobid = $DB->lastInsertId('mjobsheet_js_id_seq');
 	if(!$ok){
@@ -312,6 +324,43 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	return $ret;
 }
 
+global $DB;
+$sql = "select * from mjobcatlookup";
+$data = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
+$jobcatarr = array();
+foreach ($data as $key => $value) {
+	$jobcatarr[$value['jcl_id']] = $value['jcl_requiretime'];
+}
+echo '<script type="text/javascript"> var catlookup = '.json_encode($jobcatarr).'; console.log("HERE!"); console.log(catlookup);</script>';
+
 # final rendering
 $dbo->render();
 ?>
+<script type="text/javascript">
+$( document ).ready(function() {
+	var checkcatarr = [];
+	$('input[id^="dbo_jobsheet_new_jobcategory"]').change(function(){
+		$this = $(this);
+		if($this.is(':checked')) checkcatarr.push($this.val());
+		else{
+			var index = checkcatarr.indexOf($this.val());
+			checkcatarr.splice(index, 1);
+		}
+		calMinutes();
+	});
+	
+	function calMinutes(){
+		var totalmin = 0;
+		$.each(checkcatarr, function( index, value ) {
+			totalmin += catlookup[value];
+		});
+
+		$('#requiredmin').text(totalmin+' minutes');
+
+	}	
+
+
+});
+
+</script>
+

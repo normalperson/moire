@@ -220,6 +220,11 @@ class Setting{
 		html_header();
 		dbo_include('locale_setup');
 	}
+	
+	function mailtemplatesetup() {
+		html_header();
+		dbo_include('mail_template');
+	}
 }
 
 $Setting = new Setting();

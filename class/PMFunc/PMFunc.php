@@ -165,7 +165,18 @@ class PMFunc{
 	}
 	
 	
-	function notifyLateReqVerification() {
+	function notifyLateVerification() {
+		global $DB;
+		
+		$mailcode = 'NOTIFY_LATE_REQ_VER';
+		$rs = $DB->getRow("select * from mmailtemplate where mt_code = :0 and mt_status = 'ACTIVE'", array($mailcode), PDO::FETCH_ASSOC);
+		if ($rs) {
+			$udv = new UDV();
+			$recp = $udv->parse($rs['mt_recipient_to']);
+			$recpcc = $udv->parse($rs['mt_recipient_cc']);
+			$subject = $udv->parse($rs['mt_subject']);
+			$content = $udv->parse($rs['mt_content']);
+		}
 		return true;
 	}
 }
