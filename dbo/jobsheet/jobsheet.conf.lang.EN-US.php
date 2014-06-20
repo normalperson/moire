@@ -53,7 +53,7 @@ $dbo->cols['js_decision']->caption->set('default', 'js_decision', 'text');
 $dbo->cols['js_width']->caption->set('default', 'js_width', 'text');
 $dbo->cols['js_height']->caption->set('default', 'js_height', 'text');
 $dbo->cols['js_manrequiretime']->caption->set('default', 'js_manrequiretime', 'text');
-$dbo->cols['js_requiretime']->caption->set('default', 'js_requiretime', 'text');
+$dbo->cols['js_requiretime']->caption->set('default', 'Required minutes', 'text');
 $dbo->cols['filehistory']->caption->set('default', 'File history', 'text');
 $dbo->cols['filehistory']->caption->setTabCaption('default', 'FILE HISTORY', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');

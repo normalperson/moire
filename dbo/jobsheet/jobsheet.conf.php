@@ -7,7 +7,7 @@ $dbo->id = $dboID;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, \'\' attachment, \'\' remark, \'\' info,
-\'\' filehistory,
+\'\' filehistory, 
 cast(jobcategory as varchar) as jobcategory,
 cast(joboutput as varchar) as joboutput
 from mjobsheet left join (
@@ -22,7 +22,7 @@ $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
 $dbo->colDetail = array('js_jobcolor', 'js_description', 'joboutput', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
-$dbo->colNew = array('js_jobcolor', 'js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'joboutput', 'attachment', 'info', 'remark');
+$dbo->colNew = array('js_jobcolor', 'js_description', 'js_ctid', 'jobcategory', 'js_requiretime', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'joboutput', 'attachment', 'info', 'remark');
 $dbo->colEdit = array('js_jobcolor', 'js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory', 'joboutput', 'attachment', 'info', 'remark');
 $dbo->colSearch = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colExport = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
@@ -63,6 +63,7 @@ $dbo->layoutDetail = '5;
 1;
 1;';
 $dbo->layoutNew = '5;
+5;
 5;
 5;
 5;
