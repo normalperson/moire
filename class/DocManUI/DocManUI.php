@@ -75,7 +75,7 @@ class DocManUI {
 		return array('filelocation' => $filelocation, 'filename' => $filename);
 
 	}	
-	function multiFileDownload($filelist,$reftype,$destination='DEFAULT/'){
+	function multiFileDownload($filelist,$reftype,$appname='DEFAULT'){
 		$files = array();
 		// generate files array
 		foreach ($filelist as $key => $value) {
@@ -83,10 +83,12 @@ class DocManUI {
 			array_push($files,$file);
 		}
 		static $zipCount;
-		if($zipCount) ++$zipCount;
+/*		if($zipCount) ++$zipCount;
 		else $zipCount = 1;
-		$zipname="MOIREZIP_".$zipCount;
-
+		$zipname="MOIREZIP";
+*/
+		$zipname = $appname;
+		$destination = $appname.DS;
 		$zip = new ZipArchive;
 		$zip->open($zipname, ZipArchive::CREATE);
 		foreach ($files as $singlefile) {
@@ -117,7 +119,7 @@ class DocManUI {
 	function download(){
 		$listofdoc = $_REQUEST['docid'];
 		$reftype = $_REQUEST['reftype'];
-		$destination = strtoupper (APP);
+		$appname = strtoupper (APP);
 		
 		if( in_array('0', $listofdoc) )	array_shift($listofdoc);
 
@@ -127,13 +129,8 @@ class DocManUI {
 			$fileinfo = $this->generateFileName($listofdoc[0],$reftype);
 			$this->singleFileDownload($fileinfo['filelocation'],$fileinfo['filename']);
 		}else{
-			$this->multiFileDownload($listofdoc,$reftype,$destination);				
+			$this->multiFileDownload($listofdoc,$reftype,$appname);				
 		}
-
-
-		// if more than 1 then zip..
-
-
 
 	}
 	

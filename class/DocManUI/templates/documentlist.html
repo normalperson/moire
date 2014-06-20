@@ -1,7 +1,18 @@
+<style type="text/css">
+table.doctable > thead > tr > th {
+	padding: 3px; 
+	line-height: 1.42857143;
+	vertical-align: top;
+	border-top: 1px solid #e4e4e4;
+}
+</style>
 <div id="{$id}">
 <div class="pull-right">
-	<button class="btn btn-primary disabled docdownload"  name="docdownload" disabled="disabled">Download</button>
+	{if count($docinfo) > 0}
+		<button class="btn btn-primary disabled docdownload"  name="docdownload" disabled="disabled">Download</button>
+	{/if}
 </div>
+{if count($docinfo) > 0}
 <table class="table table-striped doctable">
 	<thead>
 		<tr>
@@ -32,6 +43,11 @@
 		{/foreach}
 	</tbody>
 </table>
+{else}
+<div class="alert alert-info">
+	No files was uploaded
+</div>
+{/if}
 </div>
 <script type="text/javascript">
 (function(){

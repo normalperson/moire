@@ -5,21 +5,28 @@
 #dbotab_jobsheet_edit_tbody_2 .caption{
 	display:none;
 }
+#dbo_jobsheet_new_cont_js_distortion{
+	min-width: 200px;
+}
+#dbo_jobsheet_edit_cont_js_distortion{
+	min-width: 200px;
+}
 </style>
 <script type="text/javascript">
 function populateInput(obj,elemt,value,readonly){
 	console.log('readonly = '+readonly);
 	if(value==0){
 		// create the html element
-		$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']" ><span class="input-group-addon">'+obj.carv_unit+'</span></div>');
+		$element = $('<label class="col-md-2 mandatory" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']" ><span class="input-group-addon">'+obj.carv_unit+'</span></div>');
 	}else{
 		if(readonly){
-			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
+			$element = $('<label class="col-md-2 mandatory" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
 		}else{
-			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
+			$element = $('<label class="col-md-2 mandatory" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
 
-		}
-	}		
+		}		
+	}	
+	// $('#'+obj.carv_carid+'_'+obj.carv_code).rules("add", {required:true, messages: { required:'Please fill up '+obj.carv_code}});	// validation
 
 	// append to data div
 	elemt.append($element);
@@ -82,6 +89,7 @@ $( document ).ready(function() {
 });
 
 </script>
+
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'jobsheet.conf.php');
 require_once(DOC_DIR.DS.'inc'.DS.'appFunc.php');
@@ -110,6 +118,17 @@ function showFileHistory($col, $colVal, $data=array(), $html=null){
 	$html = $docUI->getFileList($data['js_id'],'js_id');
 
 	return $html;
+}
+function showPercentage($col, $colVal, $data=array(), $html=null){
+
+	$html = '<div class="input-group">'.$html.'<span class="input-group-addon">%</span></div>';
+	return $html;
+}	
+function showPercentageDet($col, $colVal, $data=array(), $html=null){
+
+	$newhtml = '<div id="dbo_jobsheet_detail_cont_js_distortion_value" class="value_container" inputtype="text" inputtypesize="">'.$colVal.' %</div>';
+
+	return $newhtml;
 }
 
 
@@ -160,6 +179,10 @@ function dbo_jobsheet_custom_new($table, $cols){
 	$cols['js_primcat'] = getHighestPriorityCat($cols['jobcategory']);
 	$catstring = $cols['jobcategory'];
 	unset($cols['jobcategory']);
+
+	// output requirement handling part 1
+	$outputreq = $cols['joboutput'];
+	unset($cols['joboutput']);	
 	
 	$cols['js_orgid'] = $USER->orgid; // assign org id
 	$cartonarr = $_POST['carcode']; // get the carton array
@@ -175,6 +198,14 @@ function dbo_jobsheet_custom_new($table, $cols){
 			// insert into mjobcat
 			$data = array('jc_jsid' => $jobid, 'jc_jclid' => $value);
 			$ok = $DB->doInsert('mjobcat', $data);
+		}
+
+		// output requirement handling part 2
+		$oparr = explode(",",$outputreq);
+		foreach ($oparr as $key => $value) {
+			// insert into mjoboutput
+			$opdata = array('jo_jsid' => $jobid, 'jo_outputcode' => $value);
+			$ok = $DB->doInsert('mjoboutput', $opdata);
 		}
 		foreach ($cartonarr as $key => $value) {
 			$cartondata = array(
@@ -230,6 +261,10 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$catstring = $cols['jobcategory'];
 	unset($cols['jobcategory']);
 
+	// output requirement handling part 1
+	$outputreq = $cols['joboutput'];
+	unset($cols['joboutput']);	
+
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
 		$ret[] = $DB->lastError;
@@ -245,6 +280,18 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 			$data = array('jc_jsid' => $jobid, 'jc_jclid' => $value);
 			$ok = $DB->doInsert('mjobcat', $data);
 		}
+		// delete the existing output requirement
+		$sql = "delete from mjoboutput where jo_jsid = :0 ";
+		$ok = $DB->Execute($sql,array($jobid));
+
+		// output requirement handling part 2
+		$oparr = explode(",",$outputreq);
+		foreach ($oparr as $key => $value) {
+			// insert into mjoboutput
+			$opdata = array('jo_jsid' => $jobid, 'jo_outputcode' => $value);
+			$ok = $DB->doInsert('mjoboutput', $opdata);
+		}
+
 		// delete existing job info
 		$sql = "delete from mjscartonvalue where carval_jsid = :0";
 		$ok = $DB->Execute($sql,array($jobid));
