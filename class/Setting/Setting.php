@@ -195,6 +195,31 @@ class Setting{
 		$dbo = dbo_include('machinesetup');
 	}
 	
+	function testlocale() {
+		global $LOCALE;
+		html_header();
+		
+		echo "<div>";
+		//pr($LOCALE);
+		echo "<form method='post'>";
+		echo "Date<input type='text' name='datetime' value='".(!empty($_POST['datetime']) ? $_POST['datetime'] : '')."' />";
+		echo "Interval<input type='text' name='interval' value='".(!empty($_POST['interval']) ? $_POST['interval'] : '')."' />";
+		echo "<input type='submit'>";
+		echo "</form>";
+		echo "</div>";
+		if (!empty($_POST['datetime'])) {
+			$dt = new DateTime($_POST['datetime']);
+			$di = new DateInterval($_POST['interval']);
+			$LOCALE->dateTimeAdd($dt, $di);
+			vd($dt);
+		}
+	}
+	
+	
+	function localesetup() {
+		html_header();
+		dbo_include('locale_setup');
+	}
 }
 
 $Setting = new Setting();
