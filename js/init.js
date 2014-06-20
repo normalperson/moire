@@ -1,10 +1,12 @@
 if (typeof DBO == 'object') {
 	DBO.formValidator = function(formname){
+		
 		if(!document.forms[formname]) return false;
 		this.formname = formname;
 		this.form = document.forms[formname];
 		var state = formname.substring(formname.lastIndexOf('_')+1).slice(0, -4);
 		var dboid = formname.slice(4,formname.lastIndexOf('_'));
+		
 		$(this.form).validate({
 			ignore : '', 
 			invalidHandler : function (e, v) {
@@ -23,10 +25,17 @@ if (typeof DBO == 'object') {
 		this.summarizeError = true;
 		this.validationList = new Array();
 		this.addValidation = function(inputname, validation, message, param){
-			var $inp = $(this.form[inputname]);
-			$inp.closest('td.value').addClass('form-group');
-			if (validation == 'mandatory') {
-				$inp.rules("add", {required:true, messages: { required:message}})
+			var $inp;
+			if (this.form[inputname]) {
+				$inp = $(this.form[inputname]);
+			}else if(this.form[inputname+'[]']){
+				$inp = $(this.form[inputname+'[]']);
+			}
+			if ($inp) {
+				$inp.closest('td.value').addClass('form-group col-md-12');
+				if (validation == 'mandatory') {
+					$inp.rules("add", {required:true, messages: { required:message}});
+				}
 			}
 		};
 		this.runValidation = function(){

@@ -86,7 +86,6 @@ require(dirname(__FILE__).DIRECTORY_SEPARATOR.'jobsheet.conf.php');
 require_once(DOC_DIR.DS.'inc'.DS.'appFunc.php');
 require_once(CLASS_DIR.DS.'DocManUI'.DS.'DocManUI.php');
 require_once(CORE_DIR.DS.'inc'.DS.'DocumentManager.inc.php');
-
 function displayCartonEdit($col, $colVal, $data=array(), $html=null){
 	$str = "<script>getCarton(".$colVal.",'dbotab_jobsheet_edit_tbody_1',".$data['js_id'].")</script>";
 	$html .= $str;
