@@ -108,7 +108,7 @@ div.dbo_theme_pixeladmin div.value_container label {
 div.dbo_theme_pixeladmin div.value_container input[type="text"]:focus,
 div.dbo_theme_pixeladmin div.value_container input[type="password"]:focus,
 div.dbo_theme_pixeladmin div.value_container input[type="search"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="date"],:focus,
+div.dbo_theme_pixeladmin div.value_container input[type="date"]:focus,
 div.dbo_theme_pixeladmin div.value_container input[type="datetime-local"]:focus,
 div.dbo_theme_pixeladmin div.value_container input[type="month"]:focus,
 div.dbo_theme_pixeladmin div.value_container input[type="time"]:focus,

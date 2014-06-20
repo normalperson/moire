@@ -5,6 +5,14 @@ $dbo->cols['lc_code']->caption->set('default', 'Code', 'text');
 $dbo->cols['lc_description']->caption->set('default', 'Description', 'text');
 $dbo->cols['lc_primary_langcode']->caption->set('default', 'Primary Language', 'text');
 $dbo->cols['lc_tzcode']->caption->set('default', 'Timezone', 'text');
+$dbo->cols['__map_fclocaleholiday__lch_lccode__']->caption->set('default', 'Holidays', 'text');
+$dbo->cols['__map_fclocaleholiday__lch_date__']->caption->set('default', 'Date', 'text');
+$dbo->cols['__map_fclocaleholiday__lch_description__']->caption->set('default', 'Holiday Name', 'text');
+$dbo->cols['__map_fclocaleholiday__lch_recurring__']->caption->set('default', 'Recurring?', 'text');
+$dbo->cols['__map_fclocaleworkinghour__lcw_lccode__']->caption->set('default', 'Working Hour', 'text');
+$dbo->cols['__map_fclocaleworkinghour__lcw_day__']->caption->set('default', 'Day', 'text');
+$dbo->cols['__map_fclocaleworkinghour__lcw_start_time__']->caption->set('default', 'Start Time (HH24:MM:SS)', 'text');
+$dbo->cols['__map_fclocaleworkinghour__lcw_end_time__']->caption->set('default', 'End Time (HH24:MM:SS)', 'text');
 
 $dbo->titleList = 'List Locale';
 $dbo->titleDetail = 'Detail';
