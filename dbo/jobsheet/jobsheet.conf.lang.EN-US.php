@@ -8,6 +8,7 @@ $dbo->cols['js_request_date']->caption->set('default', 'Request date', 'text');
 $dbo->cols['js_request_by']->caption->set('default', 'js_request_by', 'text');
 $dbo->cols['js_title']->caption->set('default', 'js_title', 'text');
 $dbo->cols['js_description']->caption->set('default', 'Job description', 'text');
+$dbo->cols['js_description']->caption->setTabCaption('default', 'JOB INFO', 'text');
 $dbo->cols['js_material_provided']->caption->set('default', 'js_material_provided', 'text');
 $dbo->cols['js_cyan']->caption->set('default', 'Cyan', 'text');
 $dbo->cols['js_cyan']->caption->setTabCaption('default', 'COLOR', 'text');
@@ -42,6 +43,7 @@ $dbo->cols['js_completiondate']->caption->set('default', 'js_completiondate', 't
 $dbo->cols['js_assignto']->caption->set('default', 'js_assignto', 'text');
 $dbo->cols['js_refid']->caption->set('default', 'js_refid', 'text');
 $dbo->cols['attachment']->caption->set('default', 'Upload image', 'text');
+$dbo->cols['attachment']->caption->setTabCaption('default', 'OTHER', 'text');
 $dbo->cols['remark']->caption->set('default', 'Remark', 'text');
 $dbo->cols['js_orgid']->caption->set('default', 'js_orgid', 'text');
 $dbo->cols['js_model']->caption->set('default', 'js_model', 'text');
@@ -57,11 +59,6 @@ $dbo->cols['js_requiretime']->caption->set('default', 'js_requiretime', 'text');
 $dbo->cols['filehistory']->caption->set('default', 'File history', 'text');
 $dbo->cols['filehistory']->caption->setTabCaption('default', 'FILE HISTORY', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
-$dbo->cols['js_jobcolor']->caption->set('default', 'Color of job', 'text');
-$dbo->cols['js_jobcolor']->caption->setTabCaption('default', 'JOB INFO', 'text');
-$dbo->cols['joboutput']->caption->set('default', 'Output Requirement', 'text');
-$dbo->cols['joboutput']->caption->setTabCaption('new', 'Upload', 'text');
-$dbo->cols['joboutput']->caption->setTabCaption('edit', 'Upload', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';
