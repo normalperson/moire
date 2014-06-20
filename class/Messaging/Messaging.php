@@ -40,7 +40,7 @@ class Messaging {
 			"<div class='message {$row['di_status']}' data-msgid='{$row['di_id']}'>
 				<button type='button' class='close'>&times</button>
 				<img src='{$senderimage}' alt=\"{$displaysender}\" title=\"{$displaysender}\" class='message-avatar'>
-				<a href='javascript:void(0)' class='message-subject'>{$row['di_subject']}</a>
+				<span class='message-subject'>{$row['di_subject']}</span>
 				<div class='message-description' >
 					from  <a href='javascript:void(0)'>{$displaysender}</a>
 					&nbsp;·&nbsp;

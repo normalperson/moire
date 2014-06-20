@@ -77,6 +77,12 @@ function showFileHistory($col, $colVal, $data=array(), $html=null){
 
 	return $html;
 }
+function showPercentageDet($col, $colVal, $data=array(), $html=null){
+
+	$newhtml = '<div id="dbo_jobsheet_detail_cont_js_distortion_value" class="value_container" inputtype="text" inputtypesize="">'.$colVal.' %</div>';
+
+	return $newhtml;
+}
 
 # customization
 function dbo_flowsummarymtd_customize(&$dbo){
@@ -89,7 +95,7 @@ function dbo_flowsummarymtd_customize(&$dbo){
 
 
 	$dbo->whereSQL = " pmf_obj_type = '".$GLOBAL['type']."'
-		and pmf_obj_id = '".$GLOBAL['id']."'
+		and pmf_obj_id = '".$GLOBAL['actvid']."'
 		and pmf_end_date is not null
 		and pmf_end_by = '".$USER->userid."'
 		and pmf_start_date > date_trunc('month', current_date)

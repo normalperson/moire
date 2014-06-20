@@ -33,11 +33,10 @@
 					<div class="right clearfix">
 						<ul class="nav navbar-nav pull-right right-navbar-nav">
 							{$Menu->genClock()}
-							{$NotificationList->renderDropDown()}
+							{$Notification->renderDropDown()}
 							{$Messaging->renderDropDown()}
 							{$PMTask->renderDropDown()}
 							{$PMTask->renderCaseSearch()}
-
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
 									{$Menu->genUserAvatar()}

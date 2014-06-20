@@ -43,29 +43,26 @@ function orgTopOrgID($orgID){
 	return $topID;
 }
 
-
-// function pushData($recepient, ) {
-
-
-// }
-
- // $entryData = array(
-        // 'category' => 'kittensCategory'
-      // , 'title'    => 'asdasd'
-      // , 'article'  => 'weee'
-      // , 'when'     => time()
-    // );
-
-    // // $pdo->prepare("INSERT INTO blogs (title, article, category, published) VALUES (?, ?, ?, ?)")
-        // // ->execute($entryData['title'], $entryData['article'], $entryData['category'], $entryData['when']);
-
-    // // This is our new stuff
-    // $context = new ZMQContext();
-    // $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');
-    // $socket->connect("tcp://127.0.0.1:5555");
-	
-	
-	// $socket->send(json_encode($entryData));
-// echo "asd";
+function sendMailFromTemplate($mtcode) {
+	$rs = $DB->getRow("select * from mmailtemplate where mt_code = :0 and mt_status = 'ACTIVE'", array($mtcode), PDO::FETCH_ASSOC);
+	if ($rs) {
+		$udv = new UDV();
+		$recp = $udv->parse($rs['mt_recipient_to']);
+		$recpcc = $udv->parse($rs['mt_recipient_cc']);
+		$subject = $udv->parse($rs['mt_subject']);
+		$content = $udv->parse($rs['mt_content']);
+		
+		$rs['mt_internal_userid'] = $udv->parse($rs['mt_internal_userid']);
+		if (!empty($rs['mt_internal_userid'])) {
+			$userlist = explode(',', $rs['mt_internal_userid']);
+			$userlist = array_map('trim', $userlist);
+			$userlist = array_filter($userlist);
+			include_once(CLASS_DIR.DS.'Notification'.DS.'Notification.php');
+			Notification::send($userlist, $subject, $content);
+		}
+		return true;
+	}
+	else return false;
+}
 
 ?>
