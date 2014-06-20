@@ -34,7 +34,7 @@ class PMTask {
 					<i class='nav-icon fa fa-plus'></i>
 					<span class='small-screen-text'>Create New</span>
 				</a>
-				<ul class='dropdown-menu'>";
+				<ul class='dropdown-menu' style='width:300px'>";
 			$wfname = "";
 			$cnt = 0;
 			foreach ($rs as $r) {
@@ -43,7 +43,7 @@ class PMTask {
 					$html .= "<li role='presentation' class='dropdown-header'>{$r['pmwf_name']}</li>";
 					$wfname = $r['pmwf_name'];
 				}
-				$html .= "<li><a href='{$this->classurl}/startEvent?id={$r['pmev_id']}&type=PM_Event'>{$r['pmev_name']}</a></li>";
+				$html .= "<li><a style='padding-left:30px' href='{$this->classurl}/startEvent?id={$r['pmev_id']}&type=PM_Event'>{$r['pmev_name']}</a></li>";
 			}
 			$html .= 
 				"</ul>
