@@ -258,12 +258,16 @@ function autoDetailCustomNew($table, $cols) {
 		$ret[] = $DB->lastError;
 	}
 	else {
-		$newid = $DB->lastInsertId();
-		if (!$newid) {
-			$seq = $DB->getOne("select pg_get_serial_sequence(:0, :1)", array($table, $DETAIL_SETUP['keycol']));
-			$newid = $DB->lastInsertId($seq);
+		if (!empty($cols[$DETAIL_SETUP['keycol']])) {
+			$newid = $cols[$DETAIL_SETUP['keycol']];
 		}
-
+		else {
+			$newid = $DB->lastInsertId();
+			if (!$newid) {
+				$seq = $DB->getOne("select pg_get_serial_sequence(:0, :1)", array($table, $DETAIL_SETUP['keycol']));
+				$newid = $DB->lastInsertId($seq);
+			}
+		}
 		if (!$newid) $ret[] = 'Error retrieving last ID';
 		else {
 			if (!empty($_POST['detail'])) {

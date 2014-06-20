@@ -4,7 +4,14 @@ class DBO_InputType_BootstrapDateTime extends DBO_InputType{
 		global $HTML;
 		$ret = "";
 		extract($param);
-		if ($value) $datetime = new DateTime($value);
+		if ($value) {
+			try {
+				$datetime = new DateTime($value);
+			}
+			catch (Exception $e) {
+				$datetime = false;
+			}
+		}
 		else $datetime = false;
 		$ret = $HTML->genInputHidden($name, $value, $ext)."
 		<div class='col-sm-7 no-padding'>
