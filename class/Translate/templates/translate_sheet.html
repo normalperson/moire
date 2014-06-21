@@ -1,0 +1,102 @@
+<table width=100% align=center>
+{if $message}
+	<tr>
+		<td align=center>
+			<div class='alert {$messagecat}' style='width:60%;margin:20px'>{$message}</div>
+		</td>	
+	</tr>
+{/if}
+{if $dotranslate}
+	<tr>
+		<td align=center>
+			<form method='post'>
+				<table id="translate-table" class="table table-bordered">
+					<tr class="info">
+						<td colspan={$colspan} style='font-weight:bold'>
+							<div class="control-group form-horizontal">
+								<label class="control-label" for="translate_file"><b>Translate File</b></label>
+								<div class="controls">
+									<input type='text' id="translate_file" class="form-control" name="translate_file" value="{$translatefile}" />
+								</div>
+							</div>
+						</td>
+					</tr>	
+					<tr class="title-row">
+						<th>Code</th>
+{foreach $translatelang key=lang item=langdesc}
+						<th>{$langdesc} ({$lang})<input type='hidden' name='translate_lang[]' value="{$lang}" /></th>
+{/foreach}
+						<th></th>
+					</tr>
+{foreach $translatedata key=code item=data}
+					<tr class="translate-row">
+						<td class="td-key"><input type='text' class="courier form-control" name='translate_key[]' value="{$code}" /></td>
+	{foreach $translatelang key=lang item=langdesc}
+						<td><input type="text" name="translate_text[{array_search($lang,array_keys($translatelang))}][{array_search($code,array_keys($translatedata))}]" class="form-control" value="{if isset($data.$lang)}{$data.$lang}{/if}" /></td>
+	{/foreach}
+						<td><i class="fa fa-trash-o fa-lg delete-row"></i></td>
+					</tr>
+{/foreach}		
+					<tfoot>
+						<tr><td colspan={$colspan} style='text-align:center'><i class='fa fa-arrow-down add-row'></i></td></tr>
+					</tfoot>
+				</table>
+				<input type='submit' style='margin:5px' class="btn btn-success" name="translate_submit" value="Save" />
+				<input type='submit' style='margin:5px' class="btn" name="translate_cancel" value="Discard" />
+			</form>
+			<table id="template-translate-table" style='display:none'>
+				<tr class="translate-row">
+					<td class="td-key"><input type='text' class="form-control courier" name='translate_key[]' value="" /></td>
+{foreach $translatelang key=lang item=langdesc}
+					<td><input type="text" name="translate_text[{array_search($lang,array_keys($translatelang))}][]" class="form-control" value="" /></td>
+{/foreach}
+					<td><i class="fa fa-trash-o fa-lg delete-row"></i></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{/if}
+</table>
+<style type='text/css'>
+.td-key {
+	background-color: #fcf8e3;
+}
+.courier {
+	font-family: courier;
+	font-weight: bold;
+}
+tr.title-row > th {
+	background-color: #dff0d8;
+}
+.delete-row , .add-row {
+	cursor : pointer;
+}
+</style>
+<script type='text/javascript'>
+$(function () {
+	
+	var $tlTab = $('table#translate-table');
+	var $templateRow = $('table#template-translate-table tr.translate-row');
+	
+	function tagInputNameIndex () {
+		$('tr.translate-row').each (function (i) {
+			$(this).find('input[name^=translate_text]').each (function (j) {
+				this.name = "translate_text["+j+"]["+i+"]";
+			})
+		})
+	}
+	
+	$(document).on( 'click', '.delete-row', function(){
+		var $row = $(this).parents('tr.translate-row');
+		$row.remove();
+		tagInputNameIndex();	
+	})
+	
+	
+	$('.add-row').click(function () {
+		$tlTab.append($templateRow.clone());
+		tagInputNameIndex();
+	})
+	
+})
+</script>

@@ -164,7 +164,7 @@ class PMFunc{
 		return true;
 	}
 
-	
+
 	function notifyLateVerification() {
 		sendMailFromTemplate('NOTIFY_LATE_REQ_VER');
 		return true;

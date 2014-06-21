@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by admin on 10-10-2013 11:51:58*/
+/*Last Modified by admin on 21-06-2014 12:00:56*/
 $translate = array (
   'Search by room number or customer name' => 'Search by room number or customer name',
   'Alert' => 'Alert',
