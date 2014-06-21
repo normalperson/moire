@@ -1,0 +1,262 @@
+<style type="text/css">
+#print_task_container{
+	width: 21cm;
+	color:#000000;
+}
+
+table.print_task_table{
+	border-spacing: 10px;
+    border-collapse: separate;
+}
+
+table.print_task_table th{
+	height:30px;
+	text-align:left;
+	padding:5px;
+	background-color:#d5dde5;
+	-webkit-print-color-adjust: exact;
+	vertical-align:top;
+}
+
+table.print_task_table td{
+	text-align:left;
+	vertical-align:top;
+	padding:5px;
+}
+
+table.print_task_table td th{
+	background-color:transparent;
+	text-align:left;
+}
+
+table.print_task_table ul.pj_ul{
+	margin:0px;
+	padding:0px;
+	list-style-type:none;
+}
+
+@media print{
+	body{
+		background-color:white;
+	}
+	#main-navbar{
+		display:none;
+	}
+	#main-menu{
+		display:none;
+	}
+	#main-menu-bg{
+		display:none;
+	}
+	div.slimScrollDiv{
+		display:none;
+	}
+	#content-wrapper{
+		position:absolute;
+	}
+	#print_task_container{
+	}
+}
+</style>
+<div id="print_task_container">
+<table class="print_task_table">
+	<tr>
+		<td width="50%" rowspan="2"><img src="/{$APP}/image/print_moirelogo.png" style="width:100%"/></td>
+		<th>Job Summary</th>
+	</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<th>Job ID</th>
+					<td>{$data['js_id']}</td>
+				</tr>
+				<tr>
+					<th>Submitted Date/Time</th>
+					<td>{$data['js_request_date']|date_format:"d-m-Y H:i:s"}</td>
+				</tr>
+				<tr>
+					<th>Job Description</th>
+					<td>{$data['js_description']}</td>
+				</tr>
+				<tr>
+					<th>Customer Name</th>
+					<td>{$data['org_name']}</td>
+				</tr>
+			</table>
+		</td>
+	<tr>
+	<tr>
+		<th>Job Details</th>
+		<th>Artwork Specification</th>
+	</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<th>Expected Completion Date</th>
+					<td>{$data['preferredcompletiondatetime']|date_format:"d-m-Y H:i:s"}</td>
+				</tr>
+				<tr>
+					<th>Primary Category</th>
+					<td>{$data['primary_category_id']} - {$data['primary_category_title']}</td>
+				</tr>
+				<tr>
+					<th>Category</th>
+					<td>
+						<ul class="pj_ul">
+{foreach $data['category_array'] as $cat}
+	<li>{$cat['jcl_id']} - {$cat['jcl_title']}</li>
+{/foreach}
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th>Trapping Size</th>
+					<td>{$data['js_trapping_size']}</td>
+				</tr>
+				<tr>
+					<th>Barcode Type</th>
+					<td>{$data['js_barcodetype']} - {$data['barcodetype_desc']}</td>
+				</tr>
+				<tr>
+					<th>Barcode Number</th>
+					<td>{$data['js_barcodenumber']}</td>
+				</tr>
+			</table>
+		</td>
+		<td rowspan="3">
+			<div>
+				<table style="width:100%;">
+					<tr>
+						<th>Colour 1</th>
+						<td>{$data['js_color_1']}</td>
+						<th>Angle 1</th>
+						<td>{$data['js_angle_1']}</td>
+					</tr>
+					<tr>
+						<th>Colour 2</th>
+						<td>{$data['js_color_2']}</td>
+						<th>Angle 2</th>
+						<td>{$data['js_angle_2']}</td>
+					</tr>
+					<tr>
+						<th>Colour 3</th>
+						<td>{$data['js_color_3']}</td>
+						<th>Angle 3</th>
+						<td>{$data['js_angle_3']}</td>
+					</tr>
+					<tr>
+						<th>Colour 4</th>
+						<td>{$data['js_color_4']}</td>
+						<th>Angle 4</th>
+						<td>{$data['js_angle_4']}</td>
+					</tr>
+					<tr>
+						<th>Colour 5</th>
+						<td>{$data['js_color_5']}</td>
+						<th>Angle 5</th>
+						<td>{$data['js_angle_5']}</td>
+					</tr>
+				</table>
+			</div>
+			<div>
+				<table width="100%">
+					<tr>
+						<th>Bleeding</th>
+						<td>{$data['js_bleeding']}</td>
+					</tr>
+					<tr>
+						<th>Bleeding Remark</th>
+						<td>{$data['js_bleeding_remark']}a</td>
+					</tr>
+					<tr>
+						<th>Distortion (X/Y)</th>
+						<td>Direction {$data['js_distortion']}</td>
+					</tr>
+					<tr>
+						<th>Distortion Value</th>
+						<td>{$data['js_distortion_value']}</td>
+					</tr>
+					<tr>
+						<th>Die Cut Included (Y/N)</th>
+						<td>{if $data['js_diecut_ind']=='Y'}Y - Yes{elseif $data['js_diecut_ind']=='N'}N - No{/if}</td>
+					</tr>
+					<tr>
+						<th>Die Cut Number</th>
+						<td>{$data['js_diecut_no']}</td>
+					</tr>
+					<tr>
+						<th>Final Artwork File Type</th>
+						<td>
+							<ul class="pj_ul">
+{foreach $data['output_array'] as $row}
+	<li>{$row['lu_code']} - {$row['lu_title']}</li>
+{/foreach}
+							</ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Customer P.I.C Details</th>
+	</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<th>Person-in-charge</th>
+					<td>{$data['ct_name']}</td>
+				</tr>
+				<tr>
+					<th>Contact Number (O)</th>
+					<td>{$data['oph_number']}</td>
+				</tr>
+				<tr>
+					<th>Contact Number (M)</th>
+					<td>{$data['mph_number']}</td>
+				</tr>
+				<tr>
+					<th>Email Address</th>
+					<td>{$data['ct_email']}</td>
+				</tr>
+				<tr>
+					<th>Country</th>
+					<td>{$data['con_code']} - {$data['con_name']}</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<th>Customer's Overall Remark</th>
+		<th>Artwork's Dimension Details</th>
+	</tr>
+	<tr>
+		<td>{$data['customer_remark']}</td>
+		<td>
+			<table width="100%">
+				<tr>
+					<th>Carton Type</th>
+					<td>{$data['car_name']}</td>
+				</tr>
+				<tr>
+					<th>Carton Preview</th>
+					<td><img src="{$data['carton_img_src']}" style="width:100%"/></td>
+				</tr>
+				<tr>
+					<th>Carton Dimension</th>
+					<td>
+						<ul class="pj_ul">
+{foreach $data['carton_dimension_array'] as $row}
+	<li>{$row['carv_code']}: {$row['caval_value']}{$row['carv_unit']}</li>
+{/foreach}
+						<ul>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</div>
