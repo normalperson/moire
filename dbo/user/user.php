@@ -1,9 +1,6 @@
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'user.conf.php');
 
-global $HTML;
-/*$HTML->addJS('js/jquery.min.js');*/
-$HTML->addJS('js/popup.js');
 function neworgrole(){
 	global $DB,$USER;
 
@@ -410,7 +407,7 @@ var usrVal = {
 			}
 		}
 
-		if(msg!='') showAlert(msg);
+		if(msg!='') alert(msg);
 		//$("#formID input:checkbox:checked").length > 0
 		return success;
 	}
@@ -451,7 +448,7 @@ function addrow(){
 	if(rowCount-itemCount === 1){	
 		addTableRow($("#userorgrole"));
 	}else{
-		showAlert("Please select role")
+		alert("Please select role")
 	}
 
 	// prevent button redirecting to new page
