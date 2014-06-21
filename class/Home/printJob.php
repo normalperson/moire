@@ -15,7 +15,8 @@ $smarty->assign('APP', APP);
 $jsid = $_GET['jobid'];
 $currentOrgId = $DB->getOne("select uor_orgid from fcuserorgrole where uor_id = :0", array($USER->userorgroleid));
 $rs = $DB->getRowAssoc("select mjobsheet.*, pndcontact.*, fcorg.*, pndphoneo.ph_number as oph_number, pndphonem.ph_number as mph_number, 
-jcl_id as primary_category_id, jcl_title as primary_category_title, mcarton.*, 
+jcl_id as primary_category_id, jcl_title as primary_category_title, fclookup.lu_title as barcodetype_desc, 
+mcarton.*, 
 fccountry.* 
 from mjobsheet join pndcontact on js_ctid = ct_id 
 join fcorg on ct_refid = org_id and ct_reftype = 'ORG_ID' 
@@ -24,6 +25,7 @@ join mcarton on js_carid = car_id
 left join pndphone pndphoneo on pndphoneo.ph_refid = ct_id and pndphoneo.ph_reftype = 'CT_ID' and pndphoneo.ph_type = 'O' 
 left join pndphone pndphonem on pndphonem.ph_refid = ct_id and pndphonem.ph_reftype = 'CT_ID' and pndphonem.ph_type = 'M' 
 left join fccountry on org_concode = con_code 
+left join fclookup on js_barcodetype = lu_code and lu_cat = 'BARCODETYPE' 
 where js_id = :0 and org_id = :1", array($jsid, $currentOrgId));
 if(!$rs) die('Job not found!');
 pr($rs);
