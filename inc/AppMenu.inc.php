@@ -57,13 +57,13 @@ class AppMenu extends Menu{
 
 			if ($r['__CHILDREN']) {
 				if ($lvl === 0) {
-					echo "<li class='dropdown $liclass'><a href='$url' class='dropdown-toggle $anchorclass' data-toggle='dropdown'>{$r['mn_title']} <span class='caret'></span></a>";
+					echo "<li class='dropdown $liclass'><a href='$url' class='dropdown-toggle $anchorclass' data-toggle='dropdown'>".tl({$r['mn_title']},true,'menu')."<span class='caret'></span></a>";
 				}
-				else echo "<li class='dropdown dropdown-submenu'><a href='$url' class='dropdown-toggle $anchorclass' data-toggle='dropdown'>{$r['mn_title']}</a>";
+				else echo "<li class='dropdown dropdown-submenu'><a href='$url' class='dropdown-toggle $anchorclass' data-toggle='dropdown'>".tl({$r['mn_title']},true,'menu')."</a>";
 
 				$prependLi = array();
 				if ($url != "javascript:void(0)") {
-					$prependLi[] = "<li><a href='$url' class='$anchorclass'>{$r['mn_title']}</a></li>";
+					$prependLi[] = "<li><a href='$url' class='$anchorclass'>".tl({$r['mn_title']},true,'menu')."</a></li>";
 					$prependLi[] = "<li class='divider'></li>";
 				}
 				$this->renderBootstrapNavi($r['__CHILDREN'],$lvl+1, $prependLi);
@@ -71,9 +71,9 @@ class AppMenu extends Menu{
 			}
 			else {
 				if ($lvl === 0) {
-					if ($anchorclass != 'without-link') echo "<li class='$liclass'><a href='$url' class='$anchorclass'>{$r['mn_title']}</a></li>";
+					if ($anchorclass != 'without-link') echo "<li class='$liclass'><a href='$url' class='$anchorclass'>".tl({$r['mn_title']},true,'menu')."</a></li>";
 				}
-				else echo "<li><a href='$url' class='$anchorclass'>{$r['mn_title']}</a></li>";
+				else echo "<li><a href='$url' class='$anchorclass'>".tl({$r['mn_title']},true,'menu')."</a></li>";
 			}
 		}
 		echo "</ul>";
@@ -96,22 +96,22 @@ class AppMenu extends Menu{
 			if ($r['__CHILDREN']) {
 				if ($liclass) $liclass .= ' open';
 				if ($lvl === 0) {
-					echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i>  <span class='mm-text'>{$r['mn_title']}</span> </a>";
+					echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i>  <span class='mm-text'>".tl({$r['mn_title']},true,'menu')."</span> </a>";
 				}
-				else echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i> <span class='mm-text'> {$r['mn_title']} </span> </a>";
+				else echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i> <span class='mm-text'>".tl({$r['mn_title']},true,'menu')."</span> </a>";
 
 				$prependLi = array();
 				if ($url != "#") {
-					$prependLi[] = "<li class='$liclass'><a tabindex='-1' href='$url'> <span class='mm-text'> {$r['mn_title']} </span> </a></li>";
+					$prependLi[] = "<li class='$liclass'><a tabindex='-1' href='$url'> <span class='mm-text'>".tl({$r['mn_title']},true,'menu')."</span> </a></li>";
 				}
 				$this->rendermenuonleft($r['__CHILDREN'],$lvl+1, $prependLi);
 				echo "</li>";
 			}
 			else {
 				if ($lvl === 0) {
-					if ($anchorclass != 'without-link') echo "<li class='$liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i><span class='mm-text'> {$r['mn_title']}  </span></a></li>";
+					if ($anchorclass != 'without-link') echo "<li class='$liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i><span class='mm-text'>".tl({$r['mn_title']},true,'menu')."</span></a></li>";
 				}
-				else echo "<li class='$liclass'><a tabindex='-1' href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i> <span class='mm-text'>  {$r['mn_title']} </span></a></li>";
+				else echo "<li class='$liclass'><a tabindex='-1' href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i> <span class='mm-text'>".tl({$r['mn_title']},true,'menu')."</span></a></li>";
 			}
 		}
 
