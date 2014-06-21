@@ -77,6 +77,12 @@ function showFileHistory($col, $colVal, $data=array(), $html=null){
 
 	return $html;
 }
+function showPercentageDet($col, $colVal, $data=array(), $html=null){
+
+	$newhtml = '<div id="dbo_jobsheet_detail_cont_js_distortion_value" class="value_container" inputtype="text" inputtypesize="">'.$colVal.' %</div>';
+
+	return $newhtml;
+}
 
 # customization
 function dbo_flowsummary_customize(&$dbo){

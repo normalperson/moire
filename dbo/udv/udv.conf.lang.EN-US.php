@@ -11,6 +11,7 @@ $dbo->cols['udv_result_lookup']->caption->set('default', 'Result Lookup', 'text'
 $dbo->cols['udv_result_lookup_type']->caption->set('default', 'Result Lookup Type', 'text');
 $dbo->cols['udv_test']->caption->set('default', 'Test', 'text');
 $dbo->cols['udv_return_type']->caption->set('default', 'Return Type', 'text');
+$dbo->cols['udv_cat']->caption->set('default', 'Cat', 'text');
 
 $dbo->titleList = 'List UDV';
 $dbo->titleDetail = 'Detail';
@@ -23,6 +24,17 @@ $dbo->text->editCancel = 'Cancel';
 $dbo->text->editSubmit = 'Submit';
 $dbo->text->newCancel = 'Cancel';
 $dbo->text->newSubmit = 'Submit';
+$dbo->text->listSubmit = 'Submit';
 $dbo->text->detailCancel = 'Back';
+$dbo->text->detailDelete = 'Delete';
+$dbo->text->listEdit = 'Edit';
+$dbo->text->listDelete = 'Delete';
+$dbo->text->listDetail = 'Detail';
+$dbo->text->messageAfterNew = '';
+$dbo->text->messageAfterEdit = '';
+$dbo->text->messageAfterDelete = '';
+$dbo->text->defaultMessageAfterNew = 'Record created.';
+$dbo->text->defaultMessageAfterEdit = 'Record updated.';
+$dbo->text->defaultMessageAfterDelete = 'Record deleted.';
 
 ?>

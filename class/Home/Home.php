@@ -35,7 +35,7 @@ class Home{
 
 	}
 	function supervisorhome(){
-		global $HTML;
+		global $HTML,$LANG;
 		html_header();
 		$smarty = $this->initSmarty();
 		$smarty->assign('Home', $this);		
@@ -51,16 +51,104 @@ class Home{
 		$smarty->assign('Home', $this);		
 		$smarty->display('customerhome.html');
 	}
-	function renderJobByCategory($paneltitle='JOB BY CATEGORY', $charttitle = 'Total Job', $chartsubtitle='Job by category',$userid=''){
-		global $USER,$HTML;
-		if (trim($userid) == '') $userid = $USER->userid;
+	function noGraph(){
+		$smarty = $this->initSmarty();
+		$imagelocation = IMAGE_HREF.DS.'/nograph.png';
+		$smarty->assign('imagelocation', $imagelocation);		
+
+		$html = $smarty->fetch('nograph.html');
+		return $html;
+	}
+	function renderJobByCat($type){
+		global $HTML,$DB,$USER;
+		$sql = "select * from mjobcatlookup order by jcl_title";
+		$jobcat = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
+		$showgraph = true;
+
+		$xAxis = array();
+		foreach ($jobcat as $jckey => $jcvalue) {
+			$xAxis[] = $jcvalue['jcl_title'];					
+		}
+		/*			For last 3 months
+		$sql = "select to_char(( date_trunc('month', current_date) -  INTERVAL '2 MONTH')::date,'Mon-YYYY') as mth1,  
+				to_char(( date_trunc('month', current_date) -  INTERVAL '1 MONTH')::date,'Mon-YYYY') as mth2,
+				to_char( date_trunc('month', current_date) ,'Mon-YYYY') as mth3";
+		$last3mth = $DB->GetRow($sql,null, PDO::FETCH_ASSOC);*/
+		
+		if($type == 'supervisor'){
+			$sqlWhere = "and 1=1";		
+		}elseif ($type == 'customer'){
+			$sqlWhere = "and js_orgid=".$USER->orgid;
+		}
+		$sql = "select cast(coalesce(count(*),0) as integer) as total
+				from mjobsheet
+				join mjobcatlookup on js_primcat = jcl_id
+				where js_request_Date > ( date_trunc('month', current_date) )::date
+				and js_request_Date < ( date_trunc('month', current_date) + INTERVAL '1 MONTH')::date
+				and js_primcat = :0 $sqlWhere";
+
+		$name = $DB->GetOne("select to_char(current_date,'Mon-YYYY')",null, PDO::FETCH_ASSOC);				
+
+		$result = array();
+		foreach ($jobcat as $jckey => $jcvalue) {
+			$result[] = $DB->GetOne($sql,array($jcvalue['jcl_id']), PDO::FETCH_ASSOC);					
+		}
+		$arrcnt = array_count_values($result);
+
+		if($arrcnt[0] == 8) $showgraph = false; // if no data
+		$data[] = array("name" => $name, "data" => $result);
+
+		$HTML->addJS('js/highcharts.js');
+		$smarty = $this->initSmarty();
+		$smarty->assign('data',json_encode($data)); 
+		$smarty->assign('xAxis',json_encode($xAxis)); 
+		$smarty->assign('showgraph',json_encode($showgraph)); 
+		$smarty->assign('Home',$this); 
+		$html = $smarty->fetch('jobbycat.html');
+		return $html;
+	}
+	function renderJobByFlow($type,$actvid,$paneltitle='JOB BY CATEGORY MTD', $charttitle = 'Total Job', $chartsubtitle='Job by category'){
+		global $USER,$HTML,$DB;
+
+		$sql = "select * from mjobcatlookup order by jcl_title";
+		$jobcat = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
+		$showgraph = true;
+		$xAxis = array();
+		foreach ($jobcat as $jckey => $jcvalue) {
+			$xAxis[] = $jcvalue['jcl_title'];					
+		}
+
+		$sql = "select cast( coalesce(count(*),0) as integer) as total
+				from mjobsheet
+				join fcpmcase on js_id = pmc_casekey
+				join fcpmcaseflow on pmc_id = pmf_pmcid
+				where js_request_Date > ( date_trunc('month', current_date) )::date
+				and js_request_Date < ( date_trunc('month', current_date) + INTERVAL '1 MONTH')::date
+				and pmf_obj_type = :0
+				and pmf_obj_id = :1
+				and js_primcat = :2
+				and pmf_end_by = :3";
+		$name = $DB->GetOne("select to_char(current_date,'Mon-YYYY')",null, PDO::FETCH_ASSOC);								
+
+		$result = array();
+		foreach ($jobcat as $key => $value) {
+			$result[] = $DB->GetOne($sql,array($type,$actvid,$value['jcl_id'],$USER->userid), PDO::FETCH_ASSOC);
+		}
+		$arrcnt = array_count_values($result);
+
+		if($arrcnt[0] == 8) $showgraph = false; // if no data
+		$data[] = array("name" => $name, "data" => $result);
 
 		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
 		$smarty->assign('paneltitle',$paneltitle );
 		$smarty->assign('charttitle',$charttitle );
-		$smarty->assign('chartsubtitle',$chartsubtitle );		
-		$html = $smarty->fetch('jobbycategory.html');
+		$smarty->assign('chartsubtitle',$chartsubtitle );	
+		$smarty->assign('data',json_encode($data)); 
+		$smarty->assign('xAxis',json_encode($xAxis)); 
+		$smarty->assign('showgraph',json_encode($showgraph)); 
+
+		$html = $smarty->fetch('jobcatbyflow.html');
 		return $html;
 
 	}
@@ -82,26 +170,81 @@ class Home{
 		return $html;
 
 	}
-	function renderMyPerformance($userid=''){
-		global $USER,$HTML;
-		if (trim($userid) == '') $userid = $USER->userid;
+	function renderMyPerformance(){
+	global $USER,$HTML,$DB;
+
+		$showgraph = true;
+		// artist performance sql
+		$sql = "select cast( sum(case when pmf_due_date >= pmf_end_date then 1 else 0 end) as integer) as exceedsla,
+				cast ( sum(case when pmf_due_date < pmf_end_date then 1 else 0 end) as integer) as withinsla
+				from fcpmcaseflow
+				join fcuser on pmf_end_by = usr_userid
+				where pmf_start_date > ( date_trunc('month', current_date) )::date
+				and pmf_start_date < ( date_trunc('month', current_date) + INTERVAL '1 MONTH')::date
+				and pmf_end_date is not null
+				and pmf_end_by = :0
+				group by usr_name order by usr_name ";
+		$result = $DB->GetRow($sql,array($USER->userid), PDO::FETCH_ASSOC);
+		
+		$data = array();
+		if(!empty($result)){
+			$data[] = array('Comply with SLA', $result['withinsla']);
+			$data[] = array('Exceed SLA', $result['exceedsla']);
+
+		}else{
+			$showgraph = false;
+		}			
 
 		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
+		$smarty->assign('data',json_encode($data)); 
+		$smarty->assign('showgraph',json_encode($showgraph)); 
 		$html = $smarty->fetch('myperformance.html');
 		return $html;
 	}
-	function renderMonthlySalesByCat(){
-		global $HTML;
-		$HTML->addJS('js/highcharts.js');
-		$smarty = $this->initSmarty();
-		$html = $smarty->fetch('monthlysalesbycat.html');
-		return $html;
-	}
 	function renderArtistPerformance(){
-		global $HTML;
-		$HTML->addJS('js/highcharts.js');
+		global $HTML,$DB;
+		
 		$smarty = $this->initSmarty();
+		$showgraph = true;
+		// artist performance sql
+		$sql = "select cast( sum(case when pmf_due_date >= pmf_end_date then 1 else 0 end) as integer) as exceedsla,
+				cast ( sum(case when pmf_due_date < pmf_end_date then 1 else 0 end) as integer) as withinsla,
+				usr_name as artist
+				from fcpmcaseflow
+				join fcuser on pmf_end_by = usr_userid
+				join fcuserorgrole on uor_usrid = usr_userid
+				join fcrole on uor_rolid = rol_id and rol_name = 'Artist'
+				where pmf_start_date > ( date_trunc('month', current_date) )::date
+				and pmf_start_date < ( date_trunc('month', current_date) + INTERVAL '1 MONTH')::date
+				and pmf_end_date is not null
+				group by usr_name order by usr_name ";
+		$result = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
+		
+		$xAxis = array();
+		$data = array();
+		if(!empty($result)){
+			$comply = array();
+			$exceed = array();
+			foreach ($result as $key => $value) {
+				$xAxis[] = $value['artist'];
+				$comply[] = $value['withinsla'];
+				$exceed[] = $value['exceedsla'];
+			}	
+
+			$data[] = array("name" => 'Comply with SLA', "data" => $comply);
+			$data[] = array("name" => 'Exceed SLA', "data" => $exceed);
+
+		}else{
+			$showgraph = false;
+		}			
+		
+
+
+		$HTML->addJS('js/highcharts.js');
+		$smarty->assign('data',json_encode($data));
+		$smarty->assign('xAxis',json_encode($xAxis));
+		$smarty->assign('showgraph',json_encode($showgraph));
 		$html = $smarty->fetch('artistperformance.html');
 		return $html;
 	}

@@ -7,18 +7,22 @@ $dbo->id = $dboID;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, pmc_id, \'\' filehistory,
-cast(jobcategory as varchar) as jobcategory 
+cast(jobcategory as varchar) as jobcategory,
+cast(joboutput as varchar) as joboutput
 from mjobsheet 
 join fcpmcase on js_id = pmc_casekey
 left join (
 select string_agg(jc_jclid::char,\', \' order by jc_jclid) jobcategory,jc_jsid from mjobcat
-group by jc_jsid) a on js_id = a.jc_jsid';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'pmc_id', 'filehistory', 'jobcategory');
+group by jc_jsid) a on js_id = a.jc_jsid
+left join (
+select string_agg(jo_outputcode,\', \' order by jo_id) joboutput,jo_jsid from mjoboutput
+group by jo_id) b on js_id = b.jo_jsid';
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'pmc_id', 'filehistory', 'jobcategory', 'joboutput');
 $dbo->colList = array('pmc_id', 'js_description', 'js_primcat', 'jobcategory', 'js_request_date', 'js_orgid');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
+$dbo->colDetail = array('js_jobcolor', 'js_description', 'joboutput', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
 $dbo->colNew = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid');
 $dbo->colEdit = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
 $dbo->colSearch = array('pmc_id', 'js_request_date', 'js_description', 'js_primcat');
@@ -413,6 +417,8 @@ $dbo->cols['js_distortion']->option->detailMethod = 'text';
 $dbo->cols['js_distortion']->option->newMethod = 'text';
 $dbo->cols['js_distortion']->option->editMethod = 'text';
 $dbo->cols['js_distortion_value'] = new DBO_COL('js_distortion_value', 'numeric', '-1', '1310728');
+$dbo->cols['js_distortion_value']->displayDetailModifierMethod = 'phpfunc';
+$dbo->cols['js_distortion_value']->displayDetailModifier = 'showPercentageDet';
 $dbo->cols['js_distortion_value']->inputTypeDefault = 'text';
 $dbo->cols['js_distortion_value']->searchMode = 'exact';
 $dbo->cols['js_distortion_value']->capContClassDefault = array();
@@ -735,6 +741,39 @@ $dbo->cols['pmc_id']->option->listMethod = 'text';
 $dbo->cols['pmc_id']->option->detailMethod = 'text';
 $dbo->cols['pmc_id']->option->newMethod = 'text';
 $dbo->cols['pmc_id']->option->editMethod = 'text';
+$dbo->cols['js_request_dateinmth'] = new DBO_COL('js_request_dateinmth', 'varchar', '-1', '54');
+$dbo->cols['js_request_dateinmth']->inputTypeDefault = 'text';
+$dbo->cols['js_request_dateinmth']->searchMode = 'exact';
+$dbo->cols['js_request_dateinmth']->capContClassDefault = array();
+$dbo->cols['js_request_dateinmth']->valContClassDefault = array();
+$dbo->cols['js_request_dateinmth']->option->defaultMethod = 'text';
+$dbo->cols['js_request_dateinmth']->option->searchMethod = 'text';
+$dbo->cols['js_request_dateinmth']->option->listMethod = 'text';
+$dbo->cols['js_request_dateinmth']->option->detailMethod = 'text';
+$dbo->cols['js_request_dateinmth']->option->newMethod = 'text';
+$dbo->cols['js_request_dateinmth']->option->editMethod = 'text';
+$dbo->cols['js_jobcolor'] = new DBO_COL('js_jobcolor', 'varchar', '-1', '54');
+$dbo->cols['js_jobcolor']->inputTypeDefault = 'text';
+$dbo->cols['js_jobcolor']->searchMode = 'exact';
+$dbo->cols['js_jobcolor']->capContClassDefault = array();
+$dbo->cols['js_jobcolor']->valContClassDefault = array();
+$dbo->cols['js_jobcolor']->option->defaultMethod = 'text';
+$dbo->cols['js_jobcolor']->option->searchMethod = 'text';
+$dbo->cols['js_jobcolor']->option->listMethod = 'text';
+$dbo->cols['js_jobcolor']->option->detailMethod = 'text';
+$dbo->cols['js_jobcolor']->option->newMethod = 'text';
+$dbo->cols['js_jobcolor']->option->editMethod = 'text';
+$dbo->cols['joboutput'] = new DBO_COL('joboutput', 'varchar', '-1', '-1');
+$dbo->cols['joboutput']->inputTypeDefault = 'text';
+$dbo->cols['joboutput']->searchMode = 'exact';
+$dbo->cols['joboutput']->capContClassDefault = array();
+$dbo->cols['joboutput']->valContClassDefault = array();
+$dbo->cols['joboutput']->option->defaultMethod = 'text';
+$dbo->cols['joboutput']->option->searchMethod = 'text';
+$dbo->cols['joboutput']->option->listMethod = 'text';
+$dbo->cols['joboutput']->option->detailMethod = 'text';
+$dbo->cols['joboutput']->option->newMethod = 'text';
+$dbo->cols['joboutput']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

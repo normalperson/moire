@@ -1,0 +1,75 @@
+<div class="panel panel-success panel-dark">
+	<div class="panel-heading">
+		<div>{$paneltitle}
+			<div class="panel-heading-controls">
+
+				<div class="panel-heading-icon">
+					View cases
+					<i class="fa  fa-angle-double-right"></i>
+				</div>
+			</div>
+		</div>					
+	</div>
+    <div class="panel-body">
+       <div id="jobcatbyflow" style="height:400px">
+
+       </div>
+    </div>
+</div>		
+<script type="text/javascript">
+$( document ).ready(function() {
+    var data = {$data},
+    category = {$xAxis},
+    showgraph = {$showgraph},
+    v_title = '{$charttitle}',
+    v_subtitle = '{$chartsubtitle}';
+    console.log(data);
+    console.log(category);  
+    if(showgraph){
+        $('#jobcatbyflow').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: v_title
+            },
+            subtitle: {
+                text: v_subtitle
+            },
+            xAxis: {
+                categories: category,
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Quantity ',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' item'
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: data
+        });  
+    }
+    else{
+        $('#jobcatbyflow').text('need to create a no data found image here!');
+    }
+});
+</script>

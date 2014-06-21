@@ -43,5 +43,26 @@ function orgTopOrgID($orgID){
 	return $topID;
 }
 
+function sendMailFromTemplate($mtcode) {
+	$rs = $DB->getRow("select * from mmailtemplate where mt_code = :0 and mt_status = 'ACTIVE'", array($mtcode), PDO::FETCH_ASSOC);
+	if ($rs) {
+		$udv = new UDV();
+		$recp = $udv->parse($rs['mt_recipient_to']);
+		$recpcc = $udv->parse($rs['mt_recipient_cc']);
+		$subject = $udv->parse($rs['mt_subject']);
+		$content = $udv->parse($rs['mt_content']);
+		
+		$rs['mt_internal_userid'] = $udv->parse($rs['mt_internal_userid']);
+		if (!empty($rs['mt_internal_userid'])) {
+			$userlist = explode(',', $rs['mt_internal_userid']);
+			$userlist = array_map('trim', $userlist);
+			$userlist = array_filter($userlist);
+			include_once(CLASS_DIR.DS.'Notification'.DS.'Notification.php');
+			Notification::send($userlist, $subject, $content);
+		}
+		return true;
+	}
+	else return false;
+}
 
 ?>

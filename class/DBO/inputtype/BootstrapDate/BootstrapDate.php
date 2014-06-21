@@ -4,7 +4,14 @@ class DBO_InputType_BootstrapDate extends DBO_InputType{
 		global $HTML;
 		$ret = "";
 		extract($param);
-		if ($value) $datetime = new DateTime($value);
+		if ($value) {
+			try {
+				$datetime = new DateTime($value);
+			}
+			catch (Exception $e) {
+				$datetime = false;
+			}
+		}
 		else $datetime = false;
 		$ret = $HTML->genInputHidden($name, $value, $ext)."
 			<div class='input-group date' id='{$name}-datepicker-component'>
@@ -16,7 +23,6 @@ class DBO_InputType_BootstrapDate extends DBO_InputType{
 (function () {
 	var \$actualInput = $('#{$name}'),
 		\$dateInput = $('#{$name}-datepicker-input');
-	
 	$('#{$name}-datepicker-component').datepicker({
 		format: 'dd-M-yyyy',
 		todayBtn: 'linked',

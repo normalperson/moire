@@ -96,9 +96,9 @@ class AppMenu extends Menu{
 			if ($r['__CHILDREN']) {
 				if ($liclass) $liclass .= ' open';
 				if ($lvl === 0) {
-					echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i>  <span class='mm-text'>{$r['mn_title']}</span> </a>";
+					echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i>  <span class='mm-text'>".tl($r['mn_title'],true,'menu')."</span> </a>";
 				}
-				else echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i> <span class='mm-text'> {$r['mn_title']} </span> </a>";
+				else echo "<li class='mm-dropdown $liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i> <span class='mm-text'>".tl($r['mn_title'],true,'menu')."</span> </a>";
 
 				$prependLi = array();
 				if ($url != "#") {
@@ -109,9 +109,9 @@ class AppMenu extends Menu{
 			}
 			else {
 				if ($lvl === 0) {
-					if ($anchorclass != 'without-link') echo "<li class='$liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i><span class='mm-text'> {$r['mn_title']}  </span></a></li>";
+					if ($anchorclass != 'without-link') echo "<li class='$liclass'><a href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i><span class='mm-text'>".tl($r['mn_title'],true,'menu')."</span></a></li>";
 				}
-				else echo "<li class='$liclass'><a tabindex='-1' href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i> <span class='mm-text'>  {$r['mn_title']} </span></a></li>";
+				else echo "<li class='$liclass'><a tabindex='-1' href='$url'><i class='menu-icon {$r['mn_icon_class']}'></i> <span class='mm-text'>".tl($r['mn_title'],true,'menu')."</span></a></li>";
 			}
 		}
 

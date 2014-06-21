@@ -165,10 +165,15 @@ function neworgrole(){
 	$tblorg = $tableprefix.$orgpostname;
 
 	$toporgid = userTopOrgID();
-	$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0 and org_id = :1", array('ACTIVE', $toporgid));
+/*	$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0 and org_id = :1", array('ACTIVE', $toporgid));
 	$rs = $DB->getArray("select org_id,org_name from $tblorg where org_status = :0 and org_parentid = :1", array('ACTIVE', $toporgid));
 	if($rs)
-		$orgdata = array_merge($orgdata, $rs);
+		$orgdata = array_merge($orgdata, $rs);*/
+
+	/* for temporary use*/
+	$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0", array('ACTIVE'));
+	/*if($rs)
+		$orgdata = array_merge($orgdata, $rs);		*/
 
 	$orgHTML = "<select id='userorg_1' name='userorg_1'><option value='default'>--Select Org--</option>";
 	foreach ($orgdata as $data){

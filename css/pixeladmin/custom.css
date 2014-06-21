@@ -6,8 +6,14 @@ button.close {
 	font-family : "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+label.mandatory:after{
+	content:" *";
+	color:red;
+}
+
+
 .widget-notifications .notification.UNREAD {
-	background-color: #5E756A;
+	background-color: #DDDDDD;
 }
 
 .widget-notifications .notification-ago, .widget-notifications .notification-description, .widget-notifications .notification-title {
@@ -22,7 +28,7 @@ button.close {
 }
 
 .widget-messages-alt .message.UNREAD {
-	background-color: #5E756A;
+	background-color: #DDDDDD;
 }
 .widget-messages-alt.dropdown-menu .messages-link{
 	width:49%;
@@ -114,3 +120,6 @@ button.close {
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
+.select2-results li.select2-result-with-children>.select2-result-label {
+	font-weight : 700;
+}

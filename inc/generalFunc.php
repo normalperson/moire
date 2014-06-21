@@ -258,12 +258,16 @@ function autoDetailCustomNew($table, $cols) {
 		$ret[] = $DB->lastError;
 	}
 	else {
-		$newid = $DB->lastInsertId();
-		if (!$newid) {
-			$seq = $DB->getOne("select pg_get_serial_sequence(:0, :1)", array($table, $DETAIL_SETUP['keycol']));
-			$newid = $DB->lastInsertId($seq);
+		if (!empty($cols[$DETAIL_SETUP['keycol']])) {
+			$newid = $cols[$DETAIL_SETUP['keycol']];
 		}
-
+		else {
+			$newid = $DB->lastInsertId();
+			if (!$newid) {
+				$seq = $DB->getOne("select pg_get_serial_sequence(:0, :1)", array($table, $DETAIL_SETUP['keycol']));
+				$newid = $DB->lastInsertId($seq);
+			}
+		}
 		if (!$newid) $ret[] = 'Error retrieving last ID';
 		else {
 			if (!empty($_POST['detail'])) {
@@ -364,4 +368,11 @@ function convertBytes( $value ) {
         return $qty;
     }
 }
+
+function getuserSessID($userid) {
+	global $DB;
+	$sessid = $DB->getOne("select us_sessid from fcusersession where us_userid =:0 and us_active = 'Y' order by us_id desc", array($userid));
+	return ($sessid) ? $sessid : false;
+}
+
 ?>

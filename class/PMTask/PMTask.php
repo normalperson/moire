@@ -7,6 +7,16 @@ class PMTask {
 		$this->classurl = WEB_HREF.'/'.__CLASS__;
 	}
 
+	function runAllTimer() { // temp
+		global $DB;
+		$DB->showSQL=true;
+		$dueArr = $DB->getArray("select * from fcpmcaseflow where pmf_end_date is null and pmf_timer_due_date <= now()");
+		foreach($dueArr as $d) {
+			$case = new PM_Case($d['pmf_pmcid']);
+			$case->performFlow($d['pmf_id'], false, true);
+		}
+	}
+	
 	function initSmarty($headerTmpl = "header.html"){
 		$smarty = new Smarty();
 		$smarty->caching = false;
@@ -22,7 +32,9 @@ class PMTask {
 		global $DB, $USER, $GLOBAL;
 
 		$rs = $DB->getArray("select pmev_name, pmev_id, pmwf_name
-		from fcpmevent join fcpmworkflow on pmwf_id=pmev_pmwfid where pmev_type = 'START' and pmev_start_function is not null 
+		from fcpmevent join fcpmworkflow on pmwf_id=pmev_pmwfid 
+		left join fcpmswimlane on pmsl_id = pmev_pmslid
+		where pmev_type = 'START' and pmev_start_function is not null and ".PM_Case::genObjectPermWhere()."
 		order by pmwf_name, pmev_name", array(), PDO::FETCH_ASSOC);
 
 		if ($rs) {
@@ -32,7 +44,7 @@ class PMTask {
 					<i class='nav-icon fa fa-plus'></i>
 					<span class='small-screen-text'>Create New</span>
 				</a>
-				<ul class='dropdown-menu'>";
+				<ul class='dropdown-menu' style='width:300px'>";
 			$wfname = "";
 			$cnt = 0;
 			foreach ($rs as $r) {
@@ -41,7 +53,7 @@ class PMTask {
 					$html .= "<li role='presentation' class='dropdown-header'>{$r['pmwf_name']}</li>";
 					$wfname = $r['pmwf_name'];
 				}
-				$html .= "<li><a href='{$this->classurl}/startEvent?id={$r['pmev_id']}&type=PM_Event'>{$r['pmev_name']}</a></li>";
+				$html .= "<li><a style='padding-left:30px' href='{$this->classurl}/startEvent?id={$r['pmev_id']}&type=PM_Event'>{$r['pmev_name']}</a></li>";
 			}
 			$html .= 
 				"</ul>
@@ -54,8 +66,6 @@ class PMTask {
 	function renderNavi($skipUL = true) {
 		global $DB, $USER, $GLOBAL;
 
-
-
 		// USER ACTIVITIES
 		$rs1 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Activity' as object_type, pmat_id activityid, 
 		max(pmat_name) activityname, 
@@ -64,7 +74,8 @@ class PMTask {
 		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
 		min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
 		from fcpmworkflow join fcpmactivity on pmwf_id = pmat_pmwfid and pmat_type = 'USER'
-		left join fcpmcaseflow on pmf_obj_type = 'PM_Activity' and pmat_id = pmf_obj_id and pmf_end_date is null
+		join fcpmcaseflow on pmf_obj_type = 'PM_Activity' and pmat_id = pmf_obj_id and pmf_end_date is null
+		where ".PM_Case::genFlowPermWhere()."
 		group by pmwf_id, pmat_id
 		order by 2,4", array(), PDO::FETCH_ASSOC);
 
@@ -75,13 +86,28 @@ class PMTask {
 		sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount,
 		sum(case when pmf_id is not null and pmf_end_date is null and pmf_due_date < now() then 1 else 0 end) totaloverduecount,
 		min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date  else null end) earliestduedate
-		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and ((pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y')
-		or (pmev_type = 'START' and pmev_start_function is not null))
-		left join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmev_id = pmf_obj_id and pmf_end_date is null
+		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y'
+		join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmev_id = pmf_obj_id and pmf_end_date is null
+		where ".PM_Case::genFlowPermWhere()."
 		group by pmwf_id, pmev_id, pmev_type
 		order by 2, pmev_type desc, 4", array(), PDO::FETCH_ASSOC);
 
+		// START EVENTS SHOW AS TASK
+		$rs3 = $DB->getArray("select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Event' as object_type, pmev_id eventid, pmev_type eventtype,
+		max(pmev_name) eventname, 
+		0 totalcount,
+		0 totalpendingcount,
+		0 totaloverduecount,
+		null earliestduedate
+		from fcpmworkflow join fcpmevent on pmwf_id = pmev_pmwfid and pmev_type = 'START' and pmev_start_function is not null
+		left join fcpmswimlane on pmev_pmslid = pmsl_id
+		where ".PM_Case::genObjectPermWhere()."
+		group by pmwf_id, pmev_id, pmev_type
+		order by 2, pmev_type desc, 4", array(), PDO::FETCH_ASSOC);
+		
 		$rs = array_merge($rs1, $rs2);
+		$rs = array_merge($rs, $rs3);
+		
 		$data = array();
 		$totalpending = 0;
 		$totaldue = 0;
@@ -185,7 +211,7 @@ class PMTask {
 					"class='label label-danger' title='{$totaldue} overdue task(s)'" : 
 					"class='label label-warning'").">{$totalpending}</span>" : "";
 
-		$html = "<li class='mm-dropdown mm-dropdown-root ".((!empty($_GET['webc']) && $_GET['webc'] == __CLASS__) ? 'open active' : '')."'>
+		$html = "<li class='mm-dropdown mm-dropdown-root tasklistingLI ".((!empty($_GET['webc']) && $_GET['webc'] == __CLASS__) ? 'open active' : '')."'>
 					<a href='#'>
 						<i class='menu-icon fa fa-tasks'></i>
 						<span class='mm-text mmc-dropdown-delay animated fadeIn'>Task</span>{$pendingBadge}
@@ -193,11 +219,22 @@ class PMTask {
 					<ul class='mmc-dropdown-delay animated fadeInLeft'>
 						{$html}
 					</ul>
-				</li>";
+				</li>
+				<script type='text/javascript'>
+				$('.tasklistingLI').bind('reload', function (e) {
+					var \$this = $(this);
+					ajaxRenderHTML('{$this->classurl}/ajaxRenderNavi', {}, \$this, 'replaceWith');
+				});
+				</script>";
 
 		if (!$skipUL) $html = "<ul id='taskListing' class='navigation'>{$html}</ul>";
 
 		return $html;
+	}
+	
+	function ajaxRenderNavi() {
+		echo $this->renderNavi();
+	
 	}
 
 	function showingTask($type, $id) {
@@ -217,19 +254,27 @@ class PMTask {
 	}
 
 	function startEvent() {
+		ob_start();
 		global $HTML, $GLOBAL, $DB;
 		$smarty = $this->initSmarty();
-		if (!empty($_REQUEST['id'])) {
-			$GLOBAL['PMTask_taskid'] = $_REQUEST['id'];
+		if (!empty($_GET['id'])) {
+			$GLOBAL['PMTask_taskid'] = $_GET['id'];
 			$GLOBAL['PMTask_tasktype'] = 'PM_Event';
 		}
 		$ev = new PM_Event($GLOBAL['PMTask_taskid']);
 		$this->renderTopBar($ev->id, 'PM_Event');
 		$case = $ev->start();
-		if ($case) redirect('?');
+		if ($case) {
+			$flowarr = array_keys($case->activeFlow);
+			foreach ($flowarr as $fid) {
+				$this->notifyNextUsers($case->activeFlow[$fid]);
+			}
+			redirect('?');
+		}
 	}
 
 	function caseFlowList() {
+		ob_start();
 		global $HTML, $GLOBAL, $DB;
 		$smarty = $this->initSmarty();
 
@@ -252,8 +297,16 @@ class PMTask {
 				foreach ($toPerform as $p) {
 					parse_str($p, $keys);
 					$case = new PM_Case($keys['pmf_pmcid']);
+					$flowarr_before = array_keys($case->activeFlow);
 					$ok = $case->performFlow($keys['pmf_id'], true);
-					if ($ok) $performed = $ok;
+					if ($ok) {
+						$flowarr_after = array_keys($case->activeFlow);
+						$flowarr_diff = array_diff($flowarr_after, $flowarr_before);
+						foreach ($flowarr_diff as $fid) {
+							$this->notifyNextUsers($case->activeFlow[$fid]);
+						}
+						$performed = $ok;
+					}
 				}
 				if ($performed) {
 					redirect($this->classurl."/caseFlowList?id={$GLOBAL['PMTask_taskid']}&type={$GLOBAL['PMTask_tasktype']}");
@@ -304,9 +357,6 @@ class PMTask {
 				minLength : 1,
 				select: function(event, ui) {
 					document.location = '{$this->classurl}/renderCaseScreen?caseid='+this.value;
-				},
-				error : function () {
-					alert(123);
 				}
 			});
 		})()
@@ -463,12 +513,13 @@ class PMTask {
 		$html = '';
 		$evRS = $DB->getAll("select * from fcpmcaseflow join fcpmevent on pmf_obj_id = pmev_id and pmf_obj_type = 'PM_Event' 
 				where pmf_pmcid = :0 and pmf_end_date is null and 
-				pmev_type = 'INTERMEDIATE' order by pmev_name", array($pmcid), PDO::FETCH_ASSOC);
+				pmev_type = 'INTERMEDIATE' and  ".PM_Case::genFlowPermWhere()."
+				order by pmev_name", array($pmcid), PDO::FETCH_ASSOC);
 
 		if ($evRS) { // has active intermediate event
 			$html = "<form id='eventForm' method='post'><input id='eventInp' type='hidden' name='event_action_manual' /></form>
 					<div class='btn-group action-event'>
-						<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>Event 
+						<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>Action 
 							<span class='caret'></span>
 						</button>
 						<ul class='dropdown-menu pull-right' role='menu'>";
@@ -516,8 +567,32 @@ $(function () {
 		}
 	}
 
+	function notifyNextUsers($data) {
+		global $DB,$PUSHSOCKET;
+		$userlist = array();
+		$assign = $DB->getArray("select * from fcpmcaseflowassign where pmfa_pmfid = :0", array($data['pmf_id']), PDO::FETCH_ASSOC);
+		foreach ($assign as $a) {
+			$where = array();
+			$where[] = ($a['pmfa_userid']) ? 'uor_usrid = '.$DB->quote($a['pmfa_userid']) : '1=1';
+			$where[] = ($a['pmfa_orgid']) ? 'uor_orgid = '.$DB->quote($a['pmfa_orgid']) : '1=1';
+			$where[] = ($a['pmfa_rolid']) ? 'uor_rolid = '.$DB->quote($a['pmfa_rolid']) : '1=1';
+			$userlist = array_merge($userlist, $DB->getCol("select uor_usrid from fcuserorgrole 
+			where ".implode(' and ',$where)));
+		}
+		if ($PUSHSOCKET) {
+			foreach ($userlist as $user) {
+				if ($sessid = getuserSessID($user)) {
+					$PUSHSOCKET->send(json_encode(array(
+						'topic'=>$sessid, 
+						'msg'=>"You've received a new task", 
+						'cat'=>'TASK')));
+				}
+			}
+		}
+	}
 
 	function renderActivityPerform() {
+		ob_start();
 		global $HTML, $GLOBAL, $DB;
 
 		$smarty = $this->initSmarty();
@@ -530,10 +605,16 @@ $(function () {
 		$this->renderTopBar(null, null, $GLOBAL['PMTask_flowid'], $caseid);
 		if ($caseid) {
 			$case = new PM_Case($caseid);
+			$flowarr_before = array_keys($case->activeFlow);
 			$currid = $case->activeFlow[$GLOBAL['PMTask_flowid']]['pmf_obj_id'];
 			$currtype = $case->activeFlow[$GLOBAL['PMTask_flowid']]['pmf_obj_type'];
 			$performed = $case->performFlow($GLOBAL['PMTask_flowid'], true);
 			if ($performed) {
+				$flowarr_after = array_keys($case->activeFlow);
+				$flowarr_diff = array_diff($flowarr_after, $flowarr_before);
+				foreach ($flowarr_diff as $fid) {
+					$this->notifyNextUsers($case->activeFlow[$fid]);
+				}
 				redirect($this->classurl."/caseFlowList?id={$currid}&type={$currtype}");
 			}
 		}

@@ -1,7 +1,5 @@
 /* pixeladmin */
 div.dbo_theme_pixeladmin{
-	width:90%;
-	margin:auto;
 }
 /*error message*/
 pre.dbo_error_new,
@@ -28,14 +26,19 @@ div.dbo_theme_pixeladmin >  table {
 	width:100%;
 	border-spacing:3px;
     border-collapse:collapse;
-    margin-left:10px;
-    margin-right:10px;
    	color:#222222;
 }
 div.dbo_theme_pixeladmin > table td, table th{
     padding: 3px; /* 'cellpadding' equivalent */
 }
 
+div.dbo_theme_pixeladmin.dbo_container  {
+	padding : 30px;
+	background : #fff;
+	border: 1px solid #e4e4e4;
+	overflow : auto;
+	margin-bottom : 20px;
+}
 div.dbo_theme_pixeladmin .value {
 	padding-right : 50px;
 }
@@ -44,21 +47,21 @@ div.dbo_theme_pixeladmin .form_button > * {
 	margin-right : 10px;
 }
 
-div.dbo_theme_pixeladmin div.value_container input[type="text"],
-div.dbo_theme_pixeladmin div.value_container input[type="password"],
-div.dbo_theme_pixeladmin div.value_container input[type="search"],
-div.dbo_theme_pixeladmin div.value_container input[type="date"], 
-div.dbo_theme_pixeladmin div.value_container input[type="datetime-local"], 
-div.dbo_theme_pixeladmin div.value_container input[type="month"], 
-div.dbo_theme_pixeladmin div.value_container input[type="time"], 
-div.dbo_theme_pixeladmin div.value_container input[type="week"],
-div.dbo_theme_pixeladmin div.value_container input[type="color"], 
-div.dbo_theme_pixeladmin div.value_container input[type="email"], 
-div.dbo_theme_pixeladmin div.value_container input[type="number"], 
-div.dbo_theme_pixeladmin div.value_container input[type="tel"], 
-div.dbo_theme_pixeladmin div.value_container input[type="url"],
-div.dbo_theme_pixeladmin div.value_container select,
-div.dbo_theme_pixeladmin div.value_container textarea
+div.dbo_theme_pixeladmin div.value_container> input[type="text"],
+div.dbo_theme_pixeladmin div.value_container> input[type="password"],
+div.dbo_theme_pixeladmin div.value_container> input[type="search"],
+div.dbo_theme_pixeladmin div.value_container> input[type="date"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="datetime-local"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="month"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="time"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="week"],
+div.dbo_theme_pixeladmin div.value_container> input[type="color"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="email"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="number"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="tel"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="url"],
+div.dbo_theme_pixeladmin div.value_container> select,
+div.dbo_theme_pixeladmin div.value_container> textarea
  {
 	width: 100%;
 	padding: 6px 12px;
@@ -75,20 +78,20 @@ div.dbo_theme_pixeladmin div.value_container textarea
 	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
-div.dbo_theme_pixeladmin div.value_container input[type="text"],
-div.dbo_theme_pixeladmin div.value_container input[type="password"],
-div.dbo_theme_pixeladmin div.value_container input[type="search"],
-div.dbo_theme_pixeladmin div.value_container input[type="date"], 
-div.dbo_theme_pixeladmin div.value_container input[type="datetime-local"], 
-div.dbo_theme_pixeladmin div.value_container input[type="month"], 
-div.dbo_theme_pixeladmin div.value_container input[type="time"], 
-div.dbo_theme_pixeladmin div.value_container input[type="week"],
-div.dbo_theme_pixeladmin div.value_container input[type="color"], 
-div.dbo_theme_pixeladmin div.value_container input[type="email"], 
-div.dbo_theme_pixeladmin div.value_container input[type="number"], 
-div.dbo_theme_pixeladmin div.value_container input[type="tel"], 
-div.dbo_theme_pixeladmin div.value_container input[type="url"],
-div.dbo_theme_pixeladmin div.value_container select
+div.dbo_theme_pixeladmin div.value_container> input[type="text"],
+div.dbo_theme_pixeladmin div.value_container> input[type="password"],
+div.dbo_theme_pixeladmin div.value_container> input[type="search"],
+div.dbo_theme_pixeladmin div.value_container> input[type="date"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="datetime-local"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="month"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="time"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="week"],
+div.dbo_theme_pixeladmin div.value_container> input[type="color"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="email"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="number"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="tel"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="url"],
+div.dbo_theme_pixeladmin div.value_container> select
 {
 	display: block;
 	height: 32px;
@@ -102,27 +105,61 @@ div.dbo_theme_pixeladmin div.value_container label {
 	font-weight : normal;
 }
 
-div.dbo_theme_pixeladmin div.value_container input[type="text"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="password"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="search"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="date"],:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="datetime-local"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="month"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="time"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="week"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="color"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="email"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="number"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="tel"]:focus,
-div.dbo_theme_pixeladmin div.value_container input[type="url"]:focus,
-div.dbo_theme_pixeladmin div.value_container select:focus,
-div.dbo_theme_pixeladmin div.value_container textarea:focus{
+div.dbo_theme_pixeladmin div.value_container> input[type="text"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="password"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="search"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="date"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="datetime-local"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="month"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="time"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="week"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="color"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="email"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="number"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="tel"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="url"]:focus,
+div.dbo_theme_pixeladmin div.value_container> select:focus,
+div.dbo_theme_pixeladmin div.value_container> textarea:focus{
 	border-color: #1d89cf;
 	outline: 0;
 	-webkit-box-shadow: none;
 	box-shadow: none;
 }
 
+div.dbo_theme_pixeladmin div.value_container> input[type="text"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="password"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="search"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="date"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="datetime-local"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="month"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="time"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="week"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="color"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="email"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="number"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="tel"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="url"][disabled],
+div.dbo_theme_pixeladmin div.value_container> select[disabled],
+div.dbo_theme_pixeladmin div.value_container> textarea[disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="text"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="password"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="search"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="date"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="datetime-local"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="month"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="time"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="week"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="color"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="email"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="number"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="tel"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="url"][readonly],
+div.dbo_theme_pixeladmin div.value_container> select[readonly],
+div.dbo_theme_pixeladmin div.value_container> textarea[readonly]{
+	cursor: not-allowed;
+	background-color: #eee;
+	opacity: 1;
+}
 div.dbo_theme_pixeladmin .button, div.dbo_theme_pixeladmin .button:focus, div.dbo_theme_pixeladmin .button:active {
 	display: inline-block;
 	margin-bottom: 0;
@@ -195,6 +232,7 @@ div.dbo_theme_pixeladmin table.dbo_list > thead > tr{
 div.dbo_theme_pixeladmin table.dbo_list > thead > tr div.tool{
 	float:right;
 	padding : 10px 0;
+	min-height: 40px;
 }
 
 
@@ -290,7 +328,7 @@ div.dbo_theme_pixeladmin table.dbo_list > thead > tr.title{
 div.dbo_theme_pixeladmin table.dbo_list > thead > tr.title > th, div.dbo_theme_pixeladmin table.dbo_list > thead > tr.title > td {
 	padding: 8px;
 	line-height: 1.428571429;
-	font-family : Segoe UI Semibold;
+	font-weight:600;
 	font-size: 1.0em;
 }
 
@@ -686,6 +724,8 @@ div.dbo_theme_pixeladmin td.dbo_container_detail > fieldset > legend{
 div.dbo_theme_pixeladmin td.dbo_container_detail th.caption{
 	font-weight:normal;
 	text-align:left;
+	vertical-align: top;
+	padding-top: 10px;
 
 }
 
@@ -738,6 +778,8 @@ div.dbo_theme_pixeladmin td.dbo_container_new table.dbo_new > tbody > tr > * {
 div.dbo_theme_pixeladmin td.dbo_container_new th.caption{
 	font-weight:normal;
 	text-align:left;
+	vertical-align: top;
+	padding-top: 10px;
 
 }
 
@@ -763,6 +805,8 @@ div.dbo_theme_pixeladmin td.dbo_container_edit table.dbo_edit > tbody > tr > * {
 div.dbo_theme_pixeladmin td.dbo_container_edit th.caption{
 	font-weight:normal;
 	text-align:left;
+	vertical-align: top;
+	padding-top: 10px;
 
 }
 
@@ -827,7 +871,7 @@ ul.dbotab_ul > li {
   display: block;
   float: left;
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
   margin-left: 0px;
   margin-right: 6px;
   padding: 0px;
@@ -835,7 +879,7 @@ ul.dbotab_ul > li {
 ul.dbotab_ul > li > a {
   position: relative;
   display: block;
-  padding: 10px 15px;
+  padding: 8px 20px;
   border-radius: 2px;
 }
 
@@ -864,4 +908,24 @@ ul.dbotab_ul > li.dbotab_active > a:focus {
   text-decoration: none;
   color: #ffffff;
   background-color: #64bed8;
+}
+
+div.dbo_theme_pixeladmin .has-error .value_container input[type="text"],
+div.dbo_theme_pixeladmin .has-error .value_container input[type="password"],
+div.dbo_theme_pixeladmin .has-error .value_container input[type="search"],
+div.dbo_theme_pixeladmin .has-error .value_container input[type="date"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="datetime-local"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="month"], 
+div.dbo_theme_pixeladmin .has-error .value_container  input[type="time"], 
+div.dbo_theme_pixeladmin .has-error .value_container  input[type="week"],
+div.dbo_theme_pixeladmin .has-error .value_container input[type="color"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="email"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="number"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="tel"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="url"],
+div.dbo_theme_pixeladmin .has-error .value_container select,
+div.dbo_theme_pixeladmin .has-error .value_container textarea{
+	border-color: #d38e99 !important;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
