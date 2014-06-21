@@ -1,0 +1,111 @@
+<table align=center>
+	<tr>
+		<td>
+			<form target='translateSheetFrame' method='post' action='translateSheet'>
+				<fieldset>
+					<legend>Advance Translate</legend>
+						<table>
+							<tr>
+								<td style='padding-right:20px'>
+									<label class="radio" for='load_type_existing' >
+										<input type='radio' name='load_type' id='load_type_existing' value='EXIST' />
+										<b>Load from existing Language File</b>
+									</label>
+								</td>
+								<td>
+									<select name='load_file' class='form-control' id='load_file' disabled>
+										<option></option>
+{foreach from=$langfiles item="langfile" key="language"}
+										<optgroup label="{$language}">
+	{foreach from=$langfile item="file"}
+											<option data-lang="{$file.lang_file_lang}" value="{$file.lang_file}">{$file.lang_file}</option>
+	{/foreach}
+										</optgroup>
+{/foreach}
+									</select>
+
+								</td>
+								<td rowspan=2 style='padding-left:50px'>
+									<select name='load_translate[]' id='load_translate' multiple size=6 class='form-control'>
+{foreach from=$langlist item="langrow" key="langcat"}
+										<optgroup label="{$langcat}">
+	{foreach from=$langrow item="lang"}
+											<option value="{$lang.langCode}">{$lang.langName} ({$lang.langCode})</option>
+	{/foreach}
+										</optgroup>
+{/foreach}								
+									</select>
+									<h6><strong>Note: Click on ctrl to select multiple language</strong></h4>
+								</td>
+								<td rowspan=2 style='padding-left:50px'>
+									<input type='submit' style='margin:5px' class="btn btn-primary btn-large" name="load_submit" value="Start Translate" />
+									<input type='submit' style='margin:5px' class="btn btn-large" name="load_cancel" value="Discard" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label class="radio" for='load_type_new' >
+										<input type='radio' name='load_type' id='load_type_new' value='NEW' />
+										<b>Create new Language File</b>
+									</label>
+								</td>
+								<td>
+									<input type='text' disabled name='load_name' id='load_name' placeholder='New Language File Name' class='form-control' />
+								</td>
+							</tr>
+						</table>
+				</fieldset>
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td style='height:700px'>
+			<iframe id='translateSheetFrame' name='translateSheetFrame' width=100% height=100% src='translateSheet' ></iframe>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">
+$(function() {
+
+	var lastValidSelection = null;
+	var $loadFile = $('#load_file');
+	var $loadName = $('#load_name');
+	var $loadLang = $('#load_translate');
+	var currFileLang = false;
+	
+	$loadLang.change(function(event) {
+		var $this = $(this);
+		var currVal = $this.val();
+		if (currVal != null && currVal.length > 5) {
+			alert('You can only choose up to 5 at a time!');
+			$this.val(lastValidSelection);
+		}
+		else if (currFileLang && $.inArray(currFileLang,currVal) == -1) {
+			$this.val(lastValidSelection);
+		}
+		else {
+			lastValidSelection = currVal;
+		}
+	});
+	
+	$('input[name=load_type]').click(function () {
+		currFileLang = false;
+		if (this.value == 'EXIST') {
+			$loadName.val('').attr('disabled',true);
+			$loadFile.val('').attr('disabled',false);
+		}
+		else if (this.value == 'NEW') {
+			$loadName.val('').attr('disabled',false);
+			$loadFile.val('').attr('disabled',true);
+		}
+	})
+	
+	$loadFile.change(function () {
+		var fileLang = $(this).find(":selected").attr('data-lang');
+		if (fileLang) currFileLang = fileLang;
+		else currFileLang = false;
+		$loadLang.val(fileLang);
+		lastValidSelection = $loadLang.val();
+	})
+});
+</script>

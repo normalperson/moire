@@ -165,7 +165,8 @@ class PMFunc{
 	}
 	
 	
-	function notifyLateReqVerification() {
+	function notifyLateVerification() {
+		
 		return true;
 	}
 }
