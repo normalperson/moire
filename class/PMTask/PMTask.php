@@ -491,6 +491,7 @@ class PMTask {
 				$html .= $this->showCaseIntermediateEvent($rs['pmc_id']);
 				$html .= $this->showCommentButton($rs['pmc_id'], (!empty($rs['pmf_id'])) ? $rs['pmf_id'] : false);
 				$html .= $this->showFlagButton($rs['pmc_id']);
+				$html .= $this->showTimelineButton($rs['pmc_id']);
 				$html .= "</div>";
 
 
@@ -656,6 +657,62 @@ $(function () {
 		return $ret;
 	}
 
+	
+	// case comment start 
+	static function showTimelineButton($pmcid) {
+		global $DB, $USER;
+		static $timelineButtonCount;
+		if ($timelineButtonCount) ++$timelineButtonCount;
+		else $timelineButtonCount = 1;
+		$classurl = WEB_HREF.'/'.__CLASS__;
+		$buttonid  = "timelineButton_{$timelineButtonCount}";
+		$ret = "<button id='{$buttonid}' class='btn action action-timeline' title='View Timeline' data-caseid='{$pmcid}' >
+				<span class='btn-label icon fa fa-sort-numeric-asc'></span>
+			</button>";
+
+		if ($timelineButtonCount == 1) {
+			$ret .=
+			"<script type='text/javascript'>
+			$(function () {
+				$('.action-timeline').click(function (e) {
+					e.preventDefault();
+					e.stopPropagation();
+					var \$this = $(this),
+						caseid = \$this.data('caseid');
+					
+					var \$modal = createEmptyModal('timelineModal');
+					ajaxRenderHTML('{$classurl}/ajaxRenderTimeline?caseid='+caseid, {}, \$modal.find('.modal-content'), 'html', function () {
+						$(window.document).one('hidden.bs.modal', '#'+\$modal.attr('id') ,function () {
+							\$modal.remove();
+						});
+						\$modal.modal('show');
+					});
+				})
+			})
+			</script>";
+		}
+		return $ret;
+	}
+	
+	function ajaxRenderTimeline() {
+		global $HTML, $GLOBAL, $DB;
+		if (!empty($_REQUEST['caseid'])) {
+			$GLOBAL['PMTask_timeline_caseid'] = $_REQUEST['caseid'];
+		}
+		
+		if (empty($GLOBAL['PMTask_timeline_caseid'])) return;
+		
+		$case = $DB->getRow("select * from fcpmcase where pmc_id = :0", array($GLOBAL['PMTask_timeline_caseid']), PDO::FETCH_ASSOC);
+		$rs = $DB->getArray("select * from fcpmcaseflow where pmf_pmcid = :0 order by pmf_id", array($GLOBAL['PMTask_timeline_caseid']), PDO::FETCH_ASSOC);
+		
+		$smarty = $this->initSmarty(false);
+		$smarty->assign('caseid', $GLOBAL['PMTask_timeline_caseid']);
+		$smarty->assign('classurl', $this->classurl);
+		
+		$smarty->display('timeline.html');
+		
+	}
+	
 	// case comment start 
 	static function showCommentButton($pmcid, $pmfid = false) {
 		global $DB, $USER;

@@ -4,6 +4,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'flowsummary';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
+$dbo->fileSaveMode = 511;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, pmc_id,pmf_obj_type, pmf_obj_id, pmf_end_date, pmf_end_by, \'\' filehistory,
@@ -114,7 +115,7 @@ $dbo->listEditSubmit = 'Submit';
 $dbo->whereSQL = ' pmf_obj_type = \'PM_Activity\'
 		and pmf_obj_id = \'5\'
 		and pmf_end_date is not null
-		and pmf_end_by = \'admin2\'';
+		and pmf_end_by = \'fongadmin\'';
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
 $dbo->cols['js_id']->inputTypeDefault = 'text';
@@ -483,7 +484,7 @@ $dbo->cols['js_trapping_size']->option->listMethod = 'text';
 $dbo->cols['js_trapping_size']->option->detailMethod = 'text';
 $dbo->cols['js_trapping_size']->option->newMethod = 'text';
 $dbo->cols['js_trapping_size']->option->editMethod = 'text';
-$dbo->cols['js_barcodetype'] = new DBO_COL('js_barcodetype', 'int4', '4', '-1');
+$dbo->cols['js_barcodetype'] = new DBO_COL('js_barcodetype', 'varchar', '-1', '54');
 $dbo->cols['js_barcodetype']->inputTypeDefault = 'text';
 $dbo->cols['js_barcodetype']->searchMode = 'exact';
 $dbo->cols['js_barcodetype']->capContClassDefault = array();
@@ -824,6 +825,8 @@ $dbo->cols['joboutput']->option->detailMethod = 'text';
 $dbo->cols['joboutput']->option->newMethod = 'text';
 $dbo->cols['joboutput']->option->editMethod = 'text';
 $dbo->cols['printbutton'] = new DBO_COL('printbutton', 'unknown', '-2', '-1');
+$dbo->cols['printbutton']->displayListModifierMethod = 'text';
+$dbo->cols['printbutton']->displayListModifier = '<button class="btn btn-labeled btn-primary" onclick="printJobPreview({js_id});"><span class="btn-label icon fa fa-camera-retro"></span>Print</button>';
 $dbo->cols['printbutton']->inputTypeDefault = 'text';
 $dbo->cols['printbutton']->searchMode = 'exact';
 $dbo->cols['printbutton']->capContClassDefault = array();

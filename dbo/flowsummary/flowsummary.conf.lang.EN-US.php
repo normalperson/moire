@@ -66,7 +66,7 @@ $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmt
 $dbo->cols['js_jobcolor']->caption->set('default', 'Color of job', 'text');
 $dbo->cols['js_jobcolor']->caption->setTabCaption('default', 'JOB INFO', 'text');
 $dbo->cols['joboutput']->caption->set('default', 'Output Requirement', 'text');
-$dbo->cols['printbutton']->caption->set('default', 'printbutton', 'text');
+$dbo->cols['printbutton']->caption->set('default', ' ', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';

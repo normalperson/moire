@@ -3,7 +3,6 @@ require(dirname(__FILE__).DIRECTORY_SEPARATOR.'rule.conf.php');
 
 # customization
 function dbo_rule_customize(&$dbo){
-	
 }
 
 

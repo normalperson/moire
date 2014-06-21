@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by admin2 on 21-06-2014 13:31:46*/
+/*Last Modified by ysyow on 21-06-2014 23:33:25*/
 $translate = array (
   'Home (Supervisor)' => 'Home (Supervisor)',
   'Home (QC)' => 'Home (QC)',
@@ -23,5 +23,9 @@ $translate = array (
   'Permission Setup' => 'Permission Setup',
   'Rule Setting' => 'Rule Setting',
   'Menu Setup' => 'Menu Setup',
+  'Contact Setup' => 'Contact Setup',
+  'DBO Setup' => 'DBO Setup',
+  'Translation' => 'Translation',
+  'Terms and Conditions' => 'Terms and Conditions',
 );
 ?>

@@ -32,6 +32,9 @@ $dbo->cols['pmf_specific_userid']->caption->set('default', 'pmf_specific_userid'
 $dbo->cols['pmf_end_by']->caption->set('default', 'pmf_end_by', 'text');
 $dbo->cols['pmf_end_pmfid']->caption->set('default', 'pmf_end_pmfid', 'text');
 $dbo->cols['pmf_from_event_gateway']->caption->set('default', 'pmf_from_event_gateway', 'text');
+$dbo->cols['pmf_last_timer_check_date']->caption->set('default', 'pmf_last_timer_check_date', 'text');
+$dbo->cols['pmf_timer_due_date']->caption->set('default', 'pmf_timer_due_date', 'text');
+$dbo->cols['pmf_timer_due_count']->caption->set('default', 'pmf_timer_due_count', 'text');
 
 $dbo->titleList = ' ';
 $dbo->titleDetail = 'Detail';
@@ -47,6 +50,12 @@ $dbo->text->newSubmit = 'Submit';
 $dbo->text->listSubmit = 'Submit';
 $dbo->text->detailCancel = 'Back';
 $dbo->text->detailDelete = 'Delete';
+$dbo->text->listEdit = 'Edit';
+$dbo->text->listDelete = 'Delete';
+$dbo->text->listDetail = 'Detail';
+$dbo->text->messageAfterNew = '';
+$dbo->text->messageAfterEdit = '';
+$dbo->text->messageAfterDelete = '';
 $dbo->text->defaultMessageAfterNew = 'Record created.';
 $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';

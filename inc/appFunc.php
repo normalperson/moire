@@ -44,6 +44,7 @@ function orgTopOrgID($orgID){
 }
 
 function sendMailFromTemplate($mtcode) {
+	global $DB;
 	$rs = $DB->getRow("select * from mmailtemplate where mt_code = :0 and mt_status = 'ACTIVE'", array($mtcode), PDO::FETCH_ASSOC);
 	if ($rs) {
 		$udv = new UDV();
@@ -51,6 +52,22 @@ function sendMailFromTemplate($mtcode) {
 		$recpcc = $udv->parse($rs['mt_recipient_cc']);
 		$subject = $udv->parse($rs['mt_subject']);
 		$content = $udv->parse($rs['mt_content']);
+		
+		$mail = new Email();
+		// vd($mail); $fromarr['emailadd'], $fromarr['name']
+		$ret = $mail->sendEmail_bySMTP(
+			$fromarr=array('emailadd'=>'noreply@moiregc.com.my', 'name'=>'no-reply-moire'),
+			$replytoarr='',
+			$toaddarr=array(array('emailadd'=>$recp, 'name'=>''), array('emailadd'=>$recpcc, 'name'=>'')),
+			$subject,
+			$content,
+			$altbody='',
+			$attachmentpath='',
+			$smtpauth=true,
+			$host='moiregc.com.my',
+			$port=25,
+			$username='noreply@moiregc.com.my',
+			$password='User123');
 		
 		$rs['mt_internal_userid'] = $udv->parse($rs['mt_internal_userid']);
 		if (!empty($rs['mt_internal_userid'])) {
@@ -63,6 +80,27 @@ function sendMailFromTemplate($mtcode) {
 		return true;
 	}
 	else return false;
+}
+
+
+function login_after_function(&$loginresult) {
+	if ($loginresult) {
+		global $USER, $DB;
+		if ($USER->role == 'Customer') {
+			$loginresult = false;
+			$accepted = $DB->getOne("select count(*) from mtncacceptance where tca_userid=:0 and 
+			tca_tcid in (select max(tc_id) from mtnc) and tca_result='ACCEPT'", array($USER->userid));
+			if (!$accepted) {
+				// $_SESSION['BK_USERID'] = $_SESSION['USERID'];
+				// unset($_SESSION['USERID']);
+				// if (!empty($_POST['tnc_result'])) {
+					// return;
+				// }
+				// echo "<form method='post'><input type='submit' name='tnc_result' value='ACCEPT'></form>";
+				// die();
+			}
+		}
+	}
 }
 
 ?>

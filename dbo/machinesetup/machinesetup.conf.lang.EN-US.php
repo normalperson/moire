@@ -44,7 +44,7 @@ $dbo->cols['mc_platecommercialname']->caption->set('default', 'Commercial name',
 $dbo->cols['mc_platetype']->caption->set('default', 'Type', 'text');
 $dbo->cols['mc_platedurometer']->caption->set('default', 'Durometer', 'text');
 $dbo->cols['mc_platedurometer']->caption->setSectionCaption('default', 'Characteristics', 'text');
-$dbo->cols['mc_platethickness']->caption->set('default', 'Thckness (mm)', 'text');
+$dbo->cols['mc_platethickness']->caption->set('default', 'Thickness (mm)', 'text');
 $dbo->cols['mc_platerelief']->caption->set('default', 'Relief (mm)', 'text');
 $dbo->cols['mc_mountingtapemanufacturer']->caption->set('default', 'Manufacturer', 'text');
 $dbo->cols['mc_mountingtapemanufacturer']->caption->setTabCaption('default', 'MOUNTING', 'text');

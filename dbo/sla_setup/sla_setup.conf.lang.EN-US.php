@@ -8,7 +8,7 @@ $dbo->cols['pmat_name']->caption->set('default', 'Activity Name', 'text');
 $dbo->cols['pmat_type']->caption->set('default', 'pmat_type', 'text');
 $dbo->cols['pmat_function']->caption->set('default', 'pmat_function', 'text');
 $dbo->cols['pmat_sla_interval']->caption->set('default', 'SLA Timer', 'text');
-$dbo->cols['pmat_sla_workinghours_only']->caption->set('default', 'pmat_sla_workinghours_only', 'text');
+$dbo->cols['pmat_sla_workinghours_only']->caption->set('default', 'Follow Working Hour', 'text');
 $dbo->cols['pmat_show_caseinfo']->caption->set('default', 'pmat_show_caseinfo', 'text');
 
 $dbo->titleList = 'List SLA Activity';

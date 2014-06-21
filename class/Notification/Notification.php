@@ -56,9 +56,10 @@ class Notification {
 				<div class='notification-title text-{$severe_class_map[$row['di_severity']]}'>{$row['di_cat2']}
 				</div>
 				<div class='notification-description'>
-					{$row['di_subject']}
-				</div>
-				<div class='notification-ago' title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</div>
+					{$row['di_subject']} 
+				</div>".
+				(($row['di_text']) ? "<a class='notification-view-content' href='javascript:void(0)'>View Content</a>" : '').
+				"<div class='notification-ago' title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</div>
 				<div class='notification-icon fa ".((!empty($cat_icon_class[$row['di_cat2']])) ? $cat_icon_class[$row['di_cat2']] : $cat_icon_class['UNKNOWN']).
 				" bg-{$severe_class_map[$row['di_severity']]}'>
 				</div>
@@ -94,6 +95,15 @@ class Notification {
 				.find('div.notification').on('click', function(e) {
 					e.stopPropagation();
 				})
+				.find('.notification-view-content').on('click', function (e) {
+					var \$modal = createEmptyModal('notificationContentModal');
+					ajaxRenderHTML('{$classurl}/ajaxRenderContent', {'notid':$(this).closest('.notification').data('notid')}, \$modal.find('.modal-content'), 'html', function () {
+						\$modal.modal('show').one('hidden.bs.modal', function () {
+							\$notlist.trigger('reload');
+							\$modal.remove();
+						});
+					});
+				}).closest('div.notification')
 				.find('button.close').on('click', function(e) {
 					e.stopPropagation();
 					var \$notDiv = $(this).closest('div.notification');
@@ -114,19 +124,43 @@ class Notification {
 						\$modal.remove();
 					});
 				});
-				
 			})
 			\$notlist.find('.dropdown-toggle').click(function (e) {
 				if ($(this).find('.small-screen-text').is(':visible')) { //mobile view
 					\$notlist.find('.notifications-link').click();
 				}
 			})
+			
 		})();
 	</script>
 </li>";
 		return $html;
 	}
 
+	function renderContent($notid) {
+		global $DB, $USER;
+		static $notContentCount;
+		if ($notContentCount) ++$notContentCount;
+		else $notContentCount = 1;
+		$id = "notificationContent_{$notContentCount}";
+		
+		$rs = $DB->getRow("select a.*, to_char(di_display_date, 'DD-Mon-YYYY hh:mi AM') di_display_date_disp 
+		from fcuserdiary a where di_id=:0", array($notid), PDO::FETCH_ASSOC);
+		$smarty = new Smarty();
+		$smarty->setTemplateDir(dirname(__FILE__).DS.'templates');
+		$smarty->setCompileDir(DOC_DIR.DS.'smarty'.DS.'templates_c');
+		$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
+		$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
+		$smarty->assign('rs', $rs);
+		
+		return $smarty->fetch('content.html');
+	}
+	
+	function ajaxRenderContent() {
+		global $DB;
+		echo $this->renderContent($_POST['notid']);
+	}
+	
 	function renderPanel() {
 		global $DB, $USER;
 		static $notPanelCount;
@@ -165,8 +199,9 @@ class Notification {
 				</div>
 				<div class='notification-description'>
 					{$row['di_subject']}
-				</div>
-				<div class='notification-ago' title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</div>
+				</div>".
+				(($row['di_text']) ? "<a class='notification-view-content' href='javascript:void(0)'>View Content</a>" : '').
+				"<div class='notification-ago' title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</div>
 				<div class='notification-icon fa ".((!empty($cat_icon_class[$row['di_cat2']])) ? $cat_icon_class[$row['di_cat2']] : $cat_icon_class['UNKNOWN']).
 				" bg-{$severe_class_map[$row['di_severity']]}'>
 				</div>
@@ -228,7 +263,15 @@ class Notification {
 			});
 		}
 		else $(this).remove();
+	}).on('click', '.notification-view-content', function (e) {
+		var \$modal = createEmptyModal('notificationContentModal');
+		ajaxRenderHTML('{$classurl}/ajaxRenderContent', {'notid': $(this).closest('.notification').data('notid')}, \$modal.find('.modal-content'), 'html', function () {
+			\$modal.modal('show').one('hidden.bs.modal', function () {
+				\$modal.remove();
+			});
+		});
 	});
+	
 })();
 </script>";
 		

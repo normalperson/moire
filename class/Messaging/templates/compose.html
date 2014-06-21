@@ -24,6 +24,7 @@
 </form>
 <script type='text/javascript'>
 var classurl = '{$classurl}';
+var defrecp = {$defaultRecp|json_encode};
 {literal}
 (function () {
 	$("#contentInput").limiter(100, { label: '#character-limit-textarea-label' });
@@ -50,7 +51,7 @@ var classurl = '{$classurl}';
 				}).done(function(data) { callback(data); });
 			}
 		}
-	});
+	}).select2("data",defrecp);
 	
 	
 	$("#messageForm").validate({

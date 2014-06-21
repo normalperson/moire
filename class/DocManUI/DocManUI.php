@@ -50,6 +50,7 @@ class DocManUI {
 			case 'jpg': $mime = 'image/jpg'; break;
 			default: $mime = 'application/force-download';
 		}
+
 		header('Pragma: public'); 	// required
 		header('Expires: 0');		// no cache
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -117,7 +118,7 @@ class DocManUI {
 
 	}
 	function download(){
-		$listofdoc = $_REQUEST['docid'];
+		$listofdoc = json_decode($_REQUEST['docid'],true);
 		$reftype = $_REQUEST['reftype'];
 		$appname = strtoupper (APP);
 		

@@ -6,12 +6,14 @@ class DBO_InputType_Summernote_WYSIWYG extends DBO_InputType{
 		$ret = "";
 		extract($param);
 		$ret = $HTML->genTextarea($name, $value, $ext);
+		$size = $dbo->cols[$col]->size;
+		if (!$size) $size = 200;
 		$ret .= 
 "<script type='text/javascript'>
 (function () {
 	if (! $('html').hasClass('ie8')) {
 		$('#{$name}').summernote({
-			height: 200,
+			height: {$size},
 			tabsize: 2
 		});
 	}

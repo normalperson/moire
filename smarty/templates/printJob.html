@@ -1,5 +1,6 @@
 <style type="text/css">
 #print_task_container{
+	font-family: Segoe UI,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
 	width: 21cm;
 	color:#000000;
 }
@@ -56,9 +57,13 @@ table.print_task_table ul.pj_ul{
 	}
 	#print_task_container{
 	}
+	div.print_button_container{
+		display:none;
+	}
 }
 </style>
 <div id="print_task_container">
+<div style="text-align:right;" class="print_button_container"><input type="button" onclick="window.print();" value="Print"/></div>
 <table class="print_task_table">
 	<tr>
 		<td width="50%" rowspan="2"><img src="/{$APP}/image/print_moirelogo.png" style="width:100%"/></td>

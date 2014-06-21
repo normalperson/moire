@@ -5,6 +5,9 @@ require_once(dirname(__FILE__).'/init.inc.php');
 
 if(!empty($_POST['username'])){
 	$ok = $User->login($_POST['username'], $_POST['password']);
+	if(function_exists('login_after_function')){
+		login_after_function($ok);
+	}
 	if($ok){
 		// $url = isset($GLOBAL['urlbeforelogin'])&&!empty($GLOBAL['urlbeforelogin'])?$GLOBAL['urlbeforelogin']:'index.php';
 		if (isset($GLOBAL['urlbeforelogin'])) unset($GLOBAL['urlbeforelogin']);

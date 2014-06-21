@@ -4,6 +4,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'role';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
+$dbo->fileSaveMode = 511;
 $dbo->table = 'fcrole';
 $dbo->key = array('rol_id');
 $dbo->sql = 'select fcrole.*,\'\' as rol_permission from fcrole';
@@ -14,7 +15,7 @@ $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
 $dbo->colDetail = array();
 $dbo->colNew = array('rol_name', 'rol_permission');
-$dbo->colEdit = array('rol_id', 'rol_name', 'rol_permission');
+$dbo->colEdit = array('rol_name', 'rol_permission');
 $dbo->colSearch = array('rol_name');
 $dbo->colExport = array('rol_permission');
 $dbo->colSort = array();

@@ -42,7 +42,6 @@ $( document ).ready(function() {
                                             .css("background-color","#E6E6E6");
 
   $('#dbo_reqverification_edit_js_decision').change(function(){
-  	 console.log($(this).val());
   	 if($(this).val() == 'Revert'){
   	 	$('#dbo_reqverification_edit_js_assignto').attr('disabled','disabled')
                                             .css("background-color","#E6E6E6");

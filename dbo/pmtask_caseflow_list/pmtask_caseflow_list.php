@@ -45,6 +45,7 @@ function showactions($colname, $currval, $rs, $html) {
 	$ret .= "<div class='btn-group btn-group-sm'>";
 	$ret .= PMTask::showCommentButton($rs['pmc_id'], $rs['pmf_id']);
 	$ret .= PMTask::showFlagButton($rs['pmc_id']);
+	$ret .= PMTask::showTimelineButton($rs['pmc_id']);
 	$ret .= "</div>";
 
 	return $ret;

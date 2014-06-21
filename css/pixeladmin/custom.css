@@ -36,6 +36,10 @@ label.mandatory:after{
 	margin:0 !important;
 }
 
+.widget-messages-alt .message-subject {
+	width : 90%;
+}
+
 .widget-messages-alt.dropdown-menu .messages-link.messages-compose-link{
 	margin-left: 1.5px !important;
 }
@@ -122,4 +126,17 @@ label.mandatory:after{
 
 .select2-results li.select2-result-with-children>.select2-result-label {
 	font-weight : 700;
+}
+
+
+div.dbo_theme_pixeladmin table.dbo_list a.sortable{
+	color:#000000;
+}
+
+.widget-notifications .notification a{
+	line-height: 17px!important;
+}
+
+.widget-notifications .notification a:hover{
+	background:none !important;
 }

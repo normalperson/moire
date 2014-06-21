@@ -91,7 +91,6 @@ function editorgrole($param1,$param12,$param3){
 			foreach ($orgdata as $data){
 				if($data['org_id'] == $val['uor_orgid']) $orgHTML .= "<option selected value='".$data['org_id']."'>".$data['org_name']."</option>";
 				else  $orgHTML .= "<option value='".$data['org_id']."'>".$data['org_name']."</option>";
-				
 			}
 			$orgHTML .= "</select>"; 
 

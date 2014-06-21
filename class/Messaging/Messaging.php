@@ -42,7 +42,7 @@ class Messaging {
 				<img src='{$senderimage}' alt=\"{$displaysender}\" title=\"{$displaysender}\" class='message-avatar'>
 				<span class='message-subject'>{$row['di_subject']}</span>
 				<div class='message-description' >
-					from  <a href='javascript:void(0)'>{$displaysender}</a>
+					from  &nbsp;<a href='javascript:void(0)' class='message-reply-link' data-userid='{$row['di_created_by']}'>{$displaysender}</a>
 					&nbsp;·&nbsp;
 					<span title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</span>
 				</div>
@@ -110,6 +110,16 @@ class Messaging {
 					});
 				});
 			})
+			\$msglist.find('.message-reply-link').click(function (e) {
+				var \$modal = createEmptyModal('messageComposeModal');
+				ajaxRenderHTML('{$classurl}/ajaxRenderCompose', {'defaultRecp': [$(this).data('userid')]}, \$modal.find('.modal-content'), 'html', function () {
+					\$modal.modal('show').one('hidden.bs.modal', function () {
+						\$msglist.trigger('reload');
+						\$modal.remove();
+					});
+				});
+			})
+			
 			\$msglist.find('.dropdown-toggle').click(function (e) {
 				if ($(this).find('.small-screen-text').is(':visible')) { //mobile view
 					\$msglist.find('.messages-link.messages-view-all-link').click();
@@ -122,7 +132,7 @@ class Messaging {
 	}
 	
 	
-	function renderCompose() {
+	function renderCompose($defaultRecp = array()) {
 		global $DB, $USER;
 		$smarty = new Smarty();
 		$smarty->setTemplateDir(dirname(__FILE__).DS.'templates');
@@ -130,8 +140,13 @@ class Messaging {
 		$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
 		$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
 		
+		$defaultRecpArr = array();
+		foreach($defaultRecp as $r) {
+			$defaultRecpArr[] = $DB->getRow("select usr_userid as id, usr_name as text from fcuser where usr_userid=:0", array($r), PDO::FETCH_ASSOC);
+		}
 		$classurl = WEB_HREF.'/'.__CLASS__;
 		$smarty->assign('classurl', $classurl);
+		$smarty->assign('defaultRecp', $defaultRecpArr);
 		return $smarty->fetch('compose.html');
 		
 	}
@@ -244,7 +259,7 @@ class Messaging {
 				<img src='{$senderimage}' alt=\"{$displaysender}\" title=\"{$displaysender}\" class='message-avatar'>
 				<span class='message-subject'>{$row['di_subject']}</span>
 				<div class='message-description' >
-					from  <a href='javascript:void(0)'>{$displaysender}</a>
+					from  <a href='javascript:void(0)' class='message-reply-link' data-userid='{$row['di_created_by']}'>{$displaysender}</a>
 					&nbsp;·&nbsp;
 					<span title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</span>
 				</div>
@@ -318,7 +333,19 @@ class Messaging {
 				\$modal.remove();
 			});
 		});
+	}).on('click', '.message-reply-link', function (e) {
+		var \$exmodal = $(this).closest('#messageListModal');
+		if (\$exmodal.length > 0) {
+			\$exmodal.modal('hide');
+		}
+		var \$modal = createEmptyModal('messageComposeModal');
+		ajaxRenderHTML('{$classurl}/ajaxRenderCompose', {'defaultRecp': [$(this).data('userid')]}, \$modal.find('.modal-content'), 'html', function () {
+			\$modal.modal('show').one('hidden.bs.modal', function () {
+				\$modal.remove();
+			});
+		});
 	})
+	
 })();
 </script>";
 		
@@ -330,7 +357,8 @@ class Messaging {
 	}
 	
 	function ajaxRenderCompose() {
-		echo $this->renderCompose();
+		$defrecp = (!empty($_POST['defaultRecp'])) ? $_POST['defaultRecp'] : array();
+		echo $this->renderCompose($defrecp);
 	}
 	
 	function ajaxRenderNextMessages() {

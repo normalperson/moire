@@ -4,6 +4,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'menu';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
+$dbo->fileSaveMode = 511;
 $dbo->table = 'fcmenu';
 $dbo->key = array('mn_id');
 $dbo->sql = 'select * from fcmenu';
@@ -17,7 +18,7 @@ $dbo->colNew = array('mn_code', 'mn_title', 'mn_parentid', 'mn_status', 'mn_url'
 $dbo->colEdit = array('mn_code', 'mn_title', 'mn_parentid', 'mn_status', 'mn_url', 'mn_webflag', 'mn_order', 'mn_pmscode', 'mn_func', 'mn_class', 'mn_icon_class');
 $dbo->colSearch = array('mn_code', 'mn_title', 'mn_status', 'mn_webflag', 'mn_order', 'mn_pmscode', 'mn_func', 'mn_class', 'mn_parentid');
 $dbo->colExport = array('mn_title', 'mn_url', 'mn_status', 'mn_order', 'mn_webflag', 'mn_class');
-$dbo->colSort = array();
+$dbo->colSort = array('mn_order');
 $dbo->canSearch = true;
 $dbo->canNew = true;
 $dbo->canEdit = true;

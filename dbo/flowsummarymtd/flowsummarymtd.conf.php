@@ -4,12 +4,14 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'flowsummarymtd';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
+$dbo->fileSaveMode = 511;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, pmc_id,pmf_obj_type, pmf_obj_id, pmf_end_date, pmf_end_by, 
 pmf_start_Date, pmf_due_date,\'\' filehistory,
 cast(jobcategory as varchar) as jobcategory,
-cast(joboutput as varchar) as joboutput
+cast(joboutput as varchar) as joboutput, 
+\'\' as printbutton
 from mjobsheet 
 join fcpmcase on js_id = pmc_casekey
 join fcpmcaseflow on pmf_pmcid = pmc_id 
@@ -19,8 +21,8 @@ group by jc_jsid) a on js_id = a.jc_jsid
 left join (
 select string_agg(jo_outputcode,\', \' order by jo_id) joboutput,jo_jsid from mjoboutput
 group by jo_id) b on js_id = b.jo_jsid';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'pmc_id', 'pmf_obj_type', 'pmf_obj_id', 'pmf_end_date', 'pmf_end_by', 'pmf_start_date', 'pmf_due_date', 'filehistory', 'jobcategory', 'joboutput');
-$dbo->colList = array('pmc_id', 'js_description', 'js_primcat', 'jobcategory', 'js_request_date', 'js_orgid');
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'pmc_id', 'pmf_obj_type', 'pmf_obj_id', 'pmf_end_date', 'pmf_end_by', 'pmf_start_date', 'pmf_due_date', 'filehistory', 'jobcategory', 'joboutput', 'printbutton');
+$dbo->colList = array('pmc_id', 'js_description', 'js_primcat', 'jobcategory', 'js_request_date', 'js_orgid', 'printbutton');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
@@ -113,9 +115,9 @@ $dbo->render = array();
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
 $dbo->whereSQL = ' pmf_obj_type = \'PM_Activity\'
-		and pmf_obj_id = \'5\'
+		and pmf_obj_id = \'4\'
 		and pmf_end_date is not null
-		and pmf_end_by = \'admin\'
+		and pmf_end_by = \'fongadmin\'
 		and pmf_start_date > date_trunc(\'month\', current_date)
 		and pmf_start_date < (date_trunc(\'MONTH\', current_date) + INTERVAL \'1 MONTH\')::date
 		and pmf_end_date > pmf_due_date ';
@@ -487,7 +489,7 @@ $dbo->cols['js_trapping_size']->option->listMethod = 'text';
 $dbo->cols['js_trapping_size']->option->detailMethod = 'text';
 $dbo->cols['js_trapping_size']->option->newMethod = 'text';
 $dbo->cols['js_trapping_size']->option->editMethod = 'text';
-$dbo->cols['js_barcodetype'] = new DBO_COL('js_barcodetype', 'int4', '4', '-1');
+$dbo->cols['js_barcodetype'] = new DBO_COL('js_barcodetype', 'varchar', '-1', '54');
 $dbo->cols['js_barcodetype']->inputTypeDefault = 'text';
 $dbo->cols['js_barcodetype']->searchMode = 'exact';
 $dbo->cols['js_barcodetype']->capContClassDefault = array();
@@ -849,6 +851,18 @@ $dbo->cols['joboutput']->option->listMethod = 'text';
 $dbo->cols['joboutput']->option->detailMethod = 'text';
 $dbo->cols['joboutput']->option->newMethod = 'text';
 $dbo->cols['joboutput']->option->editMethod = 'text';
+$dbo->cols['printbutton'] = new DBO_COL('printbutton', 'unknown', '-2', '-1');
+$dbo->cols['printbutton']->displayListModifier = '<button class="btn btn-labeled btn-primary" onclick="printJobPreview({js_id});"><span class="btn-label icon fa fa-camera-retro"></span>Print</button>';
+$dbo->cols['printbutton']->inputTypeDefault = 'text';
+$dbo->cols['printbutton']->searchMode = 'exact';
+$dbo->cols['printbutton']->capContClassDefault = array();
+$dbo->cols['printbutton']->valContClassDefault = array();
+$dbo->cols['printbutton']->option->defaultMethod = 'text';
+$dbo->cols['printbutton']->option->searchMethod = 'text';
+$dbo->cols['printbutton']->option->listMethod = 'text';
+$dbo->cols['printbutton']->option->detailMethod = 'text';
+$dbo->cols['printbutton']->option->newMethod = 'text';
+$dbo->cols['printbutton']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

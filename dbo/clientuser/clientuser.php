@@ -260,7 +260,7 @@ function editorgrole($param1,$param12,$param3){
 
 			//$roledata = $DB->GetArray("select rol_id,rol_code,rol_name from $tblrole where rol_status = :0 ",array('ACTIVE'));
 			if($USER->userid == 'admin') $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole ");
-			else $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where rol_code not in (:0,:1)",array(1,2));
+			else $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where rol_id not in (:0,:1)",array(1,2));
 
 
 			$roleHTML = "<select id='userrole_$num' name='userrole_$num'><option value='default'>--Select Role--</option>";

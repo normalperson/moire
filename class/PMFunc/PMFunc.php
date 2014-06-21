@@ -24,6 +24,20 @@ class PMFunc{
 		}
 		echo "<form method='post'><input type='submit' value='MOVE' name='PROCEED' /></form>";
 	}
+	function reassign($flowid,$o){
+		global $FLOWDECISION,$REMARK,$DB;
+		$_GET['dboid']='reassign';
+		$_GET['js_id']=$o->casekey;
+		$_GET['dbostate']='edit';
+
+		dbo_include('reassign');
+		if(isset($FLOWDECISION) && $FLOWDECISION==true) {
+			// insert comment
+			if(trim($REMARK) != '')	$o->insertComment($REMARK, $flowid);
+
+			return true;
+		}
+	}
 	function reqVerification($flowid,$o){
 		global $FLOWDECISION,$REMARK,$DB;
 		$_GET['dboid']='reqverification';

@@ -15,6 +15,8 @@
 <script type="text/javascript">
 var inpcnt = 0;
 function populateInput(obj,elemt,value,readonly){
+	console.log(obj);
+	console.log(value);
 	inpcnt++;
 	var inpid = 'carinp_'+inpcnt;
 	if(value==0){
@@ -25,13 +27,14 @@ function populateInput(obj,elemt,value,readonly){
 			$element = $('<div class="form-group" > <label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');		
 		}else{
 			$element = $('<div class="form-group" > <label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');		
-
+		
 		}		
 	}	
 
 	// append to data div
 	elemt.append($element);
-	$('#'+inpid).rules("add", {required:true, messages: { required:'Please fill up '+obj.carv_code}});	// validation
+	if(value==0 || !readonly) 	$('#'+inpid).rules("add", {required:true, messages: { required:'Please fill up '+obj.carv_code}});	// validation
+	
 }
 function getCarton(carid, tbody, jobid,readonly){
 	jobid= typeof jobid !== 'undefined' ? jobid : 0;
@@ -49,7 +52,7 @@ function getCarton(carid, tbody, jobid,readonly){
 		dataType: 'json',
 		data: {'carid' : carid, 'jobid' : jobid},
 		success: function (data,textStatus,jqXHR) {
-			/*console.log(data);*/
+			console.log(data);
 			// show image
 			var imagelocation = data.imageinfo;
 
@@ -265,8 +268,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$REMARK = $cols['remark']; // get the remark and insert after insert queue
 	unset($cols['remark']); // unset remark
 	unset($cols['info']); // unset image info
-	unset($cols['fileinfo']); // unset file info
-
+	unset($cols['filehistory']);
 	$cartonarr = $_POST['carcode']; // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
 	// category handling part 1
@@ -331,7 +333,7 @@ $jobcatarr = array();
 foreach ($data as $key => $value) {
 	$jobcatarr[$value['jcl_id']] = $value['jcl_requiretime'];
 }
-echo '<script type="text/javascript"> var catlookup = '.json_encode($jobcatarr).'; console.log("HERE!"); console.log(catlookup);</script>';
+echo '<script type="text/javascript"> var catlookup = '.json_encode($jobcatarr).'; </script>';
 
 # final rendering
 $dbo->render();

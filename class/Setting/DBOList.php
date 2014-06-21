@@ -20,6 +20,6 @@ for($i=2; $i<count($list); $i++){
 </div>
 </td>
 <td>
-<iframe name="dboload" id="dboload" src="DBOLoad<?php echo isset($_GET['load'])?'?load='.$_GET['load']:''; ?>" src="DBOLoad" style="width:100%;height:100%;border:0px;padding:5px;"></iframe>
+<iframe name="dboload" id="dboload" src="DBOLoad<?php echo isset($_GET['load'])?'?load='.$_GET['load']:''; ?>" src="DBOLoad" style="width:100%;height:100%;min-height:500px;border:0px;padding:5px;"></iframe>
 </td>
 </tr></table>
