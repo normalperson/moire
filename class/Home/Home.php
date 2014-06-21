@@ -188,7 +188,7 @@ class Home{
 		$result = $DB->GetRow($sql,array($USER->userid), PDO::FETCH_ASSOC);
 
 		$data = array();
-		if($result['exceedsla'] != 0 && $result['withinsla'] != 0){
+		if(!empty($result) && $result['exceedsla'] != 0 && $result['withinsla'] != 0){
 			$data[] = array('Comply with SLA', $result['withinsla']);
 			$data[] = array('Exceed SLA', $result['exceedsla']);
 
