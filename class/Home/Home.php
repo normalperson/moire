@@ -141,9 +141,10 @@ class Home{
 
 		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
-		$smarty->assign('paneltitle',$paneltitle );
-		$smarty->assign('charttitle',$charttitle );
-		$smarty->assign('chartsubtitle',$chartsubtitle );	
+		$smarty->assign('paneltitle',tl($paneltitle,true,'home') );
+		$smarty->assign('charttitle',tl($charttitle,true,'widget')  );
+		$smarty->assign('chartsubtitle',tl($chartsubtitle,true,'widget') );	
+		$smarty->assign('Home',$this );	
 		$smarty->assign('data',json_encode($data)); 
 		$smarty->assign('xAxis',json_encode($xAxis)); 
 		$smarty->assign('showgraph',json_encode($showgraph)); 
@@ -185,9 +186,9 @@ class Home{
 				and pmf_end_by = :0
 				group by usr_name order by usr_name ";
 		$result = $DB->GetRow($sql,array($USER->userid), PDO::FETCH_ASSOC);
-		
+
 		$data = array();
-		if(!empty($result)){
+		if($result['exceedsla'] != 0 && $result['withinsla'] != 0){
 			$data[] = array('Comply with SLA', $result['withinsla']);
 			$data[] = array('Exceed SLA', $result['exceedsla']);
 
@@ -199,6 +200,7 @@ class Home{
 		$smarty = $this->initSmarty();
 		$smarty->assign('data',json_encode($data)); 
 		$smarty->assign('showgraph',json_encode($showgraph)); 
+		$smarty->assign('Home',$this); 
 		$html = $smarty->fetch('myperformance.html');
 		return $html;
 	}

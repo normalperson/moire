@@ -4,6 +4,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'jobsheet';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
+$dbo->fileSaveMode = 511;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, \'\' attachment, \'\' remark, \'\' info,

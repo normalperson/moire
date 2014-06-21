@@ -4,7 +4,7 @@
 			<div class="panel-heading-controls">
 
 				<div class="panel-heading-icon">
-					View cases
+					{'View cases'|tl:true:'home'}
 					<i class="fa  fa-angle-double-right"></i>
 				</div>
 			</div>
@@ -16,15 +16,16 @@
        </div>
     </div>
 </div>		
+<div id="nograph_jobcatbyflow" class="hidden">{$Home->noGraph()}</div>
 <script type="text/javascript">
 $( document ).ready(function() {
     var data = {$data},
     category = {$xAxis},
     showgraph = {$showgraph},
     v_title = '{$charttitle}',
-    v_subtitle = '{$chartsubtitle}';
-    console.log(data);
-    console.log(category);  
+    v_subtitle = '{$chartsubtitle}',
+    gyAxisTitle = "{'Quantity'|tl:false:'widget'}",
+    gsuffix = "{'item'|tl:false:'widget'}";
     if(showgraph){
         $('#jobcatbyflow').highcharts({
             chart: {
@@ -45,7 +46,7 @@ $( document ).ready(function() {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Quantity ',
+                    text: gyAxisTitle,
                     align: 'high'
                 },
                 labels: {
@@ -53,7 +54,7 @@ $( document ).ready(function() {
                 }
             },
             tooltip: {
-                valueSuffix: ' item'
+                valueSuffix: gsuffix
             },
             plotOptions: {
                 bar: {
@@ -69,7 +70,7 @@ $( document ).ready(function() {
         });  
     }
     else{
-        $('#jobcatbyflow').text('need to create a no data found image here!');
+        $('#jobcatbyflow').append($('#nograph_jobcatbyflow').removeClass("hidden"));
     }
 });
 </script>
