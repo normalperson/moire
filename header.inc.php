@@ -16,7 +16,7 @@ function html_header($headerTemplate='header.html'){
 		$HTML->addCSS('css/'.$THEME.'/custom.css');
 		$HTML->addJS('js/jquery-2.1.1.min.js');
 		$HTML->addJS('js/bootstrap.min.js');
-		$HTML->addJS('js/pixel-admin.min.js');
+		$HTML->addJS('js/pixel-admin.js');
 		$HTML->addJS('js/jquery.ui.draggable.min.js');
 		$HTML->addJS('js/jquery.ui.droppable.min.js');
 		$HTML->addJS('js/moment.min.js');
@@ -38,8 +38,8 @@ function html_header($headerTemplate='header.html'){
 		$HTML->smarty->assign('Menu', $Menu);
 		
 		// include Widgets in Menu
-		include_once(CLASS_DIR.DS.'NotificationList'.DS.'NotificationList.php');
-		$HTML->smarty->assign('NotificationList', new NotificationList());
+		include_once(CLASS_DIR.DS.'Notification'.DS.'Notification.php');
+		$HTML->smarty->assign('Notification', new Notification());
 		
 		include_once(CLASS_DIR.DS.'Messaging'.DS.'Messaging.php');
 		$HTML->smarty->assign('Messaging', new Messaging());

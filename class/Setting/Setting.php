@@ -190,6 +190,11 @@ class Setting{
 		$dbo = dbo_include('jobsheet');	
 
 	}
+	function showDBO2(){
+		html_header();
+		$dbo = dbo_include('flowsummary');	
+
+	}
 	function machinesetup(){
 		html_header();
 		$dbo = dbo_include('machinesetup');
@@ -219,6 +224,11 @@ class Setting{
 	function localesetup() {
 		html_header();
 		dbo_include('locale_setup');
+	}
+	
+	function mailtemplatesetup() {
+		html_header();
+		dbo_include('mail_template');
 	}
 }
 

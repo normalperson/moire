@@ -7,6 +7,16 @@ class PMTask {
 		$this->classurl = WEB_HREF.'/'.__CLASS__;
 	}
 
+	function runAllTimer() { // temp
+		global $DB;
+		$DB->showSQL=true;
+		$dueArr = $DB->getArray("select * from fcpmcaseflow where pmf_end_date is null and pmf_timer_due_date <= now()");
+		foreach($dueArr as $d) {
+			$case = new PM_Case($d['pmf_pmcid']);
+			$case->performFlow($d['pmf_id'], false, true);
+		}
+	}
+	
 	function initSmarty($headerTmpl = "header.html"){
 		$smarty = new Smarty();
 		$smarty->caching = false;

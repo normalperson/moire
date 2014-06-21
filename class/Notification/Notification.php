@@ -1,5 +1,5 @@
 <?php
-class NotificationList {
+class Notification {
 
 	var $severe_class_map = array(
 		5=>'danger',
@@ -305,7 +305,7 @@ class NotificationList {
 	}
 	
 	
-	static function sendNotification($recipients, $msg) {
+	static function send($recipients, $subject, $content = null) {
 		global $USER, $DB;
 		if (is_string($recipients)) {
 			$recipients = explode(',',$recipients);
@@ -320,7 +320,8 @@ class NotificationList {
 					'di_userid'=>$r,
 					'di_cat'=>'NOTICE',
 					'di_status'=>'UNREAD',
-					'di_subject'=>$msg,
+					'di_subject'=>$subject,
+					'di_text'=>$content,
 				);
 				$ok = $DB->doInsert('fcuserdiary', $data);
 				if (!$ok) return false;

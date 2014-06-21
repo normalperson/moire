@@ -96,7 +96,7 @@
 <!-- monthly sales and my performance -->
 <div class="row">
 	<div class="col-md-6">
-		{$Home->renderTaskPendingAction('ARTIST')}			
+		{$Home->renderJobByFlow('PM_Activity',4)}		
 	</div>
 	
 
@@ -104,17 +104,6 @@
 	<div class="col-md-6">
 		{$Home->renderMyPerformance()}			
 	</div>
-
-</div>
-
-<!-- pending job count and QC pass category-->
-<div class="row">
-	<!-- monthly sales -->
-	<div class="col-md-12">
-		{$Home->renderJobByCategory()}		
-	</div>
-
-	
 
 </div>
 

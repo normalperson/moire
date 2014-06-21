@@ -6,6 +6,12 @@ button.close {
 	font-family : "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+label.mandatory:after{
+	content:" *";
+	color:red;
+}
+
+
 .widget-notifications .notification.UNREAD {
 	background-color: #DDDDDD;
 }

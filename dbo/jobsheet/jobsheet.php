@@ -1,27 +1,37 @@
-<!--
 <style type="text/css">
-#dbo_jobsheet .caption{
+#dbotab_jobsheet_detail_tbody_2 .caption{
 	display:none;
 }
+#dbotab_jobsheet_edit_tbody_2 .caption{
+	display:none;
+}
+#dbo_jobsheet_new_cont_js_distortion{
+	min-width: 200px;
+}
+#dbo_jobsheet_edit_cont_js_distortion{
+	min-width: 200px;
+}
 </style>
--->
 <script type="text/javascript">
+var inpcnt = 0;
 function populateInput(obj,elemt,value,readonly){
-	console.log('readonly = '+readonly);
+	inpcnt++;
+	var inpid = 'carinp_'+inpcnt;
 	if(value==0){
 		// create the html element
-		$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']" ><span class="input-group-addon">'+obj.carv_unit+'</span></div>');
+		$element = $('<div class="form-group" ><label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']" ><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');
 	}else{
 		if(readonly){
-			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
+			$element = $('<div class="form-group" > <label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');		
 		}else{
-			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
+			$element = $('<div class="form-group" > <label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');		
 
-		}
-	}		
+		}		
+	}	
 
 	// append to data div
 	elemt.append($element);
+	$('#'+inpid).rules("add", {required:true, messages: { required:'Please fill up '+obj.carv_code}});	// validation
 }
 function getCarton(carid, tbody, jobid,readonly){
 	jobid= typeof jobid !== 'undefined' ? jobid : 0;
@@ -39,7 +49,7 @@ function getCarton(carid, tbody, jobid,readonly){
 		dataType: 'json',
 		data: {'carid' : carid, 'jobid' : jobid},
 		success: function (data,textStatus,jqXHR) {
-			console.log(data);
+			/*console.log(data);*/
 			// show image
 			var imagelocation = data.imageinfo;
 
@@ -81,6 +91,7 @@ $( document ).ready(function() {
 });
 
 </script>
+
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'jobsheet.conf.php');
 require_once(DOC_DIR.DS.'inc'.DS.'appFunc.php');
@@ -107,6 +118,24 @@ function showFileHistory($col, $colVal, $data=array(), $html=null){
 	$docUI = new DocManUI();
 	$html = $docUI->getFileList($data['js_id'],'js_id');
 
+	return $html;
+}
+function showPercentage($col, $colVal, $data=array(), $html=null){
+
+	$html = '<div class="input-group">'.$html.'<span class="input-group-addon">%</span></div>';
+	return $html;
+}	
+function showPercentageDet($col, $colVal, $data=array(), $html=null){
+
+	$newhtml = '<div id="dbo_jobsheet_detail_cont_js_distortion_value" class="value_container" inputtype="text" inputtypesize="">'.$colVal.' %</div>';
+
+	return $newhtml;
+}
+function showRequiredMinute($col, $colVal, $data=array(), $html=null){
+	$html = '<div class="note note-info">
+				<h4 class="note-title" id="requiredmin">0 minutes</h4>
+				<small>Note:Supervisor has the right to override the time.</small>
+			</div>';
 	return $html;
 }
 
@@ -158,10 +187,19 @@ function dbo_jobsheet_custom_new($table, $cols){
 	$cols['js_primcat'] = getHighestPriorityCat($cols['jobcategory']);
 	$catstring = $cols['jobcategory'];
 	unset($cols['jobcategory']);
+
+	// output requirement handling part 1
+	$outputreq = $cols['joboutput'];
+	unset($cols['joboutput']);	
 	
 	$cols['js_orgid'] = $USER->orgid; // assign org id
 	$cartonarr = $_POST['carcode']; // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
+
+	$cols['js_request_by'] = $USER->userid; // store the userid
+
+	unset($cols['js_requiretime']); // unset the requiretime (finalize by supervisor)
+
 	$ok = $DB->doInsert($table, $cols);
 	$jobid = $DB->lastInsertId('mjobsheet_js_id_seq');
 	if(!$ok){
@@ -173,6 +211,14 @@ function dbo_jobsheet_custom_new($table, $cols){
 			// insert into mjobcat
 			$data = array('jc_jsid' => $jobid, 'jc_jclid' => $value);
 			$ok = $DB->doInsert('mjobcat', $data);
+		}
+
+		// output requirement handling part 2
+		$oparr = explode(",",$outputreq);
+		foreach ($oparr as $key => $value) {
+			// insert into mjoboutput
+			$opdata = array('jo_jsid' => $jobid, 'jo_outputcode' => $value);
+			$ok = $DB->doInsert('mjoboutput', $opdata);
 		}
 		foreach ($cartonarr as $key => $value) {
 			$cartondata = array(
@@ -219,7 +265,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$REMARK = $cols['remark']; // get the remark and insert after insert queue
 	unset($cols['remark']); // unset remark
 	unset($cols['info']); // unset image info
-	unset($cols['fileinfo']);
+	unset($cols['fileinfo']); // unset file info
 
 	$cartonarr = $_POST['carcode']; // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
@@ -227,6 +273,10 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$cols['js_primcat'] = getHighestPriorityCat($cols['jobcategory']);
 	$catstring = $cols['jobcategory'];
 	unset($cols['jobcategory']);
+
+	// output requirement handling part 1
+	$outputreq = $cols['joboutput'];
+	unset($cols['joboutput']);	
 
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
@@ -243,6 +293,18 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 			$data = array('jc_jsid' => $jobid, 'jc_jclid' => $value);
 			$ok = $DB->doInsert('mjobcat', $data);
 		}
+		// delete the existing output requirement
+		$sql = "delete from mjoboutput where jo_jsid = :0 ";
+		$ok = $DB->Execute($sql,array($jobid));
+
+		// output requirement handling part 2
+		$oparr = explode(",",$outputreq);
+		foreach ($oparr as $key => $value) {
+			// insert into mjoboutput
+			$opdata = array('jo_jsid' => $jobid, 'jo_outputcode' => $value);
+			$ok = $DB->doInsert('mjoboutput', $opdata);
+		}
+
 		// delete existing job info
 		$sql = "delete from mjscartonvalue where carval_jsid = :0";
 		$ok = $DB->Execute($sql,array($jobid));
@@ -262,6 +324,43 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	return $ret;
 }
 
+global $DB;
+$sql = "select * from mjobcatlookup";
+$data = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
+$jobcatarr = array();
+foreach ($data as $key => $value) {
+	$jobcatarr[$value['jcl_id']] = $value['jcl_requiretime'];
+}
+echo '<script type="text/javascript"> var catlookup = '.json_encode($jobcatarr).'; console.log("HERE!"); console.log(catlookup);</script>';
+
 # final rendering
 $dbo->render();
 ?>
+<script type="text/javascript">
+$( document ).ready(function() {
+	var checkcatarr = [];
+	$('input[id^="dbo_jobsheet_new_jobcategory"]').change(function(){
+		$this = $(this);
+		if($this.is(':checked')) checkcatarr.push($this.val());
+		else{
+			var index = checkcatarr.indexOf($this.val());
+			checkcatarr.splice(index, 1);
+		}
+		calMinutes();
+	});
+	
+	function calMinutes(){
+		var totalmin = 0;
+		$.each(checkcatarr, function( index, value ) {
+			totalmin += catlookup[value];
+		});
+
+		$('#requiredmin').text(totalmin+' minutes');
+
+	}	
+
+
+});
+
+</script>
+
