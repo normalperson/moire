@@ -35,7 +35,7 @@ class Home{
 
 	}
 	function supervisorhome(){
-		global $HTML;
+		global $HTML,$LANG;
 		html_header();
 		$smarty = $this->initSmarty();
 		$smarty->assign('Home', $this);		
@@ -50,6 +50,14 @@ class Home{
 		$smarty = $this->initSmarty();
 		$smarty->assign('Home', $this);		
 		$smarty->display('customerhome.html');
+	}
+	function noGraph(){
+		$smarty = $this->initSmarty();
+		$imagelocation = IMAGE_HREF.DS.'/nograph.png';
+		$smarty->assign('imagelocation', $imagelocation);		
+
+		$html = $smarty->fetch('nograph.html');
+		return $html;
 	}
 	function renderJobByCat($type){
 		global $HTML,$DB,$USER;
@@ -95,6 +103,7 @@ class Home{
 		$smarty->assign('data',json_encode($data)); 
 		$smarty->assign('xAxis',json_encode($xAxis)); 
 		$smarty->assign('showgraph',json_encode($showgraph)); 
+		$smarty->assign('Home',$this); 
 		$html = $smarty->fetch('jobbycat.html');
 		return $html;
 	}

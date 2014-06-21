@@ -2,8 +2,11 @@ div.translate-mode-bar {
 	width: 100%;
 	height: auto;
 	background-color: #DFDFDF;
-	border-bottom: outset 1px;
+	border-top: outset 1px;
 	text-align: center;
+	bottom : 0;
+	position:fixed;
+	z-index : 999;
 }
 
 div.translate-mode-bar  > p {

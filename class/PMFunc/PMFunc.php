@@ -169,6 +169,30 @@ class PMFunc{
 		sendMailFromTemplate('NOTIFY_LATE_REQ_VER');
 		return true;
 	}
+	
+	function notifyLateAcknowledgement() {
+		sendMailFromTemplate('NOTIFY_LATE_ACKNOWLEDGE');
+		return true;
+	}
+	
+	function notifyLateWIP() {
+		sendMailFromTemplate('NOTIFY_LATE_WIP');
+		return true;
+	}
+	function notifyLateQC() {
+		sendMailFromTemplate('NOTIFY_LATE_QC');
+		return true;
+	}
+	
+	function autoCustomerAccept($flowid, $case) {
+		global $DB;
+		$data = array(
+			'js_status'=>'COMPLETED',
+			'js_decision'=>'Auto Accept',
+		);
+		return $DB->doUpdate('mjobssheet', $data, array('js_id'=>$case->casekey));
+	}
+	
 }
 
 

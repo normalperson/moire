@@ -1,6 +1,6 @@
 <div class="panel panel-success panel-dark">
 	<div class="panel-heading">
-		<div>SALES BY QUANTITY MTD
+		<div>{'SALES BY QUANTITY MTD'|tl:true:'widget'}
 			<div class="panel-heading-controls">
 
 				<!-- <div class="panel-heading-icon">
@@ -16,20 +16,25 @@
        </div>
     </div>
 </div>		
+<div id="nograph" class="hidden">{$Home->noGraph()}</div>
 
 <script type="text/javascript">
 $( document ).ready(function() {
     var data = {$data},
         category = {$xAxis},
-        showgraph = {$showgraph};
-{literal}    
+        showgraph = {$showgraph},
+        gtitle = "{'Monthly sales'|tl:true:'widget'}",
+        gsubtitle = "{'by quantity'|tl:true:'widget'}",
+        gyAxisTitle = "{'Quantity'|tl:true:'widget'}";
+{literal}  
+    showgraph  = false;
     if(showgraph){
     	$('#salebyqty').highcharts({
             chart: {
                 type: 'bar'
             },
             title: {
-                text: 'Monthly sales '
+                text: gtitle
             },
             subtitle: {
                 text: 'by quantity'
@@ -66,7 +71,7 @@ $( document ).ready(function() {
             series: data
         });
     }else{
-        $('#salebyqty').text('need to have a beautiful image to show no data found!');
+        $('#salebyqty').append($('#nograph').removeClass("hidden"));
     }
 });
 </script>
