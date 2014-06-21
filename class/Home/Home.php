@@ -247,6 +247,7 @@ class Home{
 		$smarty->assign('data',json_encode($data));
 		$smarty->assign('xAxis',json_encode($xAxis));
 		$smarty->assign('showgraph',json_encode($showgraph));
+		$smarty->assign('Home',$this); 
 		$html = $smarty->fetch('artistperformance.html');
 		return $html;
 	}
