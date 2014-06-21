@@ -62,7 +62,14 @@ CREATE FUNCTION cleanqueue() RETURNS void
 BEGIN
     delete from fcpmcase;
     delete from fcpmcaseflow;
+    delete from fcpmcasecomment;    
+    delete from fcpmcasecommentread;
+    delete from fcpmcaseflag;
+    delete from fcpmcaseflowassign;
+    delete from mjobcat;
     delete from mjobsheet;
+    delete from mjoboutput;
+    
 END;
 $$;
 
@@ -6955,10 +6962,6 @@ POSBMENU	For POSB Admin
 --
 
 COPY fcpmactivity (pmat_id, pmat_pmwfid, pmat_pmslid, pmat_name, pmat_type, pmat_function, pmat_sla_interval, pmat_sla_workinghours_only, pmat_show_caseinfo) FROM stdin;
-8	1	\N	Notify Supervisor On Late Job Acknowledgement	SCRIPT	\N	\N	N	N
-11	1	\N	Notify Supervisor and Manager On Late WIP	SCRIPT	\N	\N	N	N
-12	1	\N	Notify Supervisor and Manager On Late QC Check	SCRIPT	\N	\N	N	N
-13	1	\N	Auto Accept	SCRIPT	\N	\N	N	N
 2	1	1	Pending resolution 	USER	pendingRevert	\N	N	N
 9	1	2	Reassign Artist	USER	\N	\N	N	N
 1	1	2	Requirement verification	USER	reqVerification	PT30M	N	Y
@@ -6967,6 +6970,10 @@ COPY fcpmactivity (pmat_id, pmat_pmwfid, pmat_pmslid, pmat_name, pmat_type, pmat
 6	1	1	Pending acceptance	USER	pendingCust	PT24H	N	Y
 10	1	3	Rework in progress	USER	wip	\N	N	Y
 7	1	\N	Notify Manager On Late Requirement Verification	SCRIPT	notifyLateVerification	\N	N	N
+8	1	\N	Notify Supervisor On Late Job Acknowledgement	SCRIPT	notifyLateAcknowledgement	\N	N	N
+11	1	\N	Notify Supervisor and Manager On Late WIP	SCRIPT	notifyLateWIP	\N	N	N
+12	1	\N	Notify Supervisor and Manager On Late QC Check	SCRIPT	notifyLateQC	\N	N	N
+13	1	\N	Auto Accept	SCRIPT	autoCustomerAccept	\N	N	N
 \.
 
 
@@ -7252,12 +7259,13 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 573	91	7	PM_Activity	541	27	2014-06-13 22:37:08+08	\N	\N	\N	2014-06-13 22:37:08+08	artist1	\N	N	\N	\N	\N
 571	93	6	PM_Event	570	25	2014-06-11 20:50:52+08	2014-06-11 20:50:52+08	END	\N	2014-06-11 20:50:52+08	artist1	571	N	\N	\N	\N
 575	83	7	PM_Activity	525	27	2014-06-19 10:43:08+08	\N	\N	\N	2014-06-19 10:43:08+08	artist1	\N	N	\N	\N	\N
+527	84	1	PM_Activity	526	1	2014-06-10 17:32:52+08	\N	\N	2014-06-10 18:02:52+08	2014-06-21 15:33:13+08	artist1	\N	N	2014-06-20 19:06:38+08	2014-06-20 19:36:38+08	3
 577	83	1	PM_Gateway	525	2	2014-06-19 10:45:08+08	2014-06-19 10:45:08+08	DONE	\N	2014-06-19 10:45:08+08	artist1	577	N	\N	\N	\N
 525	83	1	PM_Activity	524	1	2014-06-10 17:32:03+08	2014-06-19 10:45:08+08	DONE	2014-06-10 18:02:03+08	2014-06-19 10:45:06+08	artist1	525	N	2014-06-19 10:45:06+08	2014-06-19 11:13:08+08	2
 576	84	7	PM_Activity	527	27	2014-06-19 10:43:09+08	\N	\N	\N	2014-06-19 10:43:09+08	artist1	\N	N	\N	\N	\N
 578	83	2	PM_Gateway	577	4	2014-06-19 10:45:08+08	2014-06-19 10:45:08+08	DONE	\N	2014-06-19 10:45:08+08	artist1	578	N	\N	\N	\N
 581	82	8	PM_Activity	523	8	2014-06-20 18:07:37+08	\N	\N	\N	2014-06-20 18:07:37+08	\N	\N	N	\N	\N	\N
-527	84	1	PM_Activity	526	1	2014-06-10 17:32:52+08	\N	\N	2014-06-10 18:02:52+08	2014-06-20 19:06:38+08	artist1	\N	N	2014-06-20 19:06:38+08	2014-06-20 19:36:38+08	3
+552	92	5	PM_Activity	551	17	2014-06-10 23:20:47+08	2014-06-21 15:56:47+08	DONE	2014-06-11 00:13:47+08	2014-06-21 15:56:46+08	admin2	552	N	2014-06-20 18:07:37+08	2014-06-20 18:27:37+08	1
 583	86	7	PM_Activity	531	27	2014-06-20 18:07:37+08	\N	\N	\N	2014-06-20 18:07:37+08	\N	\N	N	\N	\N	\N
 522	82	2	PM_Event	521	5	2014-06-10 13:56:48+08	2014-06-20 18:07:37+08	INTERRUPT	\N	\N	admin2	523	Y	\N	\N	\N
 529	85	1	PM_Activity	528	1	2014-06-10 18:05:44+08	\N	\N	2014-06-10 18:35:44+08	2014-06-20 19:06:38+08	artist1	\N	N	2014-06-20 19:06:38+08	2014-06-20 19:36:38+08	2
@@ -7271,15 +7279,16 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 585	88	7	PM_Activity	535	27	2014-06-20 18:07:37+08	\N	\N	\N	2014-06-20 18:07:37+08	\N	\N	N	\N	\N	\N
 537	89	1	PM_Activity	536	1	2014-06-10 18:26:56+08	\N	\N	2014-06-10 18:56:56+08	2014-06-20 19:06:38+08	artist1	\N	N	2014-06-20 19:06:38+08	2014-06-20 19:36:38+08	2
 587	92	12	PM_Activity	552	30	2014-06-20 18:07:37+08	\N	\N	\N	2014-06-20 18:07:37+08	\N	\N	N	\N	\N	\N
-552	92	5	PM_Activity	551	17	2014-06-10 23:20:47+08	\N	\N	2014-06-11 00:13:47+08	2014-06-20 19:08:32+08	artist1	\N	N	2014-06-20 18:07:37+08	2014-06-20 18:27:37+08	1
 588	90	7	PM_Activity	539	27	2014-06-20 18:07:38+08	\N	\N	\N	2014-06-20 18:07:38+08	\N	\N	N	\N	\N	\N
 539	90	1	PM_Activity	538	1	2014-06-10 19:05:26+08	\N	\N	2014-06-10 19:35:26+08	2014-06-20 19:06:38+08	artist1	\N	N	2014-06-20 19:06:38+08	2014-06-20 19:36:38+08	3
 541	91	1	PM_Activity	540	1	2014-06-10 21:09:22+08	\N	\N	2014-06-10 21:39:22+08	2014-06-20 19:06:38+08	artist1	\N	N	2014-06-20 19:06:38+08	2014-06-20 19:36:38+08	4
 590	91	7	PM_Activity	541	27	2014-06-20 18:07:38+08	\N	\N	\N	2014-06-20 18:07:38+08	\N	\N	N	\N	\N	\N
+621	92	5	PM_Gateway	552	18	2014-06-21 15:56:47+08	2014-06-21 15:56:48+08	DONE	\N	2014-06-21 15:56:47+08	admin2	621	N	\N	\N	\N
 580	83	3	PM_Event	578	6	2014-06-19 10:45:08+08	2014-06-20 18:07:38+08	DONE	\N	2014-06-20 18:07:38+08	admin2	580	Y	2014-06-20 18:07:38+08	2014-06-19 11:15:08+08	1
 579	83	2	PM_Event	578	5	2014-06-19 10:45:08+08	2014-06-20 18:07:38+08	INTERRUPT	\N	\N	admin2	580	Y	\N	\N	\N
 591	83	8	PM_Activity	580	8	2014-06-20 18:07:38+08	\N	\N	\N	2014-06-20 18:07:38+08	\N	\N	N	\N	\N	\N
 592	84	7	PM_Activity	527	27	2014-06-20 18:07:38+08	\N	\N	\N	2014-06-20 18:07:38+08	\N	\N	N	\N	\N	\N
+622	92	6	PM_Activity	621	23	2014-06-21 15:56:48+08	\N	\N	2014-06-25 15:00:00+08	\N	\N	\N	N	\N	2014-06-24 09:00:00+08	\N
 601	84	7	PM_Activity	527	27	2014-06-20 19:06:38+08	2014-06-20 19:06:38+08	DONE	\N	2014-06-20 19:06:38+08	admin2	601	N	\N	\N	\N
 602	84	5	PM_Event	601	28	2014-06-20 19:06:38+08	2014-06-20 19:06:38+08	END	\N	2014-06-20 19:06:38+08	admin2	602	N	\N	\N	\N
 603	85	7	PM_Activity	529	27	2014-06-20 19:06:38+08	2014-06-20 19:06:38+08	DONE	\N	2014-06-20 19:06:38+08	admin2	603	N	\N	\N	\N
@@ -7304,7 +7313,7 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 -- Name: fcpmcaseflow_pmf_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 620, true);
+SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 622, true);
 
 
 --
@@ -7312,6 +7321,7 @@ SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 620, true);
 --
 
 COPY fcpmcaseflowassign (pmfa_id, pmfa_pmfid, pmfa_userid, pmfa_orgid, pmfa_rolid, pmfa_pmscode) FROM stdin;
+1	622	\N	\N	14	\N
 \.
 
 
@@ -7319,7 +7329,7 @@ COPY fcpmcaseflowassign (pmfa_id, pmfa_pmfid, pmfa_userid, pmfa_orgid, pmfa_roli
 -- Name: fcpmcaseflowassign_pmfa_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcaseflowassign_pmfa_id_seq', 1, false);
+SELECT pg_catalog.setval('fcpmcaseflowassign_pmfa_id_seq', 1, true);
 
 
 --
@@ -7612,8 +7622,9 @@ SELECT pg_catalog.setval('fcrule_ru_id_seq', 3, true);
 
 COPY fcsetting (set_id, set_user, set_code, set_description, set_val) FROM stdin;
 2	*	MAXLIFETIME	Maximum Idle Time (in second)	15
-1	*	LANG	English - United States	EN-US
-5	*	THEME	Pixel Admin	pixeladmin
+5	*	THEME	Theme	pixeladmin
+1	*	LANG	Default Language	EN-US
+8	*	SERVERLOCALE	Server Locale	MYWP
 \.
 
 
@@ -7621,7 +7632,7 @@ COPY fcsetting (set_id, set_user, set_code, set_description, set_val) FROM stdin
 -- Name: fcsetting_set_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcsetting_set_id_seq', 7, true);
+SELECT pg_catalog.setval('fcsetting_set_id_seq', 8, true);
 
 
 --
@@ -7632,6 +7643,7 @@ COPY fcudv (udv_code, udv_name, udv_query_type, udv_query, udv_return_type, udv_
 RVDEC	Requirement verification decision	sql	select js_decision from mjobsheet where js_id = {$CASEKEY}	CELL	lookup	text	Revert\r\nAssign	\N
 QCDEC	QC check decision	sql	select js_decision from mjobsheet where js_id = {$CASEKEY}	CELL	lookup	text	Revert\r\nFTCUST	\N
 CUSTDEC	Customer acceptance decision	sql	select js_decision from mjobsheet where js_id = {$CASEKEY}	CELL	lookup	text	Revert\r\nAccept	\N
+ACKNOWLEDGE_ACTIVITY_START	Job Acknowledgement Activity Start Time	sql	select to_char(max(pmf_start_date),'DD-Mon-YYYY HH:MI AM') from fcpmcaseflow where pmf_pmcid = {$PMCID} and pmf_obj_type = 'PM_Event' and pmf_obj_id = 2	CELL	\N	\N	\N	\N
 REQTIMEART	Required time for artist	sql	select 'PT'||js_requiretime||'M' from mjobsheet where js_id = {$CASEKEY}	CELL	char	\N	\N	\N
 REQTIMEQC	Required time for QC	sql	select 'PT'||(js_requiretime/3)||'M' from mjobsheet where js_id = {$CASEKEY}	CELL	char	\N	\N	\N
 JS_CUSTOMER_ORG	Customer Org	sql	select js_orgid from mjobsheet where js_id = {$CASEKEY}	CELL	\N	\N	\N	\N
@@ -7640,9 +7652,12 @@ JS_CONTACT_PERSON_EMAIL	Job Requestor Contact Person Email	sql	select ct_email f
 JS_REQUESTOR_EMAIL	Job Requestor Email	sql	select usr_email from mjobsheet join fcuser on js_request_by = usr_userid\r\nwhere js_id = {$CASEKEY}	CELL	\N	\N	\N	EMAIL_RECIPIENT
 JS_ASSIGNED_ARTIST_EMAIL	Job Assigned Artist Email	sql	select usr_email from mjobsheet join fcuser on js_assignto = usr_userid\r\nwhere js_id = {$CASEKEY}	CELL	\N	\N	\N	EMAIL_RECIPIENT
 JS_JOB_DESCRIPTION	Jobsheet Short Description	sql	select js_description from mjobsheet where js_id = {$CASEKEY}	CELL	\N	\N	\N	\N
-REQ_VER_ACTIVITY_START	Requirement Verification Activity Start Time	sql	select to_char(max(pmf_start_date),'DD-Mon-YYYY HH:MI AM') from fcpmcaseflow where pmf_pmcid = {$PMCID} and pmf_obj_type = 'PM_Activity' and pmf_obj_id = 1	\N	\N	\N	\N	\N
+WIP_ACTIVITY_START	Job WIP Activity Start Time	sql	select to_char(max(pmf_start_date),'DD-Mon-YYYY HH:MI AM') from fcpmcaseflow where pmf_pmcid = {$PMCID} and pmf_obj_type = 'PM_Activity' and pmf_obj_id = 4	CELL	\N	\N	\N	\N
 JS_REQUESTOR_USERID	Job Requestor Userid	sql	select usr_userid from mjobsheet join fcuser on js_request_by = usr_userid\r	CELL	\N	\N	\N	USERID
 JS_ASSIGNED_ARTIST_USERID	Job Assigned Artist Userid	sql	select usr_userid from mjobsheet join fcuser on js_assignto = usr_userid\r	CELL	\N	\N	\N	USERID
+JS_ASSIGN_ARTIST_NAME	Job Assigned Artist Name	sql	select usr_name from mjobsheet join fcuser on js_assignto = usr_userid where js_id = {$CASEKEY}	CELL	\N	\N	\N	\N
+REQ_VER_ACTIVITY_START	Requirement Verification Activity Start Time	sql	select to_char(max(pmf_start_date),'DD-Mon-YYYY HH:MI AM') from fcpmcaseflow where pmf_pmcid = {$PMCID} and pmf_obj_type = 'PM_Activity' and pmf_obj_id = 1	CELL	\N	\N	\N	\N
+QC_ACTIVITY_START	Job QC Activity Start Time	sql	select to_char(max(pmf_start_date),'DD-Mon-YYYY HH:MI AM') from fcpmcaseflow where pmf_pmcid = {$PMCID} and pmf_obj_type = 'PM_Activity' and pmf_obj_id = 5	CELL	\N	\N	\N	\N
 \.
 
 
@@ -7652,10 +7667,10 @@ JS_ASSIGNED_ARTIST_USERID	Job Assigned Artist Userid	sql	select usr_userid from 
 
 COPY fcuser (usr_userid, usr_password, usr_created, usr_name, usr_email, usr_last_active, usr_last_success_login, usr_last_fail_login, usr_group, usr_sessiondata, usr_status, usr_langcode) FROM stdin;
 customer	b39f008e318efd2bb988d724a161b61c6909677f	2014-04-24 15:46:41.898+08	Customer	customer@gmail.com	2014-05-10 10:06:53+08	2014-05-09 09:56:20+08	\N	\N	a:4:{s:7:"dbosess";a:8:{s:7:"jobinfo";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"144";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"detail";}s:8:"jobcolor";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"153";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:8:"jobother";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"144";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"detail";}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:18:"customeracceptance";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"88";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:9:"pendingQC";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"86";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"93";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:3:"wip";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"89";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}}s:9:"dboconfig";a:0:{}s:11:"PMTask_atid";s:1:"5";s:13:"PMTask_flowid";s:2:"86";}	ACTIVE	\N
+supervisor	0f4d09e43d208d5e9222322fbc7091ceea1a78c3	2014-04-30 19:09:48.659+08	supervisor	supervisor@gmail.com	2014-06-21 13:31:36+08	2014-06-20 19:09:25+08	\N	\N	a:0:{}	ACTIVE	\N
 qc	d6426af04235d59336c5b6b08f61240cbb6b0f66	2014-04-30 19:10:06.929+08	qc	qc@gmail.com	2014-04-30 19:36:48+08	2014-04-30 19:36:04+08	\N	\N	a:0:{}	ACTIVE	\N
-admin2	d033e22ae348aeb5660fc2140aec35850c4da997	2014-01-26 15:39:57.04+08	Administrator 2	\N	2014-06-20 19:07:26+08	2014-06-20 17:14:40+08	2014-06-20 17:14:34+08	ADMIN	a:0:{}	ACTIVE	\N
-supervisor	0f4d09e43d208d5e9222322fbc7091ceea1a78c3	2014-04-30 19:09:48.659+08	supervisor	supervisor@gmail.com	2014-06-20 19:22:10+08	2014-06-20 19:09:25+08	\N	\N	a:1:{s:7:"dbosess";a:0:{}}	ACTIVE	\N
-admin	d033e22ae348aeb5660fc2140aec35850c4da997	2013-08-15 09:55:18.85+08	Administrator	\N	2014-06-20 19:47:52+08	2014-06-20 19:09:03+08	2014-05-13 06:00:56+08	ADMIN	a:4:{s:7:"dbosess";a:6:{s:8:"jobsheet";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:2:"45";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:13:"mail_template";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:4:"role";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:10:"joblisting";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:14:"flowsummarymtd";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:4:{s:6:"pmc_id";s:0:"";s:15:"js_request_date";s:0:"";s:14:"js_description";s:0:"";s:10:"js_primcat";s:0:"";}s:5:"state";s:4:"list";}s:11:"flowsummary";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}}s:9:"dboconfig";a:1:{s:8:"jobsheet";i:1;}s:4:"type";s:11:"PM_Activity";s:6:"actvid";s:1:"4";}	ACTIVE	\N
+admin2	d033e22ae348aeb5660fc2140aec35850c4da997	2014-01-26 15:39:57.04+08	Administrator 2	\N	2014-06-21 16:21:01+08	2014-06-21 13:31:46+08	2014-06-21 13:31:42+08	ADMIN	a:6:{s:7:"dbosess";a:21:{s:10:"clientuser";a:4:{s:6:"lastid";a:1:{s:10:"usr_userid";s:6:"admin2";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:13:"mail_template";a:4:{s:6:"lastid";a:1:{s:7:"mt_code";s:19:"NOTIFY_LATE_REQ_VER";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:4:"rule";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:3:"udv";a:5:{s:6:"lastid";a:1:{s:8:"udv_code";s:26:"ACKNOWLEDGE_ACTIVITY_START";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";s:4:"page";i:2;}s:11:"jobcatsetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:8:"jobsheet";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:34;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}s:15:"reqverification";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:26;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:11:"timer_setup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:9:"sla_setup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:11:"artistsetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:11:"cartonsetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:12:"machinesetup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:9:"clientorg";a:4:{s:6:"lastid";a:1:{s:6:"org_id";s:1:"1";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:12:"locale_setup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:6:"lookup";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:4:"user";a:4:{s:6:"lastid";a:1:{s:10:"usr_userid";s:5:"admin";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:4:"role";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:10:"permission";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:4:"menu";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"search";}s:9:"pendingQC";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:34;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}}s:9:"dboconfig";a:0:{}s:13:"PMTask_caseid";i:84;s:13:"PMTask_taskid";s:1:"1";s:15:"PMTask_tasktype";s:8:"PM_Event";s:13:"PMTask_flowid";s:3:"552";}	ACTIVE	\N
+admin	d033e22ae348aeb5660fc2140aec35850c4da997	2013-08-15 09:55:18.85+08	Administrator	\N	2014-06-21 16:52:48+08	2014-06-21 13:28:21+08	2014-05-13 06:00:56+08	ADMIN	a:4:{s:7:"dbosess";a:2:{s:8:"jobsheet";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}s:10:"clientuser";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}}s:13:"PMTask_taskid";s:1:"1";s:15:"PMTask_tasktype";s:8:"PM_Event";s:9:"dboconfig";a:0:{}}	ACTIVE	EN-US
 artist1	2cabffd3c7cb40ae6541b7f10a640b41190ccb27	2014-06-09 21:32:50.011+08	Artist 1	artist1@gmail.com	2014-06-19 22:49:56+08	2014-06-19 22:49:36+08	\N	\N	a:0:{}	ACTIVE	\N
 artist2	09c04a14fff8cbd7d0235da2c01bfd31d7826824	2014-06-09 21:35:00.767+08	Artist 2	artist2@gmail.com	\N	\N	\N	\N	\N	ACTIVE	\N
 Test	a94a8fe5ccb19ba61c4c0873d391e987982fbbd3	2014-06-10 11:11:07.626+08	test	test@email.com	\N	\N	\N	\N	\N	ACTIVE	\N
@@ -8258,6 +8273,11 @@ COPY fcuserlogin (ul_id, ul_userid, ul_ip, ul_success, ul_created, last_modified
 528	admin	192.168.0.128	Y	2014-06-20 19:07:29.732+08	2014-06-20 19:07:29.732+08	\N	N	\N
 529	admin	127.0.0.1	Y	2014-06-20 19:09:03.369+08	2014-06-20 19:09:03.369+08	\N	N	\N
 530	supervisor	192.168.0.128	Y	2014-06-20 19:09:25.684+08	2014-06-20 19:09:25.684+08	\N	N	\N
+531	admin	127.0.0.1	Y	2014-06-21 12:52:39.792+08	2014-06-21 12:52:39.792+08	\N	N	\N
+532	admin	127.0.0.1	Y	2014-06-21 12:55:29.019+08	2014-06-21 12:55:29.019+08	\N	N	\N
+533	admin	127.0.0.1	Y	2014-06-21 13:28:21.799+08	2014-06-21 13:28:21.799+08	\N	N	\N
+534	admin2	192.168.0.128	N	2014-06-21 13:31:42.113+08	2014-06-21 13:31:42.113+08	\N	N	\N
+535	admin2	192.168.0.128	Y	2014-06-21 13:31:46.38+08	2014-06-21 13:31:46.38+08	\N	N	\N
 \.
 
 
@@ -8265,7 +8285,7 @@ COPY fcuserlogin (ul_id, ul_userid, ul_ip, ul_success, ul_created, last_modified
 -- Name: fcuserlogin_ul_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcuserlogin_ul_id_seq', 530, true);
+SELECT pg_catalog.setval('fcuserlogin_ul_id_seq', 535, true);
 
 
 --
@@ -8314,8 +8334,8 @@ SELECT pg_catalog.setval('fcuserorgrole_uor_id_seq', 50, true);
 COPY fcusersession (us_id, us_sessid, us_userid, us_ip, us_active, us_created, us_last_active, us_forcecloseby) FROM stdin;
 408	1kkbhl72fl7lktmld4p5d10os0	ironman@gmail.com	127.0.0.1	Y	2014-02-17 15:31:34.882+08	2014-02-17 15:31:34+08	\N
 458	h68n7hesc822jhi1caneg5ghl0	customer	127.0.0.1	Y	2014-05-09 09:56:20.674+08	2014-05-09 09:56:20+08	\N
-501	oo7mg5sqnn7r3ldi1pa5s0tsj4	admin	127.0.0.1	Y	2014-06-20 19:09:03.47+08	2014-06-20 19:09:03+08	\N
-502	4imd8ddd4uvbgciidj3a88b051	supervisor	192.168.0.128	Y	2014-06-20 19:09:25.702+08	2014-06-20 19:09:25+08	\N
+505	oo7mg5sqnn7r3ldi1pa5s0tsj4	admin	127.0.0.1	Y	2014-06-21 13:28:21.807+08	2014-06-21 13:28:21+08	\N
+506	4imd8ddd4uvbgciidj3a88b051	admin2	192.168.0.128	Y	2014-06-21 13:31:46.388+08	2014-06-21 13:31:46+08	\N
 \.
 
 
@@ -8323,7 +8343,7 @@ COPY fcusersession (us_id, us_sessid, us_userid, us_ip, us_active, us_created, u
 -- Name: fcusersession_us_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcusersession_us_id_seq', 502, true);
+SELECT pg_catalog.setval('fcusersession_us_id_seq', 506, true);
 
 
 --
@@ -8559,7 +8579,6 @@ COPY mjoboutput (jo_id, jo_jsid, jo_outputcode) FROM stdin;
 --
 
 COPY mjobsheet (js_id, js_orgid, js_ctid, js_request_date, js_request_by, js_title, js_model, js_description, js_material_provided, js_color_1, js_color_2, js_color_3, js_color_4, js_color_5, js_angle_1, js_angle_2, js_angle_3, js_angle_4, js_angle_5, js_bleeding, js_bleeding_remark, js_distortion, js_distortion_value, js_diecut_ind, js_diecut_no, js_trapping_size, js_barcodetype, js_barcodenumber, js_primcat, js_status, js_completiondate, js_assignto, js_carid, js_decision, js_width, js_height, js_requiretime, js_request_dateinmth, js_jobcolor) FROM stdin;
-34	\N	1	2014-06-10 22:44:42.107+08	\N	\N	\N	Try 2 picture	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	1.0000	Y	\N	\N	\N	\N	6	\N	\N	artist1	38	Assign	100	200	160	Jun-2014	\N
 36	\N	1	2014-06-11 20:47:02.736+08	\N	\N	\N	New job	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	Y	\N	Y	\N	\N	\N	\N	6	\N	\N	\N	38	\N	\N	\N	\N	Jun-2014	\N
 35	\N	1	2014-06-10 23:21:42.452+08	\N	\N	\N	test customer resolution 1	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	\N	\N	\N	111.0000	222	\N	6	\N	\N	artist1	38	Accept	100	200	160	Jun-2014	\N
 37	\N	\N	2014-07-01 00:00:00+08	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	5	NEW	\N	\N	\N	\N	\N	\N	\N	Jul-2014	\N
@@ -8583,6 +8602,7 @@ COPY mjobsheet (js_id, js_orgid, js_ctid, js_request_date, js_request_by, js_tit
 45	1	1	2014-06-20 13:11:23.145+08	\N	\N	\N	123	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	5	NEW	\N	\N	\N	\N	\N	\N	\N	Jun-2014	1
 46	1	3	2014-06-20 13:14:16.219+08	\N	\N	\N	123	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	Y	1.0000	N	\N	\N	\N	\N	5	NEW	\N	\N	38	\N	\N	\N	\N	Jun-2014	1
 47	1	1	2014-06-20 15:17:12.216+08	\N	\N	\N	123	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	5	NEW	\N	\N	38	\N	\N	\N	\N	Jun-2014	1
+34	\N	1	2014-06-10 22:44:42.107+08	\N	\N	\N	Try 2 picture	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	X	1.0000	Y	\N	\N	\N	\N	6	\N	\N	artist1	38	FTCUST	100	200	160	Jun-2014	\N
 \.
 
 
@@ -8878,6 +8898,9 @@ SELECT pg_catalog.setval('mjscartonvalue_caval_id_seq', 336, true);
 
 COPY mmailtemplate (mt_code, mt_desc, mt_recipient_to, mt_recipient_cc, mt_subject, mt_content, mt_status, mt_internal_userid) FROM stdin;
 NOTIFY_LATE_REQ_VER	Late Requirement Verification Notification Email	supervisor@gmail.com	supervisor@gmail.com	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "[[JS_JOB_DESCRIPTION]]" job is still pending since [[REQ_VER_ACTIVITY_START]].</p><p><br></p>	ACTIVE	[[JS_ASSIGNED_ARTIST_USERID]], admin, supervisor
+NOTIFY_LATE_ACKNOWLEDGE	Late Job Acknowledgement Notification Email	supervisor@gmail.com	[[JS_ASSIGNED_ARTIST_EMAIL]]	[MOIRE] Late Job Acknowledgement Notification	<p>Dear Supervisor,</p><p>This email is to notify that the  "[[JS_JOB_DESCRIPTION]]" job is still pending acknowledgement from [[JS_ASSIGN_ARTIST_NAME]] since [[ACKNOWLEDGE_ACTIVITY_START]].</p><div><br></div>	ACTIVE	supervisor
+NOTIFY_LATE_WIP	Late Job WIP Notification Email	supervisor@gmail.com	[[JS_ASSIGNED_ARTIST_EMAIL]]	[MOIRE] Late Job WIP Notification	<p>Dear Manager and Supervisor,</p><p>This email is to notify that the  "[[JS_JOB_DESCRIPTION]]" job is still WIP from [[JS_ASSIGN_ARTIST_NAME]] since [[WIP_ACTIVITY_START]].</p><div><br></div>	ACTIVE	supervisor
+NOTIFY_LATE_QC	Late QC Notification Email	supervisor@gmail.com	qc@gmail.com	[MOIRE] Late Job QC Notification	<p>Dear Manager and Supervisor,</p><p>This email is to notify that the  "[[JS_JOB_DESCRIPTION]]" job is still pending QC since [[QC_ACTIVITY_START]].</p><div><br></div>	ACTIVE	supervisor
 \.
 
 
