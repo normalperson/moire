@@ -1,8 +1,8 @@
 <?php
-/*Last Modified by supervisor on 21-06-2014 13:29:37*/
+/*Last Modified by admin on 21-06-2014 17:17:52*/
 $translate = array (
-  'Monthly sales' => 'Monthly sales',
   'SALES BY QUANTITY MTD' => 'SALES BY QUANTITY MTD',
+  'Monthly sales' => 'Monthly sales',
   'by quantity' => 'by quantity',
   'Quantity' => 'Quantity',
 );

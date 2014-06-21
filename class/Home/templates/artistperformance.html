@@ -1,9 +1,9 @@
 <div class="panel panel-success panel-dark">
 	<div class="panel-heading">
-		<div>ARTIST PERFORMANCE MTD
+		<div>{'ARTIST PERFORMANCE MTD'|tl:true:'widget'}
 			<div class="panel-heading-controls">
 				<div class="panel-heading-icon">
-					View online time report
+					{'View online time report'|tl:true:'widget'}
 					<i class="fa  fa-angle-double-right"></i>
 				</div>
 			</div>
@@ -15,13 +15,12 @@
        </div>
     </div>
 </div>		
+<div id="nograph_artistperformance" class="hidden">{$Home->noGraph()}</div>
 <script type="text/javascript">
 $( document ).ready(function() {
     var data = {$data},
     category = {$xAxis},
     showgraph = {$showgraph};
-    console.log(data);
-    console.log(category);    
     if(showgraph){
     	$('#artistperformance').highcharts({
             chart: {
@@ -49,6 +48,8 @@ $( document ).ready(function() {
             },
             series: data
         });
+    }else{
+        $('#artistperformance').append($('#nograph_artistperformance').removeClass("hidden"));
     }
 });
 </script>

@@ -50,10 +50,10 @@ class PMTask {
 			foreach ($rs as $r) {
 				if ($wfname != $r['pmwf_name']) {
 					if ($cnt > 0) $html .= "<li role='presentation' class='divider'></li>";
-					$html .= "<li role='presentation' class='dropdown-header'>{$r['pmwf_name']}</li>";
+					$html .= "<li role='presentation' class='dropdown-header'>".tl($r['pmwf_name'],true,'workflow')."</li>";
 					$wfname = $r['pmwf_name'];
 				}
-				$html .= "<li><a style='padding-left:30px' href='{$this->classurl}/startEvent?id={$r['pmev_id']}&type=PM_Event'>{$r['pmev_name']}</a></li>";
+				$html .= "<li><a style='padding-left:30px' href='{$this->classurl}/startEvent?id={$r['pmev_id']}&type=PM_Event'>".tl($r['pmev_name'],true,'workflow')."</a></li>";
 			}
 			$html .= 
 				"</ul>
@@ -160,8 +160,8 @@ class PMTask {
 				if ($focusThis) $focusWF = true;
 				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
 								<a tabindex='-1' href='{$this->classurl}/startEvent?id={$s['id']}&type=PM_Event'>
-									<i class='menu-icon fa fa-plus' title='Start Event'></i>
-									<span class='mm-text'>{$s['name']}</span>
+									<i class='menu-icon fa fa-plus' title='".tl('Start Event',true,'workflow')."'></i>
+									<span class='mm-text'>".tl($s['name'],true,'workflow')."</span>
 								</a>
 							</li>";
 			}
@@ -174,8 +174,8 @@ class PMTask {
 					"class='label label-warning'").">{$a['totalpendingcount']}</span>" : "";
 				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
 								<a tabindex='-1' href='{$this->classurl}/caseFlowList?id={$a['id']}&type=PM_Activity'>
-									<i class='menu-icon fa fa-pencil-square-o' title='User Activity'></i>
-									<span class='mm-text'>{$a['name']}</span>{$pendingBadge}
+									<i class='menu-icon fa fa-pencil-square-o' title='".tl('User Activity',true,'workflow')."'></i>
+									<span class='mm-text'>".tl($a['name'],true,'workflow')."</span>{$pendingBadge}
 								</a>
 							</li>";
 			}
@@ -187,8 +187,8 @@ class PMTask {
 					"class='label label-warning'").">{$e['totalpendingcount']}</span>" : "";
 				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
 								<a tabindex='-1' href='{$this->classurl}/caseFlowList?id={$e['id']}&type=PM_Event'>
-									<i class='menu-icon fa fa-play-circle-o' title='Intermediate Event'></i>
-									<span class='mm-text'>{$e['name']}</span>{$pendingBadge}
+									<i class='menu-icon fa fa-play-circle-o' title='".tl('Intermediate Event',true,'workflow')."'></i>
+									<span class='mm-text'>".tl($e['name'],true,'workflow')."</span>{$pendingBadge}
 								</a>
 							</li>";
 			}
@@ -199,7 +199,7 @@ class PMTask {
 
 			$html .= "<li class='mm-dropdown ".(($focusWF) ? 'open active' : '')."'>
 						<a tabindex='-1' href='#'>
-							<span class='mm-text'>{$d['name']}</span>
+							<span class='mm-text'>".tl($d['name'],true,'workflow')."</span>
 							{$pendingBadge}
 						</a>
 						<ul>
@@ -214,7 +214,7 @@ class PMTask {
 		$html = "<li class='mm-dropdown mm-dropdown-root tasklistingLI ".((!empty($_GET['webc']) && $_GET['webc'] == __CLASS__) ? 'open active' : '')."'>
 					<a href='#'>
 						<i class='menu-icon fa fa-tasks'></i>
-						<span class='mm-text mmc-dropdown-delay animated fadeIn'>Task</span>{$pendingBadge}
+						<span class='mm-text mmc-dropdown-delay animated fadeIn'>".tl('Task',true,'workflow')."</span>{$pendingBadge}
 					</a>
 					<ul class='mmc-dropdown-delay animated fadeInLeft'>
 						{$html}

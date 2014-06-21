@@ -15,9 +15,9 @@
 				</span>
 					<br>
 				<!-- Big text -->
-				<span class="text-bg">Jobs</span><br>
+				<span class="text-bg">{'Jobs'|tl:true:'home'}</span><br>
 				<!-- Small text -->
-				<span class="text-sm">checked</span>
+				<span class="text-sm">{'checked'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->
 	</div>
@@ -39,9 +39,9 @@
 				</span>
 				<br>
 				<!-- Big text -->
-				<span class="text-bg">Jobs</span><br>
+				<span class="text-bg">{'Jobs'|tl:true:'home'}</span><br>
 				<!-- Small text -->
-				<span class="text-sm">pending QC check</span>
+				<span class="text-sm">{'pending QC check'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->			
 	</div>	
@@ -63,9 +63,9 @@
 				</span>
 				<br>
 				<!-- Big text -->
-				<span class="text-bg">Job</span><br>
+				<span class="text-bg">{'Job'|tl:true:'home'}</span><br>
 				<!-- Small text -->
-				<span class="text-sm">pending rework in progress</span>
+				<span class="text-sm">{'pending rework in progress'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
 	</div>		
@@ -85,9 +85,9 @@
 				</span>
 				<br>
 				<!-- Big text -->
-				<span class="text-bg">Jobs</span><br>
+				<span class="text-bg">{'Jobs'|tl:true:'home'}</span><br>
 				<!-- Small text -->
-				<span class="text-sm">exceeded SLA MTD</span>
+				<span class="text-sm">{'exceeded SLA MTD'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
 	</div>	
@@ -98,7 +98,6 @@
 	<div class="col-md-6">
 		{$Home->renderJobByFlow('PM_Activity',5)}			
 	</div>
-
 	<!-- myperformance -->
 	<div class="col-md-6">
 		{$Home->renderMyPerformance()}	

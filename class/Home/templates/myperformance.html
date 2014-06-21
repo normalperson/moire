@@ -1,6 +1,6 @@
 <div class="panel panel-success panel-dark">
 	<div class="panel-heading">
-		<div>MY PERFORMANCE
+		<div>{'MY PERFORMANCE'|tl:true:'home'}
 			<!-- <div class="panel-heading-controls">
 				<div class="panel-heading-icon">
 					View cases
@@ -13,6 +13,7 @@
        <div id="myperformance" style="height:400px"></div>
     </div>
 </div>		
+<div id="nograph_myperformance" class="hidden">{$Home->noGraph()}</div>
 <script type="text/javascript">
 $( document ).ready(function() {
     var data = {$data},
@@ -49,7 +50,7 @@ $( document ).ready(function() {
 		});
 	}
 	else{
-		$('#myperformance').text('need to have a beautiful image to show no data found!');
+		$('#myperformance').append($('#nograph_myperformance').removeClass("hidden"));
 	}
 });	
 </script>

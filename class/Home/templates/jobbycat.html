@@ -16,18 +16,18 @@
        </div>
     </div>
 </div>		
-<div id="nograph" class="hidden">{$Home->noGraph()}</div>
+<div id="nograph_jobbycat" class="hidden">{$Home->noGraph()}</div>
 
 <script type="text/javascript">
 $( document ).ready(function() {
     var data = {$data},
         category = {$xAxis},
         showgraph = {$showgraph},
-        gtitle = "{'Monthly sales'|tl:true:'widget'}",
-        gsubtitle = "{'by quantity'|tl:true:'widget'}",
-        gyAxisTitle = "{'Quantity'|tl:true:'widget'}";
+        gtitle = "{'Monthly sales'|tl:false:'widget'}",
+        gsubtitle = "{'by quantity'|tl:false:'widget'}",
+        gyAxisTitle = "{'Quantity'|tl:false:'widget'}",
+        gsuffix = "{'item'|tl:false:'widget'}";
 {literal}  
-    showgraph  = false;
     if(showgraph){
     	$('#salebyqty').highcharts({
             chart: {
@@ -37,7 +37,7 @@ $( document ).ready(function() {
                 text: gtitle
             },
             subtitle: {
-                text: 'by quantity'
+                text: gsubtitle
             },
             xAxis: {
                 categories: category,
@@ -48,7 +48,7 @@ $( document ).ready(function() {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Quantity ',
+                    text: gyAxisTitle,
                     align: 'high'
                 },
                 labels: {
@@ -56,7 +56,7 @@ $( document ).ready(function() {
                 }
             },
             tooltip: {
-                valueSuffix: ' item'
+                valueSuffix: gsuffix
             },
             plotOptions: {
                 bar: {
@@ -71,7 +71,7 @@ $( document ).ready(function() {
             series: data
         });
     }else{
-        $('#salebyqty').append($('#nograph').removeClass("hidden"));
+        $('#salebyqty').append($('#nograph_jobbycat').removeClass("hidden"));
     }
 });
 </script>
