@@ -41,3 +41,8 @@ function dbo_wip_custom_edit($table, $cols, $wheres){
 # final rendering
 $dbo->render();
 ?>
+<script type="text/javascript">
+	$('#dbo_wip_edit_js_width').rules("add", { number:true});	 // validation
+	$('#dbo_wip_edit_js_height').rules("add", { number:true});	 // validation
+
+</script>

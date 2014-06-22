@@ -21,7 +21,7 @@ function ajaxGetJSON(posturl, postdata, successFunc) {
 		method : 'post',
 		success : successFunc,
 		error : function (request, status, error) {
-			showError((request.responseText) ? ((status) ? status + ':' + request.responseText : request.responseText) : status);
+			showError((request.responseText) ? request.responseText : status);
 		}
 	})
 }
@@ -40,7 +40,7 @@ function ajaxRenderHTML(posturl, postdata, targetElement, func /*JQUERY Function
 			}
 		},
 		error : function (request, status, error) {
-			showError((request.responseText) ? ((status) ? status + ':' + request.responseText : request.responseText) : status);
+			showError((request.responseText) ? request.responseText : status);
 		}
 	})
 }

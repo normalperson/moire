@@ -18,8 +18,9 @@ $sql = "select mjobsheet.*, pndcontact.*, fcorg.*, pndphoneo.ph_number as oph_nu
 jcl_id as primary_category_id, jcl_title as primary_category_title, fclookup.lu_title as barcodetype_desc, 
 mcarton.*, 
 fccountry.* 
-from mjobsheet join pndcontact on js_ctid = ct_id 
-join fcorg on ct_refid = org_id and ct_reftype = 'ORG_ID' 
+from mjobsheet 
+join fcorg on org_id = js_orgid
+left join pndcontact on js_ctid = ct_id 
 join mjobcatlookup on js_primcat = jcl_id 
 join mcarton on js_carid = car_id 
 left join pndphone pndphoneo on pndphoneo.ph_refid = ct_id and pndphoneo.ph_reftype = 'CT_ID' and pndphoneo.ph_type = 'O' 
@@ -29,7 +30,7 @@ left join fclookup on js_barcodetype = lu_code and lu_cat = 'BARCODETYPE'
 where js_id = :0";
 $bind = array($jsid);
 if($currentOrgExternal=='Y'){
-	$sql .= " and org_id = :1";
+	$sql .= " and js_orgid = :1";
 	$bind[] = $currentOrgId;
 }
 $rs = $DB->getRowAssoc($sql, $bind);

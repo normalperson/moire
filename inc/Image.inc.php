@@ -189,7 +189,7 @@ class Image {
         foreach ($this->accept as $key => $value) {
             $filename = DOC_DIR.DS.'image'.DS.$foldername.DS.$id.'.'.$value;
             if (file_exists($filename)) {
-                $imagelocation = IMAGE_HREF.DS.$foldername.DS.$id.'.'.$value;
+                $imagelocation = IMAGE_HREF.'/'.$foldername.'/'.$id.'.'.$value;
                 return $imagelocation;
             }
         }

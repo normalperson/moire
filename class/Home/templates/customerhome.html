@@ -9,7 +9,7 @@
 					<!-- Extra large text -->
 					<span class="text-xlg">
 						<strong>
-						<a href="showJobList?page=customer">
+						<a href="showJobList?frompage=customer">
 							{$Home->totalOrder()}
 						</a>
 						</strong>
@@ -80,7 +80,7 @@
 						<strong>
 <!-- 		  			  Activity name   : "Pending acceptance"
 		                  Activity ID : 6 -->		
-						<a href="showJobList?page=customer&active=true">
+						<a href="showJobList?frompage=customer&active=true">
 							{$Home->activeOrder()}
 						</a>	
 						</strong>
@@ -96,7 +96,7 @@
 <!-- monthly sales and my performance -->
 <div class="row">
 	<div class="col-md-12">
-		{$Home->renderJobByCat('customer')}	
+		{$Home->renderJobByCat('ORDER BY QUANTITY MTD')}	
 	</div>
 
 <!-- 	<div class="col-md-6">

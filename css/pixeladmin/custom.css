@@ -36,10 +36,10 @@ label.mandatory:after{
 	margin:0 !important;
 }
 
-.widget-messages-alt .message-subject {
+.widget-messages-alt .messages-list .message-subject {
 	width : 90%;
+	color:#A7A7A7 !important;
 }
-
 .widget-messages-alt.dropdown-menu .messages-link.messages-compose-link{
 	margin-left: 1.5px !important;
 }
@@ -139,4 +139,66 @@ div.dbo_theme_pixeladmin table.dbo_list a.sortable{
 
 .widget-notifications .notification a:hover{
 	background:none !important;
+}
+
+.widget-caseflow-timeline .thread {
+  padding: 0 0 14px 0;
+}
+.widget-caseflow-timeline .thread + .thread {
+  padding-top: 13px;
+  border-top: 1px solid;
+  border-top-color: #e4e4e4;
+}
+.widget-caseflow-timeline .thread:last-child {
+  
+}
+.widget-caseflow-timeline .thread-icon {
+  display: block;
+  float: left;
+  height: 32px;
+  margin-top: 2px;
+  width: 32px;
+  border-radius: 999999px;
+  text-align:center;
+  padding-top: 5px;
+}
+.widget-caseflow-timeline .thread-icon  > .fa { 
+	font-size:1.8em;
+}
+.widget-caseflow-timeline .thread-body {
+  margin-left: 42px;
+}
+.widget-caseflow-timeline .thread-time {
+  float: right;
+  font-size: 12px;
+  color: #aaa;
+}
+.widget-caseflow-timeline .thread-info {
+  color: #aaa;
+  font-size: 12px;
+}
+.widget-caseflow-timeline .thread-info a {
+  color: #555555;
+}
+.widget-caseflow-timeline .thread-info a.pastdue {
+  color: rgb(189, 8, 8);
+}
+
+.widget-caseflow-timeline .thread-info a.pastdue:hover {
+  color: rgb(179, 3, 3);
+}
+
+.widget-caseflow-timeline .thread-info a:hover {
+  color: #888;
+}
+
+.panel.widget-caseflow-timeline .thread {
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left : 5px solid white;
+}
+
+.panel.widget-caseflow-timeline .thread.ongoing {
+  border-left-color : rgb(0,255,143);
 }

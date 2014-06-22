@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by uat_supervisor1 on 22-06-2014 14:40:58*/
+/*Last Modified by uat_supervisor1 on 22-06-2014 21:14:50*/
 $translate = array (
   'Start Event' => 'Start Event',
   'New Job' => 'New Job',
@@ -14,5 +14,17 @@ $translate = array (
   'Pull Back' => 'Pull Back',
   'Work in progress ' => 'Work in progress ',
   'Reassign Artist' => 'Reassign Artist',
+  'Job has been submitted successfully.' => 'Job has been submitted successfully.',
+  'The job has successfully been Reverted.' => 'The job has successfully been Reverted.',
+  'Pending resolution ' => 'Pending resolution ',
+  'The job has successfully been sent back for verification.' => 'The job has successfully been sent back for verification.',
+  'The job has successfully been Assigned.' => 'The job has successfully been Assigned.',
+  'The job has successfully been assigned to Artist 2.' => 'The job has successfully been assigned to Artist 2.',
+  'The job has successfully been sent to QC for verification.' => 'The job has successfully been sent to QC for verification.',
+  'Pending check (QC)' => 'Pending check (QC)',
+  'The job has successfully been reverted.' => 'The job has successfully been reverted.',
+  'The job has successfully been forwarded to customer.' => 'The job has successfully been forwarded to customer.',
+  'The job has successfully been accepted.' => 'The job has successfully been accepted.',
+  'The job has successfully been assigned to artist.' => 'The job has successfully been assigned to artist.',
 );
 ?>

@@ -1,0 +1,31 @@
+<?php
+/*Last Modified by fongadmin on 22-06-2014 22:54:24*/
+$translate = array (
+  'Home (QC)' => 'Home (QC)',
+  'Home(Customer)' => 'Home(Customer)',
+  'Home (Artist)' => 'Home (Artist)',
+  'Home (Supervisor)' => 'Home (Supervisor)',
+  'Admin Setup' => 'Admin Setup',
+  'Job category setup' => 'Job category setup',
+  'Carton setup' => 'Carton setup',
+  'SLA Setup' => 'SLA Setup',
+  'Artist setup' => 'Artist setup',
+  'Mail Template Setup' => 'Mail Template Setup',
+  'User setting' => 'User setting',
+  'Terms and Conditions' => 'Terms and Conditions',
+  'Customer setup' => 'Customer setup',
+  'Contact Setup' => 'Contact Setup',
+  'Customer machine setting' => 'Customer machine setting',
+  'Setting' => 'Setting',
+  'Locale Setup' => 'Locale Setup',
+  'Lookup Setup' => 'Lookup Setup',
+  'POSB User Setting' => 'POSB User Setting',
+  'POSB User Setup' => 'POSB User Setup',
+  'Role Setup' => 'Role Setup',
+  'Permission Setup' => 'Permission Setup',
+  'Rule Setting' => 'Rule Setting',
+  'Menu Setup' => 'Menu Setup',
+  'DBO Setup' => 'DBO Setup',
+  'Translation' => 'Translation',
+);
+?>

@@ -53,21 +53,31 @@ function sendMailFromTemplate($mtcode) {
 		$subject = $udv->parse($rs['mt_subject']);
 		$content = $udv->parse($rs['mt_content']);
 		
-		$mail = new Email();
-		// vd($mail); $fromarr['emailadd'], $fromarr['name']
-		$ret = $mail->sendEmail_bySMTP(
-			$fromarr=array('emailadd'=>'noreply@moiregc.com.my', 'name'=>'no-reply-moire'),
-			$replytoarr='',
-			$toaddarr=array(array('emailadd'=>$recp, 'name'=>''), array('emailadd'=>$recpcc, 'name'=>'')),
-			$subject,
-			$content,
-			$altbody='',
-			$attachmentpath='',
-			$smtpauth=true,
-			$host='moiregc.com.my',
-			$port=25,
-			$username='noreply@moiregc.com.my',
-			$password='User123');
+		$emailSettingRS = $DB->getArray("select set_code, set_val from fcsetting where set_code in ('EMAILHOST', 'EMAILPORT', 'EMAILUSERNAME', 'EMAILPASSWORD')");
+		$emailSetting = array();
+		if($emailSettingRS){
+			foreach($emailSettingRS as $row){
+				$emailSetting[$row['set_code']] = $row['set_val'];
+			}
+			$mail = new Email();
+			// vd($mail); $fromarr['emailadd'], $fromarr['name']
+			$recipientArr = array(array('emailadd'=>$recp, 'name'=>''));
+			if($recpcc)
+				$recipientArr[] = array('emailadd'=>$recpcc, 'name'=>'');
+			$ret = $mail->sendEmail_bySMTP(
+				$fromarr=array('emailadd'=>'noreply@moiregc.com.my', 'name'=>'no-reply-moire'),
+				$replytoarr='',
+				$toaddarr=$recipientArr,
+				$subject,
+				$content,
+				$altbody='',
+				$attachmentpath='',
+				$smtpauth=true,
+				$host=$emailSetting['EMAILHOST'],
+				$port=$emailSetting['EMAILPORT'],
+				$username=$emailSetting['EMAILUSERNAME'],
+				$password=$emailSetting['EMAILPASSWORD']);
+		}
 		
 		$rs['mt_internal_userid'] = $udv->parse($rs['mt_internal_userid']);
 		if (!empty($rs['mt_internal_userid'])) {

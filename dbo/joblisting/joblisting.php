@@ -85,21 +85,23 @@ function showPercentageDet($col, $colVal, $data=array(), $html=null){
 }
 # customization
 function dbo_joblisting_customize(&$dbo){
-	global $GLOBAL,$USER;
+	global $GLOBAL,$USER,$DB;
 
-	if( isset($_GET['page']) && $_GET['page'] == 'supervisor'){
-		$dbo->whereSQL = "1=1";
-	}
-	else if( isset( $_GET['page']) && $_GET['page'] == 'customer'){
+	list($currentOrgId, $currentOrgExternal) = $DB->getRow("select org_id, org_external from fcuserorgrole join fcorg on uor_orgid = org_id where uor_id = :0 and uor_rolid = :1", array($USER->userorgroleid, $USER->roleid));
+	
+	if($currentOrgExternal=='Y'){
 		$dbo->whereSQL = "js_orgid = ".$USER->orgid;
-		if( isset($_GET['active']) && $_GET['active'] == 'true' ){
-			$GLOBAL['actvorder'] = true;
-		}	
-		if( isset($GLOBAL['actvorder'])  && $GLOBAL['actvorder'] ){
-			$dbo->whereSQL .= " and js_status != 'COMPLETED'";
-		}
+	}	
 
+	if( isset($_GET['active']) && $_GET['active'] == 'true' ){
+		$GLOBAL['actvorder'] = true;
+	}elseif ( !isset($_GET['page'])  ){
+		unset($GLOBAL['actvorder']);
+	}	
+	if( isset($GLOBAL['actvorder'])  && $GLOBAL['actvorder'] ){
+		$dbo->whereSQL .= " and js_status != 'COMPLETED'";
 	}
+
 }
 
 

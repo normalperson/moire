@@ -273,6 +273,7 @@ class PMTask {
 			$udv = new UDV();
 			$msg = $udv->parse($ev->setup['pmev_performed_message']);
 			if (!$msg) $msg = "Your request has been updated successfully";
+			$msg = tl($msg,false, self::$tl);
 ?>
 <script>
 (function () {
@@ -370,7 +371,7 @@ class PMTask {
 				},
 				minLength : 1,
 				select: function(event, ui) {
-					document.location = '{$this->classurl}/renderCaseScreen?caseid='+this.value;
+					document.location = '{$this->classurl}/renderCaseScreen?caseid='+ui.item.value;
 				}
 			});
 		})()
@@ -635,6 +636,7 @@ $(function () {
 				$udv = new UDV();
 				$msg = !empty($o->setup['pmat_performed_message']) ? $udv->parse($o->setup['pmat_performed_message']) : '';
 				if (!$msg) $msg = "Your request has been updated successfully";
+				$msg = tl($msg,false, self::$tl);
 ?>
 <script>
 (function () {
@@ -642,7 +644,7 @@ $(function () {
 	var redirecturl =  <?php echo json_encode($redirecturl); ?>;
 
 	showModalAlert('success', msg, '', function () {
-		document.location = '?';
+		document.location = redirecturl;
 	});
 })()
 </script>
@@ -698,7 +700,7 @@ $(function () {
 		$classurl = WEB_HREF.'/'.__CLASS__;
 		$buttonid  = "timelineButton_{$timelineButtonCount}";
 		$ret = "<button id='{$buttonid}' class='btn action action-timeline' title='View Timeline' data-caseid='{$pmcid}' >
-				<span class='btn-label icon fa fa-sort-numeric-asc'></span>
+				<span class='btn-label icon fa fa-toggle-right'></span>
 			</button>";
 
 		if ($timelineButtonCount == 1) {
@@ -734,14 +736,114 @@ $(function () {
 		if (empty($GLOBAL['PMTask_timeline_caseid'])) return;
 		
 		$case = $DB->getRow("select * from fcpmcase where pmc_id = :0", array($GLOBAL['PMTask_timeline_caseid']), PDO::FETCH_ASSOC);
-		$rs = $DB->getArray("select * from fcpmcaseflow where pmf_pmcid = :0 order by pmf_id", array($GLOBAL['PMTask_timeline_caseid']), PDO::FETCH_ASSOC);
+		$rs = $DB->getArray("select a.*, b.*
+		from fcpmcaseflow a left join fcuser b on usr_userid = pmf_end_by 
+		where pmf_pmcid = :0 order by pmf_id", array($GLOBAL['PMTask_timeline_caseid']), PDO::FETCH_ASSOC);
+		
 		
 		$smarty = $this->initSmarty(false);
-		$smarty->assign('caseid', $GLOBAL['PMTask_timeline_caseid']);
-		$smarty->assign('classurl', $this->classurl);
+		$smarty->assign('rs', $rs);
+		$smarty->assign('case', $case);
+		$smarty->assign('o', $this);
 		
 		$smarty->display('timeline.html');
 		
+	}
+	
+	function renderSingleTimelineDetail($r, $c) {
+		global $DB;
+		$html = "";
+		$o = new $r['pmf_obj_type']($r['pmf_obj_id']);
+		$startdate = new DateTime($r['pmf_start_date']);
+		$enddate = new DateTime($r['pmf_end_date']);
+		$duedate = new DateTime($r['pmf_due_date']);
+		$now = new DateTime();
+		if ($r['pmf_end_status'] == 'INTERRUPT') return;
+		if ($r['pmf_obj_type'] == 'PM_Event' && $o->type == 'END' && $c['pmc_end_pmevid'] != $o->id ) return;
+		$html .= "<div class='thread ".((!$r['pmf_end_date']) ? 'ongoing' : '')."'>";
+		$action = $icon = '';
+		switch (get_class($o)) {
+			case 'PM_Event':
+				if ($o->type == 'START') {
+					$icon = 'fa-plus';
+					$action = "Started by <a title='{$r['pmf_end_by']}'>{$r['usr_name']}</a>
+					 on <a title='{$startdate->format('j-M-Y g:i A')}'>".$startdate->format('j-M-Y g:i A')."</a>";
+				}
+				else if ($o->type == 'TIMER') {
+					$icon = 'fa-clock-o';
+					$action = '';
+				}
+				else if ($o->type == 'END') {
+					$icon = 'fa-circle-o';
+					$action = "Ended by <a title='{$r['pmf_end_by']}'>{$r['usr_name']}</a>
+					 on <a title='{$enddate->format('j-M-Y g:i A')}'>".$enddate->format('j-M-Y g:i A')."</a>";
+				}
+				else if ($o->type == 'INTERMEDIATE') {
+					$icon = 'fa-play-circle-o';
+					$action = "performed by <a title='{$r['pmf_end_by']}'>{$r['usr_name']}</a>
+					 on <a title='{$enddate->format('j-M-Y g:i A')}'>".$enddate->format('j-M-Y g:i A')."</a>";
+				}
+				$html .= "
+				<div class='thread-icon'><i class='fa {$icon}'></i></div>
+				<div class='thread-body'>
+					<span class='thread-time' title='{$startdate->format('j-M-Y g:i A')}'>".time_different_string($r['pmf_start_date'])."</span>
+					<a class='thread-title'>{$o->name}</a>
+					<div class='thread-info'>{$action}</div>
+				</div>";
+				break;
+			case 'PM_Activity':
+				if ($o->type == 'USER') {
+					$icon = 'fa-pencil-square-o';
+					if ($r['pmf_end_date']) {
+						$pastdue = false;
+						if ($r['pmf_due_date']) {
+							if ($duedate < $enddate) {
+								$pastdue = time_different_string($enddate, $duedate, true, false, 'just').' past due';
+							}
+						}
+						$action = "Performed by <a title='{$r['pmf_end_by']}'>{$r['usr_name']}</a> on 
+						<a title='{$enddate->format('j-M-Y g:i A')}'>".$enddate->format('j-M-Y g:i A')."</a><br>
+						Time Taken : <a ".(($pastdue) ? "class='pastdue' title='{$pastdue}'" : "").">".time_different_string($startdate, $enddate, true, false, 'Immediate')."</a>";
+					}
+					else {
+						$pastdue = false;
+						$title = '';
+						if ($r['pmf_due_date']) {
+							if ($duedate < $now) {
+								$pastdue = true;
+								$title = time_different_string($now, $duedate, true, false, 'just').' past due';
+							}
+						}
+						else {
+							$title = time_different_string($startdate, $now, true, true, 'just now');
+						}
+						$action = "Pending action from <a>{$o->setup['pmsl_name']}</a> since 
+						<a ".(($pastdue) ? "class='pastdue'" : "")."  title='{$title}'>".$startdate->format('j-M-Y g:i A')."</a>";
+					}
+				}
+				else if ($o->type == 'SCRIPT') {
+					$icon = 'fa-gear';
+					$action = 'started by';
+				}
+				$html .= "
+				<div class='thread-icon'><i class='fa {$icon}'></i></div>
+				<div class='thread-body'>
+					<span class='thread-time' title='{$startdate->format('j-M-Y g:i A')}'>".time_different_string($r['pmf_start_date'])."</span>
+					<a class='thread-title'>{$o->name}</a>
+					<div class='thread-info'>{$action}</div>
+				</div>";
+				break;
+			case 'PM_Gateway':
+				// $html .= "<div class='thread-icon'><i class='fa fa-pencil-square-o'></i></div><div class='thread-body'>
+					// <span class='thread-time'>14h</span>
+					// <a href='#' class='thread-title'>Lorem ipsum dolor sit amet</a>
+					// <div class='thread-info'>started by <a href='#' title=''>Robert Jang</a> in <a href='#' title=''>Forum name</a></div>
+				// </div>";
+				break;
+		}
+		$html .= "</div>";
+		
+		return $html;
 	}
 	
 	// case comment start 

@@ -33,7 +33,10 @@ function populateInput(obj,elemt,value,readonly){
 
 	// append to data div
 	elemt.append($element);
-	if(value==0 || !readonly) 	$('#'+inpid).rules("add", {required:true, messages: { required:'Please fill up '+obj.carv_code}});	// validation
+	if(value==0 || !readonly) {
+		$('#'+inpid).rules("add", { required:true,number:true, messages: { required:'Please fill up '+obj.carv_code}});	// validation
+		//$('#'+inpid).mask("0?9");
+	}	
 	
 }
 function getCarton(carid, tbody, jobid,readonly){
@@ -113,7 +116,7 @@ function displayCartonDetail($col, $colVal, $data=array(), $html=null){
 	return $html;
 }
 function showinfo($col, $colVal, $data=array(), $html=null){
-	$html = '<img src="..'.DS.'..'.DS.'image'.DS.'info'.DS.'attachementinfo.png" alt="..." class="img-responsive img-thumbnail ">';
+	$html = '<img src="'.IMAGE_HREF.'/info/attachementinfo.png" alt="..." class="img-responsive img-thumbnail " style="width:100%">';
 
 	return $html;
 }
@@ -360,6 +363,12 @@ $( document ).ready(function() {
 		$('#requiredmin').text(totalmin+' minutes');
 
 	}	
+	// number validation
+	// js_distortion_value 
+	$('#dbo_jobsheet_new_js_trapping_size').rules("add", { number:true});	 // validation
+	$('#dbo_jobsheet_edit_js_trapping_size').rules("add", { number:true});	 // validation
+	$('#dbo_jobsheet_new_js_distortion_value').rules("add", { number:true}); // validation
+	$('#dbo_jobsheet_edit_js_distortion_value').rules("add", { number:true}); // validation
 
 
 });

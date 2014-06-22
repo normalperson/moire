@@ -1,3 +1,6 @@
+/*
+#94c53e
+#a1cc3d*/
 body {
 	font-family: "Segoe UI","Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
@@ -9,10 +12,10 @@ body {
 }
 
 .panel-banner {
-  border-color: #40FF00;
+  border-color: #a1cc3d;
 }
 .panel-banner > .panel-heading {
-  color: #80FF00;
+  color: #94c53e;
   background-color: #ffffff;
   border-color: #ffffff;
   padding:0px;
@@ -21,7 +24,7 @@ body {
 
 }
 .panel-banner > .panel-body{
-  background-color:#80FF00;
+  background-color:#94c53e;
   color:#ffffff;
   overflow:auto;
   /*height:222px;*/
@@ -36,7 +39,7 @@ body {
 }
 
 .nav-login {
-  border-bottom: 1px solid #00FF00;
+  border-bottom: 1px solid #94c53e;
 }
 
 .nav-login > li {
@@ -59,8 +62,8 @@ body {
 }
 
 .nav-login > li > a:hover {
-  border-color: #00FF00;
-  background-color:#40FF00;
+  border-color: #94c53e;
+  background-color:#a1cc3d;
 }
 
 .nav-login > li.active > a,
@@ -68,8 +71,8 @@ body {
 .nav-login > li.active > a:focus {
   color: #ffffff;
   cursor: default;
-  background-color: #40FF00;
-  border: 1px solid #00FF00;
+  background-color: #a1cc3d;
+  border: 1px solid #94c53e;
   border-bottom-color: transparent;
 }
 
@@ -126,19 +129,19 @@ body {
 }
 
 .login-content{
-  padding-top: 5%;
+  padding-top: 5% !important;
 	background-color: #ffffff;
 	height:420px;
-	padding-left:25px;
-	padding-right:25px;
-  border: 2px solid #00FF00;
+	padding-left:25px !important;
+	padding-right:25px !important;
+  border: 2px solid #94c53e;
 }
 
 
 .btn-login {
   color: #ffffff;
-  background-color:#40FF00;
-  border-color: #40FF00;
+  background-color:#a1cc3d;
+  border-color: #a1cc3d;
   border-radius: 2px;
 }
 

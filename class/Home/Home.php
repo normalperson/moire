@@ -59,7 +59,7 @@ class Home{
 		$html = $smarty->fetch('nograph.html');
 		return $html;
 	}
-	function renderJobByCat($type){
+	function renderJobByCat($caption='SALES BY QUANTITY MTD'){
 		global $HTML,$DB,$USER;
 		$sql = "select * from mjobcatlookup order by jcl_title";
 		$jobcat = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
@@ -69,16 +69,12 @@ class Home{
 		foreach ($jobcat as $jckey => $jcvalue) {
 			$xAxis[] = $jcvalue['jcl_title'];					
 		}
-		/*			For last 3 months
-		$sql = "select to_char(( date_trunc('month', current_date) -  INTERVAL '2 MONTH')::date,'Mon-YYYY') as mth1,  
-				to_char(( date_trunc('month', current_date) -  INTERVAL '1 MONTH')::date,'Mon-YYYY') as mth2,
-				to_char( date_trunc('month', current_date) ,'Mon-YYYY') as mth3";
-		$last3mth = $DB->GetRow($sql,null, PDO::FETCH_ASSOC);*/
-		
-		if($type == 'supervisor'){
-			$sqlWhere = "and 1=1";		
-		}elseif ($type == 'customer'){
+
+		list($currentOrgId, $currentOrgExternal) = $DB->getRow("select org_id, org_external from fcuserorgrole join fcorg on uor_orgid = org_id where uor_id = :0 and uor_rolid = :1", array($USER->userorgroleid, $USER->roleid));
+		if($currentOrgExternal=='Y'){
 			$sqlWhere = "and js_orgid=".$USER->orgid;
+		}else{
+			$sqlWhere = "and 1=1";		
 		}
 		$sql = "select cast(coalesce(count(*),0) as integer) as total
 				from mjobsheet
@@ -100,6 +96,7 @@ class Home{
 
 		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
+		$smarty->assign('paneltitle',tl($caption,true,'widget') );
 		$smarty->assign('data',json_encode($data)); 
 		$smarty->assign('xAxis',json_encode($xAxis)); 
 		$smarty->assign('showgraph',json_encode($showgraph)); 
@@ -375,7 +372,8 @@ class Home{
 		return $url;
 	}
 	function getEventData($eventid,$column){
-		global $DB;
+		global $DB,$EVENT,$USER;
+
 		$sql = "select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Event' as object_type, 
 				pmev_id eventid, pmev_type eventtype, max(pmev_name) eventname, 
 				sum(case when pmf_id is not null then 1 else 0 end) totalcount, 
@@ -386,15 +384,18 @@ class Home{
 				and ((pmev_type = 'INTERMEDIATE' and pmev_intermediate_show_task = 'Y') or (pmev_type = 'START' and pmev_start_function is not null)) 
 				left join fcpmcaseflow on pmf_obj_type = 'PM_Event' and pmev_id = pmf_obj_id 
 				and pmf_end_date is null 
-				where pmev_id = :0
+				where pmev_id = :0 and
+				".PM_Case::genFlowPermWhere()."
 				group by pmwf_id, pmev_id, pmev_type ";		
 		$data = $DB->GetRow($sql,array($eventid), PDO::FETCH_ASSOC);
 
-		return $data[$column];
+		if(!empty($data)) return $data[$column];
+		else return 0;
 	}
 	/*get flow data*/
 	function getActivityData($activityid, $column){
-		global $DB;
+		global $DB,$USER;
+
 		$sql = "select pmwf_id workflowid, max(pmwf_name) workflowname, 'PM_Activity' as object_type, 
 				pmat_id activityid, max(pmat_name) activityname, sum(case when pmf_id is not null then 1 else 0 end) totalcount, 
 				sum(case when pmf_id is not null and pmf_end_date is null then 1 else 0 end) totalpendingcount, 
@@ -402,11 +403,13 @@ class Home{
 				min(case when pmf_id is not null and pmf_end_date is null then pmf_due_date else null end) earliestduedate 
 				from fcpmworkflow join fcpmactivity on pmwf_id = pmat_pmwfid and pmat_type = 'USER' 
 				left join fcpmcaseflow on pmf_obj_type = 'PM_Activity' and pmat_id = pmf_obj_id and pmf_end_date is null 
-				where pmat_id = :0
+				where pmat_id = :0				
+				and  ".PM_Case::genFlowPermWhere()."
 				group by pmwf_id, pmat_id";
 		$data = $DB->GetRow($sql,array($activityid), PDO::FETCH_ASSOC);
 
-		return $data[$column];
+		if(!empty($data)) return $data[$column];
+		else return 0;
 		
 	}
 

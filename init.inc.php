@@ -52,5 +52,4 @@ if (class_exists('ZMQContext')) {
 	}
 	$PUSHSOCKET = $socket;
 }
-
 ?>

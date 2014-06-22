@@ -74,7 +74,7 @@ function quote($str) {
 	return $DB->quote($str);
 }
 
-function time_different_string($to, $from = false, $full = false, $nowtext = 'just now') {
+function time_different_string($to, $from = false, $full = false, $showagolater = true, $nowtext = 'just now') {
     $now = ($from) ? (($from instanceof DateTime) ? $from : new DateTime($from)) : new DateTime;
 
     $ago = ($to instanceof DateTime) ? $to : new DateTime($to);
@@ -101,7 +101,14 @@ function time_different_string($to, $from = false, $full = false, $nowtext = 'ju
     }
 
     if (!$full) $string = array_slice($string, 0, 1);
-    return $string ? implode(', ', $string) . (($now > $ago) ? ' ago' : ' later') : $nowtext;
+	if ($string) {
+		$ret = implode(', ', $string);
+		if ($showagolater) {
+			$ret .= ($now > $ago) ? ' ago' : ' later';
+		}
+	}
+	else $ret = $nowtext;
+	return $ret;
 }
 
 function insertNotice($to, $subject, $text = null, $duedate = null, $from = null) {

@@ -10,8 +10,11 @@
 	<!-- Pixel Admin's stylesheets -->
 	<link href="css/pixeladmin/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="css/login-green.css" rel="stylesheet" type="text/css">
+	<link href="css/pixeladmin/pixel-admin.min.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/pixel-admin.min.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
 
 
   </head>
@@ -48,8 +51,15 @@
 			  	</div>
 			  	<div class="col-md-12">
 			  		<p>This is P&D Dynamic Moire portal. <br>Kindly login with your username and password </p>
+					{if $loginMessage}
+						<div class="alert alert-danger">{$loginMessage}</div>
+					{/if}
 			  	</div>
+				
+				    
 			  	<form class="form-horizontal" role="form"  method="post" id="loginform">
+				
+				
 				    <div class="col-md-12" style="margin-bottom:15px">
 				      <input type="text" class="form-control input-lg" id="username" name="username" placeholder="Username">
 				    </div><!-- /col-md-12 -->
@@ -61,7 +71,6 @@
 				
 				    <div class="col-md-12"  style="margin-bottom:15px">
 				    	<input type="submit" class="btn btn-lg btn-login " value="sign in" />
-				    
 				    </div>
 				    <div class="col-md-12">
 				    	<a href="#" id="atagforgot" class="atag-login">Forgot password?</a>
@@ -71,12 +80,14 @@
 		  </div>
 		  <div class="tab-pane" id="sendmessage">
 		  	<div class="row">
+				<form class="form-horizontal" role="form"  method="post" id="messageform">
 		  		<div class="col-md-12" style="margin-bottom:15px">
 		  			<textarea id="message" class="form-control" rows="10" placeholder="Type your message here......"></textarea>
 		  		</div>
 		  		<div class="col-md-12">
-		  			<input type="button" class="btn btn-lg btn-login" value="Send" />
+		  			<input type="button" id="message_send_button" class="btn btn-lg btn-login" value="Send"/>
 		  		</div>
+				</form>
 		  	</div>
 		  </div>
 		  <div class="tab-pane" id="contactus">
@@ -142,7 +153,7 @@
 			  	<div class="col-md-12">
 			  		<p>Kindly key in your email address and your new password will send to you shortly</p>
 			  	</div>
-			  	<form class="form-horizontal" role="form"  method="post" id="loginform">
+			  	<form class="form-horizontal" role="form" action="?forgot=1" method="post" id="loginform">
 				    <div class="col-md-12" style="margin-bottom:15px">
 				      <input type="text" class="form-control input-lg" name="forgotemail" id="forgotemail" value="" placeholder="Email address"/>
 				    </div><!-- /col-md-12 -->
@@ -166,10 +177,9 @@
 
 	</div><!-- end of row -->
 	  <div id="loginfooter" >
-	  	<div class="pull-left" style="margin-top:15px">Phi Orion Sdn Bhd 2014 All rights reserved</div>
-	  	<div class="pull-right"  style="margin-top:15px"><img src="image/posb.jpg" alt="Phi Orion Sdn Bhd" class="img-responsive img-thumbnail "></div>
+	  	<div class="pull-left" style="margin-top:15px;margin-left:10px">Phi Orion Sdn Bhd 2014 All rights reserved</div>
+	  	<div class="pull-right"  style="margin-top:15px;margin-right:10px"><img src="image/posb.jpg" alt="Phi Orion Sdn Bhd" class="img-responsive img-thumbnail "></div>
 	  </div>
-
 	</div><!-- end of container -->
 
   </body>
@@ -196,4 +206,17 @@ $('#ataglogin').click(function(event){
 	   	}); 
   });
 });
+$('#message_send_button').click(
+	function(event){
+		event.preventDefault();
+		var data = {
+			'message' : $('#message').val()
+		};
+		var url = '/{$smarty.const.APP}/class/Moire/leaveMessage.php';
+		console.log(data);
+		ajaxGetJSON(url, data, function(){
+			showModalAlert('success', 'Leave Message', 'Thank you for your message')
+		});
+	}
+);
 </script>
