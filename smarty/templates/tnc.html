@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="ie8"> <![endif]-->
+<!--[if IE 9]>         <html class="ie9 gt-ie8"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="gt-ie8 gt-ie9 not-ie"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>{$title}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+	<!-- Open Sans font from Google CDN -->
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin" rel="stylesheet" type="text/css">
+
+	<!-- Pixel Admin's stylesheets -->
+	<link href="{$appurl}/css/pixeladmin/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="{$appurl}/css/pixeladmin/pixel-admin.min.css" rel="stylesheet" type="text/css">
+	<link href="{$appurl}/css/pixeladmin/tnc.css" rel="stylesheet" type="text/css">
+	<link href="{$appurl}/css/pixeladmin/rtl.min.css" rel="stylesheet" type="text/css">
+	<link href="{$appurl}/css/pixeladmin/themes.min.css" rel="stylesheet" type="text/css">
+
+	<!--[if lt IE 9]>
+		<script src="{$appurl}/js/ie.min.js"></script>
+	<![endif]-->
+	<script src="{$appurl}/js/jquery-2.1.1.min.js"></script>
+	<script src="{$appurl}/js/bootstrap.min.js"></script>
+	<script src="{$appurl}/js/pixel-admin.min.js"></script>
+
+</head>
+
+<body class="theme-fresh page-tnc">
+	<div class="tnc-header">
+		<a href="#" class="logo">
+			<div class="tnc-logo bg-primary"><img src="{$appurl}/image/logo.png" alt="" style="margin-top: -4px;background-color:white;width:24px;height:24px"></div>&nbsp;
+			{$title}
+		</a> <!-- / .logo -->
+	</div> <!-- / .header -->
+
+	<h1 class="form-header">Terms and Conditions</h1>
+
+	<!-- Form -->
+	<form method="post" id="tnc-form" class="panel">
+		<div class='panel-body'>
+			{$rs.tc_text}
+		</div>
+		<div class='panel-footer clearfix'>
+			<div class="form-actions pull-right">
+				<a href='{$appurl}/login.php?logout=1' class="btn btn-default btn-lg">I Disagree</a>
+				<button type="submit" value="{$rs.tc_id}" name="tnc_agree" class="btn btn-primary btn-lg" >I Agree</button>
+			</div>
+		</div>
+	</form>
+	<!-- / Form -->
+
+</body>
+</html>
