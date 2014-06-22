@@ -21,7 +21,6 @@ if(!empty($_POST['username'])){
 }else if(isset($_GET['logout'])){
 	$User->logout();
 }else if(isset($_GET['forgot'])){
-	pr($_POST);
 	$User->loginForm = 'forgot.html';
 	if(!empty($_POST['forgotemail'])){
 		$userid = $DB->getOne("select usr_userid from ".$DB->prefix."user where usr_email = :0", array($_POST['forgotemail']));
@@ -42,8 +41,8 @@ if(!empty($_POST['username'])){
 					$replytoarr='',
 					$toaddarr=array(array('emailadd'=>$_POST['forgotemail'], 'name'=>'')),
 					$subject='Moire Reset Password',
-					$content='Password reset on request!
-					New password : '.$newpassword.'
+					$content='Password reset on request!<br />
+					New password : '.$newpassword.'<br />
 					Please change your password once you login!',
 					$altbody='',
 					$attachmentpath='',
@@ -61,8 +60,6 @@ if(!empty($_POST['username'])){
 			$loginMessage = 'User not found!';
 		}
 	}
-	
-	die();
 }
 $User->smarty->assign('loginMessage', $loginMessage);
 
