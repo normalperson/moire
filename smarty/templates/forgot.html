@@ -1,59 +1,225 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="css/login.css">
-	<title>Login</title>
-</head>
-<body>
-<table class="container" align="center">
-	<tr>
-		<td rowspan="2" class="leftspace">&nbsp;</td>
-		<td class="banner">&nbsp;</td>
-		<td rowspan="2" class="formContainer">
-			<div class="loginFormContainer">
-				<form method="post" id="forgotForm">
-					<table id="forgotTable">
-						<caption>Reset password</caption>
-						<tr>
-							<td class="captionContainer">Email</td>
-							<td class="inputContainer"><input type="text" name="forgotemail" id="forgotemail" value=""/></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<div id="submitContainerForgot">
-									<input type="submit" name="forgotsubmit" id="forgotsubmit" value="Reset"/>
-								</div>
-							</td>
-						</tr>
-					</table>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Moire Portal</title>
+
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&amp;subset=latin" rel="stylesheet" type="text/css">
+	<!-- Pixel Admin's stylesheets -->
+	<link href="css/pixeladmin/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="css/login-green.css" rel="stylesheet" type="text/css">
+	<link href="css/pixeladmin/pixel-admin.min.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/pixel-admin.min.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+
+
+  </head>
+  <body>
+  	<div class="container" style="margin-top:50px;margin-bottom:50px">
+    <div class="row">
+      <div class="col-md-1">&nbsp;</div>
+
+	  <div id="leftdiv" class="hidden-xs col-md-5">
+  		<div class="panel panel-banner">
+			<div class="panel-heading">
+				<img src="image/login_banner1.png" alt="..." class="img-responsive img-thumbnail ">
+			</div>
+		  <div class="panel-body">
+		    {$contents}
+		  </div>
+		</div>	  		
+	  </div>
+
+	  <div id="rightdiv_login" class="col-md-5">
+	  	<!-- Nav tabs -->
+		<ul class="nav nav-login">
+		  <li class="active" style="width:30%"><a href="#login" data-toggle="tab">Login</a></li>
+		  <li style="width:40%"><a href="#sendmessage" data-toggle="tab">Leave a message</a></li>
+		  <li style="width:30%"><a href="#contactus" data-toggle="tab">Contact Us</a></li>
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content login-content">
+		  <div class="tab-pane active" id="login">		  	
+		  	<div class="row">
+			  	<div class="col-md-12">
+			  		<p style="font-size:2.2em;">Welcome to Moire portal</p>
+			  	</div>
+			  	<div class="col-md-12">
+			  		<p>This is P&D Dynamic Moire portal. <br>Kindly login with your username and password </p>
+					{if $loginMessage}
+						<div class="alert alert-danger">{$loginMessage}</div>
+					{/if}
+			  	</div>
+				
+				    
+			  	<form class="form-horizontal" role="form"  method="post" id="loginform">
+				
+				
+				    <div class="col-md-12" style="margin-bottom:15px">
+				      <input type="text" class="form-control input-lg" id="username" name="username" placeholder="Username">
+				    </div><!-- /col-md-12 -->
+
+				    <div class="col-md-12"  style="margin-bottom:15px">
+				      <input type="password" class="form-control input-lg" id="password" name="password" placeholder="Password">
+				    </div><!-- /col-md-12 -->
+
+				
+				    <div class="col-md-12"  style="margin-bottom:15px">
+				    	<input type="submit" class="btn btn-lg btn-login " value="sign in" />
+				    </div>
+				    <div class="col-md-12">
+				    	<a href="#" id="atagforgot" class="atag-login">Forgot password?</a>
+				    </div>
+				</form>
+			</div><!-- end of row -->		   
+		  </div>
+		  <div class="tab-pane" id="sendmessage">
+		  	<div class="row">
+				<form class="form-horizontal" role="form"  method="post" id="messageform">
+		  		<div class="col-md-12" style="margin-bottom:15px">
+		  			<textarea id="message" class="form-control" rows="10" placeholder="Type your message here......"></textarea>
+		  		</div>
+		  		<div class="col-md-12">
+		  			<input type="button" id="message_send_button" class="btn btn-lg btn-login" value="Send"/>
+		  		</div>
+				</form>
+		  	</div>
+		  </div>
+		  <div class="tab-pane" id="contactus">
+		  	<h5>P & D Dynamic Sdn Bhd</h5>
+		  	<table width="100%"> 
+		  		<tr>
+		  			<td width="15%" valign="top">Address</td>
+		  			<td width="5%" valign="top">:</td>
+		  			<td>
+		  				No 199, Jalan KIP 6, <br>
+						Taman Perindustian KIP,<br>
+						52200 Kepong, KL<br>
+						Malaysia										
+						<br>
+						<br>
+						<p style="color:#FF00FF"><u>Moire Division Address</u>
+							<br>
+							No.4 Jalan IKS M7, <br>
+							Taman IKS Merdeka, 75350 Melaka,<br>
+							Malaysia
+						</p>
+					</td>
+		  		</tr>
+		  		<tr>
+		  			<td></td>
+		  			<td></td>
+		  			<td><a class="link_about" title="Find us on Google Maps" href="https://www.google.com/maps/place/3%C2%B012'14.8%22N+101%C2%B036'18.9%22E/@3.204105,101.6052531,15z/data=!3m1!4b1!4m2!3m1!1s0x0:0x0" target="_blank">Find us on Google Maps</a></td>
+		  		</tr>
+		  		<tr>
+		  			<td>GPS</td>
+		  			<td>:</td>
+		  			<td>N 3° 12' 14.778", E 101° 36' 18.911"</td>
+		  		</tr>
+		  		<tr>
+		  			<td>Phone</td>
+		  			<td>:</td>
+		  			<td>-</td>
+		  		</tr>
+		  		<tr>
+		  			<td>Fax</td>
+		  			<td>:</td>
+		  			<td>-</td>
+		  		</tr>
+		  		<tr>
+		  			<td>Email</td>
+		  			<td>:</td>
+		  			<td>-</td>
+		  		</tr>
+		  	</table>
+			
+		  </div>
+		</div>
+		<div class="col-md-1">&nbsp;</div>
+	  </div><!-- rightdiv_login -->
+
+	  <div id="rightdiv_forgot" class="col-md-5">	
+		<!-- Tab panes -->
+		<div class="login-content">
+		  	<div class="row">
+			  	<div class="col-md-12">
+			  		<p style="font-size:2.2em;">Reset password</p>
+			  	</div>
+			  	<div class="col-md-12">
+			  		<p>Kindly key in your email address and your new password will send to you shortly</p>
+			  	</div>
+			  	<form class="form-horizontal" role="form" action="?forgot=1" method="post" id="loginform">
+				    <div class="col-md-12" style="margin-bottom:15px">
+				      <input type="text" class="form-control input-lg" name="forgotemail" id="forgotemail" value="" placeholder="Email address"/>
+				    </div><!-- /col-md-12 -->
+
+				    <div class="col-md-12"  style="margin-bottom:15px">
+				    	<input type="submit" class="btn btn-lg btn-login " name="forgotsubmit" id="forgotsubmit" value="Reset"/>
+				    </div>
 					<div id="forgotMessage">
 						{$loginMessage}
 					</div>
-					<div id="helpContainer">
-						<a href="/{$APP}/login.php">Login</a>
-					</div>
+				    
+				    <div class="col-md-12">
+				    	<a  href="#" id="ataglogin" class="atag-login" >Login</a>
+				    </div>
 				</form>
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td class="message">
-			{$contents}
-		</td>
-	</tr>
-	<tr>
-		<td colspan="3" class="copyright">
-			<hr>
-			<p>&copy;{$year} Phi Orion</p>
-		</td>
-	</tr>
-</table>
-</div>
-<script type="text/javascript" defer="defer">
-(function(){
-	if(document.getElementById('username')) document.getElementById('username').focus();
-}());
-</script>
-</body>
+			</div><!-- end of row -->		   
+		  </div>
+		  
+		  
+		</div>
+		
+		<div class="col-md-1">&nbsp;</div>
+	  </div><!-- rightdiv_forgot -->
+
+	</div><!-- end of row -->
+	  <div id="loginfooter" >
+	  	<div class="pull-left" style="margin-top:15px;margin-left:10px">Phi Orion Sdn Bhd 2014 All rights reserved</div>
+	  	<div class="pull-right"  style="margin-top:15px;margin-right:10px"><img src="image/posb.jpg" alt="Phi Orion Sdn Bhd" class="img-responsive img-thumbnail "></div>
+	  </div>
+	</div><!-- end of container -->
+
+  </body>
 </html>
+<script type="text/javascript">
+$( document ).ready(function() {
+  $('#rightdiv_forgot').hide();
+});
+$('#atagforgot').click(function(event){
+  event.preventDefault();
+  $( "#rightdiv_login" ).hide( "slow", function() {
+    // Animation complete.
+	   	$('#rightdiv_forgot').show("slow", function(){
+
+	   	}); 
+  });
+});
+$('#ataglogin').click(function(event){
+  event.preventDefault();
+  $( "#rightdiv_forgot" ).hide( "slow", function() {
+    // Animation complete.
+	   	$('#rightdiv_login').show("slow", function(){
+
+	   	}); 
+  });
+});
+$('#message_send_button').click(
+	function(event){
+		event.preventDefault();
+		var data = {
+			'message' : $('#message').val()
+		};
+		var url = '/{$smarty.const.APP}/class/Moire/leaveMessage.php';
+		console.log(data);
+		ajaxGetJSON(url, data, function(){
+			showModalAlert('success', 'Leave Message', 'Thank you for your message')
+		});
+	}
+);
+</script>

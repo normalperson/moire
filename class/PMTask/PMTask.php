@@ -760,6 +760,7 @@ $(function () {
 		$now = new DateTime();
 		if ($r['pmf_end_status'] == 'INTERRUPT') return;
 		if ($r['pmf_obj_type'] == 'PM_Event' && $o->type == 'END' && $c['pmc_end_pmevid'] != $o->id ) return;
+		if ($r['pmf_obj_type'] == 'PM_Gateway' && $o->type != 'EXCLUSIVE' ) return;
 		$html .= "<div class='thread ".((!$r['pmf_end_date']) ? 'ongoing' : '')."'>";
 		$action = $icon = '';
 		switch (get_class($o)) {
@@ -823,7 +824,7 @@ $(function () {
 				}
 				else if ($o->type == 'SCRIPT') {
 					$icon = 'fa-gear';
-					$action = 'started by';
+					$action = "on <a>".$enddate->format('j-M-Y g:i A')."</a>";
 				}
 				$html .= "
 				<div class='thread-icon'><i class='fa {$icon}'></i></div>
@@ -834,11 +835,30 @@ $(function () {
 				</div>";
 				break;
 			case 'PM_Gateway':
-				// $html .= "<div class='thread-icon'><i class='fa fa-pencil-square-o'></i></div><div class='thread-body'>
-					// <span class='thread-time'>14h</span>
-					// <a href='#' class='thread-title'>Lorem ipsum dolor sit amet</a>
-					// <div class='thread-info'>started by <a href='#' title=''>Robert Jang</a> in <a href='#' title=''>Forum name</a></div>
-				// </div>";
+				$next = $DB->getArray("select * from fcpmcaseflow join fcpmconnector on pmcn_id = pmf_prev_pmcnid
+				where pmf_pmcid=:0 and pmf_previd = :1", array($r['pmf_pmcid'], $r['pmf_id']), PDO::FETCH_ASSOC);
+				$actions = array();
+				foreach ($next as $n) {
+					if ($n['pmcn_rule']) {
+						$arr = explode('::',$n['pmcn_rule']);
+						$ruleid = $arr[0];
+						$ruleresult = $arr[1];
+						$rule = new Rule($ruleid);
+						if ($rule->isValid()) {
+							$actions[] = "<a>{$rule->rs['ru_name']} = ".(($ruleresult =='false') ? $rule->rs['ru_false_msg'] : $rule->rs['ru_true_msg'])."</a>";
+						}
+					}
+					else 
+						$actions[] = "<a>Other</a>";
+				}
+				$action = implode('<br>', $actions);
+				$html .= "
+				<div class='thread-icon'><i class='fa fa-random'></i></div>
+				<div class='thread-body'>
+					<span class='thread-time' title='{$startdate->format('j-M-Y g:i A')}'>".time_different_string($r['pmf_start_date'])."</span>
+					<a href='#' class='thread-title'>{$o->name}</a>
+					<div class='thread-info'>{$action}</div>
+				</div>";
 				break;
 		}
 		$html .= "</div>";
