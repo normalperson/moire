@@ -405,7 +405,7 @@ $dbo->cols['decision']->searchMode = 'exact';
 $dbo->cols['decision']->capContClassDefault = array();
 $dbo->cols['decision']->valContClassDefault = array();
 $dbo->cols['decision']->option->default = 'Revert|Revert
-FTCUST|Forward to customer';
+Forward to Customer|Forward to customer';
 $dbo->cols['decision']->option->defaultMethod = 'text';
 $dbo->cols['decision']->option->searchMethod = 'text';
 $dbo->cols['decision']->option->listMethod = 'text';

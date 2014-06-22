@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by fongadmin on 22-06-2014 00:30:23*/
+/*Last Modified by uat_artist1 on 22-06-2014 13:34:23*/
 $translate = array (
   'Order' => 'Order',
   'Total order place' => 'Total order place',
@@ -16,5 +16,12 @@ $translate = array (
   'JOB BY CATEGORY MTD' => 'JOB BY CATEGORY MTD',
   'View cases' => 'View cases',
   'MY PERFORMANCE' => 'MY PERFORMANCE',
+  'received' => 'received',
+  'pending verification' => 'pending verification',
+  'work in progress' => 'work in progress',
+  'pending customer acceptance' => 'pending customer acceptance',
+  'completed' => 'completed',
+  'pending completion' => 'pending completion',
+  'pending acknowledgement' => 'pending acknowledgement',
 );
 ?>

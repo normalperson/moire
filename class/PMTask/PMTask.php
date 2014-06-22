@@ -3,6 +3,7 @@ require_once(CLASS_DIR.DS.'PMFunc'.DS.'PMFunc.php');
 class PMTask {
 
 	var $classurl;
+	static $tl = 'pmtask';
 	function __construct() {
 		$this->classurl = WEB_HREF.'/'.__CLASS__;
 	}
@@ -50,10 +51,10 @@ class PMTask {
 			foreach ($rs as $r) {
 				if ($wfname != $r['pmwf_name']) {
 					if ($cnt > 0) $html .= "<li role='presentation' class='divider'></li>";
-					$html .= "<li role='presentation' class='dropdown-header'>".tl($r['pmwf_name'],true,'workflow')."</li>";
+					$html .= "<li role='presentation' class='dropdown-header'>".tl($r['pmwf_name'],true,self::$tl)."</li>";
 					$wfname = $r['pmwf_name'];
 				}
-				$html .= "<li><a style='padding-left:30px' href='{$this->classurl}/startEvent?id={$r['pmev_id']}&type=PM_Event'>".tl($r['pmev_name'],true,'workflow')."</a></li>";
+				$html .= "<li><a style='padding-left:30px' href='{$this->classurl}/startEvent?id={$r['pmev_id']}&type=PM_Event'>".tl($r['pmev_name'],true,self::$tl)."</a></li>";
 			}
 			$html .= 
 				"</ul>
@@ -160,8 +161,8 @@ class PMTask {
 				if ($focusThis) $focusWF = true;
 				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
 								<a tabindex='-1' href='{$this->classurl}/startEvent?id={$s['id']}&type=PM_Event'>
-									<i class='menu-icon fa fa-plus' title='".tl('Start Event',true,'workflow')."'></i>
-									<span class='mm-text'>".tl($s['name'],true,'workflow')."</span>
+									<i class='menu-icon fa fa-plus' title='".tl('Start Event',false,self::$tl)."'></i>
+									<span class='mm-text'>".tl($s['name'],true,self::$tl)."</span>
 								</a>
 							</li>";
 			}
@@ -174,8 +175,8 @@ class PMTask {
 					"class='label label-warning'").">{$a['totalpendingcount']}</span>" : "";
 				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
 								<a tabindex='-1' href='{$this->classurl}/caseFlowList?id={$a['id']}&type=PM_Activity'>
-									<i class='menu-icon fa fa-pencil-square-o' title='".tl('User Activity',true,'workflow')."'></i>
-									<span class='mm-text'>".tl($a['name'],true,'workflow')."</span>{$pendingBadge}
+									<i class='menu-icon fa fa-pencil-square-o' title='".tl('User Activity',false,self::$tl)."'></i>
+									<span class='mm-text'>".tl($a['name'],true,self::$tl)."</span>{$pendingBadge}
 								</a>
 							</li>";
 			}
@@ -187,8 +188,8 @@ class PMTask {
 					"class='label label-warning'").">{$e['totalpendingcount']}</span>" : "";
 				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
 								<a tabindex='-1' href='{$this->classurl}/caseFlowList?id={$e['id']}&type=PM_Event'>
-									<i class='menu-icon fa fa-play-circle-o' title='".tl('Intermediate Event',true,'workflow')."'></i>
-									<span class='mm-text'>".tl($e['name'],true,'workflow')."</span>{$pendingBadge}
+									<i class='menu-icon fa fa-play-circle-o' title='".tl('Intermediate Event',false,self::$tl)."'></i>
+									<span class='mm-text'>".tl($e['name'],true,self::$tl)."</span>{$pendingBadge}
 								</a>
 							</li>";
 			}
@@ -199,7 +200,7 @@ class PMTask {
 
 			$html .= "<li class='mm-dropdown ".(($focusWF) ? 'open active' : '')."'>
 						<a tabindex='-1' href='#'>
-							<span class='mm-text'>".tl($d['name'],true,'workflow')."</span>
+							<span class='mm-text'>".tl($d['name'],true,self::$tl)."</span>
 							{$pendingBadge}
 						</a>
 						<ul>
@@ -214,7 +215,7 @@ class PMTask {
 		$html = "<li class='mm-dropdown mm-dropdown-root tasklistingLI ".((!empty($_GET['webc']) && $_GET['webc'] == __CLASS__) ? 'open active' : '')."'>
 					<a href='#'>
 						<i class='menu-icon fa fa-tasks'></i>
-						<span class='mm-text mmc-dropdown-delay animated fadeIn'>".tl('Task',true,'workflow')."</span>{$pendingBadge}
+						<span class='mm-text mmc-dropdown-delay animated fadeIn'>".tl('Task',true,self::$tl)."</span>{$pendingBadge}
 					</a>
 					<ul class='mmc-dropdown-delay animated fadeInLeft'>
 						{$html}
@@ -269,7 +270,20 @@ class PMTask {
 			foreach ($flowarr as $fid) {
 				$this->notifyNextUsers($case->activeFlow[$fid]);
 			}
-			redirect('?');
+			$udv = new UDV();
+			$msg = $udv->parse($ev->setup['pmev_performed_message']);
+			if (!$msg) $msg = "Your request has been updated successfully";
+?>
+<script>
+(function () {
+	var msg = <?php echo json_encode($msg); ?>;
+
+	showModalAlert('success', msg, '', function () {
+		document.location = '?';
+	});
+})()
+</script>
+<?php
 		}
 	}
 
@@ -616,7 +630,24 @@ $(function () {
 				foreach ($flowarr_diff as $fid) {
 					$this->notifyNextUsers($case->activeFlow[$fid]);
 				}
-				redirect($this->classurl."/caseFlowList?id={$currid}&type={$currtype}");
+				$redirecturl = $this->classurl."/caseFlowList?id={$currid}&type={$currtype}";
+				$o = new $currtype($currid);
+				$udv = new UDV();
+				$msg = !empty($o->setup['pmat_performed_message']) ? $udv->parse($o->setup['pmat_performed_message']) : '';
+				if (!$msg) $msg = "Your request has been updated successfully";
+?>
+<script>
+(function () {
+	var msg = <?php echo json_encode($msg); ?>;
+	var redirecturl =  <?php echo json_encode($redirecturl); ?>;
+
+	showModalAlert('success', msg, '', function () {
+		document.location = '?';
+	});
+})()
+</script>
+<?php
+				
 			}
 		}
 		else return;

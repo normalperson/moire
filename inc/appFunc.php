@@ -83,24 +83,5 @@ function sendMailFromTemplate($mtcode) {
 }
 
 
-function login_after_function(&$loginresult) {
-	if ($loginresult) {
-		global $USER, $DB;
-		if ($USER->role == 'Customer') {
-			$loginresult = false;
-			$accepted = $DB->getOne("select count(*) from mtncacceptance where tca_userid=:0 and 
-			tca_tcid in (select max(tc_id) from mtnc) and tca_result='ACCEPT'", array($USER->userid));
-			if (!$accepted) {
-				// $_SESSION['BK_USERID'] = $_SESSION['USERID'];
-				// unset($_SESSION['USERID']);
-				// if (!empty($_POST['tnc_result'])) {
-					// return;
-				// }
-				// echo "<form method='post'><input type='submit' name='tnc_result' value='ACCEPT'></form>";
-				// die();
-			}
-		}
-	}
-}
 
 ?>

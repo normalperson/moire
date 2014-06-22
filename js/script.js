@@ -62,6 +62,31 @@ function createEmptyModal(modalID) {
 	$ret.appendTo($('body'));
 	return $ret;
 }
+
+
+var modalAlertCounter = 0;
+function showModalAlert(type/*danger/success/warning/info*/, title, text, callbackFunc) {
+	var iconmap = {
+		danger 	:	$('<i class="fa fa-times-circle"></i>'),
+		success :	$('<i class="fa fa-check-circle"></i>'),
+		warning	:	$('<i class="fa fa-warning"></i>'),
+		info 	:	$('<i class="fa fa-info-circle"></i>')
+	}
+	if (typeof iconmap[type] == 'undefined') return false;
+	++modalAlertCounter;
+	var $modal = createEmptyModal('modal_alert_'+modalAlertCounter);
+	$modal.addClass('modal-alert modal-'+type);
+	$modal.find('.modal-header').html(iconmap[type]);
+	$modal.find('.modal-body').html(text);
+	$('<div class="modal-title"></div>').html(title).insertBefore($modal.find('.modal-body'));
+	$modal.find('.modal-footer').html('<button type="button" class="btn btn-'+type+'" data-dismiss="modal">OK</button>');
+	$modal.modal('show').one('hidden.bs.modal', function () {
+		if ($.isFunction(callbackFunc)) {
+			callbackFunc();
+		}
+	})
+}
+
 function addClass(obj, cls){
 	if(typeof(obj)=='string'){
 		obj = document.getElementById(obj);

@@ -248,7 +248,8 @@ function editorgrole($param1,$param12,$param3){
 		foreach($relationshiparr as $key => $val){
 			$num = $i+1;
 			$toporgid = userTopOrgID();
-			$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0 and org_id = :1",array('ACTIVE',$toporgid));
+			#$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0 and org_id = :1",array('ACTIVE',$toporgid));
+			$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0", array('ACTIVE'));
 
 			$orgHTML = "<select id='userorg_$num' name='userorg_$num'><option value='default'>--Select Org--</option>";
 			foreach ($orgdata as $data){
