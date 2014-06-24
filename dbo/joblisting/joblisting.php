@@ -1,6 +1,5 @@
 <script type="text/javascript">
 function populateInput(obj,elemt,value,readonly){
-	console.log('readonly = '+readonly);
 	if(value==0){
 		// create the html element
 		$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']" ><span class="input-group-addon">'+obj.carv_unit+'</span></div>');
@@ -53,7 +52,7 @@ function getCarton(carid, tbody, jobid,readonly){
 			}
 		},
 		error: function (){
-			console.log(data);
+			//console.log(data);
 		}
 	});
 }

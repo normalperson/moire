@@ -75,6 +75,17 @@ class PMFunc{
 		}
 
 	}
+	function updPullBackStatus($flowid,$o){
+		global $DB;
+	}
+	function updAcknowdgeJobStatus($flowid,$o){
+		global $DB;
+		$sql = "update mjobsheet set js_status = :0 where js_id = :1";
+		$ok = $DB->Execute($sql,array('WORK IN PROGRESS',$o->casekey));
+
+		if($ok) return true;
+
+	}
 	function pendingAcknowledge($flowid,$o){
 		global $DB;
 		$smarty = $this->initSmarty();
@@ -162,7 +173,7 @@ class PMFunc{
 		}
 
 		$ret = array('imageinfo' => $imageinfo, 'variable' => $var, 'boxsize' => $value);
-
+	
 		echo json_encode($ret);
 	}
 	

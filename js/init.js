@@ -34,6 +34,7 @@ if (typeof DBO == 'object') {
 			if ($inp) {
 				$inp.closest('td.value').addClass('form-group col-md-12');
 				if (validation == 'mandatory') {
+					$inp.rules("remove");
 					$inp.rules("add", {required:true, messages: { required:message}});
 				}
 			}

@@ -24,6 +24,7 @@ function dbo_wip_custom_edit($table, $cols, $wheres){
 		// validate rar or zip format
 		unset($cols['artwork']); 
 	}
+	$cols['js_status'] = 'PENDING QC CHECK';
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
 		$ret[] = $DB->lastError;

@@ -778,7 +778,7 @@ $dbo->cols['joboutput']->option->detailMethod = 'text';
 $dbo->cols['joboutput']->option->newMethod = 'text';
 $dbo->cols['joboutput']->option->editMethod = 'text';
 $dbo->cols['printbutton'] = new DBO_COL('printbutton', 'unknown', '-2', '-1');
-$dbo->cols['printbutton']->displayListModifier = '<button class="btn btn-labeled btn-primary" onclick="printJobPreview({js_id});"><span class="btn-label icon fa fa-camera-retro"></span>Print</button>';
+$dbo->cols['printbutton']->displayListModifier = '<button class="btn btn-labeled btn-primary" style="min-width:85px;" onclick="printJobPreview({js_id});"><span class="btn-label icon fa fa-camera-retro"></span>Print</button>';
 $dbo->cols['printbutton']->inputTypeDefault = 'text';
 $dbo->cols['printbutton']->searchMode = 'exact';
 $dbo->cols['printbutton']->capContClassDefault = array();

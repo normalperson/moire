@@ -26,7 +26,7 @@
 		<tr class='template-row'>
 			<td class='index-col'>0</td>
 {foreach from=$d.value item="value"}
-			<td>{$value}</td>
+			<td class='form-group'>{$value}</td>
 {/foreach}
 			<td><a href='javascript:void(0)' class='close remove-row-button' aria-hidden='true'>&times;</a></td>
 		</tr>
@@ -67,6 +67,13 @@ $(function () {
 		})
 		$newTR.appendTo($detailTable.children('tbody'));
 		regenerateIndex();
+		
+		// validation
+		if (typeof dbofv != 'undefined') {
+			$newTR.find('.value_container.mandatory > :input[name^=detail]').each(function () {
+				dbofv.addValidation($(this).attr('name'), 'mandatory', 'This is a mandatory field');
+			})
+		}
 	}
 	
 	function regenerateIndex() {
@@ -74,20 +81,20 @@ $(function () {
 			var $this = $(this)
 			$this.find('.index-col').html(i+1);
 			$this.find(':input').each(function () {
-				if (this.id.slice(-2) == '[]') {
-					var newName = 'detail['+fkcol+'][data]['+i+']['+$(this).data('colname')+'][]';
-				}
+				if (this.id.slice(-2) == '[]') var newName = 'detail['+fkcol+'][data]['+i+']['+$(this).data('colname')+'][]';
 				else var newName = 'detail['+fkcol+'][data]['+i+']['+$(this).data('colname')+']';
 				$(this).attr('name', newName);
+				$(this).attr('id', inpPrefix+$(this).data('colname')+'_'+i);
 			})
 			$this.find('.remove-row-button').show();
 			if (mustfill && i === 0) {
 				$this.find('.remove-row-button').hide();
 			}
+			$this.find('.has-error').removeClass('has-error');
+			$this.find('.jquery-validate-error').remove();
 		})
 		
 	}
-	
 	$detailTable.find('.append-row-button').click(function () {
 		addDetailRow();
 	})

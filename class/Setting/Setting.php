@@ -152,6 +152,10 @@ class Setting{
 		html_header();
 		$dbo = dbo_include('jobcatsetup');
 	}
+	function joboutputsetup(){
+		html_header();
+		$dbo = dbo_include('joboutputsetup');
+	}
 	function User(){
 		html_header();
 		$dbo = dbo_include('user');

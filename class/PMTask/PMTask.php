@@ -341,6 +341,8 @@ class PMTask {
 	);
 
 	function renderCaseSearch($limitresult = 12) {
+		global $USER;
+		if (!$USER->inGroup('SEARCH_PMC')) return;
 		static $caseSearchCount;
 		if ($caseSearchCount) ++$caseSearchCount;
 		else $caseSearchCount = 1;

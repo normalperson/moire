@@ -11,5 +11,7 @@ function runAllTimer() { // temp
 		$case->performFlow($d['pmf_id'], false, true);
 	}
 }
+echo "------------------- ".date('Y-m-d H:i:s')."------------------------<br\>\n";
 runAllTimer();
+echo "-------------------------------------------------------------------<br\>\n\n";
 ?>

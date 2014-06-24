@@ -5,7 +5,7 @@ html_header();
 
 global $USER, $DB;
 $userRS = $DB->getRowAssoc("select usr_name, usr_email, usr_langcode, usr_password from ".$DB->prefix."user where usr_userid = :0", array($USER->userid));
-$langRS = $DB->getArrayAssoc("select lang_code, lang_name from ".$DB->prefix."lang where langcode in ('EN-US', 'ZH-CN', 'ZH-TW') order by 2");
+$langRS = $DB->getArrayAssoc("select lang_code, lang_name from ".$DB->prefix."lang where lang_code in ('EN-US', 'ZH-CN', 'ZH-TW') order by 2");
 $form = array('name'=>$userRS['usr_name'], 'email'=>$userRS['usr_email'], 'language'=>$userRS['usr_langcode']);
 if($_POST){
 	$form = $_POST;
