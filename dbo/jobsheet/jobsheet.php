@@ -88,33 +88,33 @@ $( document ).ready(function() {
 		if($this.val()){
 			getCarton($this.val(),'dbotab_jobsheet_new_tbody_1');				
 		}
+		else $('#cartonimage').remove();
 	}).change();
 	$('#dbo_jobsheet_edit_js_carid').change(function(){
 		$this = $(this);	
 		if($this.val()){
 			getCarton($this.val(),'dbotab_jobsheet_edit_tbody_1');				
-		}
+		}else $('#cartonimage').remove();
 	})
 });
 </script>
 <?php
-
-
-
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'jobsheet.conf.php');
 require_once(DOC_DIR.DS.'inc'.DS.'appFunc.php');
 require_once(CLASS_DIR.DS.'DocManUI'.DS.'DocManUI.php');
 require_once(CORE_DIR.DS.'inc'.DS.'DocumentManager.inc.php');
 function displayCartonEdit($col, $colVal, $data=array(), $html=null){
-	$str = "<script>$(function () {getCarton(".$colVal.",'dbotab_jobsheet_edit_tbody_1',".$data['js_id'].")})</script>";
-	$html .= $str;
-
+	if ($colVal) {
+		$str = "<script>$(function () {getCarton(".$colVal.",'dbotab_jobsheet_edit_tbody_1',".$data['js_id'].")})</script>";
+		$html .= $str;
+	}
 	return $html;
 }
 function displayCartonDetail($col, $colVal, $data=array(), $html=null){
-	$str = "<script>$(function () {getCarton(".$colVal.",'dbotab_jobsheet_detail_tbody_1',".$data['js_id'].",true)})</script>";
-	$html .= $str;
-
+	if ($colVal) {
+		$str = "<script>$(function () {getCarton(".$colVal.",'dbotab_jobsheet_detail_tbody_1',".$data['js_id'].",true)})</script>";
+		$html .= $str;
+	}
 	return $html;
 }
 function showinfo($col, $colVal, $data=array(), $html=null){
@@ -141,7 +141,8 @@ function showPercentageDet($col, $colVal, $data=array(), $html=null){
 	return $newhtml;
 }
 function showRequiredMinute($col, $colVal, $data=array(), $html=null){
-	$html = '<div class="note note-info">
+
+	$html = '<div style="display:none">'.$html.'</div><div class="note note-info">
 				<h4 class="note-title" id="requiredmin">0 minutes</h4>
 				<small>Note : This is the estimated time required for this job once the job has been confirmed and acknowledged. 
 				Supervisor has the right to override this time.</small>
@@ -222,10 +223,16 @@ function dbo_jobsheet_custom_new($table, $cols){
 	unset($cols['joboutput']);	
 	
 	$cols['js_orgid'] = $USER->orgid; // assign org id
-	$cartonarr = $_POST['carcode']; // get the carton array
+	$cartonarr = (!empty($_POST['carcode'])) ? $_POST['carcode'] : array(); // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
 	$cols['js_request_by'] = $USER->userid; // store the userid
-	unset($cols['js_requiretime']); // unset the requiretime (finalize by supervisor)
+	
+	$currmth = date('Ym');
+	$ind = $DB->getOne("select coalesce(max(js_month_occur),0)+1 from mjobsheet 
+	where to_char(js_request_date,'YYYYMM') = :0", array($currmth));
+	
+	$cols['js_code'] = $currmth.str_pad($ind, 4, "0", STR_PAD_LEFT);
+	$cols['js_month_occur'] = $ind;
 	$ok = $DB->doInsert($table, $cols);
 	$jobid = $DB->lastInsertId('mjobsheet_js_id_seq');
 	if(!$ok){
@@ -333,7 +340,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	unset($cols['remark']); // unset remark
 	unset($cols['info']); // unset image info
 	unset($cols['filehistory']);
-	$cartonarr = $_POST['carcode']; // get the carton array
+	$cartonarr = (!empty($_POST['carcode'])) ? $_POST['carcode'] : array(); // get the carton array
 	$cartonid = $cols['js_carid']; // get the carton id selected by user
 	// category handling part 1
 	$cols['js_primcat'] = getPrimaryCat($cols['js_jobcolor'], $cols['jobcategory']);
@@ -444,7 +451,10 @@ foreach ($data as $key => $value) {
 }
 $data = $DB->GetArray("select * from mjoboutputlookup",null, PDO::FETCH_ASSOC);
 foreach ($data as $key => $value) {
-	$timemap['JOBOUTP'][$value['jol_id']] = $value['jol_requiredtime'];
+	$timemap['JOBOUTP'][$value['jol_id']] = array(
+		1=>$value['jol_requiredtime'],
+		'title'=>$value['jol_title'],
+	);
 }
 echo '<script type="text/javascript"> var jstimemap = '.json_encode($timemap).'; </script>';
 
@@ -457,7 +467,8 @@ $( document ).ready(function() {
 	var $colorjob = $('input[name=dbo_jobsheet_new_js_jobcolor], input[name=dbo_jobsheet_edit_js_jobcolor]').click(function () {calMinutes()}),
 		$outputjob = $('input[name=dbo_jobsheet_new_joboutput\\[\\]], input[name=dbo_jobsheet_edit_joboutput\\[\\]]').click(function () {calMinutes()}),
 		$categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes()}),
-		$requiredmin = $('#requiredmin');
+		$requiredmin = $('#requiredmin'),
+		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime');
 
 	// estimated time calculation
 	function calMinutes(){
@@ -479,11 +490,13 @@ $( document ).ready(function() {
 			$outputjob.filter(':checked').each(function () {
 				var olid = $(this).val();
 				if (typeof jstimemap['JOBOUTP'][olid] != 'undefined' && 
-					jstimemap['JOBOUTP'][olid] > p2_maxmin) {
-					p2_maxmin = jstimemap['JOBOUTP'][olid];
+					jstimemap['JOBOUTP'][olid][1] != 'undefined' &&
+					jstimemap['JOBOUTP'][olid][1] > p2_maxmin) {
+					p2_maxmin = jstimemap['JOBOUTP'][olid][1];
 				}
 			})
-			$requiredmin.text(p1_maxmin+p2_maxmin + ' minutes');
+			$requiredmin.text((p1_maxmin+p2_maxmin) + ' minutes');
+			$requireinput.val((p1_maxmin+p2_maxmin));
 		}
 	}
 	calMinutes();
@@ -491,12 +504,12 @@ $( document ).ready(function() {
 	// color input enabling
 	function setColorInput(val) {
 		var sel = parseInt(val);
-		$('input[id^=dbo_jobsheet_new_js_color_], input[id^=dbo_jobsheet_edit_js_color_]').prop('readonly', true);
+		$('input[id^=dbo_jobsheet_new_js_color_], input[id^=dbo_jobsheet_edit_js_color_]').prop('disabled', true);
 		if (val) {
 			for (var i=1; i <= 4; i++ ){
-				var $colorinp = $('#dbo_jobsheet_new_js_color_'+i+', #dbo_jobsheet_edit_js_color_'+i).prop('readonly', false);
+				var $colorinp = $('#dbo_jobsheet_new_js_color_'+i+', #dbo_jobsheet_edit_js_color_'+i).prop('disabled', false);
 				if (i > sel) {
-					$colorinp.prop('readonly', true).val('');
+					$colorinp.prop('disabled', true).val('');
 				}
 			}
 		}
@@ -552,7 +565,7 @@ $( document ).ready(function() {
 	}).change();
 	
 	// barcode enabling
-	var $barcodeTable = $('#detail-jbc_jsid-table');
+	var $barcodeTable = $('.dbo_edit #detail-jbc_jsid-table, .dbo_new #detail-jbc_jsid-table');
 	function setBarcodeProp() {
 		if ($categoryjob.filter(':checked').filter(function () {
 			if (typeof jstimemap['JOBCAT'][this.value] != 'undefined' &&
@@ -571,6 +584,32 @@ $( document ).ready(function() {
 		setBarcodeProp();
 	})
 	setBarcodeProp();
+	
+	
+	//distortion value enabling
+	var $distortValInp = $('#dbo_jobsheet_new_js_distortion_value, #dbo_jobsheet_edit_js_distortion_value');
+	$('#dbo_jobsheet_new_js_distortion, #dbo_jobsheet_edit_js_distortion').change(function () {
+		if ($(this).val()) {
+			$distortValInp.prop('disabled', false);
+		}
+		else $distortValInp.val('').prop('disabled', true);
+	}).change();
+	
+	
+	// carton type enabling
+	var $cartonTypeInp = $('#dbo_jobsheet_new_js_carid, #dbo_jobsheet_edit_js_carid');
+	function setCartonProp() {
+		if ($outputjob.filter(':checked').filter(function () {
+			if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
+			jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'MASTER CARD') return true;
+			return false;
+		}).length > 0) $cartonTypeInp.prop('disabled', false).change();
+		else $cartonTypeInp.val('').prop('disabled', true).change();
+	}
+	$outputjob.click(function () {
+		setCartonProp();
+	})
+	setCartonProp();
 	
 	
 });

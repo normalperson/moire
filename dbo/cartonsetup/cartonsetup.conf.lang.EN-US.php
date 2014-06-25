@@ -8,11 +8,12 @@ $dbo->cols['__map_mcartonvariable__carv_carid__']->caption->set('default', 'Vari
 $dbo->cols['__map_mcartonvariable__carv_code__']->caption->set('default', 'Variable code', 'text');
 $dbo->cols['__map_mcartonvariable__carv_unit__']->caption->set('default', 'Unit', 'text');
 $dbo->cols['file']->caption->set('default', 'Picture', 'text');
+$dbo->cols['car_status']->caption->set('default', 'Status', 'text');
 
-$dbo->titleList = 'List Record';
+$dbo->titleList = 'List Carton';
 $dbo->titleDetail = 'Detail';
-$dbo->titleNew = 'New Record';
-$dbo->titleEdit = 'Edit Record';
+$dbo->titleNew = 'New Carton';
+$dbo->titleEdit = 'Edit Carton';
 $dbo->titleSearch = 'Search Record';
 $dbo->text->searchCancel = 'Cancel';
 $dbo->text->searchSubmit = 'Search';
@@ -20,7 +21,7 @@ $dbo->text->editCancel = 'Cancel';
 $dbo->text->editSubmit = 'Save';
 $dbo->text->newCancel = 'Cancel';
 $dbo->text->newSubmit = 'Save';
-$dbo->text->listSubmit = 'Submit';
+$dbo->text->listSubmit = 'Save';
 $dbo->text->detailCancel = 'Cancel';
 $dbo->text->detailDelete = 'Delete';
 $dbo->text->listEdit = 'Edit';

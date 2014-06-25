@@ -13,7 +13,8 @@ function dbo_reqverification_custom_edit($table, $cols, $wheres){
   $ret = array();
   $REMARK = $cols['remark'];
   unset($cols['remark']);
-  $cols['js_status'] = 'PENDING ARTIST ACKNOWLEDGE JOB';
+  if($cols['js_decision'] == 'Assign')  $cols['js_status'] = 'PENDING ARTIST ACKNOWLEDGE JOB';
+  else $cols['js_status'] = 'PENDING CUSTOMER RESOLUTION';
   $ok = $DB->doUpdate($table, $cols, $wheres);
   if(!$ok){
     $ret[] = $DB->lastError;

@@ -136,10 +136,8 @@ class Setting{
 	}
 	function resetDefault(){
 		global $DB;
-
 		$DB->Execute("select resetfcsetting()");
-		
-	}	
+	}
 	function cartonSetup(){
 		html_header();
 		$dbo = dbo_include('cartonsetup');

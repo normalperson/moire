@@ -1,3 +1,8 @@
+<style type="text/css">
+#dbotab_joblisting_detail_tbody_2 .caption{
+	display:none;
+}
+</style>
 <script type="text/javascript">
 function populateInput(obj,elemt,value,readonly){
 	if(value==0){
@@ -85,7 +90,7 @@ function showPercentageDet($col, $colVal, $data=array(), $html=null){
 # customization
 function dbo_joblisting_customize(&$dbo){
 	global $GLOBAL,$USER,$DB;
-
+	autoDetailTableInput($dbo);
 	list($currentOrgId, $currentOrgExternal) = $DB->getRow("select org_id, org_external from fcuserorgrole join fcorg on uor_orgid = org_id where uor_id = :0 and uor_rolid = :1", array($USER->userorgroleid, $USER->roleid));
 	
 	if($currentOrgExternal=='Y'){

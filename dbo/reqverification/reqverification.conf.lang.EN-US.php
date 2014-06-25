@@ -59,6 +59,8 @@ $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmt
 $dbo->cols['js_jobcolor']->caption->set('default', 'js_jobcolor', 'text');
 $dbo->cols['js_lpi']->caption->set('default', 'js_lpi', 'text');
 $dbo->cols['js_mcid']->caption->set('default', 'js_mcid', 'text');
+$dbo->cols['js_code']->caption->set('default', 'js_code', 'text');
+$dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Job Detail';

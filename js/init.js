@@ -32,7 +32,7 @@ if (typeof DBO == 'object') {
 				$inp = $(this.form[inputname+'[]']);
 			}
 			if ($inp) {
-				$inp.closest('td.value').addClass('form-group col-md-12');
+				$inp.closest('td.value').addClass('form-group col-dbo');
 				if (validation == 'mandatory') {
 					$inp.rules("remove");
 					$inp.rules("add", {required:true, messages: { required:message}});
