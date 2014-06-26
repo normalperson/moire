@@ -1,0 +1,78 @@
+<div class="panel panel-success panel-dark">
+	<div class="panel-heading">
+		<div>{'Active order'|tl:true:'widget'}
+			<div class="panel-heading-controls">
+
+				<!-- <div class="panel-heading-icon">
+					View cases
+					<i class="fa  fa-angle-double-right"></i>
+				</div> -->
+			</div>
+		</div>					
+	</div>
+    <div class="panel-body">
+       <div id="activeorder" style="height:400px">
+
+       </div>
+    </div>
+</div>		
+<div id="nograph_activeorder" class="hidden">{$Home->noGraph()}</div>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+    var data = {$data},
+        category = {$xAxis},
+        showgraph = {$showgraph},
+        gtitle = "{'Current active order'|tl:false:'widget'}",
+        gsubtitle = "{'by quantity'|tl:false:'widget'}",
+        gyAxisTitle = "{'Quantity'|tl:false:'widget'}",
+        gsuffix = "{'job'|tl:false:'widget'}";
+{literal}  
+    if(showgraph){
+    	$('#activeorder').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: gtitle
+            },
+            subtitle: {
+                text: gsubtitle
+            },
+            xAxis: {
+                categories: category,
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: gyAxisTitle,
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: gsuffix
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },        
+            credits: {
+                enabled: false
+            },
+            series: data
+        });
+    }else{
+        $('#activeorder').append($('#nograph_activeorder').removeClass("hidden"));
+    }
+});
+</script>
+{/literal}

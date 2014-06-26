@@ -37,7 +37,7 @@ $dbo->cols['js_trapping_size']->caption->set('default', 'Trapping size', 'text')
 $dbo->cols['js_barcodetype']->caption->set('default', 'Barcode type', 'text');
 $dbo->cols['js_barcodenumber']->caption->set('default', 'Barcode number', 'text');
 $dbo->cols['js_primcat']->caption->set('default', 'Primary Category', 'text');
-$dbo->cols['js_status']->caption->set('default', 'js_status', 'text');
+$dbo->cols['js_status']->caption->set('default', 'Status', 'text');
 $dbo->cols['js_completiondate']->caption->set('default', 'js_completiondate', 'text');
 $dbo->cols['js_assignto']->caption->set('default', 'js_assignto', 'text');
 $dbo->cols['js_refid']->caption->set('default', 'js_refid', 'text');
@@ -67,6 +67,10 @@ $dbo->cols['js_jobcolor']->caption->set('default', 'Color of job', 'text');
 $dbo->cols['js_jobcolor']->caption->setTabCaption('default', 'JOB INFO', 'text');
 $dbo->cols['joboutput']->caption->set('default', 'Output Requirement', 'text');
 $dbo->cols['printbutton']->caption->set('default', ' ', 'text');
+$dbo->cols['js_lpi']->caption->set('default', 'js_lpi', 'text');
+$dbo->cols['js_mcid']->caption->set('default', 'js_mcid', 'text');
+$dbo->cols['js_code']->caption->set('default', 'Job code', 'text');
+$dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';
