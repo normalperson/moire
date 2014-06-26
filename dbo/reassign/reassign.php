@@ -21,6 +21,7 @@ function dbo_reassign_custom_edit($table, $cols, $wheres){
 	$ret = array();
 	$REMARK = $cols['remark'];
   	unset($cols['remark']);
+  	$cols['js_status'] = 'PENDING ARTIST ACKNOWLEDGE JOB';
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
 		$ret[] = $DB->lastError;

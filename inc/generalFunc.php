@@ -145,6 +145,12 @@ function autoDetailTableInput(&$dbo) { // search for DBO columns with __map_{det
 					$setup->inputNewModifierMethod = 'phpfunc';
 					$setup->inputNewModifier = 'genDetailTableInput';
 				}
+				
+				if (in_array($colname, $dbo->colDetail)) {
+					$detailTableKeyMap[$det[0]] = array("ori"=>$colname, "target"=>$det[1]);
+					$setup->displayDetailModifierMethod = 'phpfunc';
+					$setup->displayDetailModifier = 'genDetailTableDisplay';
+				}
 			}
 		}
 	}
@@ -174,11 +180,56 @@ function autoDetailTableInput(&$dbo) { // search for DBO columns with __map_{det
 			"value"=>$detValue,
 			"table"=>$detTab,
 			"cols"=>$detailDBO->col,
+			"dbo"=>$detailDBO,
 			"fkcol"=>$detailTableKeyMap[$detTab]["target"],
 			"fkcolcaption"=>$dbo->cols[$detailTableKeyMap[$detTab]["ori"]]->caption->get($state),
 			"inputPrefix"=>"dbo_".$detailDBO->id."_".$state."_",
 		);
 	}
+}
+
+function genDetailTableDisplay($colname, $currval, $rs, $html) {
+	global $DB, $DETAIL_SETUP;
+	if (empty($DETAIL_SETUP[$colname])) return $html;
+	$d = $DETAIL_SETUP[$colname];
+	$data = array();
+	if ($currval) $data = $DB->getArray("select * from {$d['table']} where {$d['fkcol']} = :0 order by 1", array($currval), PDO::FETCH_ASSOC);
+	
+	if ($data) {
+		foreach ($data as $i=>&$r) {
+			foreach ($d['cols'] as $c) {
+				$optionMethod = $d['dbo']->cols[$c]->option->getMethod('detail');
+				$optionString = $d['dbo']->cols[$c]->option->get('detail');
+				if(strlen($optionString)){
+					$options = $d['dbo']->genOption($optionMethod, $optionString);
+					if($options){
+						$opt = array();
+						foreach($options as $arr){
+							$keys = array_keys($arr);
+							$opt[$arr[$keys[0]]] = $arr[isset($keys[1])?$keys[1]:$keys[0]];
+						}
+					}
+					$valueArr = explode(', ', $r[$c]);
+					$values = array();
+					foreach($valueArr as $valuecode){
+						$values[] = isset($opt[$valuecode])?$opt[$valuecode]:$valuecode;
+					}
+					$r[$c] = implode(', ', $values);
+				}
+			}
+		}
+	}
+	$smarty = new Smarty();
+	$smarty->caching = false;
+	$smarty->setTemplateDir(DOC_DIR.DS.'smarty'.DS.'templates');
+	$smarty->setCompileDir(DOC_DIR.DS.'smarty'.DS.'templates_c');
+	$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
+	$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
+	$smarty->assign("d", $d);
+	$smarty->assign("data", $data);
+	$smarty->assign("keyhtml",$html);
+
+	return $smarty->fetch("dbodetaildisplay.html");
 }
 
 function genDetailTableInput($colname, $currval, $rs, $html) {

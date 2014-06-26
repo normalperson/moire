@@ -136,10 +136,8 @@ class Setting{
 	}
 	function resetDefault(){
 		global $DB;
-
 		$DB->Execute("select resetfcsetting()");
-		
-	}	
+	}
 	function cartonSetup(){
 		html_header();
 		$dbo = dbo_include('cartonsetup');
@@ -151,6 +149,10 @@ class Setting{
 	function jobcatsetup(){
 		html_header();
 		$dbo = dbo_include('jobcatsetup');
+	}
+	function joboutputsetup(){
+		html_header();
+		$dbo = dbo_include('joboutputsetup');
 	}
 	function User(){
 		html_header();

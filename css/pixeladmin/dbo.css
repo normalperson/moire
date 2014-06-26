@@ -720,9 +720,13 @@ div.dbo_theme_pixeladmin td.dbo_container_detail > fieldset{
 div.dbo_theme_pixeladmin td.dbo_container_detail > fieldset > legend{
 
 }
+div.dbo_theme_pixeladmin td.dbo_container_detail td.value {
+	vertical-align:top;
+	padding-top:10px;
+}
 
 div.dbo_theme_pixeladmin td.dbo_container_detail th.caption{
-	font-weight:normal;
+	font-weight:600;
 	text-align:left;
 	vertical-align: top;
 	padding-top: 10px;
@@ -732,6 +736,11 @@ div.dbo_theme_pixeladmin td.dbo_container_detail th.caption{
 div.dbo_theme_pixeladmin td.dbo_container_detail td.form_button  input.detail_delete {
 	display : none;
 }
+
+div.dbo_theme_pixeladmin td.dbo_container_detail .detail-setup-table .value_container {
+	padding-left : 5px;
+}
+
 
 /* search */
 
@@ -775,12 +784,15 @@ div.dbo_theme_pixeladmin td.dbo_container_new table.dbo_new > tbody > tr > * {
 	padding-bottom: 15px;
 }
 
+div.dbo_theme_pixeladmin td.dbo_container_new td.value {
+	vertical-align:top;
+}
+
 div.dbo_theme_pixeladmin td.dbo_container_new th.caption{
 	font-weight:normal;
 	text-align:left;
 	vertical-align: top;
 	padding-top: 10px;
-
 }
 
 div.dbo_theme_pixeladmin td.dbo_container_new th.caption div.mandatory:after, div.dbo_theme_pixeladmin td.dbo_container_new td.caption div.mandatory:after{
@@ -799,6 +811,10 @@ div.dbo_theme_pixeladmin td.dbo_container_edit{
 
 div.dbo_theme_pixeladmin td.dbo_container_edit table.dbo_edit > tbody > tr > * {
 	padding-bottom: 15px;
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_edit td.value {
+	vertical-align:top;
 }
 
 
@@ -928,4 +944,14 @@ div.dbo_theme_pixeladmin .has-error .value_container textarea{
 	border-color: #d38e99 !important;
 	-webkit-box-shadow: none;
 	box-shadow: none;
+}
+
+
+div.dbo_theme_pixeladmin .dbo_new >tbody > tr> th.caption:first-child,
+div.dbo_theme_pixeladmin .dbo_edit >tbody > tr> th.caption:first-child{
+	min-width : 150px;
+}
+
+div.dbo_theme_pixeladmin td.value .form-group {
+	margin-bottom : 0;
 }

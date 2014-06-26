@@ -141,6 +141,7 @@ $dbo->cols['mc_aniloxcontainment_2']->caption->set('default', ' ', 'text');
 $dbo->cols['mc_aniloxcontainment_3']->caption->set('default', ' ', 'text');
 $dbo->cols['mc_aniloxcontainment_4']->caption->set('default', ' ', 'text');
 $dbo->cols['mc_aniloxcontainment_5']->caption->set('default', ' ', 'text');
+$dbo->cols['mc_printer_name']->caption->set('default', 'Printer name', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

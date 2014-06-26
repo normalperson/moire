@@ -81,8 +81,14 @@
 		  <div class="tab-pane" id="sendmessage">
 		  	<div class="row">
 				<form class="form-horizontal" role="form"  method="post" id="messageform">
-		  		<div class="col-md-12" style="margin-bottom:15px">
-		  			<textarea id="message" class="form-control" rows="10" placeholder="Type your message here......"></textarea>
+				<div class="col-md-12 form-group" style="margin-bottom:15px">
+			      <input type="text" class="form-control input-lg" id="lmname" name="lmname" placeholder="Name">
+			    </div><!-- /col-md-12 -->				
+			    <div class="col-md-12 form-group" style="margin-bottom:15px">
+			      <input type="text" class="form-control input-lg" id="lmemail" name="lmemail" placeholder="Email address">
+			    </div><!-- /col-md-12 -->				
+		  		<div class="col-md-12 form-group" style="margin-bottom:15px">
+		  			<textarea id="message" name="message" class="form-control" rows="10" placeholder="Type your message here......"></textarea>
 		  		</div>
 		  		<div class="col-md-12">
 		  			<input type="button" id="message_send_button" class="btn btn-lg btn-login" value="Send"/>
@@ -206,17 +212,39 @@ $('#ataglogin').click(function(event){
 	   	}); 
   });
 });
-$('#message_send_button').click(
+
+$('#message_send_button').click(	
 	function(event){
 		event.preventDefault();
-		var data = {
-			'message' : $('#message').val()
-		};
+		var form = $( "#messageform" );
 		var url = '/{$smarty.const.APP}/class/Moire/leaveMessage.php';
-		console.log(data);
-		ajaxGetJSON(url, data, function(){
-			showModalAlert('success', 'Leave Message', 'Thank you for your message')
+{literal}		
+		form.validate({
+		  rules: {
+		    // simple rule, converted to {required:true}
+		    lmname: "required",
+		    message: "required",
+		    // compound rule
+		    lmemail: {
+		      required: true,
+		      email: true
+		    }
+		  }
 		});
+		
+		form.validate();
+    	if( form.valid() ){
+
+			var data = {
+				'message' : $('#message').val(),
+				'name'    : $('#lmname').val(),
+				'email'   : $('#lmemail').val()
+			};
+			ajaxGetJSON(url, data, function(){
+				showModalAlert('success', 'Leave Message', 'Thank you for your message')
+			});
+		}
 	}
 );
+{/literal}
 </script>

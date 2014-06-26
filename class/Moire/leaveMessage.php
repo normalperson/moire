@@ -6,26 +6,31 @@ require_once(dirname(__FILE__).'/../../init.inc.php');
 // pr($_POST);
 // die('sss');
 echo json_encode(array(1));
-$emailSettingRS = $DB->getArray("select set_code, set_val from fcsetting where set_code in ('EMAILHOST', 'EMAILPORT', 'EMAILUSERNAME', 'EMAILPASSWORD')");
-$emailSetting = array();
-if($emailSettingRS){
-	foreach($emailSettingRS as $row){
-		$emailSetting[$row['set_code']] = $row['set_val'];
-	}
+$sql = "select ms_hostname,ms_port,ms_username,ms_password from fcemailsetting
+		where ms_hostname = :0";
+$emailSetting = $DB->GetRow($sql,array('202.190.181.92'), PDO::FETCH_ASSOC);
+if(!empty($emailSetting)){
 	$mail = new Email();
 	// vd($mail); $fromarr['emailadd'], $fromarr['name']
+	// need to add header
+	// create the content
+	extract($_POST);
+	$contenthtml = "<p>Name:$name</p>
+					<p>Email:$email</p>
+					<p>Message:$message</p>
+	               ";
 	$ret = $mail->sendEmail_bySMTP(
 		$fromarr=array('emailadd'=>'noreply@moiregc.com.my', 'name'=>'no-reply-moire'),
 		$replytoarr='',
-		$toaddarr=array(array('emailadd'=>'noreply@moiregc.com.my', 'name'=>'')),
-		$subject='Moire Leave Message',
-		$content=$_POST['message'],
+		$toaddarr=array( array('emailadd'=>'support@moiregc.com.my', 'name'=>'') ),
+		$subject='Moire Leave Message',	
+		$content=$contenthtml,
 		$altbody='',
 		$attachmentpath='',
 		$smtpauth=true,
-		$host=$emailSetting['EMAILHOST'],
-		$port=$emailSetting['EMAILPORT'],
-		$username=$emailSetting['EMAILUSERNAME'],
-		$password=$emailSetting['EMAILPASSWORD']);
+		$host=$emailSetting['ms_hostname'],
+		$port=$emailSetting['ms_port'],
+		$username=$emailSetting['ms_username'],
+		$password=$emailSetting['ms_password']);
 }
 ?>

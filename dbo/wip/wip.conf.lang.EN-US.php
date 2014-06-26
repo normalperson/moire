@@ -53,11 +53,15 @@ $dbo->cols['js_decision']->caption->set('default', 'js_decision', 'text');
 $dbo->cols['decision']->caption->set('default', 'decision', 'text');
 $dbo->cols['artwork']->caption->set('default', 'Artwork', 'text');
 $dbo->cols['widthheight']->caption->set('default', 'widthheight', 'text');
-$dbo->cols['js_width']->caption->set('default', 'Width (inch)', 'text');
-$dbo->cols['js_height']->caption->set('default', 'Height  (inch)', 'text');
+$dbo->cols['js_width']->caption->set('default', 'Width (mm)', 'text');
+$dbo->cols['js_height']->caption->set('default', 'Height (mm)', 'text');
 $dbo->cols['js_requiretime']->caption->set('default', 'js_requiretime', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
 $dbo->cols['js_jobcolor']->caption->set('default', 'js_jobcolor', 'text');
+$dbo->cols['js_lpi']->caption->set('default', 'js_lpi', 'text');
+$dbo->cols['js_mcid']->caption->set('default', 'js_mcid', 'text');
+$dbo->cols['js_code']->caption->set('default', 'js_code', 'text');
+$dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

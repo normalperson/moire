@@ -1,6 +1,10 @@
+<style type="text/css">
+#dbotab_joblisting_detail_tbody_2 .caption{
+	display:none;
+}
+</style>
 <script type="text/javascript">
 function populateInput(obj,elemt,value,readonly){
-	console.log('readonly = '+readonly);
 	if(value==0){
 		// create the html element
 		$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']" ><span class="input-group-addon">'+obj.carv_unit+'</span></div>');
@@ -53,7 +57,7 @@ function getCarton(carid, tbody, jobid,readonly){
 			}
 		},
 		error: function (){
-			console.log(data);
+			//console.log(data);
 		}
 	});
 }
@@ -86,7 +90,7 @@ function showPercentageDet($col, $colVal, $data=array(), $html=null){
 # customization
 function dbo_joblisting_customize(&$dbo){
 	global $GLOBAL,$USER,$DB;
-
+	autoDetailTableInput($dbo);
 	list($currentOrgId, $currentOrgExternal) = $DB->getRow("select org_id, org_external from fcuserorgrole join fcorg on uor_orgid = org_id where uor_id = :0 and uor_rolid = :1", array($USER->userorgroleid, $USER->roleid));
 	
 	if($currentOrgExternal=='Y'){

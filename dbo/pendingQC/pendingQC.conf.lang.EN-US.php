@@ -43,6 +43,9 @@ $dbo->cols['js_carid']->caption->set('default', 'js_carid', 'text');
 $dbo->cols['js_decision']->caption->set('default', 'Decision', 'text');
 $dbo->cols['js_width']->caption->set('default', 'js_width', 'text');
 $dbo->cols['js_height']->caption->set('default', 'js_height', 'text');
+$dbo->cols['js_requiretime']->caption->set('default', 'js_requiretime', 'text');
+$dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
+$dbo->cols['js_jobcolor']->caption->set('default', 'js_jobcolor', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

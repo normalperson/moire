@@ -13,6 +13,13 @@ function dbo_pendingQC_custom_edit($table, $cols, $wheres){
 	$REMARK = $cols['remark'];
 	unset($cols['remark']);
 
+
+	if($cols['js_decision'] == 'Forward to Customer'){
+		$cols['js_status'] = 'PENDING ACCEPTANCE';
+	}else{
+		$cols['js_status'] = 'WORK IN PROGRESS';
+	}
+
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
 		$ret[] = $DB->lastError;

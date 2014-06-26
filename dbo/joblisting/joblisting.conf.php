@@ -10,7 +10,10 @@ $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, pmc_id, \'\' filehistory,
 cast(jobcategory as varchar) as jobcategory,
 cast(joboutput as varchar) as joboutput, 
-\'\' as printbutton 
+\'\' as printbutton ,
+js_id as "__map_mjobbarcode__jbc_jsid__",
+null as "__map_mjobbarcode__jbc_btcode__", 
+null as "__map_mjobbarcode__jbc_value__"
 from mjobsheet 
 join fcpmcase on js_id = pmc_casekey
 left join (
@@ -19,16 +22,16 @@ group by jc_jsid) a on js_id = a.jc_jsid
 left join (
 select string_agg(jo_outputcode,\', \' order by jo_id) joboutput,jo_jsid from mjoboutput
 group by jo_jsid) b on js_id = b.jo_jsid';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'pmc_id', 'filehistory', 'jobcategory', 'joboutput', 'printbutton');
-$dbo->colList = array('pmc_id', 'js_description', 'js_primcat', 'jobcategory', 'js_request_date', 'js_orgid', 'printbutton');
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'pmc_id', 'filehistory', 'jobcategory', 'joboutput', 'printbutton', '__map_mjobbarcode__jbc_jsid__', '__map_mjobbarcode__jbc_btcode__', '__map_mjobbarcode__jbc_value__');
+$dbo->colList = array('pmc_id', 'js_code', 'js_description', 'js_primcat', 'js_status', 'jobcategory', 'js_request_date', 'js_orgid', 'printbutton');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('js_jobcolor', 'js_description', 'joboutput', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
-$dbo->colNew = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid');
-$dbo->colEdit = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
-$dbo->colSearch = array('pmc_id', 'js_request_date', 'js_description', 'js_primcat');
-$dbo->colExport = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_trapping_size', 'js_barcodetype', 'js_barcodenumber', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
+$dbo->colDetail = array('pmc_id', 'js_code', 'js_description', 'js_jobcolor', 'js_trapping_size', 'joboutput', 'js_lpi', 'jobcategory', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', '__map_mjobbarcode__jbc_jsid__', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
+$dbo->colNew = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid');
+$dbo->colEdit = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
+$dbo->colSearch = array('pmc_id', 'js_code', 'js_status', 'js_request_date', 'js_description', 'js_primcat');
+$dbo->colExport = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colSort = array();
 $dbo->canSearch = true;
 $dbo->canNew = false;
@@ -47,14 +50,13 @@ $dbo->titleNew = 'New Job';
 $dbo->titleEdit = 'Edit Job';
 $dbo->titleSearch = 'Search Job';
 $dbo->layoutSearch = '1|1';
-$dbo->layoutDetail = '5;
-5;
-5;
-5;
-5;
-5;
-1|1|1|1|1;
-1|1|1|1|1;
+$dbo->layoutDetail = '2|2;
+4;
+2|2;
+2|2;
+4;
+1|1|1|1;
+1|1|1|1;
 5;
 5;
 =
@@ -518,11 +520,14 @@ $dbo->cols['js_primcat']->option->detailMethod = 'text';
 $dbo->cols['js_primcat']->option->newMethod = 'text';
 $dbo->cols['js_primcat']->option->editMethod = 'text';
 $dbo->cols['js_status'] = new DBO_COL('js_status', 'varchar', '-1', '104');
-$dbo->cols['js_status']->inputTypeDefault = 'text';
+$dbo->cols['js_status']->inputTypeDefault = 'select';
 $dbo->cols['js_status']->searchMode = 'exact';
 $dbo->cols['js_status']->capContClassDefault = array();
 $dbo->cols['js_status']->valContClassDefault = array();
-$dbo->cols['js_status']->option->defaultMethod = 'text';
+$dbo->cols['js_status']->option->default = 'select lu_code,lu_title from fclookup
+where lu_cat = \'JOBSTATUS\'
+order by 2';
+$dbo->cols['js_status']->option->defaultMethod = 'sql';
 $dbo->cols['js_status']->option->searchMethod = 'text';
 $dbo->cols['js_status']->option->listMethod = 'text';
 $dbo->cols['js_status']->option->detailMethod = 'text';
@@ -778,7 +783,7 @@ $dbo->cols['joboutput']->option->detailMethod = 'text';
 $dbo->cols['joboutput']->option->newMethod = 'text';
 $dbo->cols['joboutput']->option->editMethod = 'text';
 $dbo->cols['printbutton'] = new DBO_COL('printbutton', 'unknown', '-2', '-1');
-$dbo->cols['printbutton']->displayListModifier = '<button class="btn btn-labeled btn-primary" onclick="printJobPreview({js_id});"><span class="btn-label icon fa fa-camera-retro"></span>Print</button>';
+$dbo->cols['printbutton']->displayListModifier = '<button class="btn btn-labeled btn-primary" style="min-width:85px;" onclick="printJobPreview({js_id});"><span class="btn-label icon fa fa-camera-retro"></span>Print</button>';
 $dbo->cols['printbutton']->inputTypeDefault = 'text';
 $dbo->cols['printbutton']->searchMode = 'exact';
 $dbo->cols['printbutton']->capContClassDefault = array();
@@ -789,6 +794,83 @@ $dbo->cols['printbutton']->option->listMethod = 'text';
 $dbo->cols['printbutton']->option->detailMethod = 'text';
 $dbo->cols['printbutton']->option->newMethod = 'text';
 $dbo->cols['printbutton']->option->editMethod = 'text';
+$dbo->cols['js_lpi'] = new DBO_COL('js_lpi', 'int4', '4', '-1');
+$dbo->cols['js_lpi']->inputTypeDefault = 'text';
+$dbo->cols['js_lpi']->searchMode = 'exact';
+$dbo->cols['js_lpi']->capContClassDefault = array();
+$dbo->cols['js_lpi']->valContClassDefault = array();
+$dbo->cols['js_lpi']->option->defaultMethod = 'text';
+$dbo->cols['js_lpi']->option->searchMethod = 'text';
+$dbo->cols['js_lpi']->option->listMethod = 'text';
+$dbo->cols['js_lpi']->option->detailMethod = 'text';
+$dbo->cols['js_lpi']->option->newMethod = 'text';
+$dbo->cols['js_lpi']->option->editMethod = 'text';
+$dbo->cols['js_mcid'] = new DBO_COL('js_mcid', 'int4', '4', '-1');
+$dbo->cols['js_mcid']->inputTypeDefault = 'text';
+$dbo->cols['js_mcid']->searchMode = 'exact';
+$dbo->cols['js_mcid']->capContClassDefault = array();
+$dbo->cols['js_mcid']->valContClassDefault = array();
+$dbo->cols['js_mcid']->option->defaultMethod = 'text';
+$dbo->cols['js_mcid']->option->searchMethod = 'text';
+$dbo->cols['js_mcid']->option->listMethod = 'text';
+$dbo->cols['js_mcid']->option->detailMethod = 'text';
+$dbo->cols['js_mcid']->option->newMethod = 'text';
+$dbo->cols['js_mcid']->option->editMethod = 'text';
+$dbo->cols['js_code'] = new DBO_COL('js_code', 'varchar', '-1', '36');
+$dbo->cols['js_code']->inputTypeDefault = 'text';
+$dbo->cols['js_code']->searchMode = 'exact';
+$dbo->cols['js_code']->capContClassDefault = array();
+$dbo->cols['js_code']->valContClassDefault = array();
+$dbo->cols['js_code']->option->defaultMethod = 'text';
+$dbo->cols['js_code']->option->searchMethod = 'text';
+$dbo->cols['js_code']->option->listMethod = 'text';
+$dbo->cols['js_code']->option->detailMethod = 'text';
+$dbo->cols['js_code']->option->newMethod = 'text';
+$dbo->cols['js_code']->option->editMethod = 'text';
+$dbo->cols['js_month_occur'] = new DBO_COL('js_month_occur', 'int4', '4', '-1');
+$dbo->cols['js_month_occur']->inputTypeDefault = 'text';
+$dbo->cols['js_month_occur']->searchMode = 'exact';
+$dbo->cols['js_month_occur']->capContClassDefault = array();
+$dbo->cols['js_month_occur']->valContClassDefault = array();
+$dbo->cols['js_month_occur']->option->defaultMethod = 'text';
+$dbo->cols['js_month_occur']->option->searchMethod = 'text';
+$dbo->cols['js_month_occur']->option->listMethod = 'text';
+$dbo->cols['js_month_occur']->option->detailMethod = 'text';
+$dbo->cols['js_month_occur']->option->newMethod = 'text';
+$dbo->cols['js_month_occur']->option->editMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_jsid__'] = new DBO_COL('__map_mjobbarcode__jbc_jsid__', 'int4', '4', '-1');
+$dbo->cols['__map_mjobbarcode__jbc_jsid__']->inputTypeDefault = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_jsid__']->searchMode = 'exact';
+$dbo->cols['__map_mjobbarcode__jbc_jsid__']->capContClassDefault = array();
+$dbo->cols['__map_mjobbarcode__jbc_jsid__']->valContClassDefault = array();
+$dbo->cols['__map_mjobbarcode__jbc_jsid__']->option->defaultMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_jsid__']->option->searchMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_jsid__']->option->listMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_jsid__']->option->detailMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_jsid__']->option->newMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_jsid__']->option->editMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_btcode__'] = new DBO_COL('__map_mjobbarcode__jbc_btcode__', 'unknown', '-2', '-1');
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->inputTypeDefault = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->searchMode = 'exact';
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->capContClassDefault = array();
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->valContClassDefault = array();
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->defaultMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->searchMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->listMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->detailMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->newMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->editMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_value__'] = new DBO_COL('__map_mjobbarcode__jbc_value__', 'unknown', '-2', '-1');
+$dbo->cols['__map_mjobbarcode__jbc_value__']->inputTypeDefault = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_value__']->searchMode = 'exact';
+$dbo->cols['__map_mjobbarcode__jbc_value__']->capContClassDefault = array();
+$dbo->cols['__map_mjobbarcode__jbc_value__']->valContClassDefault = array();
+$dbo->cols['__map_mjobbarcode__jbc_value__']->option->defaultMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_value__']->option->searchMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_value__']->option->listMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_value__']->option->detailMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_value__']->option->newMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_value__']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

@@ -7,19 +7,21 @@ function getUserAvatarImage($userid) {
 	return $imgfile;
 	
 }
-function getHighestPriorityCat($catstring){
-	if($catstring == '') return 'Cat string cannot be empty';
-
+function getPrimaryCat($color, $catstring){
+	if(!$catstring || !$color) return false;
 	global $DB;
-
-
-	$sql = "select jcl_id from mjobcatlookup
-			where jcl_id in ($catstring)
-			order by jcl_sequence desc
-			limit 1";
-
-	return $DB->GetOne($sql,null, PDO::FETCH_ASSOC);
-
+	$maxmin = 0;
+	$primcat = false;
+	$sql = "select * from mjobcatlookup where jcl_id in ($catstring)";
+	$rs = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
+	if (!$rs) return false;
+	foreach ($rs as $r) {
+		if (!empty($r['jcl_requiretime_color_'.$color]) && $r['jcl_requiretime_color_'.$color] > $maxmin) {
+			$maxmin = $r['jcl_requiretime_color_'.$color];
+			$primcat = $r['jcl_id'];
+		}
+	}
+	return $r['jcl_id'];
 }
 
 function userTopOrgID(){

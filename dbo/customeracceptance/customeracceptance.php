@@ -13,6 +13,9 @@ function dbo_customeracceptance_custom_edit($table, $cols, $wheres){
 	unset($cols['remark']);
 	
 	if ($cols['js_decision'] == 'Accept') $cols['js_status'] = 'COMPLETED';
+	else {
+		$cols['js_status'] = 'REQUIREMENT VERIFICATION';		
+	}
 	
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
