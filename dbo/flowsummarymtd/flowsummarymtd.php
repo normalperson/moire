@@ -1,17 +1,22 @@
+<style type="text/css">
+#dbotab_flowsummarymtd_detail_tbody_2 .caption{
+	display:none;
+}
+</style>
 <script type="text/javascript">
 function populateInput(obj,elemt,value,readonly){
 	console.log('readonly = '+readonly);
+	var inpid = 'carinp_'+inpcnt;
 	if(value==0){
 		// create the html element
-		$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']" ><span class="input-group-addon">'+obj.carv_unit+'</span></div>');
+		$element = $('<div class="form-group" ><label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']" ><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');
 	}else{
 		if(readonly){
-			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
+			$element = $('<div class="form-group" > <label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');		
 		}else{
-			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
-
-		}
-	}		
+			$element = $('<div class="form-group" > <label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');		
+		}		
+	}	
 
 	// append to data div
 	elemt.append($element);
@@ -87,12 +92,11 @@ function showPercentageDet($col, $colVal, $data=array(), $html=null){
 # customization
 function dbo_flowsummarymtd_customize(&$dbo){
 	global $GLOBAL,$USER;
-
+	autoDetailTableInput($dbo);
 	if( isset($_GET['type']) && isset($_GET['id']) ){
 		$GLOBAL['type'] = $_GET['type'];
 		$GLOBAL['actvid'] = $_GET['id'];
 	}
-
 
 	$dbo->whereSQL = " pmf_obj_type = '".$GLOBAL['type']."'
 		and pmf_obj_id = '".$GLOBAL['actvid']."'

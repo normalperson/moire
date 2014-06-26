@@ -22,7 +22,7 @@ group by jc_jsid) a on js_id = a.jc_jsid
 left join (
 select string_agg(jo_outputcode,\', \' order by jo_id) joboutput,jo_jsid from mjoboutput
 group by jo_jsid) b on js_id = b.jo_jsid';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'pmc_id', 'filehistory', 'jobcategory', 'joboutput', 'printbutton', '__map_mjobbarcode__jbc_jsid__', '__map_mjobbarcode__jbc_btcode__', '__map_mjobbarcode__jbc_value__');
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'pmc_id', 'filehistory', 'jobcategory', 'joboutput', 'printbutton', '__map_mjobbarcode__jbc_jsid__', '__map_mjobbarcode__jbc_btcode__', '__map_mjobbarcode__jbc_value__');
 $dbo->colList = array('pmc_id', 'js_code', 'js_description', 'js_primcat', 'js_status', 'jobcategory', 'js_request_date', 'js_orgid', 'printbutton');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
@@ -413,8 +413,8 @@ $dbo->cols['js_distortion']->inputTypeDefault = 'radio';
 $dbo->cols['js_distortion']->searchMode = 'exact';
 $dbo->cols['js_distortion']->capContClassDefault = array();
 $dbo->cols['js_distortion']->valContClassDefault = array();
-$dbo->cols['js_distortion']->option->default = 'X|Direction X
-Y|Direction Y';
+$dbo->cols['js_distortion']->option->default = 'H|Horizontal
+V|Vertical';
 $dbo->cols['js_distortion']->option->defaultMethod = 'text';
 $dbo->cols['js_distortion']->option->searchMethod = 'text';
 $dbo->cols['js_distortion']->option->listMethod = 'text';
@@ -772,11 +772,12 @@ $dbo->cols['js_jobcolor']->option->detailMethod = 'text';
 $dbo->cols['js_jobcolor']->option->newMethod = 'text';
 $dbo->cols['js_jobcolor']->option->editMethod = 'text';
 $dbo->cols['joboutput'] = new DBO_COL('joboutput', 'varchar', '-1', '-1');
-$dbo->cols['joboutput']->inputTypeDefault = 'text';
+$dbo->cols['joboutput']->inputTypeDefault = 'PixelAdminCheckbox';
 $dbo->cols['joboutput']->searchMode = 'exact';
 $dbo->cols['joboutput']->capContClassDefault = array();
 $dbo->cols['joboutput']->valContClassDefault = array();
-$dbo->cols['joboutput']->option->defaultMethod = 'text';
+$dbo->cols['joboutput']->option->default = 'select jol_id,jol_title from mjoboutputlookup';
+$dbo->cols['joboutput']->option->defaultMethod = 'sql';
 $dbo->cols['joboutput']->option->searchMethod = 'text';
 $dbo->cols['joboutput']->option->listMethod = 'text';
 $dbo->cols['joboutput']->option->detailMethod = 'text';
@@ -854,7 +855,8 @@ $dbo->cols['__map_mjobbarcode__jbc_btcode__']->inputTypeDefault = 'text';
 $dbo->cols['__map_mjobbarcode__jbc_btcode__']->searchMode = 'exact';
 $dbo->cols['__map_mjobbarcode__jbc_btcode__']->capContClassDefault = array();
 $dbo->cols['__map_mjobbarcode__jbc_btcode__']->valContClassDefault = array();
-$dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->defaultMethod = 'text';
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->default = 'select bt_code, bt_name from mbarcodetype order by 2';
+$dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->defaultMethod = 'sql';
 $dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->searchMethod = 'text';
 $dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->listMethod = 'text';
 $dbo->cols['__map_mjobbarcode__jbc_btcode__']->option->detailMethod = 'text';
@@ -871,6 +873,10 @@ $dbo->cols['__map_mjobbarcode__jbc_value__']->option->listMethod = 'text';
 $dbo->cols['__map_mjobbarcode__jbc_value__']->option->detailMethod = 'text';
 $dbo->cols['__map_mjobbarcode__jbc_value__']->option->newMethod = 'text';
 $dbo->cols['__map_mjobbarcode__jbc_value__']->option->editMethod = 'text';
+$dbo->cols['js_price'] = new DBO_COL('js_price', 'numeric', '-1', '1310728');
+$dbo->cols['js_price']->inputTypeDefault = 'text';
+$dbo->cols['js_price']->capContClassDefault = array();
+$dbo->cols['js_price']->valContClassDefault = array();
 
 // support multiple language. only caption
 global $LANG;

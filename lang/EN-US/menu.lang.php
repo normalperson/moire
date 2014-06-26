@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by admin on 23-06-2014 15:00:55*/
+/*Last Modified by esp on 26-06-2014 16:53:14*/
 $translate = array (
   'Home (Supervisor)' => 'Home (Supervisor)',
   'Home (QC)' => 'Home (QC)',
@@ -28,5 +28,11 @@ $translate = array (
   'Translation' => 'Translation',
   'Terms and Conditions' => 'Terms and Conditions',
   'Job output setup' => 'Job output setup',
+  'Job related setup' => 'Job related setup',
+  'Workflow related setup' => 'Workflow related setup',
+  'User related setting' => 'User related setting',
+  'User related setup' => 'User related setup',
+  'Internal user setup' => 'Internal user setup',
+  'External user setup' => 'External user setup',
 );
 ?>

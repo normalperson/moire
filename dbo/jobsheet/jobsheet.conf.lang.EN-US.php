@@ -48,7 +48,7 @@ $dbo->cols['remark']->caption->set('default', 'Remark', 'text');
 $dbo->cols['js_orgid']->caption->set('default', 'js_orgid', 'text');
 $dbo->cols['js_model']->caption->set('default', 'js_model', 'text');
 $dbo->cols['js_diecut_no']->caption->set('default', 'js_diecut_no', 'text');
-$dbo->cols['info']->caption->set('default', 'Note:', 'text');
+$dbo->cols['info']->caption->set('default', 'Guideline', 'text');
 $dbo->cols['js_carid']->caption->set('default', 'Carton type', 'text');
 $dbo->cols['jobcategory']->caption->set('default', 'Category', 'text');
 $dbo->cols['js_decision']->caption->set('default', 'js_decision', 'text');
@@ -66,6 +66,9 @@ $dbo->cols['__map_mjobbarcode__jbc_jsid__']->caption->set('default', 'Barcode', 
 $dbo->cols['__map_mjobbarcode__jbc_btcode__']->caption->set('default', 'Type', 'text');
 $dbo->cols['__map_mjobbarcode__jbc_value__']->caption->set('default', 'Value', 'text');
 $dbo->cols['js_mcid']->caption->set('default', 'Printer Name', 'text');
+$dbo->cols['js_code']->caption->set('default', 'js_code', 'text');
+$dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
+$dbo->cols['js_price']->caption->set('default', 'Price', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';

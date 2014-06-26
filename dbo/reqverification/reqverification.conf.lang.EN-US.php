@@ -61,6 +61,7 @@ $dbo->cols['js_lpi']->caption->set('default', 'js_lpi', 'text');
 $dbo->cols['js_mcid']->caption->set('default', 'js_mcid', 'text');
 $dbo->cols['js_code']->caption->set('default', 'js_code', 'text');
 $dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
+$dbo->cols['js_price']->caption->set('default', 'Total Price', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Job Detail';

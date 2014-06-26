@@ -94,6 +94,14 @@ function sendMailFromTemplate($mtcode) {
 	else return false;
 }
 
-
+function calculateCompletion($jsid) {
+	global $DB,$LOCALE;
+	$due = new DateTime();
+	$requiremin = $DB->getOne("select js_requiretime from mjobsheet where js_id = :0", array($jsid));
+	$interval = new DateInterval('PT'.$requiremin.'M');
+	
+	$LOCALE->dateTimeAdd($due, $interval);
+	return $due->format('j-M-Y g:i A');
+}
 
 ?>

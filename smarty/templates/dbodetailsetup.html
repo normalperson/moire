@@ -50,12 +50,15 @@ $(function () {
 	if (!$detailKeyInput.val()) $detailKeyInput.val('0'); // new mode
 	var $templateTR = $detailTable.find('.template-row').clone();
 	$detailTable.find('.template-row').remove();
+	$detailTable.bind('addrow', function () {});
+	$detailTable.bind('removerow', function () {});
 	function addDetailRow(data) {
 		if (typeof data == 'undefined') data = [];
 		var $newTR = $templateTR.clone();
 		$newTR.removeClass('template-row').find('.remove-row-button').click(function () {
 			$newTR.remove();
 			regenerateIndex();
+			$detailTable.trigger('removerow');
 		})
 		$newTR.find(':input').each(function () {
 			var colname = (this.id.slice(-2) == '[]') ? this.id.slice(0, -2).replace(inpPrefix,"") : this.id.replace(inpPrefix,"");
@@ -74,6 +77,7 @@ $(function () {
 				dbofv.addValidation($(this).attr('name'), 'mandatory', 'This is a mandatory field');
 			})
 		}
+		$detailTable.trigger('addrow');
 	}
 	
 	function regenerateIndex() {

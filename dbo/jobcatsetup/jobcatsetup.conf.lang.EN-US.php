@@ -16,6 +16,17 @@ $dbo->cols['jcl_requiretime_color_3']->caption->set('list', 'Time required for 3
 $dbo->cols['jcl_requiretime_color_4']->caption->set('default', '4 colors', 'text');
 $dbo->cols['jcl_requiretime_color_4']->caption->set('list', 'Time required for 4 colors', 'text');
 $dbo->cols['jcl_status']->caption->set('default', 'Status', 'text');
+$dbo->cols['jcl_price']->caption->set('default', 'Price', 'text');
+$dbo->cols['jcl_price']->caption->setSectionCaption('new', 'Pricing', 'text');
+$dbo->cols['jcl_price']->caption->setSectionCaption('edit', 'Pricing', 'text');
+$dbo->cols['jcl_price_cat']->caption->set('default', ' Charge Method', 'text');
+$dbo->cols['jcl_price_cat']->caption->setSectionCaption('new', 'Pricing', 'text');
+$dbo->cols['jcl_price_cat']->caption->setSectionCaption('edit', 'Pricing', 'text');
+$dbo->cols['jcl_price_color_1']->caption->set('default', 'Price for 1 color', 'text');
+$dbo->cols['jcl_price_color_2']->caption->set('default', 'Price for 2 colors', 'text');
+$dbo->cols['jcl_price_color_3']->caption->set('default', 'Price for 3 colors', 'text');
+$dbo->cols['jcl_price_color_4']->caption->set('default', 'Price for 4 colors', 'text');
+$dbo->cols['jcl_price_per_unit']->caption->set('default', 'Price per unit', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

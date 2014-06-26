@@ -6,6 +6,12 @@ function dbo_reqverification_customize(&$dbo){
   $dbo->editModifier = 'dbo_reqverification_custom_edit';
 }
 
+function showPriceReqVer($col, $colVal, $data, $html) {
+	$fronthtml = substr($html,0, strpos($html, '</div>'));
+	$html = '<span class="input-group-addon">RM</span>'.$fronthtml.'</div>';
+	$html = '<div class="input-group">'.$html.'</div>';
+	return $html;
+}
 
 function dbo_reqverification_custom_edit($table, $cols, $wheres){
 

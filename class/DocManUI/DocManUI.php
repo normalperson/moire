@@ -167,7 +167,6 @@ class DocManUI {
 	function dropzoneInput($inputname, $maxfilesize = false /*eg. 5M, 500K*/, $maxfiles = 5, $acceptFiles = array()) {
 		if (!$maxfilesize) $maxfilesize = ini_get( 'upload_max_filesize' );
 		$maxMB = convertBytes($maxfilesize) / 1048576;
-		
 		$acceptFileString = "";
 		if ($acceptFiles) {
 			if (is_array($acceptFiles)) $acceptFiles = implode(", ", $acceptFiles);

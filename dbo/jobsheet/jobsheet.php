@@ -150,6 +150,14 @@ function showRequiredMinute($col, $colVal, $data=array(), $html=null){
 	return $html;
 }
 
+function showPrice($col, $colVal, $data, $html) {
+	$fronthtml = substr($html,0, strpos($html, '</div>'));
+	$html = '<span class="input-group-addon">RM</span>'.$fronthtml.'</div>';
+	$html = '<div class="input-group">'.$html.'</div>';
+	return $html;
+}
+
+
 
 # customization
 function dbo_jobsheet_customize(&$dbo){
@@ -160,12 +168,16 @@ function dbo_jobsheet_customize(&$dbo){
 	global $USER;
 	if ($USER->rolename == 'Customer') {
 		$dbo->cols['js_mcid']->mandatoryDefault = 1;
+		$dbo->cols['joboutput']->mandatoryDefault = 1;
+		$dbo->cols['jobcategory']->mandatoryDefault = 1;
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = 'sql';
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = 
 			'select mc_id, mc_printer_name, org_name from mcustmachine join fcorg on mc_orgid = org_id where org_id ='.$USER->orgid.' order by 3,2';
 	}
 	else {
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
+		$dbo->cols['joboutput']->mandatoryDefault = 0;
+		$dbo->cols['jobcategory']->mandatoryDefault = 0;
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = $dbo->cols['js_mcid']->option->defaultMethod;
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = $dbo->cols['js_mcid']->option->default;
 	}
@@ -442,10 +454,20 @@ $data = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
 $timemap = array('JOBCAT'=>array(), 'JOBOUTP'=>array());
 foreach ($data as $key => $value) {
 	$timemap['JOBCAT'][$value['jcl_id']] = array(
-		1=>$value['jcl_requiretime_color_1'],
-		2=>$value['jcl_requiretime_color_2'],
-		3=>$value['jcl_requiretime_color_3'],
-		4=>$value['jcl_requiretime_color_4'],
+		'time'=> array(
+			1=>$value['jcl_requiretime_color_1'],
+			2=>$value['jcl_requiretime_color_2'],
+			3=>$value['jcl_requiretime_color_3'],
+			4=>$value['jcl_requiretime_color_4'],
+		),
+		'pricecat'=>$value['jcl_price_cat'],
+		'price'=> array(
+			0=>$value['jcl_price_per_unit'],
+			1=>$value['jcl_price_color_1'],
+			2=>$value['jcl_price_color_2'],
+			3=>$value['jcl_price_color_3'],
+			4=>$value['jcl_price_color_4'],
+		),
 		'title'=> $value['jcl_title'],
 	);
 }
@@ -464,11 +486,12 @@ $dbo->render();
 <script type="text/javascript">
 $( document ).ready(function() {
 	
-	var $colorjob = $('input[name=dbo_jobsheet_new_js_jobcolor], input[name=dbo_jobsheet_edit_js_jobcolor]').click(function () {calMinutes()}),
+	var $colorjob = $('input[name=dbo_jobsheet_new_js_jobcolor], input[name=dbo_jobsheet_edit_js_jobcolor]').click(function () {calMinutes();calPrice();}),
 		$outputjob = $('input[name=dbo_jobsheet_new_joboutput\\[\\]], input[name=dbo_jobsheet_edit_joboutput\\[\\]]').click(function () {calMinutes()}),
-		$categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes()}),
+		$categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes();calPrice();}),
 		$requiredmin = $('#requiredmin'),
-		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime');
+		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime'),
+		$priceinput = $('#dbo_jobsheet_new_js_price, #dbo_jobsheet_edit_js_price');
 
 	// estimated time calculation
 	function calMinutes(){
@@ -480,9 +503,9 @@ $( document ).ready(function() {
 				$categoryjob.filter(':checked').each(function () {
 					var clid = $(this).val();
 					if (typeof jstimemap['JOBCAT'][clid] != 'undefined' && 
-						typeof jstimemap['JOBCAT'][clid][colorval] != 'undefined' && 
-						jstimemap['JOBCAT'][clid][colorval] > p1_maxmin) {
-						p1_maxmin = jstimemap['JOBCAT'][clid][colorval];
+						typeof jstimemap['JOBCAT'][clid]['time'][colorval] != 'undefined' && 
+						jstimemap['JOBCAT'][clid]['time'][colorval] > p1_maxmin) {
+						p1_maxmin = jstimemap['JOBCAT'][clid]['time'][colorval];
 					}
 				})
 			}
@@ -500,6 +523,33 @@ $( document ).ready(function() {
 		}
 	}
 	calMinutes();
+	
+	function calPrice() {
+		var price = 0;
+		if ($priceinput.length > 0) {
+			var colorval = $colorjob.filter(':checked').val();
+			if ($categoryjob.filter(':checked').length > 0) {
+				$categoryjob.filter(':checked').each(function () {
+					var clid = $(this).val();
+					if (typeof jstimemap['JOBCAT'][clid] != 'undefined') {
+						if (jstimemap['JOBCAT'][clid]['pricecat'] == 'UNIT') {
+							if (jstimemap['JOBCAT'][clid]['title'].toUpperCase() == 'BARCODE') {
+								price += parseFloat(jstimemap['JOBCAT'][clid]['price'][0]) * $('#detail-jbc_jsid-table > tbody > tr').length;
+							}
+							else price += parseFloat(jstimemap['JOBCAT'][clid]['price'][0]);
+						}
+						else if (colorval && jstimemap['JOBCAT'][clid]['pricecat'] == 'COLOR' && jstimemap['JOBCAT'][clid]['price'][colorval]) {
+							price += parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]);
+						}
+					}
+				})
+			}
+			$priceinput.val(price);
+		}
+	}
+	calPrice();
+	$('#detail-jbc_jsid-table').on('addrow', function (){calPrice();})
+	$('#detail-jbc_jsid-table').on('removerow', function (){calPrice();})
 	
 	// color input enabling
 	function setColorInput(val) {

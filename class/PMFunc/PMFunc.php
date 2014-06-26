@@ -218,6 +218,11 @@ class PMFunc{
 		return $DB->doUpdate('mjobssheet', $data, array('js_id'=>$case->casekey));
 	}
 	
+	function notifyCustomerAck($flowid, $case) {
+		sendMailFromTemplate('NOTIFY_CUSTOMER_ACK');
+		return true;
+	}
+	
 }
 
 

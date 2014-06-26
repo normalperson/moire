@@ -8,7 +8,7 @@ $dbo->fileSaveMode = 511;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, \'\' decision, \'\' remark,\'\' artwork,\'\' widthheight from mjobsheet';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'decision', 'remark', 'artwork', 'widthheight');
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'decision', 'remark', 'artwork', 'widthheight');
 $dbo->colList = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
@@ -602,6 +602,7 @@ $dbo->cols['decision']->option->newMethod = 'text';
 $dbo->cols['decision']->option->editMethod = 'text';
 $dbo->cols['artwork'] = new DBO_COL('artwork', 'unknown', '-2', '-1');
 $dbo->cols['artwork']->inputTypeDefault = 'Dropzone';
+$dbo->cols['artwork']->size = '10M/5';
 $dbo->cols['artwork']->format = '.rar, .zip';
 $dbo->cols['artwork']->mandatoryNew = 1;
 $dbo->cols['artwork']->mandatoryEdit = 1;
@@ -730,6 +731,10 @@ $dbo->cols['js_month_occur']->option->listMethod = 'text';
 $dbo->cols['js_month_occur']->option->detailMethod = 'text';
 $dbo->cols['js_month_occur']->option->newMethod = 'text';
 $dbo->cols['js_month_occur']->option->editMethod = 'text';
+$dbo->cols['js_price'] = new DBO_COL('js_price', 'numeric', '-1', '1310728');
+$dbo->cols['js_price']->inputTypeDefault = 'text';
+$dbo->cols['js_price']->capContClassDefault = array();
+$dbo->cols['js_price']->valContClassDefault = array();
 
 // support multiple language. only caption
 global $LANG;
