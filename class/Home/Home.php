@@ -59,6 +59,38 @@ class Home{
 		$html = $smarty->fetch('nograph.html');
 		return $html;
 	}
+	function renderActiveOrder(){
+		global $HTML,$DB,$USER;
+		$sql = "select cast(count(*) as integer) as total, js_status from mjobsheet
+				where js_orgid = :0
+				group by js_status";
+		$activeorder = $DB->GetArray($sql,array($USER->orgid), PDO::FETCH_ASSOC);	
+		$showgraph = true;
+
+		$xAxis = array();
+		$result = array();
+		$data = array();
+		if(!empty($activeorder)){
+			foreach ($activeorder as $key => $value) {
+				$xAxis[] = $value['js_status'];
+				$result[] = $value['total'];
+			}
+			$data[] = array("name" => tl('Active Order',false,'widget'), "data" => $result);
+		}else{
+			$showgraph = false;
+		}
+
+		$HTML->addJS('js/highcharts.js');
+		$smarty = $this->initSmarty();
+		$smarty->assign('data',json_encode($data)); 
+		$smarty->assign('xAxis',json_encode($xAxis)); 
+		$smarty->assign('showgraph',json_encode($showgraph)); 
+		$smarty->assign('Home',$this); 
+		$html = $smarty->fetch('activeorder.html');
+		return $html;
+			
+
+	}
 	function renderJobByCat($caption='SALES BY QUANTITY MTD'){
 		global $HTML,$DB,$USER;
 		$sql = "select * from mjobcatlookup order by jcl_title";

@@ -933,6 +933,7 @@ $dbo->cols['js_price']->option->detailMethod = 'text';
 $dbo->cols['js_price']->option->newMethod = 'text';
 $dbo->cols['js_price']->option->editMethod = 'text';
 
+
 // support multiple language. only caption
 global $LANG;
 if(file_exists(dirname(__FILE__).DIRECTORY_SEPARATOR.$dbo->id.'.conf.lang.'.$LANG.'.php')){

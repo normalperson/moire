@@ -95,8 +95,11 @@
 </div>
 <!-- monthly sales and my performance -->
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-6">
 		{$Home->renderJobByCat('ORDER BY QUANTITY MTD')}	
+	</div>
+	<div class="col-md-6">
+		{$Home->renderActiveOrder()}
 	</div>
 
 <!-- 	<div class="col-md-6">
