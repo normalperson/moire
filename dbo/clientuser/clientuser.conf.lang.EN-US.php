@@ -19,7 +19,7 @@ $dbo->cols['orgid']->caption->set('default', 'orgid', 'text');
 $dbo->cols['userRole']->caption->set('default', 'Role', 'text');
 $dbo->cols['currpassword']->caption->set('default', 'Current Password', 'text');
 $dbo->cols['usr_langcode']->caption->set('default', 'usr_langcode', 'text');
-$dbo->cols['userrole']->caption->set('default', 'userrole', 'text');
+$dbo->cols['userrole']->caption->set('default', 'Role', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

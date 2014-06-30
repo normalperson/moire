@@ -5,11 +5,15 @@ require(dirname(__FILE__).DIRECTORY_SEPARATOR.'pmtask_caseflow_list.conf.php');
 function dbo_pmtask_caseflow_list_customize(&$dbo){
 	global $GLOBAL, $DB, $USER;
 	if (empty($GLOBAL['PMTask_taskid'])) die('missing activity id');
-	$dbo->sql = "select a.*,b.*,'' as urgency, '' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
+	$dbo->sql = "select a.*,b.*,'' as urgency, '' as actions, case when pmf_due_date is not null and pmf_due_date <= now() then 'Y' else 'N' end as isdue,
+	".PM_Case::genCaseDescriptionSQL()." as casedesc
+	from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
 	where pmf_obj_id = {$GLOBAL['PMTask_taskid']} and pmf_obj_type = 'PM_Activity' and pmf_end_date is null
 	and ".PM_Case::genFlowPermWhere()."
-	order by pmf_due_date, pmf_id";
+	order by pmf_due_date, pmf_start_date";
+	$dbo->searchModifier = 'dbo_pmtask_caseflow_list_custom_search';
 }
+
 
 function showurgency($colname, $currval, $rs, $html) {
 

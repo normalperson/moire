@@ -3,7 +3,7 @@ require_once(dirname(__FILE__).'/../../init.inc.php');
 global $DB, $GLOBAL, $USER, $LOCALE;
 // html_header();
 if(!isset($_GET['jobid'])) die("Invalid job");
-
+// $DB->showsql=1;
 $smarty = new Smarty();
 $smarty->caching = false;
 // die(DOC_DIR.DS.'smarty'.DS.'templates');
@@ -14,19 +14,19 @@ $smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
 $smarty->assign('APP', APP);
 $jsid = $_GET['jobid'];
 list($currentOrgId, $currentOrgExternal) = $DB->getRow("select org_id, org_external from fcuserorgrole join fcorg on uor_orgid = org_id where uor_id = :0 and uor_rolid = :1", array($USER->userorgroleid, $USER->roleid));
-$sql = "select mjobsheet.*, pndcontact.*, fcorg.*, pndphoneo.ph_number as oph_number, pndphonem.ph_number as mph_number, 
-jcl_id as primary_category_id, jcl_title as primary_category_title, fclookup.lu_title as barcodetype_desc, 
+$sql = "select mjobsheet.*, pndcontact.*, fcorg.*, fcuser.*, pndphoneo.ph_number as oph_number, pndphonem.ph_number as mph_number, 
+jcl_id as primary_category_id, jcl_title as primary_category_title, 
 mcarton.*, 
 fccountry.* 
 from mjobsheet 
 join fcorg on org_id = js_orgid
 left join pndcontact on js_ctid = ct_id 
-join mjobcatlookup on js_primcat = jcl_id 
-join mcarton on js_carid = car_id 
+left join mjobcatlookup on js_primcat = jcl_id 
+left join mcarton on js_carid = car_id 
+join fcuser on js_request_by = usr_userid 
 left join pndphone pndphoneo on pndphoneo.ph_refid = ct_id and pndphoneo.ph_reftype = 'CT_ID' and pndphoneo.ph_type = 'O' 
 left join pndphone pndphonem on pndphonem.ph_refid = ct_id and pndphonem.ph_reftype = 'CT_ID' and pndphonem.ph_type = 'M' 
 left join fccountry on org_concode = con_code 
-left join fclookup on js_barcodetype = lu_code and lu_cat = 'BARCODETYPE' 
 where js_id = :0";
 $bind = array($jsid);
 if($currentOrgExternal=='Y'){
@@ -43,6 +43,9 @@ $outputRS = $DB->getArrayAssoc("select lu_code, lu_title from mjoboutput join fc
 $rs['output_array'] = $outputRS?$outputRS:array();
 // remark
 $rs['customer_remark'] = $DB->getOne("select pmcc_comment from fcpmcase join fcpmcasecomment on pmc_id = pmcc_pmcid where pmc_casekey = :0 and pmc_casetype = 'jobsheet' order by pmcc_id asc limit 1 offset 0", array($jsid));
+// barcode
+$barcodeRS = $DB->getArrayAssoc("select jbc_btcode, bt_name, jbc_value from mjobbarcode join mbarcodetype on jbc_btcode = bt_code where jbc_jsid = :0", array($jsid));
+$rs['barcode_array'] = $barcodeRS?$barcodeRS:array();
 // carton
 // carton - image
 require_once(INCLUDE_DIR.'/Image.inc.php');

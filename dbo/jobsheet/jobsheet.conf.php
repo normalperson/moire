@@ -606,6 +606,7 @@ $dbo->cols['attachment']->option->newMethod = 'text';
 $dbo->cols['attachment']->option->editMethod = 'text';
 $dbo->cols['remark'] = new DBO_COL('remark', 'unknown', '-2', '-1');
 $dbo->cols['remark']->inputTypeDefault = 'TextareaAutosize';
+$dbo->cols['remark']->size = 3;
 $dbo->cols['remark']->searchMode = 'exact';
 $dbo->cols['remark']->capContClassDefault = array();
 $dbo->cols['remark']->valContClassDefault = array();

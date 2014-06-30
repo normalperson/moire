@@ -201,3 +201,12 @@ div.dbo_theme_pixeladmin table.dbo_list a.sortable{
 .panel.widget-caseflow-timeline .thread.ongoing {
   border-left-color : rgb(0,255,143);
 }
+
+.navbar-logo {
+	width: 150px;
+	background: url(/moire/image/logo.png);
+	background-size: 80px;
+	background-repeat: no-repeat;
+	background-position-x: 30px;
+}
+

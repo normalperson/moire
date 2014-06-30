@@ -162,8 +162,8 @@ function neworgrole(){
 	$tblorg = $tableprefix.$orgpostname;
 
 	$toporgid = userTopOrgID();
-	$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0 and org_id = :1", array('ACTIVE', $toporgid));
-	$rs = $DB->getArray("select org_id,org_name from $tblorg where org_status = :0 and org_parentid = :1", array('ACTIVE', $toporgid));
+	$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0 and org_id = :1 and org_external = 'N'", array('ACTIVE', $toporgid));
+	$rs = $DB->getArray("select org_id,org_name from $tblorg where org_status = :0 and org_parentid = :1 and org_external = 'N'", array('ACTIVE', $toporgid));
 	if($rs)
 		$orgdata = array_merge($orgdata, $rs);
 
@@ -182,8 +182,8 @@ function neworgrole(){
 	$tableprefix = $DB->prefix;
 	$tblrole = $tableprefix.$rolepostname;
 
-	if($USER->userid == 'admin') $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole ");
-	else $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where rol_id not in (:0,:1)",array(1,2));
+	if($USER->userid == 'admin') $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where lower(rol_name) != 'customer'");
+	else $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where lower(rol_name) != 'customer' ");
 
 	$roleHTML = "<select id='userrole_1' name='userrole_1'><option value='default'>--Select Role--</option>";
 	foreach ($roledata as $data){
@@ -248,7 +248,7 @@ function editorgrole($param1,$param12,$param3){
 		foreach($relationshiparr as $key => $val){
 			$num = $i+1;
 			$toporgid = userTopOrgID();
-			$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0 and org_id = :1",array('ACTIVE',$toporgid));
+			$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0 and org_id = :1 and org_external = 'N'",array('ACTIVE',$toporgid));
 			#$orgdata = $DB->GetArray("select org_id,org_name from $tblorg where org_status = :0", array('ACTIVE'));
 
 			$orgHTML = "<select id='userorg_$num' name='userorg_$num'><option value='default'>--Select Org--</option>";
@@ -260,8 +260,8 @@ function editorgrole($param1,$param12,$param3){
 			$orgHTML .= "</select>"; 
 
 			//$roledata = $DB->GetArray("select rol_id,rol_code,rol_name from $tblrole where rol_status = :0 ",array('ACTIVE'));
-			if($USER->userid == 'admin') $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole ");
-			else $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where rol_id not in (:0,:1)",array(1,2));
+			if($USER->userid == 'admin') $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where lower(rol_name) != 'customer' ");
+			else $roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where lower(rol_name) != 'customer' ");
 
 
 			$roleHTML = "<select id='userrole_$num' name='userrole_$num'><option value='default'>--Select Role--</option>";

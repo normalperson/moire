@@ -11,7 +11,9 @@ class DBO_InputType_TextareaAutosize extends DBO_InputType{
 		$ret .= 
 "<script type='text/javascript'>
 (function () {
-	$('#{$name}')".(($size) ? ".attr('rows', {$size})" : "").".autosize();
+	var \$inp = $('#{$name}');
+	if (\$inp.is(':hidden'))  \$inp.css({'height':'50px'})
+	\$inp".(($size) ? ".attr('rows', {$size})" : "").".autosize();
 })();
 </script>";
 		

@@ -35,6 +35,8 @@ $dbo->cols['pmf_from_event_gateway']->caption->set('default', 'pmf_from_event_ga
 $dbo->cols['pmf_last_timer_check_date']->caption->set('default', 'pmf_last_timer_check_date', 'text');
 $dbo->cols['pmf_timer_due_date']->caption->set('default', 'pmf_timer_due_date', 'text');
 $dbo->cols['pmf_timer_due_count']->caption->set('default', 'pmf_timer_due_count', 'text');
+$dbo->cols['isdue']->caption->set('default', ' ', 'text');
+$dbo->cols['casedesc']->caption->set('default', 'Case Description', 'text');
 
 $dbo->titleList = ' ';
 $dbo->titleDetail = 'Detail';

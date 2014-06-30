@@ -7,29 +7,30 @@ $dbo->id = $dboID;
 $dbo->fileSaveMode = 511;
 $dbo->table = 'fcpmcaseflow';
 $dbo->key = array('pmf_id', 'pmf_pmcid');
-$dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
-	where pmf_obj_id = 1 and pmf_obj_type = \'PM_Event\' and pmf_end_date is null
+$dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions, case when pmf_due_date is not null and pmf_due_date <= now() then \'Y\' else \'N\' end as isdue,
+	case when pmc_casetype = \'jobsheet\' then (select case when js_code is null then \'\' else js_code||\' - \' end ||case when length(js_description) < 23 then js_description else substring(js_description,0,20)||\'...\' end from mjobsheet where js_id = pmc_casekey)  else concat(pmc_casetype,\'::\',pmc_casekey) end as casedesc from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
+	where pmf_obj_id = 4 and pmf_obj_type = \'PM_Event\' and pmf_end_date is null
 	and (
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id) = 0 or
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id and 
-				(pmfa_userid is null or pmfa_userid = \'ysyow\') and 
-				(pmfa_rolid is null or pmfa_rolid=\'10\') and
+				(pmfa_userid is null or pmfa_userid = \'supervisor\') and 
+				(pmfa_rolid is null or pmfa_rolid=\'19\') and
 				(pmfa_orgid is null or pmfa_orgid=\'1\') and
-				(pmfa_pmscode is null or pmfa_pmscode in (\'MENU_REPORT\',\'MENU_SETTING\',\'REQUEST_NEWJOB\',\'QCHOME\',\'ARTHOME\',\'SUPHOME\',\'CUSTHOME\',\'ADMINSETTING\',\'POSBMENU\',\'ADMIN\'))
+				(pmfa_pmscode is null or pmfa_pmscode in (\'REQUEST_NEWJOB\',\'SUPHOME\',\'ADMIN\'))
 			) > 0)
-	order by pmf_due_date, pmf_id';
-$dbo->col = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date', 'pmf_end_by', 'pmf_end_pmfid', 'pmf_from_event_gateway', 'pmf_last_timer_check_date', 'pmf_timer_due_date', 'pmf_timer_due_count', 'urgency', 'actions');
-$dbo->colList = array('urgency', 'pmc_id', 'pmc_casekey', 'pmc_created_date', 'pmc_created_by', 'pmf_start_date', 'pmf_due_date', 'actions');
+	order by pmf_due_date, pmf_start_date';
+$dbo->col = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date', 'pmf_end_by', 'pmf_end_pmfid', 'pmf_from_event_gateway', 'pmf_last_timer_check_date', 'pmf_timer_due_date', 'pmf_timer_due_count', 'urgency', 'actions', 'isdue', 'casedesc');
+$dbo->colList = array('urgency', 'pmc_id', 'casedesc', 'pmc_created_date', 'pmc_created_by', 'pmf_start_date', 'pmf_due_date', 'actions');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
 $dbo->colDetail = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
 $dbo->colNew = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
 $dbo->colEdit = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
-$dbo->colSearch = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
+$dbo->colSearch = array('pmc_id', 'casedesc', 'pmf_start_date', 'isdue');
 $dbo->colExport = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
 $dbo->colSort = array();
-$dbo->canSearch = false;
+$dbo->canSearch = true;
 $dbo->canNew = false;
 $dbo->canEdit = false;
 $dbo->canDelete = false;
@@ -58,9 +59,11 @@ $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
 
 $dbo->cols['pmc_id'] = new DBO_COL('pmc_id', 'int4', '4', '-1');
+$dbo->cols['pmc_id']->displayDataType = 'int';
 $dbo->cols['pmc_id']->displayListModifierMethod = 'phpfunc';
 $dbo->cols['pmc_id']->displayListModifier = 'showcaselink';
 $dbo->cols['pmc_id']->inputTypeDefault = 'text';
+$dbo->cols['pmc_id']->inputTypeSearch = 'TextInputControl';
 $dbo->cols['pmc_id']->searchMode = 'exact';
 $dbo->cols['pmc_id']->capContClassDefault = array();
 $dbo->cols['pmc_id']->valContClassDefault = array();
@@ -455,6 +458,29 @@ $dbo->cols['pmf_timer_due_count']->option->listMethod = 'text';
 $dbo->cols['pmf_timer_due_count']->option->detailMethod = 'text';
 $dbo->cols['pmf_timer_due_count']->option->newMethod = 'text';
 $dbo->cols['pmf_timer_due_count']->option->editMethod = 'text';
+$dbo->cols['isdue'] = new DBO_COL('isdue', 'text', '-1', '-1');
+$dbo->cols['isdue']->inputTypeDefault = 'PixelAdminCheckbox';
+$dbo->cols['isdue']->searchMode = 'exact';
+$dbo->cols['isdue']->capContClassDefault = array();
+$dbo->cols['isdue']->valContClassDefault = array();
+$dbo->cols['isdue']->option->default = 'Y/Show Due Only';
+$dbo->cols['isdue']->option->defaultMethod = 'text';
+$dbo->cols['isdue']->option->searchMethod = 'text';
+$dbo->cols['isdue']->option->listMethod = 'text';
+$dbo->cols['isdue']->option->detailMethod = 'text';
+$dbo->cols['isdue']->option->newMethod = 'text';
+$dbo->cols['isdue']->option->editMethod = 'text';
+$dbo->cols['casedesc'] = new DBO_COL('casedesc', 'text', '-1', '-1');
+$dbo->cols['casedesc']->inputTypeDefault = 'text';
+$dbo->cols['casedesc']->searchMode = 'matchany';
+$dbo->cols['casedesc']->capContClassDefault = array();
+$dbo->cols['casedesc']->valContClassDefault = array();
+$dbo->cols['casedesc']->option->defaultMethod = 'text';
+$dbo->cols['casedesc']->option->searchMethod = 'text';
+$dbo->cols['casedesc']->option->listMethod = 'text';
+$dbo->cols['casedesc']->option->detailMethod = 'text';
+$dbo->cols['casedesc']->option->newMethod = 'text';
+$dbo->cols['casedesc']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

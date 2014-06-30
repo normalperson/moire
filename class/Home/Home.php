@@ -128,6 +128,7 @@ class Home{
 
 		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
+	
 		$smarty->assign('paneltitle',tl($caption,true,'widget') );
 		$smarty->assign('data',json_encode($data)); 
 		$smarty->assign('xAxis',json_encode($xAxis)); 

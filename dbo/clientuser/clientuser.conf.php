@@ -8,7 +8,7 @@ $dbo->fileSaveMode = 511;
 $dbo->table = 'fcuser';
 $dbo->key = array('usr_userid');
 $dbo->sql = 'select fcuser.*,\'\' userRole, \'\' as currpassword, \'\' as password1, \'\' as password2 
-from fcuser where usr_userid not in (select distinct uor_usrid from fcuserorgrole join fcrole on rol_id = uor_rolid where lower(rol_name)=\'artist\')';
+from fcuser where usr_userid not in (select distinct uor_usrid from fcuserorgrole join fcrole on rol_id = uor_rolid join fcorg on org_id = uor_orgid where lower(rol_name)=\'artist\' or org_external =\'Y\')';
 $dbo->col = array('usr_userid', 'usr_password', 'usr_created', 'usr_name', 'usr_email', 'usr_last_active', 'usr_last_success_login', 'usr_last_fail_login', 'usr_group', 'usr_sessiondata', 'usr_status', 'usr_langcode', 'userrole', 'currpassword', 'password1', 'password2');
 $dbo->colList = array('usr_userid', 'usr_name', 'usr_email', 'usr_created', 'usr_status');
 $dbo->colListEdit = array('usr_status');
@@ -47,7 +47,7 @@ $dbo->lang = 'EN-US';
 $dbo->render = array();
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
-$dbo->whereSQL = 'usr_userid in (\'yys1988@gmail.com\', \'yow@phiorion.com\', \'lampard7824@gmail.com\', \'admin2\', \'uat_qc1\', \'nick\', \'uat_customer2\', \'fongartist\', \'qc\', \'supervisor\', \'ysyow\', \'natasha\', \'esp@phiorion.com\', \'fred\', \'severus\', \'fongadmin\', \'fongcustomer\', \'esp_supervisor\', \'esp_artist\', \'customer\', \'superman@gmail.com\', \'uat_supervisor1\', \'uat_cust1\', \'harry\', \'hongyee@phiorion.com\', \'Test\', \'thor@gmail.com\', \'fongsupervisor\', \'tony\', \'fong@phiorion.com\', \'artist2\', \'uat_manager1\', \'artist1\', \'albus\', \'admin\', \'esp\', \'uat_artist1\', \'uat_customer3\', \'danny@phiorion.com\')';
+$dbo->whereSQL = 'usr_userid in (\'uat_supervisor3\', \'yys1988@gmail.com\', \'yow@phiorion.com\', \'lampard7824@gmail.com\', \'uat_qc2\', \'admin2\', \'uat_qc5\', \'uat_qc1\', \'uat_customer2\', \'fongartist\', \'uat_supervisor4\', \'uat_customer5\', \'ysyow\', \'natasha\', \'esp@phiorion.com\', \'fred\', \'fongcustomer\', \'esp_supervisor\', \'esp_artist\', \'customer\', \'uat_supervisor1\', \'uat_cust1\', \'harry\', \'uat_supervisor2\', \'hongyee@phiorion.com\', \'Test\', \'thor@gmail.com\', \'fongsupervisor\', \'uat_customer4\', \'fong@phiorion.com\', \'artist2\', \'uat_manager4\', \'artist1\', \'uat_customer1\', \'admin\', \'uat_artist5\', \'uat_artist1\', \'uat_customer3\', \'danny@phiorion.com\', \'uat_manager5\', \'nick\', \'uat_artist3\', \'uat_artist4\', \'qc\', \'supervisor\', \'uat_supervisor5\', \'severus\', \'fongadmin\', \'superman@gmail.com\', \'uat_manager2\', \'tony\', \'uat_manager1\', \'uat_qc3\', \'albus\', \'uat_qc4\', \'uat_artist2\', \'esp\', \'uat_manager3\')';
 
 $dbo->cols['usr_userid'] = new DBO_COL('usr_userid', 'varchar', '-1', '54');
 $dbo->cols['usr_userid']->inputTypeDefault = 'text';

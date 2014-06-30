@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
 <style type="text/css">
 #print_task_container{
 	font-family: Segoe UI,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
@@ -62,6 +66,8 @@ table.print_task_table ul.pj_ul{
 	}
 }
 </style>
+</head>
+<body>
 <div id="print_task_container">
 <div style="text-align:right;" class="print_button_container">
 	<input type="button" class="btn btn-primary" onclick="window.print();" value="Print"/></div>
@@ -74,8 +80,8 @@ table.print_task_table ul.pj_ul{
 		<td>
 			<table>
 				<tr>
-					<th>Job ID</th>
-					<td>{$data['js_id']}</td>
+					<th>Job Code</th>
+					<td>{$data['js_code']}</td>
 				</tr>
 				<tr>
 					<th>Submitted Date/Time</th>
@@ -104,6 +110,20 @@ table.print_task_table ul.pj_ul{
 					<td>{$data['preferredcompletiondatetime']|date_format:"d-m-Y H:i:s"}</td>
 				</tr>
 				<tr>
+					<th>Final Artwork File Type</th>
+					<td>
+						<ul class="pj_ul">
+{foreach $data['output_array'] as $row}
+<li>{$row['lu_code']} - {$row['lu_title']}</li>
+{/foreach}
+						</ul>
+					</td>
+				</tr>
+				<tr>
+				</tr>
+					<th>Color of Job</th>
+					<td>{$data['js_jobcolor']}</th>
+				<tr>
 					<th>Primary Category</th>
 					<td>{$data['primary_category_id']} - {$data['primary_category_title']}</td>
 				</tr>
@@ -121,14 +141,26 @@ table.print_task_table ul.pj_ul{
 					<th>Trapping Size</th>
 					<td>{$data['js_trapping_size']}</td>
 				</tr>
+{if $data['barcode_array']}
 				<tr>
-					<th>Barcode Type</th>
-					<td>{$data['js_barcodetype']} - {$data['barcodetype_desc']}</td>
+					<td colspan="2">
+						<table width="100%">
+							<tr>
+								<th>Barcode</th>
+								<th>Type</th>
+								<th>Value</th>
+							</tr>
+	{foreach $data['barcode_array'] as $bcode}
+							<tr>
+								<td>&nbsp;</td>
+								<td>{$bcode['bt_name']}</td>
+								<td>{$bcode['jbc_value']}</td>
+							</tr>
+	{/foreach}
+						</table>
+					</td>
 				</tr>
-				<tr>
-					<th>Barcode Number</th>
-					<td>{$data['js_barcodenumber']}</td>
-				</tr>
+{/if}
 			</table>
 		</td>
 		<td rowspan="3">
@@ -158,12 +190,6 @@ table.print_task_table ul.pj_ul{
 						<th>Angle 4</th>
 						<td>{$data['js_angle_4']}</td>
 					</tr>
-					<tr>
-						<th>Colour 5</th>
-						<td>{$data['js_color_5']}</td>
-						<th>Angle 5</th>
-						<td>{$data['js_angle_5']}</td>
-					</tr>
 				</table>
 			</div>
 			<div>
@@ -192,45 +218,23 @@ table.print_task_table ul.pj_ul{
 						<th>Die Cut Number</th>
 						<td>{$data['js_diecut_no']}</td>
 					</tr>
-					<tr>
-						<th>Final Artwork File Type</th>
-						<td>
-							<ul class="pj_ul">
-{foreach $data['output_array'] as $row}
-	<li>{$row['lu_code']} - {$row['lu_title']}</li>
-{/foreach}
-							</ul>
-						</td>
-					</tr>
 				</table>
 			</div>
 		</td>
 	</tr>
 	<tr>
-		<th>Customer P.I.C Details</th>
+		<th>Requester Details</th>
 	</tr>
 	<tr>
 		<td>
 			<table>
 				<tr>
-					<th>Person-in-charge</th>
-					<td>{$data['ct_name']}</td>
-				</tr>
-				<tr>
-					<th>Contact Number (O)</th>
-					<td>{$data['oph_number']}</td>
-				</tr>
-				<tr>
-					<th>Contact Number (M)</th>
-					<td>{$data['mph_number']}</td>
+					<th>Name</th>
+					<td>{$data['usr_name']}</td>
 				</tr>
 				<tr>
 					<th>Email Address</th>
-					<td>{$data['ct_email']}</td>
-				</tr>
-				<tr>
-					<th>Country</th>
-					<td>{$data['con_code']} - {$data['con_name']}</td>
+					<td>{$data['usr_email']}</td>
 				</tr>
 			</table>
 		</td>
@@ -266,3 +270,5 @@ table.print_task_table ul.pj_ul{
 	</tr>
 </table>
 </div>
+</body>
+</html>

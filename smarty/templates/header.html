@@ -3,12 +3,8 @@
 <head>
 	<meta charset="{$charset}">
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&amp;subset=latin" rel="stylesheet" type="text/css">
-{foreach from=$csslist item="css"}
-	<link rel="stylesheet" type="text/css" href="{$css}">
-{/foreach}	
-{foreach from=$jslist item="js"}
-	<script type="text/javascript" src="{$js}"></script>
-{/foreach}
+{HTML_outputCSS()}
+{HTML_outputJS()}
 	<script>var init = [];</script>
 	<title>{$title}</title>
 </head>
@@ -21,9 +17,8 @@
 			<!-- Main navbar header -->
 			<div class="navbar-header">
 				<!-- Logo -->
-				<a href="{$appurl}" class="navbar-brand">
-					<div> <img alt="{$title}" src="{$appurl}/image/logo.png" style='background-color:white'> </div>
-					{$title}
+				<a href="{$appurl}" class="navbar-brand navbar-logo">
+					&nbsp;
 				</a>
 				<!-- Main navbar toggle -->
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse"><i class="navbar-icon fa fa-bars"></i></button>

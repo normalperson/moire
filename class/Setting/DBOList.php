@@ -14,6 +14,7 @@ html_header();
 <?php
 $list = scandir(DOC_DIR.DS.'dbo');
 for($i=2; $i<count($list); $i++){
+	if(in_array($list[$i], array('init.inc.php'))) continue;
 	echo '<div><a target="dboload" href="DBOLoad?load='.$list[$i].'">'.$list[$i].'</a></div>';
 }
 ?>

@@ -78,6 +78,7 @@ div.dbo_theme_pixeladmin div.value_container> textarea
 	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
+
 div.dbo_theme_pixeladmin div.value_container> input[type="text"],
 div.dbo_theme_pixeladmin div.value_container> input[type="password"],
 div.dbo_theme_pixeladmin div.value_container> input[type="search"],
@@ -726,10 +727,10 @@ div.dbo_theme_pixeladmin td.dbo_container_detail td.value {
 }
 
 div.dbo_theme_pixeladmin td.dbo_container_detail th.caption{
-	font-weight:600;
-	text-align:left;
+	text-align:right;
 	vertical-align: top;
 	padding-top: 10px;
+	padding-right: 30px;
 
 }
 
