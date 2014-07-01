@@ -530,7 +530,6 @@ $( document ).ready(function() {
 			var colorval = $colorjob.filter(':checked').val();
 			if ($categoryjob.filter(':checked').length > 0) {
 				$categoryjob.filter(':checked').each(function () {
-					console.log(jstimemap);
 					var clid = $(this).val();
 					if (typeof jstimemap['JOBCAT'][clid] != 'undefined') {
 						if (jstimemap['JOBCAT'][clid]['pricecat'] == 'UNIT') {
