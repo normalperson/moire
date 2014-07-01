@@ -58,7 +58,7 @@ $dbo->cols['js_manrequiretime']->caption->set('default', 'js_manrequiretime', 't
 $dbo->cols['js_requiretime']->caption->set('default', 'Estimated time required', 'text');
 $dbo->cols['filehistory']->caption->set('default', 'filehistory', 'text');
 $dbo->cols['filehistory']->caption->setTabCaption('default', 'File history', 'text');
-$dbo->cols['pmc_id']->caption->set('default', 'Case ID', 'text');
+$dbo->cols['pmc_id']->caption->set('default', 'Job ID', 'text');
 $dbo->cols['pmc_id']->caption->setTabCaption('default', 'JOB INFO', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
 $dbo->cols['js_jobcolor']->caption->set('default', 'Color of job', 'text');

@@ -10,14 +10,14 @@ $dbo->key = array('pmf_id');
 $dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions, case when pmf_due_date is not null and pmf_due_date <= now() then \'Y\' else \'N\' end as isdue,
 	case when pmc_casetype = \'jobsheet\' then (select case when js_code is null then \'\' else js_code||\' - \' end ||case when length(js_description) < 23 then js_description else substring(js_description,0,20)||\'...\' end from mjobsheet where js_id = pmc_casekey)  else concat(pmc_casetype,\'::\',pmc_casekey) end as casedesc
 	from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
-	where pmf_obj_id = 10 and pmf_obj_type = \'PM_Activity\' and pmf_end_date is null
+	where pmf_obj_id = 2 and pmf_obj_type = \'PM_Activity\' and pmf_end_date is null
 	and (
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id) = 0 or
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id and 
-				(pmfa_userid is null or pmfa_userid = \'artist2\') and 
-				(pmfa_rolid is null or pmfa_rolid=\'20\') and
+				(pmfa_userid is null or pmfa_userid = \'admin\') and 
+				(pmfa_rolid is null or pmfa_rolid=\'10\') and
 				(pmfa_orgid is null or pmfa_orgid=\'1\') and
-				(pmfa_pmscode is null or pmfa_pmscode in (\'ARTHOME\',\'ADMIN\'))
+				(pmfa_pmscode is null or pmfa_pmscode in (\'ADMIN\',\'MENU_REPORT\',\'MENU_SETTING\',\'REQUEST_NEWJOB\',\'QCHOME\',\'ARTHOME\',\'SUPHOME\',\'CUSTHOME\',\'ADMINSETTING\',\'POSBMENU\',\'ADMIN\',\'SEARCH_PMC\'))
 			) > 0)
 	order by pmf_due_date, pmf_start_date';
 $dbo->col = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date', 'pmf_end_by', 'pmf_end_pmfid', 'pmf_from_event_gateway', 'pmf_last_timer_check_date', 'pmf_timer_due_date', 'pmf_timer_due_count', 'urgency', 'actions', 'isdue', 'casedesc');

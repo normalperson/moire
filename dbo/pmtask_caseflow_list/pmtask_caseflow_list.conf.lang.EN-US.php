@@ -1,10 +1,10 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
-$dbo->cols['pmc_id']->caption->set('default', 'Case ID', 'text');
-$dbo->cols['pmc_created_date']->caption->set('default', 'Case Created Date', 'text');
-$dbo->cols['pmc_created_by']->caption->set('default', 'Case Created By', 'text');
-$dbo->cols['pmc_casekey']->caption->set('default', 'Case Description', 'text');
+$dbo->cols['pmc_id']->caption->set('default', 'Job ID', 'text');
+$dbo->cols['pmc_created_date']->caption->set('default', 'Job Created Date', 'text');
+$dbo->cols['pmc_created_by']->caption->set('default', 'Job Created By', 'text');
+$dbo->cols['pmc_casekey']->caption->set('default', 'Job Description', 'text');
 $dbo->cols['pmc_casetype']->caption->set('default', 'pmc_casetype', 'text');
 $dbo->cols['pmc_parentid']->caption->set('default', 'pmc_parentid', 'text');
 $dbo->cols['pmc_pmwfid']->caption->set('default', 'pmc_pmwfid', 'text');
@@ -36,7 +36,7 @@ $dbo->cols['pmf_last_timer_check_date']->caption->set('default', 'pmf_last_timer
 $dbo->cols['pmf_timer_due_date']->caption->set('default', 'pmf_timer_due_date', 'text');
 $dbo->cols['pmf_timer_due_count']->caption->set('default', 'pmf_timer_due_count', 'text');
 $dbo->cols['isdue']->caption->set('default', ' ', 'text');
-$dbo->cols['casedesc']->caption->set('default', 'Case Description', 'text');
+$dbo->cols['casedesc']->caption->set('default', 'Job Description', 'text');
 
 $dbo->titleList = ' ';
 $dbo->titleDetail = 'Detail';

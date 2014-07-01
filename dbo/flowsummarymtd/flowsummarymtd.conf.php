@@ -116,7 +116,13 @@ $dbo->lang = 'EN-US';
 $dbo->render = array();
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
-$dbo->whereSQL = '1=1';
+$dbo->whereSQL = ' pmf_obj_type = \'PM_Activity\'
+		and pmf_obj_id = \'5\'
+		and pmf_end_date is not null
+		and pmf_end_by = \'admin\'
+		and pmf_start_date > date_trunc(\'month\', current_date)
+		and pmf_start_date < (date_trunc(\'MONTH\', current_date) + INTERVAL \'1 MONTH\')::date
+		and pmf_end_date > pmf_due_date ';
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
 $dbo->cols['js_id']->inputTypeDefault = 'text';
