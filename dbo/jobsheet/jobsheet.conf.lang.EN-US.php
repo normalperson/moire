@@ -66,9 +66,10 @@ $dbo->cols['__map_mjobbarcode__jbc_jsid__']->caption->set('default', 'Barcode', 
 $dbo->cols['__map_mjobbarcode__jbc_btcode__']->caption->set('default', 'Type', 'text');
 $dbo->cols['__map_mjobbarcode__jbc_value__']->caption->set('default', 'Value', 'text');
 $dbo->cols['js_mcid']->caption->set('default', 'Printer Name', 'text');
-$dbo->cols['js_code']->caption->set('default', 'js_code', 'text');
+$dbo->cols['js_code']->caption->set('default', 'Job Code', 'text');
 $dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
 $dbo->cols['js_price']->caption->set('default', 'Price', 'text');
+$dbo->cols['pmc_id']->caption->set('default', 'Job ID', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';
