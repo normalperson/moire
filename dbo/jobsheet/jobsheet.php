@@ -168,7 +168,7 @@ function dbo_jobsheet_customize(&$dbo){
 	global $USER;
 	if ($USER->rolename == 'Customer') {
 		$dbo->cols['js_mcid']->mandatoryDefault = 1;
-		$dbo->cols['joboutput']->mandatoryDefault = 1;
+		$dbo->cols['joboutput']->mandatoryDefault = 0;
 		$dbo->cols['jobcategory']->mandatoryDefault = 1;
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = 'sql';
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = 
