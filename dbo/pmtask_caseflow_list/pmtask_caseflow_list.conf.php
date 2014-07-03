@@ -14,10 +14,10 @@ $dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions, case when pmf_due_
 	and (
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id) = 0 or
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id and 
-				(pmfa_userid is null or pmfa_userid = \'admin\') and 
-				(pmfa_rolid is null or pmfa_rolid=\'10\') and
-				(pmfa_orgid is null or pmfa_orgid=\'1\') and
-				(pmfa_pmscode is null or pmfa_pmscode in (\'ADMIN\',\'MENU_REPORT\',\'MENU_SETTING\',\'REQUEST_NEWJOB\',\'QCHOME\',\'ARTHOME\',\'SUPHOME\',\'CUSTHOME\',\'ADMINSETTING\',\'POSBMENU\',\'ADMIN\',\'SEARCH_PMC\'))
+				(pmfa_userid is null or pmfa_userid = \'uat_customer1\') and 
+				(pmfa_rolid is null or pmfa_rolid=\'14\') and
+				(pmfa_orgid is null or pmfa_orgid=\'9\') and
+				(pmfa_pmscode is null or pmfa_pmscode in (\'REQUEST_NEWJOB\',\'CUSTHOME\',\'ADMIN\'))
 			) > 0)
 	order by pmf_due_date, pmf_start_date';
 $dbo->col = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date', 'pmf_end_by', 'pmf_end_pmfid', 'pmf_from_event_gateway', 'pmf_last_timer_check_date', 'pmf_timer_due_date', 'pmf_timer_due_count', 'urgency', 'actions', 'isdue', 'casedesc');
@@ -54,7 +54,7 @@ $dbo->recordPerPage = 10;
 $dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
-$dbo->lang = 'EN-US';
+$dbo->lang = 'ZH-CN';
 $dbo->render = array();
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
@@ -271,7 +271,7 @@ $dbo->cols['pmf_prev_pmcnid']->option->newMethod = 'text';
 $dbo->cols['pmf_prev_pmcnid']->option->editMethod = 'text';
 $dbo->cols['pmf_start_date'] = new DBO_COL('pmf_start_date', 'timestamptz', '8', '-1');
 $dbo->cols['pmf_start_date']->displayDataType = 'datetime';
-$dbo->cols['pmf_start_date']->inputTypeDefault = 'text';
+$dbo->cols['pmf_start_date']->inputTypeDefault = 'date';
 $dbo->cols['pmf_start_date']->inputTypeSearch = 'rangedate';
 $dbo->cols['pmf_start_date']->format = 'DD-MON-YYYY HH:MIN AP';
 $dbo->cols['pmf_start_date']->searchMode = 'exact';

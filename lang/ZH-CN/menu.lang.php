@@ -1,13 +1,13 @@
 <?php
-/*Last Modified by esp on 03-07-2014 16:07:38*/
+/*Last Modified by esp on 03-07-2014 20:30:16*/
 $translate = array (
   'Admin Setup' => '主管设置',
   'Setting' => '设置',
   'POSB User Setting' => 'POSB 设置',
-  'Home (Supervisor)' => '主管主页',
-  'Home (QC)' => 'QC 主页',
-  'Home (Artist)' => '艺术家主页',
-  'Home(Customer)' => '客户主页',
+  'Home (Supervisor)' => '首页',
+  'Home (QC)' => '首页',
+  'Home (Artist)' => '首页',
+  'Home(Customer)' => '首页',
   'Job category setup' => '职位类别设置',
   'Carton setup' => '纸箱设置',
   'SLA Setup' => 'SLA设置',
@@ -33,5 +33,7 @@ $translate = array (
   'Contact Setup' => 'Contact Setup',
   'DBO Setup' => 'DBO Setup',
   'Translation' => 'Translation',
+  'User related setting' => '',
+  'User related setup' => '',
 );
 ?>

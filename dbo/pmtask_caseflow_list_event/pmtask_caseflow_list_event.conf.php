@@ -13,7 +13,7 @@ $dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions, case when pmf_due_
 	and (
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id) = 0 or
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id and 
-				(pmfa_userid is null or pmfa_userid = \'supervisor\') and 
+				(pmfa_userid is null or pmfa_userid = \'uat_supervisor1\') and 
 				(pmfa_rolid is null or pmfa_rolid=\'19\') and
 				(pmfa_orgid is null or pmfa_orgid=\'1\') and
 				(pmfa_pmscode is null or pmfa_pmscode in (\'REQUEST_NEWJOB\',\'SUPHOME\',\'ADMIN\'))
@@ -53,7 +53,7 @@ $dbo->recordPerPage = 10;
 $dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
-$dbo->lang = 'EN-US';
+$dbo->lang = 'ZH-CN';
 $dbo->render = array();
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';

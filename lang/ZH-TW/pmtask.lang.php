@@ -1,9 +1,30 @@
 <?php
-/*Last Modified by esp on 03-07-2014 15:50:46*/
+/*Last Modified by esp on 03-07-2014 20:31:24*/
 $translate = array (
+  'Artwork job' => '美工訂單',
+  'New Job' => '新增訂單',
   'Start Event' => 'Start Event',
-  'New Job' => 'New Job',
-  'Artwork job' => 'Artwork job',
-  'Task' => 'Task',
+  'User Activity' => 'User Activity',
+  'Requirement verification' => 'Requirement verification',
+  'Task' => '作業/任务',
+  'Intermediate Event' => 'Intermediate Event',
+  'Pull Back' => 'Pull Back',
+  'Pending acceptance' => '',
+  'Rework in progress' => '',
+  'Acknowledge Job' => '',
+  'Work in progress ' => '',
+  'Reassign Artist' => '',
+  'Job has been submitted successfully.' => '',
+  'The job has successfully been Reverted.' => '',
+  'Pending resolution ' => '',
+  'The job has successfully been sent back for verification.' => '',
+  'The job has successfully been Assigned.' => '',
+  'The job has successfully been assigned to Artist 2.' => '',
+  'The job has successfully been sent to QC for verification.' => '',
+  'Pending check (QC)' => '',
+  'The job has successfully been reverted.' => '',
+  'The job has successfully been forwarded to customer.' => '',
+  'The job has successfully been accepted.' => '',
+  'The job has successfully been assigned to artist.' => '',
 );
 ?>

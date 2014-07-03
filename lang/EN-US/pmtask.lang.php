@@ -1,17 +1,17 @@
 <?php
-/*Last Modified by uat_supervisor1 on 22-06-2014 21:14:50*/
+/*Last Modified by esp on 03-07-2014 20:31:24*/
 $translate = array (
-  'Start Event' => 'Start Event',
-  'New Job' => 'New Job',
-  'User Activity' => 'User Activity',
-  'Pending acceptance' => 'Pending acceptance',
   'Artwork job' => 'Artwork job',
-  'Task' => 'Task',
+  'New Job' => 'New Job',
+  'Start Event' => 'Start Event',
+  'User Activity' => 'User Activity',
   'Requirement verification' => 'Requirement verification',
-  'Rework in progress' => 'Rework in progress',
+  'Task' => 'Task',
   'Intermediate Event' => 'Intermediate Event',
-  'Acknowledge Job' => 'Acknowledge Job',
   'Pull Back' => 'Pull Back',
+  'Pending acceptance' => 'Pending acceptance',
+  'Rework in progress' => 'Rework in progress',
+  'Acknowledge Job' => 'Acknowledge Job',
   'Work in progress ' => 'Work in progress ',
   'Reassign Artist' => 'Reassign Artist',
   'Job has been submitted successfully.' => 'Job has been submitted successfully.',
