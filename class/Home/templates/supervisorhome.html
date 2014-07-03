@@ -1,5 +1,6 @@
 <div class="row" style="padding-bottom:15px;margin-bottom:15px">
 	<div class="col-sm-3">
+		<a href="showJobList?frompage=supervisor">
 		<div class="stat-panel">
 			<!-- Success background. vertically centered text -->
 			<div class="stat-cell bg-danger valign-middle">
@@ -8,9 +9,7 @@
 				<!-- Extra large text -->
 				<span class="text-xlg">
 					<strong>
-						<a href="showJobList?frompage=supervisor">
 						{$Home->getTotalJob()}
-						</a>
 					</strong>
 				</span>
 					<br>
@@ -20,8 +19,10 @@
 				<span class="text-sm">{'received'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->
+		</a>
 	</div>
 	<div class="col-sm-3">
+		<a href="{$Home->getFlowUrl(1,'PM_Activity')}">
 		<div class="stat-panel">
 			<!-- Success background. vertically centered text -->
 			<div class="stat-cell bg-warning valign-middle">
@@ -32,9 +33,7 @@
 					<strong>
 <!-- 		  			  Activity name   : "Requirement verification"
 		                  Activity ID : 1 -->		
-						<a href="{$Home->getFlowUrl(1,'PM_Activity')}">
 							{$Home->getActivityData(1,'totalcount')}
-						</a>
 					</strong>
 				</span><br>
 				<!-- Big text -->
@@ -43,8 +42,10 @@
 				<span class="text-sm">{'pending verification'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->			
+		</a>
 	</div>
 	<div class="col-sm-3">
+		<a href="{$Home->getFlowUrl(4,'PM_Activity')}">
 		<div class="stat-panel">
 			<!-- Success background. vertically centered text -->
 			<div class="stat-cell bg-info valign-middle">
@@ -55,9 +56,7 @@
 					<strong>
 <!-- 		  			  Activity name   : "Work in progress "
 		                  Activity ID : 4 -->		
-						<a href="{$Home->getFlowUrl(4,'PM_Activity')}">
 							{$Home->getActivityData(4,'totalcount')}
-						</a>
 					</strong>
 				</span><br>
 				<!-- Big text -->
@@ -66,8 +65,10 @@
 				<span class="text-sm">{'work in progress'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
+		</a>
 	</div>
 	<div class="col-sm-3">
+		<a href="{$Home->getFlowUrl(6,'PM_Activity')}">
 		<div class="stat-panel">
 			<!-- Success background. vertically centered text -->
 			<div class="stat-cell bg-success valign-middle">
@@ -78,9 +79,7 @@
 					<strong>
 <!-- 		  			  Activity name   : "Pending acceptance"
 		                  Activity ID : 6 -->		
-						<a href="{$Home->getFlowUrl(6,'PM_Activity')}">
 							{$Home->getActivityData(6,'totalcount')}
-						</a>
 					</strong>
 				</span>
 					<br>
@@ -90,6 +89,7 @@
 				<span class="text-sm">{'pending customer acceptance'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
+		</a>
 	</div>			
 </div>
 <!-- monthly sales and my performance -->

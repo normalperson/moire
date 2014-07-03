@@ -1,5 +1,6 @@
 <div class="row" style="padding-bottom:15px;margin-bottom:15px">
 	<div class="col-sm-3">
+		<a href="showFlowSummary?id=5&type=PM_Activity">
 		<div class="stat-panel">
 			<!-- Success background. vertically centered text -->
 			<div class="stat-cell bg-danger valign-middle">
@@ -8,9 +9,7 @@
 				<!-- Extra large text -->
 				<span class="text-xlg">
 					<strong>
-						<a href="showFlowSummary?id=5&type=PM_Activity">
 							{$Home->getCompletedJob('PM_Activity',5)}
-						</a>
 					</strong>
 				</span>
 					<br>
@@ -20,8 +19,10 @@
 				<span class="text-sm">{'checked'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->
+		</a>
 	</div>
 	<div class="col-sm-3">
+		<a href="{$Home->getFlowUrl(5,'PM_Activity')}">
 		<div class="stat-panel">
 			<!-- Success background. vertically centered text -->
 			<div class="stat-cell bg-warning valign-middle">
@@ -32,9 +33,7 @@
 					<strong>
 <!-- 		  			  Activity name   : "Pending check (QC)"
 		                  Activity ID : 5 -->		
-						<a href="{$Home->getFlowUrl(5,'PM_Activity')}">
 							{$Home->getActivityData(5,'totalcount')}
-						</a>
 					</strong>
 				</span>
 				<br>
@@ -44,8 +43,10 @@
 				<span class="text-sm">{'pending QC check'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->			
+		</a>
 	</div>	
 	<div class="col-sm-3">
+		<a href="{$Home->getFlowUrl(10,'PM_Activity')}">
 		<div class="stat-panel">
 			<!-- Success background. vertically centered text -->
 			<div class="stat-cell bg-info valign-middle">
@@ -56,9 +57,7 @@
 					<strong>
 <!-- 		  			  Activity name   : "Rework in progress"
 		                  Activity ID     : 10 -->		
-						<a href="{$Home->getFlowUrl(10,'PM_Activity')}">
 							{$Home->getActivityData(10,'totalcount')}
-						</a>
 					</strong>
 				</span>
 				<br>
@@ -68,8 +67,10 @@
 				<span class="text-sm">{'pending rework in progress'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
+		</a>
 	</div>		
 	<div class="col-sm-3">
+		<a href="showFlowSummaryMTD?id=5&type=PM_Activity">
 		<div class="stat-panel">
 			<!-- Success background. vertically centered text -->
 			<div class="stat-cell bg-success valign-middle">
@@ -78,9 +79,7 @@
 				<!-- Extra large text -->
 				<span class="text-xlg">
 					<strong>
-						<a href="showFlowSummaryMTD?id=5&type=PM_Activity">
 							{$Home->getQCExeedSLA()}
-						</a>
 					</strong>
 				</span>
 				<br>
@@ -90,6 +89,7 @@
 				<span class="text-sm">{'exceeded SLA MTD'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
+		</a>
 	</div>	
 </div>
 <!-- monthly sales and my performance -->

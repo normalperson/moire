@@ -124,7 +124,7 @@ $dbo->lang = 'EN-US';
 $dbo->render = array();
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
-$dbo->whereSQL = ' pmf_end_by = \'esp\'
+$dbo->whereSQL = ' pmf_end_by = \'admin\'
 		and pmf_end_date is not null
 		and pmf_start_date > date_trunc(\'month\', current_date)
 		and pmf_start_date < (date_trunc(\'MONTH\', current_date) + INTERVAL \'1 MONTH\')::date
@@ -170,6 +170,7 @@ $dbo->cols['js_ctid']->option->editMethod = 'text';
 $dbo->cols['js_request_date'] = new DBO_COL('js_request_date', 'timestamptz', '8', '-1');
 $dbo->cols['js_request_date']->displayDataType = 'datetime';
 $dbo->cols['js_request_date']->inputTypeDefault = 'text';
+$dbo->cols['js_request_date']->inputTypeSearch = 'rangedate';
 $dbo->cols['js_request_date']->searchMode = 'exact';
 $dbo->cols['js_request_date']->capContClassDefault = array();
 $dbo->cols['js_request_date']->valContClassDefault = array();
