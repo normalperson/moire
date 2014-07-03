@@ -476,6 +476,13 @@ foreach ($data as $key => $value) {
 	$timemap['JOBOUTP'][$value['jol_id']] = array(
 		1=>$value['jol_requiredtime'],
 		'title'=>$value['jol_title'],
+		'price'=> array(
+			0=>null,
+			1=>$value['jol_price_color_1'],
+			2=>$value['jol_price_color_2'],
+			3=>$value['jol_price_color_3'],
+			4=>$value['jol_price_color_4'],
+		)
 	);
 }
 echo '<script type="text/javascript"> var jstimemap = '.json_encode($timemap).'; </script>';
@@ -487,7 +494,7 @@ $dbo->render();
 $( document ).ready(function() {
 	
 	var $colorjob = $('input[name=dbo_jobsheet_new_js_jobcolor], input[name=dbo_jobsheet_edit_js_jobcolor]').click(function () {calMinutes();calPrice();}),
-		$outputjob = $('input[name=dbo_jobsheet_new_joboutput\\[\\]], input[name=dbo_jobsheet_edit_joboutput\\[\\]]').click(function () {calMinutes()}),
+		$outputjob = $('input[name=dbo_jobsheet_new_joboutput\\[\\]], input[name=dbo_jobsheet_edit_joboutput\\[\\]]').click(function () {calMinutes();calPrice();}),
 		$categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes();calPrice();}),
 		$requiredmin = $('#requiredmin'),
 		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime'),
@@ -528,22 +535,30 @@ $( document ).ready(function() {
 		var price = 0;
 		if ($priceinput.length > 0) {
 			var colorval = $colorjob.filter(':checked').val();
-			if ($categoryjob.filter(':checked').length > 0) {
-				$categoryjob.filter(':checked').each(function () {
-					var clid = $(this).val();
-					if (typeof jstimemap['JOBCAT'][clid] != 'undefined') {
-						if (jstimemap['JOBCAT'][clid]['pricecat'] == 'UNIT') {
-							if (jstimemap['JOBCAT'][clid]['title'].toUpperCase() == 'BARCODE') {
-								price += parseFloat(jstimemap['JOBCAT'][clid]['price'][0]) * $('#detail-jbc_jsid-table > tbody > tr').length;
-							}
-							else price += parseFloat(jstimemap['JOBCAT'][clid]['price'][0]);
-						}
-						else if (colorval && jstimemap['JOBCAT'][clid]['pricecat'] == 'COLOR' && jstimemap['JOBCAT'][clid]['price'][colorval]) {
-							price += parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]);
-						}
-					}
-				})
+			if ($outputjob.filter(':checked').length > 0) {
+				// get the max price
+				$outputjob.filter(':checked').each(function () {
+					var opid = $(this).val();
+					if( parseFloat(jstimemap['JOBOUTP'][opid]['price'][colorval]) > price ) 
+						price = parseFloat(jstimemap['JOBOUTP'][opid]['price'][colorval]);
+					
+				});
 			}
+			$categoryjob.filter(':checked').each(function () {
+				var clid = $(this).val();
+				if( parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]) > price ) 
+					price = parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]);					
+
+				// get the barcode total price and add the output category price
+				if (jstimemap['JOBCAT'][clid]['pricecat'] == 'UNIT') {
+					if (jstimemap['JOBCAT'][clid]['title'].toUpperCase() == 'BARCODE') {
+						price += parseFloat(jstimemap['JOBCAT'][clid]['price'][0]) * $('#detail-jbc_jsid-table > tbody > tr').length;
+					}
+				}			
+
+			});
+
+
 			$priceinput.val(price);
 		}
 	}
@@ -581,10 +596,24 @@ $( document ).ready(function() {
 		}).length > 0) $trappingSizeInp.prop('disabled', false)
 		else $trappingSizeInp.val('').prop('disabled', true);
 	}
+	// outputtype
+	var $outputtype = $('#dbo_jobsheet_new_js_outputtype, #dbo_jobsheet_edit_js_outputtype, #dbo_jobsheet_new_js_outputwidth, #dbo_jobsheet_edit_js_outputwidth,#dbo_jobsheet_new_js_outputheight,#dbo_jobsheet_edit_js_outputheight');
+	function setOutputtypeProp() {
+		if ($outputjob.filter(':checked').filter(function () {
+			if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
+			jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'ARTWORK SEPERATION') return true;
+			return false;
+		}).length > 0) $outputtype.prop('disabled', false)
+		else $outputtype.val('').prop('disabled', true);
+	}
 	$categoryjob.click(function () {
 		setTrappingProp();
-	})
+	});
+	$outputjob.click(function () {
+		setOutputtypeProp();
+	});
 	setTrappingProp();
+	setOutputtypeProp();
 	
 	// angle enabling
 	var $lpiInp = $('#dbo_jobsheet_new_js_lpi, #dbo_jobsheet_edit_js_lpi');

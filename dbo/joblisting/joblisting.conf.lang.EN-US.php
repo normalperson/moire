@@ -6,9 +6,9 @@ $dbo->cols['js_cuid']->caption->set('default', 'Customer', 'text');
 $dbo->cols['js_ctid']->caption->set('default', 'Person in charge', 'text');
 $dbo->cols['js_request_date']->caption->set('default', 'Request date', 'text');
 $dbo->cols['js_request_by']->caption->set('default', 'Requestor', 'text');
-$dbo->cols['js_request_by']->caption->setTabCaption('default', 'Job Info', 'text');
 $dbo->cols['js_title']->caption->set('default', 'js_title', 'text');
 $dbo->cols['js_description']->caption->set('default', 'Job description', 'text');
+$dbo->cols['js_description']->caption->setTabCaption('default', 'JOB INFO', 'text');
 $dbo->cols['js_material_provided']->caption->set('default', 'js_material_provided', 'text');
 $dbo->cols['js_cyan']->caption->set('default', 'Cyan', 'text');
 $dbo->cols['js_cyan']->caption->setTabCaption('default', 'COLOR', 'text');
@@ -59,7 +59,6 @@ $dbo->cols['js_requiretime']->caption->set('default', 'Estimated time required',
 $dbo->cols['filehistory']->caption->set('default', 'filehistory', 'text');
 $dbo->cols['filehistory']->caption->setTabCaption('default', 'File history', 'text');
 $dbo->cols['pmc_id']->caption->set('default', 'Job ID', 'text');
-$dbo->cols['pmc_id']->caption->setTabCaption('default', 'JOB INFO', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
 $dbo->cols['js_jobcolor']->caption->set('default', 'Color of job', 'text');
 $dbo->cols['joboutput']->caption->set('default', 'Output Requirement', 'text');
@@ -72,6 +71,9 @@ $dbo->cols['__map_mjobbarcode__jbc_jsid__']->caption->set('default', 'Barcode li
 $dbo->cols['__map_mjobbarcode__jbc_btcode__']->caption->set('default', 'Barcode', 'text');
 $dbo->cols['__map_mjobbarcode__jbc_value__']->caption->set('default', 'Barcode value', 'text');
 $dbo->cols['js_price']->caption->set('default', 'Price', 'text');
+$dbo->cols['js_outputtype']->caption->set('default', 'Output type', 'text');
+$dbo->cols['js_outputwidth']->caption->set('default', 'Output width (mm)', 'text');
+$dbo->cols['js_outputheight']->caption->set('default', 'Output height (mm)', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';

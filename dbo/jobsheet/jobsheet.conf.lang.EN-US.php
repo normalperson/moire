@@ -5,7 +5,7 @@ $dbo->cols['js_id']->caption->set('default', 'Job ID', 'text');
 $dbo->cols['js_cuid']->caption->set('default', 'Customer', 'text');
 $dbo->cols['js_ctid']->caption->set('default', 'Person in charge', 'text');
 $dbo->cols['js_request_date']->caption->set('default', 'Request date', 'text');
-$dbo->cols['js_request_by']->caption->set('default', 'js_request_by', 'text');
+$dbo->cols['js_request_by']->caption->set('default', 'Requestor', 'text');
 $dbo->cols['js_title']->caption->set('default', 'js_title', 'text');
 $dbo->cols['js_description']->caption->set('default', 'Job description', 'text');
 $dbo->cols['js_description']->caption->setTabCaption('default', 'Job Info', 'text');
@@ -70,6 +70,9 @@ $dbo->cols['js_code']->caption->set('default', 'Job Code', 'text');
 $dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
 $dbo->cols['js_price']->caption->set('default', 'Price', 'text');
 $dbo->cols['pmc_id']->caption->set('default', 'Job ID', 'text');
+$dbo->cols['js_outputtype']->caption->set('default', 'Output type', 'text');
+$dbo->cols['js_outputwidth']->caption->set('default', 'Output width (mm)', 'text');
+$dbo->cols['js_outputheight']->caption->set('default', 'Output height (mm)', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';

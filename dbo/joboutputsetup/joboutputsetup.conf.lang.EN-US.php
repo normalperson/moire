@@ -5,6 +5,13 @@ $dbo->cols['jol_id']->caption->set('default', 'jol_id', 'text');
 $dbo->cols['jol_title']->caption->set('default', 'Title', 'text');
 $dbo->cols['jol_requiredtime']->caption->set('default', 'Required Time (Minute)', 'text');
 $dbo->cols['jol_status']->caption->set('default', 'Status', 'text');
+$dbo->cols['jol_price_color_1']->caption->set('default', 'Price for 1 color', 'text');
+$dbo->cols['jol_price_color_1']->caption->setSectionCaption('default', 'Pricing', 'text');
+$dbo->cols['jol_price_color_1']->caption->setSectionCaption('new', 'Pricing', 'text');
+$dbo->cols['jol_price_color_1']->caption->setSectionCaption('edit', 'Pricing', 'text');
+$dbo->cols['jol_price_color_2']->caption->set('default', 'Price for 2 color', 'text');
+$dbo->cols['jol_price_color_3']->caption->set('default', 'Price for 3 color', 'text');
+$dbo->cols['jol_price_color_4']->caption->set('default', 'Price for 4 color', 'text');
 
 $dbo->titleList = 'List Job Output';
 $dbo->titleDetail = 'Detail';

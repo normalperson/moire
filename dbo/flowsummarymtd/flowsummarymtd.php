@@ -93,15 +93,13 @@ function showPercentageDet($col, $colVal, $data=array(), $html=null){
 function dbo_flowsummarymtd_customize(&$dbo){
 	global $GLOBAL,$USER;
 	autoDetailTableInput($dbo);
-	if( isset($_GET['type']) && isset($_GET['id']) ){
+/*	if( isset($_GET['type']) && isset($_GET['id']) ){
 		$GLOBAL['type'] = $_GET['type'];
 		$GLOBAL['actvid'] = $_GET['id'];
-	}
+	}*/
 
-	$dbo->whereSQL = " pmf_obj_type = '".$GLOBAL['type']."'
-		and pmf_obj_id = '".$GLOBAL['actvid']."'
+	$dbo->whereSQL = " pmf_end_by = '".$USER->userid."'
 		and pmf_end_date is not null
-		and pmf_end_by = '".$USER->userid."'
 		and pmf_start_date > date_trunc('month', current_date)
 		and pmf_start_date < (date_trunc('MONTH', current_date) + INTERVAL '1 MONTH')::date
 		and pmf_end_date > pmf_due_date ";
