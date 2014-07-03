@@ -27,7 +27,7 @@ $dbo->colList = array('js_description', 'js_bleeding', 'js_bleeding_remark', 'js
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('js_description', 'pmc_id', 'js_code', 'js_mcid', 'js_jobcolor', 'joboutput', 'jobcategory', 'js_price', 'js_requiretime', 'js_trapping_size', '__map_mjobbarcode__jbc_jsid__', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_lpi', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
+$dbo->colDetail = array('js_description', 'pmc_id', 'js_code', 'js_mcid', 'js_jobcolor', 'joboutput', 'jobcategory', 'js_price', 'js_requiretime', 'js_trapping_size', '__map_mjobbarcode__jbc_jsid__', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_lpi', 'js_bleeding', 'js_bleeding_remark', 'js_width', 'js_height', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
 $dbo->colNew = array('js_description', 'js_mcid', 'js_jobcolor', 'joboutput', 'jobcategory', 'js_price', 'js_requiretime', 'js_trapping_size', '__map_mjobbarcode__jbc_jsid__', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_lpi', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'attachment', 'info', 'remark');
 $dbo->colEdit = array('js_description', 'js_mcid', 'js_jobcolor', 'joboutput', 'jobcategory', 'js_price', 'js_requiretime', 'js_trapping_size', '__map_mjobbarcode__jbc_jsid__', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_lpi', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory', 'attachment', 'info', 'remark');
 $dbo->colSearch = array('js_id', 'js_mcid', 'js_request_date', 'js_request_by', 'js_title', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
@@ -58,11 +58,14 @@ $dbo->layoutDetail = '4;
 4;
 4;
 4;
+4;
+4;
 1|1|1|1;
 1|1|1|1;
 4;
 4;
 4;
+2|2;
 =
 1|1;
 2;

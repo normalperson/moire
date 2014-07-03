@@ -41,11 +41,16 @@ $dbo->cols['js_color_5']->caption->set('default', 'js_color_5', 'text');
 $dbo->cols['js_angle_5']->caption->set('default', 'js_angle_5', 'text');
 $dbo->cols['js_carid']->caption->set('default', 'js_carid', 'text');
 $dbo->cols['js_decision']->caption->set('default', 'Decision', 'text');
-$dbo->cols['js_width']->caption->set('default', 'js_width', 'text');
-$dbo->cols['js_height']->caption->set('default', 'js_height', 'text');
+$dbo->cols['js_width']->caption->set('default', 'Width', 'text');
+$dbo->cols['js_height']->caption->set('default', 'Height', 'text');
 $dbo->cols['js_requiretime']->caption->set('default', 'js_requiretime', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
 $dbo->cols['js_jobcolor']->caption->set('default', 'js_jobcolor', 'text');
+$dbo->cols['js_lpi']->caption->set('default', 'js_lpi', 'text');
+$dbo->cols['js_mcid']->caption->set('default', 'js_mcid', 'text');
+$dbo->cols['js_code']->caption->set('default', 'js_code', 'text');
+$dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
+$dbo->cols['js_price']->caption->set('default', 'js_price', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

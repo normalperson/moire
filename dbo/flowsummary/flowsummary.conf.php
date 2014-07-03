@@ -27,7 +27,7 @@ $dbo->colList = array('pmc_id', 'js_code', 'js_description', 'js_primcat', 'js_s
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('pmc_id', 'js_code', 'js_description', 'js_jobcolor', 'js_trapping_size', 'joboutput', 'js_lpi', 'jobcategory', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', '__map_mjobbarcode__jbc_jsid__', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
+$dbo->colDetail = array('pmc_id', 'js_code', 'js_description', 'js_jobcolor', 'js_trapping_size', 'joboutput', 'js_lpi', 'jobcategory', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_width', 'js_height', '__map_mjobbarcode__jbc_jsid__', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
 $dbo->colNew = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid');
 $dbo->colEdit = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
 $dbo->colSearch = array('pmc_id', 'js_code', 'js_status', 'js_request_date', 'js_description', 'js_primcat');
@@ -57,8 +57,9 @@ $dbo->layoutDetail = '2|2;
 4;
 1|1|1|1;
 1|1|1|1;
-5;
-5;
+4;
+4;
+2|2;
 =
 1|1;
 2;
@@ -117,7 +118,7 @@ $dbo->listEditSubmit = 'Submit';
 $dbo->whereSQL = ' pmf_obj_type = \'PM_Activity\'
 		and pmf_obj_id = \'5\'
 		and pmf_end_date is not null
-		and pmf_end_by = \'admin\'';
+		and pmf_end_by = \'esp\'';
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
 $dbo->cols['js_id']->inputTypeDefault = 'text';
