@@ -141,18 +141,16 @@ function showPercentageDet($col, $colVal, $data=array(), $html=null){
 	return $newhtml;
 }
 function showRequiredMinute($col, $colVal, $data=array(), $html=null){
-
 	$html = '<div style="display:none">'.$html.'</div><div class="note note-info">
 				<h4 class="note-title" id="requiredmin">0 minutes</h4>
-				<small>Note : This is the estimated time required for this job once the job has been confirmed and acknowledged. 
-				Supervisor has the right to override this time.</small>
+				<small>'.tl('Note',false,'newjob').'</small>
 			</div>';
 	return $html;
 }
 
 function showPrice($col, $colVal, $data, $html) {
 	$fronthtml = substr($html,0, strpos($html, '</div>'));
-	$html = '<span class="input-group-addon">RM</span>'.$fronthtml.'</div>';
+	$html = '<span class="input-group-addon">'.tl('RM',false,'newjob').'</span>'.$fronthtml.'</div>';
 	$html = '<div class="input-group">'.$html.'</div>';
 	return $html;
 }

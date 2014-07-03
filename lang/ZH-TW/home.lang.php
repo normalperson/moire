@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 03-07-2014 15:49:52*/
+/*Last Modified by esp on 03-07-2014 16:19:35*/
 $translate = array (
   'Order' => 'Order',
   'Total order place' => 'Total order place',

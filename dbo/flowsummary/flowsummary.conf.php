@@ -122,7 +122,7 @@ $dbo->listEditSubmit = 'Submit';
 $dbo->whereSQL = ' pmf_obj_type = \'PM_Activity\'
 		and pmf_obj_id = \'5\'
 		and pmf_end_date is not null
-		and pmf_end_by = \'admin\'';
+		and pmf_end_by = \'esp\'';
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
 $dbo->cols['js_id']->inputTypeDefault = 'text';
@@ -163,7 +163,7 @@ $dbo->cols['js_ctid']->option->newMethod = 'text';
 $dbo->cols['js_ctid']->option->editMethod = 'text';
 $dbo->cols['js_request_date'] = new DBO_COL('js_request_date', 'timestamptz', '8', '-1');
 $dbo->cols['js_request_date']->displayDataType = 'datetime';
-$dbo->cols['js_request_date']->inputTypeDefault = 'text';
+$dbo->cols['js_request_date']->inputTypeDefault = 'date';
 $dbo->cols['js_request_date']->inputTypeSearch = 'rangedate';
 $dbo->cols['js_request_date']->searchMode = 'exact';
 $dbo->cols['js_request_date']->capContClassDefault = array();

@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by admin on 21-06-2014 20:51:33*/
+/*Last Modified by esp on 03-07-2014 16:07:38*/
 $translate = array (
   'Admin Setup' => '主管设置',
   'Setting' => '设置',
@@ -23,5 +23,15 @@ $translate = array (
   'Permission Setup' => '权限设置',
   'Rule Setting' => '规则设置',
   'Menu Setup' => '菜单设置',
+  'Job related setup' => 'Job related setup',
+  'Job output setup' => 'Job output setup',
+  'Workflow related setup' => 'Workflow related setup',
+  'Terms and Conditions' => 'Terms and Conditions',
+  'Internal user setup' => 'Internal user setup',
+  'External user setup' => 'External user setup',
+  'Customer user setup' => 'Customer user setup',
+  'Contact Setup' => 'Contact Setup',
+  'DBO Setup' => 'DBO Setup',
+  'Translation' => 'Translation',
 );
 ?>
