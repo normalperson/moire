@@ -183,7 +183,6 @@ function dbo_jobsheet_customize(&$dbo){
 }
 
 function dbo_jobsheet_custom_new($table, $cols){
-
 	global $DB,$JOBARRAY,$USER;
 	$ret = array();
 	//$DB->showsql = true;
@@ -219,6 +218,8 @@ function dbo_jobsheet_custom_new($table, $cols){
 	foreach ($cols as $k=>$v) {
 		if (substr($k,0,6) == '__map_') unset($cols[$k]);
 	}
+	// assign the price
+	$cols['js_price'] = $_POST['js_price'];
 	
 	$remark = $cols['remark']; // get the remark and insert after insert queue
 	unset($cols['remark']); // unset remark
@@ -345,6 +346,8 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	foreach ($cols as $k=>$v) {
 		if (substr($k,0,6) == '__map_') unset($cols[$k]);
 	}
+	// assign the price
+	$cols['js_price'] = $_POST['js_price'];
 	
 	$REMARK = $cols['remark']; // get the remark and insert after insert queue
 	unset($cols['remark']); // unset remark
@@ -496,7 +499,10 @@ $( document ).ready(function() {
 		$categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes();calPrice();}),
 		$requiredmin = $('#requiredmin'),
 		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime'),
-		$priceinput = $('#dbo_jobsheet_new_js_price, #dbo_jobsheet_edit_js_price');
+		//$priceinput = $('#dbo_jobsheet_new_js_price, #dbo_jobsheet_edit_js_price');
+		$priceinput = $('<input type="hidden" name="js_price" />');
+		$form = $('#dbo_jobsheet_newform,#dbo_jobsheet_editform').append($priceinput);
+
 
 	// estimated time calculation
 	function calMinutes(){

@@ -27,7 +27,7 @@ $dbo->colList = array('pmc_id', 'js_code', 'js_description', 'js_primcat', 'js_s
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('js_description', 'pmc_id', 'js_code', 'js_request_by', 'js_request_date', 'js_mcid', 'js_jobcolor', 'joboutput', 'jobcategory', 'js_price', 'js_requiretime', 'js_trapping_size', 'js_lpi', 'js_outputtype', 'js_outputwidth', 'js_outputheight', '__map_mjobbarcode__jbc_jsid__', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_width', 'js_height', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
+$dbo->colDetail = array('js_description', 'pmc_id', 'js_code', 'js_request_by', 'js_request_date', 'js_mcid', 'js_jobcolor', 'joboutput', 'jobcategory', 'js_requiretime', 'js_trapping_size', 'js_lpi', 'js_outputtype', 'js_outputwidth', 'js_outputheight', '__map_mjobbarcode__jbc_jsid__', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_width', 'js_height', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
 $dbo->colNew = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid');
 $dbo->colEdit = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
 $dbo->colSearch = array('pmc_id', 'js_code', 'js_status', 'js_request_date', 'js_description', 'js_primcat');
@@ -55,7 +55,7 @@ $dbo->layoutDetail = '4;
 2|2;
 2|2;
 2|2;
-2|2;
+4;
 2|2;
 2|1|1;
 4;
