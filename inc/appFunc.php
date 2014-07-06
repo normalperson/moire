@@ -21,7 +21,7 @@ function getPrimaryCat($color, $catstring){
 			$primcat = $r['jcl_id'];
 		}
 	}
-	return $r['jcl_id'];
+	return $primcat;
 }
 
 function userTopOrgID(){
