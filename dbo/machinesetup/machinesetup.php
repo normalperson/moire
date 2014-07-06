@@ -102,6 +102,28 @@ function colorslot_anilox($mcid){
 	return $ret;
 }
 
+function colorslot_anilox_det($mcid){
+	global $DB;
+	$aniloxRS = $DB->getArrayAssoc("select ma_type, ma_value from mcmanilox where ma_mcid = :0 order by ma_num", array($mcid));
+	$cslotNum = count($aniloxRS);
+	if(!$cslotNum) $cslotNum = 1;
+	$aniloxOptionRS = $DB->getArrayAssoc("select lu_code, lu_title from fclookup where lu_cat = :0", array('ANILOXTYPE'));
+	$ret = '<table><tr><th>Type</th><th>Value</th></tr>';
+	for($i=1;$i<=$cslotNum;$i++){
+		$ret .= '<tr id="anilox_row_'.$i.'" style="display:'.($cslotNum&&$i<=$cslotNum?'table-row':'none').'">';
+		$ret .= '<td><div class="value_container">';
+		foreach($aniloxOptionRS as $row){
+			// $ret .= '<option value="'.htmlentities($row['lu_code'], ENT_QUOTES).'"'.(isset($aniloxRS[$i-1])&&$row['lu_code']==$aniloxRS[$i-1]['ma_type']?' selected="selected"':'').'>'.htmlentities($row['lu_title'], ENT_QUOTES).'</option>';
+			$ret .= isset($aniloxRS[$i-1])&&$row['lu_code']==$aniloxRS[$i-1]['ma_type']?$row['lu_title']:'';
+		}
+		$ret .= '</div></td>';
+		$ret .= '<td><div class="value_container">'.(isset($aniloxRS[$i-1])?htmlentities($aniloxRS[$i-1]['ma_value'], ENT_QUOTES):'').'</div></td>';
+		$ret .= '</tr>';
+	}
+	$ret .= '</table>';
+	return $ret;
+}
+
 function colorslot_mult($mcid, $table, $colprefix){
 	global $DB;
 	$inputRS = $DB->getArray("select {$colprefix}_value from {$table} where {$colprefix}_mcid = :0 order by {$colprefix}_num", array($mcid));
@@ -111,6 +133,22 @@ function colorslot_mult($mcid, $table, $colprefix){
 	for($i=1;$i<=6;$i++){
 		$ret .= '<tr id="anilox_row_'.$table.'_'.$i.'" style="display:'.($cslotNum&&$i<=$cslotNum?'table-row':'none').'"><td><div class="value_container">';
 		$ret .= '<input type="text" name="'.$table.'_'.$i.'" id="'.$table.'_'.$i.'" value="'.(isset($inputRS[$i-1])?htmlentities($inputRS[$i-1][$colprefix.'_value'], ENT_QUOTES):'').'"/>';
+		$ret .= '</div></td></tr>';
+	}
+	$ret .= '</table>';
+	return $ret;
+}
+
+function colorslot_mult_det($mcid, $table, $colprefix){
+	global $DB;
+	$inputRS = $DB->getArray("select {$colprefix}_value from {$table} where {$colprefix}_mcid = :0 order by {$colprefix}_num", array($mcid));
+	$cslotNum = count($inputRS);
+	if(!$cslotNum) $cslotNum=1;
+	$ret = '<table>';
+	for($i=1;$i<=$cslotNum;$i++){
+		$ret .= '<tr id="anilox_row_'.$table.'_'.$i.'"><td><div class="value_container">';
+		if(isset($inputRS[$i-1]))
+			$ret .= htmlentities($inputRS[$i-1][$colprefix.'_value'], ENT_QUOTES);
 		$ret .= '</div></td></tr>';
 	}
 	$ret .= '</table>';
