@@ -90,6 +90,7 @@ function colorslot_anilox($mcid){
 	$ret = '<table><tr><th>Type</th><th>Value</th></tr>';
 	for($i=1;$i<=6;$i++){
 		$ret .= '<tr id="anilox_row_'.$i.'" style="display:'.($cslotNum&&$i<=$cslotNum?'table-row':'none').'">';
+		$ret .= '<td>'.$i.'.</td>';
 		$ret .= '<td><div class="value_container"><select name="anilox_type_'.$i.'" id="anilox_type_'.$i.'">';
 		foreach($aniloxOptionRS as $row){
 			$ret .= '<option value="'.htmlentities($row['lu_code'], ENT_QUOTES).'"'.(isset($aniloxRS[$i-1])&&$row['lu_code']==$aniloxRS[$i-1]['ma_type']?' selected="selected"':'').'>'.htmlentities($row['lu_title'], ENT_QUOTES).'</option>';
@@ -111,6 +112,7 @@ function colorslot_anilox_det($mcid){
 	$ret = '<table><tr><th>Type</th><th>Value</th></tr>';
 	for($i=1;$i<=$cslotNum;$i++){
 		$ret .= '<tr id="anilox_row_'.$i.'" style="display:'.($cslotNum&&$i<=$cslotNum?'table-row':'none').'">';
+		$ret .= '<td>'.$i.'.</td>';
 		$ret .= '<td><div class="value_container">';
 		foreach($aniloxOptionRS as $row){
 			// $ret .= '<option value="'.htmlentities($row['lu_code'], ENT_QUOTES).'"'.(isset($aniloxRS[$i-1])&&$row['lu_code']==$aniloxRS[$i-1]['ma_type']?' selected="selected"':'').'>'.htmlentities($row['lu_title'], ENT_QUOTES).'</option>';
@@ -131,7 +133,7 @@ function colorslot_mult($mcid, $table, $colprefix){
 	if(!$cslotNum) $cslotNum=1;
 	$ret = '<table>';
 	for($i=1;$i<=6;$i++){
-		$ret .= '<tr id="anilox_row_'.$table.'_'.$i.'" style="display:'.($cslotNum&&$i<=$cslotNum?'table-row':'none').'"><td><div class="value_container">';
+		$ret .= '<tr id="anilox_row_'.$table.'_'.$i.'" style="display:'.($cslotNum&&$i<=$cslotNum?'table-row':'none').'"><td>'.$i.'.</td><td><div class="value_container">';
 		$ret .= '<input type="text" name="'.$table.'_'.$i.'" id="'.$table.'_'.$i.'" value="'.(isset($inputRS[$i-1])?htmlentities($inputRS[$i-1][$colprefix.'_value'], ENT_QUOTES):'').'"/>';
 		$ret .= '</div></td></tr>';
 	}
@@ -146,7 +148,7 @@ function colorslot_mult_det($mcid, $table, $colprefix){
 	if(!$cslotNum) $cslotNum=1;
 	$ret = '<table>';
 	for($i=1;$i<=$cslotNum;$i++){
-		$ret .= '<tr id="anilox_row_'.$table.'_'.$i.'"><td><div class="value_container">';
+		$ret .= '<tr id="anilox_row_'.$table.'_'.$i.'"><td>'.$i.'.</td><td><div class="value_container">';
 		if(isset($inputRS[$i-1]))
 			$ret .= htmlentities($inputRS[$i-1][$colprefix.'_value'], ENT_QUOTES);
 		$ret .= '</div></td></tr>';
