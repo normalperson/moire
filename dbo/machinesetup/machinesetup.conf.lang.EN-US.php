@@ -1,9 +1,8 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
-$dbo->cols['mc_id']->caption->set('default', 'mc_id', 'text');
+$dbo->cols['mc_id']->caption->set('default', 'ID', 'text');
 $dbo->cols['mc_orgid']->caption->set('default', 'Customer name', 'text');
-$dbo->cols['mc_orgid']->caption->setTabCaption('default', 'PRESS', 'text');
 $dbo->cols['mc_pressmanufacturer']->caption->set('default', 'Manufacturer', 'text');
 $dbo->cols['mc_pressyearbuilt']->caption->set('default', 'Year built', 'text');
 $dbo->cols['mc_pressmodel']->caption->set('default', 'Model', 'text');
@@ -142,6 +141,18 @@ $dbo->cols['mc_aniloxcontainment_3']->caption->set('default', ' ', 'text');
 $dbo->cols['mc_aniloxcontainment_4']->caption->set('default', ' ', 'text');
 $dbo->cols['mc_aniloxcontainment_5']->caption->set('default', ' ', 'text');
 $dbo->cols['mc_printer_name']->caption->set('default', 'Printer name', 'text');
+$dbo->cols['mc_name']->caption->set('default', 'Printer Name', 'text');
+$dbo->cols['mc_type']->caption->set('default', 'Type', 'text');
+$dbo->cols['mc_colorslot']->caption->set('default', 'Color Slot', 'text');
+$dbo->cols['mc_width']->caption->set('default', 'Width', 'text');
+$dbo->cols['mc_density']->caption->set('default', 'Density', 'text');
+$dbo->cols['mc_density']->caption->setTabCaption('default', 'Ink', 'text');
+$dbo->cols['anilox']->caption->set('default', 'Anilox', 'text');
+$dbo->cols['line']->caption->set('default', 'Line', 'text');
+$dbo->cols['repeat']->caption->set('default', 'Cylinder Repeat', 'text');
+$dbo->cols['substrate']->caption->set('default', 'Cylinter Plate to Substrate', 'text');
+$dbo->cols['plate']->caption->set('default', 'Cylinder Anilox to Plate', 'text');
+$dbo->cols['mc_visosity']->caption->set('default', 'Visosity', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
