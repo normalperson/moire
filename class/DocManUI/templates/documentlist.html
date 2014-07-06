@@ -34,7 +34,7 @@ table.doctable > thead > tr > th {
 			<td><label class="px-single" style="margin: 2px 3px 0 0">
 				<input type="checkbox" name="fid[]" value="{$di.fd_id}" class="px"><span class="lbl"></span></label>
 			</td>
-			<td>{$di.fd_created_date|date_format}</td>
+			<td>{$di.fd_created_date|date_format:'Y-m-d H:i:s'}</td>
 			<td>{$di.fd_created_by}</td>
 <!-- 			<td>{$di.fd_description}</td> -->
 			<td>{$di.fd_file_name}</td>
