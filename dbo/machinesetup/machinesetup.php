@@ -109,7 +109,7 @@ function colorslot_anilox_det($mcid){
 	$cslotNum = count($aniloxRS);
 	if(!$cslotNum) $cslotNum = 1;
 	$aniloxOptionRS = $DB->getArrayAssoc("select lu_code, lu_title from fclookup where lu_cat = :0", array('ANILOXTYPE'));
-	$ret = '<table><tr><th>Type</th><th>Value</th></tr>';
+	$ret = '<table><tr><th>&nbsp;</th><th>Type</th><th>Value</th></tr>';
 	for($i=1;$i<=$cslotNum;$i++){
 		$ret .= '<tr id="anilox_row_'.$i.'" style="display:'.($cslotNum&&$i<=$cslotNum?'table-row':'none').'">';
 		$ret .= '<td>'.$i.'.</td>';
