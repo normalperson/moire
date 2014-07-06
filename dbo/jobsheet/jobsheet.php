@@ -348,6 +348,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	}
 	// assign the price
 	$cols['js_price'] = $_POST['js_price'];
+	$cols['js_status'] = 'REQUIREMENT VERIFICATION'; // after customer change
 	
 	$REMARK = $cols['remark']; // get the remark and insert after insert queue
 	unset($cols['remark']); // unset remark
