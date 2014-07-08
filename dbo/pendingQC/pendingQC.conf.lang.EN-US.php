@@ -51,6 +51,10 @@ $dbo->cols['js_mcid']->caption->set('default', 'js_mcid', 'text');
 $dbo->cols['js_code']->caption->set('default', 'js_code', 'text');
 $dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
 $dbo->cols['js_price']->caption->set('default', 'js_price', 'text');
+$dbo->cols['js_outputtype']->caption->set('default', 'js_outputtype', 'text');
+$dbo->cols['js_outputwidth']->caption->set('default', 'js_outputwidth', 'text');
+$dbo->cols['js_outputheight']->caption->set('default', 'js_outputheight', 'text');
+$dbo->cols['js_qcchecked']->caption->set('default', 'Quality control list', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
