@@ -81,6 +81,7 @@ $dbo->cols['js_outputtype']->caption->set('default', 'Output type', 'text');
 $dbo->cols['js_outputwidth']->caption->set('default', 'Output width (mm)', 'text');
 $dbo->cols['js_outputheight']->caption->set('default', 'Output height (mm)', 'text');
 $dbo->cols['taskname']->caption->set('default', 'Task name', 'text');
+$dbo->cols['js_qcchecked']->caption->set('default', 'Quality control list', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';
