@@ -10,6 +10,9 @@ label.mandatory:after{
 	content:" *";
 	color:red;
 }
+.modal-large .modal-dialog {
+  width: 80%; /* or whatever you wish */
+}
 
 .widget-notifications .notification.UNREAD {
 	background-color: #DDDDDD;

@@ -23,6 +23,40 @@ function getPrimaryCat($color, $catstring){
 	}
 	return $primcat;
 }
+function showPrinterInfo($col, $colVal, $data=array(), $html=null){	
+	$content = showDBO('machinesetup', 'detail', array('mc_id' => $colVal) );
+	$modal = '
+				<style type="text/css">#dbo_machinesetup_detail_cancel {
+					display:none
+				}
+				</style>
+				<div class="modal modal-large fade" id="spinfo">
+			    <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title">Printer info</h4>
+			      </div>
+			      <div class="modal-body">
+			        '.$content.'
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->';
+	$newhtml = '<a href="#" id="showPrinterInfo" data-mcid="'.$colVal.'">'.trim($html).'</a>'.$modal.'
+	            <script type="text/javascript">
+	            $("#showPrinterInfo").click(function(event){
+	            	event.preventDefault();
+	            	$("#spinfo").modal("show");
+	            });
+	            </script>';
+
+	return $newhtml;
+
+}
 
 function userTopOrgID(){
 	global $USER, $DB;

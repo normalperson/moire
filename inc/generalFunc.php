@@ -433,5 +433,26 @@ function getuserSessID($userid) {
 	return ($sessid) ? $sessid : false;
 }
 
+function showDBO($dboid, $state, $key = false) {
+	ob_start();
+	$_GET['dboid'] = $dboid;
+	$_GET['dbostate'] = $state;
+	if (!empty($_GET['dboconfig'])) {
+		echo
+		'<div class="alert alert-page alert-danger alert-dark">
+			<button type="button" class="close" data-dismiss="alert">&times</button>
+			<strong>You cannot configure the DBO here.</strong>
+		</div>';
+		unset($_GET['dboconfig']);
+	}
+	if ($key) {
+		foreach ($key as $k=>$v) {
+			$_GET[$k] = $v;
+		}
+	}
+	dbo_include($dboid);
+	$pageContent = ob_get_clean();
+	return $pageContent;
+}
 
 ?>

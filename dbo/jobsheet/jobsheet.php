@@ -170,7 +170,7 @@ function dbo_jobsheet_customize(&$dbo){
 		$dbo->cols['jobcategory']->mandatoryDefault = 1;
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = 'sql';
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = 
-			'select mc_id, mc_printer_name, org_name from mcustmachine join fcorg on mc_orgid = org_id where org_id ='.$USER->orgid.' order by 3,2';
+			'select mc_id, mc_name, org_name from mcustmachine join fcorg on mc_orgid = org_id where org_id ='.$USER->orgid.' order by 3,2';
 	}
 	else {
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
