@@ -75,8 +75,9 @@ function quote($str) {
 }
 
 function time_different_string($to, $from = false, $full = false, $showagolater = true, $nowtext = 'just now') {
+	$tl = 'timedifferent'; // lang file
+	
     $now = ($from) ? (($from instanceof DateTime) ? $from : new DateTime($from)) : new DateTime;
-
     $ago = ($to instanceof DateTime) ? $to : new DateTime($to);
     $diff = $now->diff($ago);
 
@@ -84,17 +85,26 @@ function time_different_string($to, $from = false, $full = false, $showagolater 
     $diff->d -= $diff->w * 7;
 
     $string = array(
-        'y' => 'year',
-        'm' => 'month',
-        'w' => 'week',
-        'd' => 'day',
-        'h' => 'hour',
-        'i' => 'minute',
-        's' => 'second',
+        'y' => tl('year',false,$tl),
+        'm' => tl('month',false,$tl),
+        'w' => tl('week',false,$tl),
+        'd' => tl('day',false,$tl),
+        'h' => tl('hour',false,$tl),
+        'i' => tl('minute',false,$tl),
+        's' => tl('second',false,$tl),
+    );
+	$pstring = array(
+        'y' => tl('years',false,$tl),
+        'm' => tl('months',false,$tl),
+        'w' => tl('weeks',false,$tl),
+        'd' => tl('days',false,$tl),
+        'h' => tl('hours',false,$tl),
+        'i' => tl('minutes',false,$tl),
+        's' => tl('seconds',false,$tl),
     );
     foreach ($string as $k => &$v) {
         if ($diff->$k) {
-            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            $v = $diff->$k . ' ' . ($diff->$k > 1 ? $pstring[$k] : $v);
         } else {
             unset($string[$k]);
         }
@@ -104,10 +114,10 @@ function time_different_string($to, $from = false, $full = false, $showagolater 
 	if ($string) {
 		$ret = implode(', ', $string);
 		if ($showagolater) {
-			$ret .= ($now > $ago) ? ' ago' : ' later';
+			$ret .= ' '. (($now > $ago) ? tl('ago',false,$tl) : tl('later',false,$tl));
 		}
 	}
-	else $ret = $nowtext;
+	else $ret = tl($nowtext,false,$tl);
 	return $ret;
 }
 
@@ -145,7 +155,6 @@ function autoDetailTableInput(&$dbo) { // search for DBO columns with __map_{det
 					$setup->inputNewModifierMethod = 'phpfunc';
 					$setup->inputNewModifier = 'genDetailTableInput';
 				}
-				
 				if (in_array($colname, $dbo->colDetail)) {
 					$detailTableKeyMap[$det[0]] = array("ori"=>$colname, "target"=>$det[1]);
 					$setup->displayDetailModifierMethod = 'phpfunc';
@@ -453,6 +462,30 @@ function showDBO($dboid, $state, $key = false) {
 	dbo_include($dboid);
 	$pageContent = ob_get_clean();
 	return $pageContent;
+}
+
+function getUserLang($userid) {
+	global $DB;
+	$ret = 'EN-US';
+	
+	$userlang = $DB->getOne("select lang_code from fcuser join fclang on usr_langcode = lang_code where usr_userid = :0", array($userid));
+	if ($userlang) {
+		$ret = $userlang;
+		return $ret;
+	}
+	
+	$applang = $DB->getOne("select set_val from fcsetting where set_user = '*' and set_code = 'LANG'");
+	if ($applang) $ret = $applang;
+	$localelang = $DB->getOne("select lang_code from fcorg join fcuserorgrole on org_id = uor_orgid
+	join fclocale on lc_code = org_lccode join fclang on lc_primary_langcode = lang_code 
+	where uor_usrid = :0 order by uor_seq", array($userid));
+	if (!$localelang) {
+		$localelang = $DB->getOne("select lang_code from fcsetting join fclocale on set_val = lc_code 
+		join fclang on lc_primary_langcode = lang_code where set_code = 'SERVERLOCALE' and set_user = '*'");
+	}
+	if ($localelang) $ret = $localelang;
+	
+	return $ret;
 }
 
 ?>

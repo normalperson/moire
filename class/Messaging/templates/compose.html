@@ -1,30 +1,31 @@
 <form id='messageForm' action="post" class="panel form-horizontal messages-compose-form" style='margin:0'>
 	<div class="panel-heading">
-		<span class="panel-title">Compose Message</span>
+		<span class="panel-title">{'Compose Message'|tl:true:$tl}</span>
 		<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
 	</div>
 	<div class="panel-body">
 		<div class="row form-group">
-			<label class="col-sm-3 control-label" for="receipientInput" >Receipients :</label>
+			<label class="col-sm-3 control-label" for="receipientInput" >{'Receipients'|tl:true:$tl} :</label>
 			<div class="col-sm-9">
 				<input type="text" id="receipientInput" name="recipient" class="form-control" value=''>
 			</div>
 		</div>
 		<div class="row form-group">
-			<label class="col-sm-3 control-label" for='contentInput'>Content :</label>
+			<label class="col-sm-3 control-label" for='contentInput'>{'Content'|tl:true:$tl} :</label>
 			<div class="col-sm-9">
 				<textarea id="contentInput" name='content' rows="3" class="form-control"></textarea>
-				<div id="character-limit-textarea-label" class="limiter-label">Characters left: <span class="limiter-count"></span></div>
+				<div id="character-limit-textarea-label" class="limiter-label">{'Characters left'|tl:true:$tl}: <span class="limiter-count"></span></div>
 			</div>
 		</div>
 	</div>
 	<div class="panel-footer text-right">
-		<button class="btn btn-primary">Send</button>
+		<button class="btn btn-primary">{'Send'|tl:false:$tl}</button>
 	</div>
 </form>
 <script type='text/javascript'>
 var classurl = '{$classurl}';
 var defrecp = {$defaultRecp|json_encode};
+var successMsg = "{'Message sent successfully'|tl:true:$tl}";
 {literal}
 (function () {
 	$("#contentInput").limiter(100, { label: '#character-limit-textarea-label' });
@@ -71,7 +72,7 @@ var defrecp = {$defaultRecp|json_encode};
 		var $this = $(this);
 		if ($this.valid()) {
 			ajaxGetJSON(classurl+"/ajaxSubmitMessage", $this.serialize(), function (ret) {
-				$.growl.notice({ message: "Message sent successfully" });
+				$.growl.notice({ message: successMsg });
 				var $modal = $this.closest('#messageComposeModal');
 				if ($modal.length > 0) {
 					$modal.modal('hide');

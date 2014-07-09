@@ -1,6 +1,6 @@
 <?php
 class Notification {
-
+	static $tl = 'notification';
 	var $severe_class_map = array(
 		5=>'danger',
 		4=>'warning',
@@ -43,7 +43,7 @@ class Notification {
 	<a href='javascript:void(0)' class='dropdown-toggle' data-toggle='dropdown'>".
 		(($unreadCount) ? "<span class='label'>{$unreadCount}</span>" : "").
 		"<i class='nav-icon fa fa-bullhorn'></i>
-		<span class='small-screen-text'>Notifications</span>
+		<span class='small-screen-text'>".tl('Notifications', true, self::$tl)."</span>
 	</a>
 	<div class='dropdown-menu widget-notifications no-padding' style='width: 300px'>
 		<div class='notifications-list' id='main-navbar-notifications'>";
@@ -69,7 +69,7 @@ class Notification {
 		$classurl = WEB_HREF.'/'.__CLASS__;
 		$html .= 
 		"</div>
-			<a href='javascript:void(0)' class='notifications-link'>".(($reccount) ? 'VIEW ALL' : 'NO NOTIFICATION')."</a>
+			<a href='javascript:void(0)' class='notifications-link'>".(($reccount) ? tl('VIEW ALL',true,self::$tl) : tl('NO NOTIFICATION',true,self::$tl))."</a>
 	</div>
 	<script type='text/javascript'>
 		(function(){
@@ -182,7 +182,7 @@ class Notification {
 		$html .= "
 <div class='panel widget-notifications' id='{$id}' style='margin:0' data-showlimit='{$showLimit}'>
 	<div class='panel-heading'>
-		<span class='panel-title'><i class='panel-title-icon fa fa-bullhorn'></i>Notifications</span>
+		<span class='panel-title'><i class='panel-title-icon fa fa-bullhorn'></i>".tl('Notifications',true,self::$tl)."</span>
 		<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
 	</div>
 	<div class='panel-body padding-sm'>
@@ -195,12 +195,12 @@ class Notification {
 			$html .= 
 			"<div class='notification {$row['di_status']}' data-notid='{$row['di_id']}' data-notdate='{$row['di_display_date_disp']}'>
 				<button type='button' class='close'>&times</button>
-				<div class='notification-title text-{$severe_class_map[$row['di_severity']]}'>{$row['di_cat2']}
+				<div class='notification-title text-{$severe_class_map[$row['di_severity']]}'>".tl($row['di_cat2'],true,self::$tl)."
 				</div>
 				<div class='notification-description'>
 					{$row['di_subject']}
 				</div>".
-				(($row['di_text']) ? "<a class='notification-view-content' href='javascript:void(0)'>View Content</a>" : '').
+				(($row['di_text']) ? "<a class='notification-view-content' href='javascript:void(0)'>".tl('View Content',true,self::$tl)."</a>" : '').
 				"<div class='notification-ago' title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</div>
 				<div class='notification-icon fa ".((!empty($cat_icon_class[$row['di_cat2']])) ? $cat_icon_class[$row['di_cat2']] : $cat_icon_class['UNKNOWN']).
 				" bg-{$severe_class_map[$row['di_severity']]}'>
@@ -211,7 +211,7 @@ class Notification {
 		}
 		if ($reccount > $showLimit) 
 			$html .= 
-			"<a href='javascript:void(0)' class='notifications-link'>MORE NOTIFICATIONS</a>";
+			"<a href='javascript:void(0)' class='notifications-link'>".tl('MORE NOTIFICATIONS',true,self::$tl)."</a>";
 		
 		$html .= "
 	</div>
@@ -298,8 +298,7 @@ class Notification {
 		order by di_display_date desc, di_id desc limit {$loadRows}", array($USER->userid, $beforeid, $beforedate), PDO::FETCH_ASSOC);
 		$reccount = count($rs);
 		$classurl = WEB_HREF.'/'.__CLASS__;
-		
-		
+
 		$html = "";
 		$stillhasmore = false;
 		$lastLoadedID = $lastLoadedDate = null;
@@ -373,7 +372,7 @@ class Notification {
 				global $PUSHSOCKET;
 				if ($PUSHSOCKET) {
 					if ($sessid = getuserSessID($r)) {
-						$PUSHSOCKET->send(json_encode(array('topic'=>$sessid, 'msg'=>"You've received a new notification", 'cat'=>'NOTICE')));
+						$PUSHSOCKET->send(json_encode(array('topic'=>$sessid, 'msg'=>tl("You've received a new notification", false, Notification::$tl, getUserLang($r)), 'cat'=>'NOTICE')));
 					}
 				}
 			}

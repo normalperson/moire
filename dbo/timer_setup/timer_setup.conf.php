@@ -7,8 +7,8 @@ $dbo->id = $dboID;
 $dbo->fileSaveMode = 511;
 $dbo->table = 'fcpmevent';
 $dbo->key = array('pmev_id');
-$dbo->sql = 'select * from fcpmevent where pmev_type =\'TIMER\' order by pmev_name';
-$dbo->col = array('pmev_id', 'pmev_pmwfid', 'pmev_pmslid', 'pmev_name', 'pmev_type', 'pmev_type_cat', 'pmev_intermediate_function', 'pmev_timer_interval', 'pmev_timer_workinghours_only', 'pmev_intermediate_show_task', 'pmev_attach_pmatid', 'pmev_timer_non_interrupt_once', 'pmev_start_function');
+$dbo->sql = 'select * from fcpmevent where pmev_type =\'TIMER\' or (pmev_type = \'INTERMEDIATE\' and pmev_intermediate_show_task = \'Y\') order by pmev_name';
+$dbo->col = array('pmev_id', 'pmev_pmwfid', 'pmev_pmslid', 'pmev_name', 'pmev_type', 'pmev_type_cat', 'pmev_intermediate_function', 'pmev_timer_interval', 'pmev_timer_workinghours_only', 'pmev_intermediate_show_task', 'pmev_attach_pmatid', 'pmev_timer_non_interrupt_once', 'pmev_start_function', 'pmev_performed_message');
 $dbo->colList = array('pmev_name', 'pmev_timer_interval', 'pmev_timer_workinghours_only');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
@@ -199,6 +199,10 @@ $dbo->cols['pmev_start_function']->option->listMethod = 'text';
 $dbo->cols['pmev_start_function']->option->detailMethod = 'text';
 $dbo->cols['pmev_start_function']->option->newMethod = 'text';
 $dbo->cols['pmev_start_function']->option->editMethod = 'text';
+$dbo->cols['pmev_performed_message'] = new DBO_COL('pmev_performed_message', 'varchar', '-1', '2004');
+$dbo->cols['pmev_performed_message']->inputTypeDefault = 'text';
+$dbo->cols['pmev_performed_message']->capContClassDefault = array();
+$dbo->cols['pmev_performed_message']->valContClassDefault = array();
 
 // support multiple language. only caption
 global $LANG;

@@ -1,6 +1,6 @@
 <?php
 class Messaging {
-
+	static $tl = 'Messaging';
 	var $eachRecLoad = 20;
 	
 	function renderDropDown($showLimit = 10, $height = 250) {
@@ -27,13 +27,13 @@ class Messaging {
 	<a href='javascript:void(0)' class='dropdown-toggle' data-toggle='dropdown'>".
 		(($unreadCount) ? "<span class='label'>{$unreadCount}</span>" : "").
 		"<i class='nav-icon fa fa-envelope'></i>
-		<span class='small-screen-text'>Messages</span>
+		<span class='small-screen-text'>".tl('Messages', false, self::$tl)."</span>
 	</a>
 	<div class='dropdown-menu widget-messages-alt no-padding' style='width: 300px'>
 		<div class='messages-list' id='main-navbar-messages'>";
 		
 		foreach ($rs as $i=>$row) {
-			$displaysender = ($row['usr_name']) ? $row['usr_name'] : (($row['di_created_by']) ? $row['di_created_by'] : 'Anonymous');
+			$displaysender = ($row['usr_name']) ? $row['usr_name'] : (($row['di_created_by']) ? $row['di_created_by'] : tl('Anonymous', false, self::$tl));
 			$senderimage = getUserAvatarImage($row['di_created_by']);
 			if ($row['di_status'] == 'UNREAD') $unreadID[] = $row['di_id'];
 			$html .= 
@@ -52,8 +52,8 @@ class Messaging {
 		$classurl = WEB_HREF.'/'.__CLASS__;
 		$html .= 
 		"</div>
-			<a href='javascript:void(0)' class='messages-link messages-view-all-link'>".(($reccount) ? 'VIEW ALL' : 'NO MESSAGES')."</a>
-			<a href='javascript:void(0)' class='messages-link messages-compose-link'>COMPOSE</a>
+			<a href='javascript:void(0)' class='messages-link messages-view-all-link'>".(($reccount) ? tl('VIEW ALL', false, self::$tl) : tl('NO MESSAGES', false, self::$tl))."</a>
+			<a href='javascript:void(0)' class='messages-link messages-compose-link'>".tl('COMPOSE', false, self::$tl)."</a>
 	</div>
 	<script type='text/javascript'>
 		(function(){
@@ -146,6 +146,7 @@ class Messaging {
 		}
 		$classurl = WEB_HREF.'/'.__CLASS__;
 		$smarty->assign('classurl', $classurl);
+		$smarty->assign('tl', self::$tl);
 		$smarty->assign('defaultRecp', $defaultRecpArr);
 		return $smarty->fetch('compose.html');
 		
@@ -207,7 +208,7 @@ class Messaging {
 				global $PUSHSOCKET;
 				if ($PUSHSOCKET) {	
 					if ($sessid = getuserSessID($r)) {
-						$PUSHSOCKET->send(json_encode(array('topic'=>$sessid, 'msg'=>"You've received a new message", 'cat'=>'MESSAGE')));
+						$PUSHSOCKET->send(json_encode(array('topic'=>$sessid, 'msg'=>tl("You've received a new message", false, self::$tl, getUserLang($r)), 'cat'=>'MESSAGE')));
 					}
 				}
 			}
@@ -237,9 +238,9 @@ class Messaging {
 		$html .= "
 <div class='panel widget-messages-alt' id='{$id}' style='margin:0' data-showlimit='{$showLimit}'>
 	<div class='panel-heading'>
-		<span class='panel-title'><i class='panel-title-icon fa fa-envelope'></i>Messages</span>
+		<span class='panel-title'><i class='panel-title-icon fa fa-envelope'></i>".tl('Messages', false, self::$tl)."</span>
 		<div class='panel-heading-controls'>
-			<button class='btn btn-xs messages-compose-button'>Compose</button>
+			<button class='btn btn-xs messages-compose-button'>".tl('Compose', false, self::$tl)."</button>
 			<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
 		</div>
 	</div>
@@ -250,7 +251,7 @@ class Messaging {
 		foreach ($rs as $i=>$row) {
 			if ($i >= $showLimit) break;
 			if ($row['di_status'] == 'UNREAD') $unreadList[] = $row['di_id'];
-			$displaysender = ($row['usr_name']) ? $row['usr_name'] : (($row['di_created_by']) ? $row['di_created_by'] : 'Anonymous');
+			$displaysender = ($row['usr_name']) ? $row['usr_name'] : (($row['di_created_by']) ? $row['di_created_by'] : tl('Anonymous', false, self::$tl));
 			$senderimage = getUserAvatarImage($row['di_created_by']);
 			
 			$html .= 
@@ -259,7 +260,7 @@ class Messaging {
 				<img src='{$senderimage}' alt=\"{$displaysender}\" title=\"{$displaysender}\" class='message-avatar'>
 				<span class='message-subject'>{$row['di_subject']}</span>
 				<div class='message-description' >
-					from  <a href='javascript:void(0)' class='message-reply-link' data-userid='{$row['di_created_by']}'>{$displaysender}</a>
+					".tl('from',false,self::$tl)."  <a href='javascript:void(0)' class='message-reply-link' data-userid='{$row['di_created_by']}'>{$displaysender}</a>
 					&nbsp;·&nbsp;
 					<span title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</span>
 				</div>
@@ -270,7 +271,7 @@ class Messaging {
 		}
 		if ($reccount > $showLimit) 
 			$html .= 
-			"<a href='javascript:void(0)' class='messages-link'>MORE MESSAGES</a>";
+			"<a href='javascript:void(0)' class='messages-link'>".tl('MORE MESSAGES', false, self::$tl)."</a>";
 		
 		$html .= "
 	</div>
@@ -394,7 +395,7 @@ class Messaging {
 				<img src='{$senderimage}' alt=\"{$displaysender}\" title=\"{$displaysender}\" class='message-avatar'>
 				<span class='message-subject'>{$row['di_subject']}</span>
 				<div class='message-description' >
-					from  <a href='javascript:void(0)'>{$displaysender}</a>
+					".tl('from',false,self::$tl)."  <a href='javascript:void(0)'>{$displaysender}</a>
 					&nbsp;·&nbsp;
 					<span title='{$row['di_display_date_disp']}'>".time_different_string($row['di_display_date'])."</span>
 				</div>

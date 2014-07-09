@@ -332,7 +332,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$ret = array();
 	$jobid = $wheres["js_id"];
 	// handle file upload if empty 
-	if($cols['attachment']['name'] == "") {
+	if(!empty($cols['attachment']['name'])) {
 		/*$ret = "Attachement cannot be empty";
 		return $ret;*/
 		unset($cols['attachment']);

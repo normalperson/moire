@@ -602,7 +602,7 @@ $(function () {
 				if ($sessid = getuserSessID($user)) {
 					$PUSHSOCKET->send(json_encode(array(
 						'topic'=>$sessid, 
-						'msg'=>"You've received a new task", 
+						'msg'=>tl("You've received a new task",false,self::$tl,getUserLang($user)), 
 						'cat'=>'TASK')));
 				}
 			}

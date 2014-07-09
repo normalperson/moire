@@ -153,3 +153,23 @@ function getCookie(cname) {
     }
     return "";
 }
+
+function postData(input, action) {
+    "use strict";
+    var form;
+    form = $('<form />', {
+        action: (typeof action !== 'undefined') ? action : '',
+        method: 'post',
+        style: 'display: none;'
+    });
+    if (typeof input !== 'undefined') {
+        $.each(input, function (name, value) {
+            $('<input />', {
+                type: 'hidden',
+                name: name,
+                value: value
+            }).appendTo(form);
+        });
+    }
+    form.appendTo('body').submit();
+}

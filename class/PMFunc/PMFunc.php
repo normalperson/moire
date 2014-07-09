@@ -66,7 +66,32 @@ class PMFunc{
 		$_GET['dbostate']='edit';
 		$_GET['js_id']=$o->casekey;
 		dbo_include('jobsheet');
-
+		if (!empty($_POST['canceljob'])) {
+			$data = array(
+				'js_status'=>'CANCELLED',
+				'js_decision'=>'Cancel',
+			);
+			if (!empty($_POST['cancelremark']) && trim($_POST['cancelremark']) != '') $o->insertComment($_POST['cancelremark'], $flowid);
+			return $DB->doUpdate('mjobsheet', $data, array('js_id'=>$o->casekey));
+		}
+		echo 
+"<script type='text/javascript'>
+$(function () {
+	console.log($('#dbo_jobsheet_edit_cancel'));
+	$('#dbo_jobsheet_edit_cancel').removeAttr('onclick').removeClass('button').addClass('btn btn-danger').click(function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+		bootbox.prompt({
+			title: '".tl('Please enter cancellation remark?', false, 'PMFunc')."',
+			callback: function(result) {
+				if (result === null) return;
+				postData({'canceljob':1, 'cancelremark':result});
+			},
+			className: 'bootbox-sm'
+		});
+	})
+})
+</script>";
 		if(isset($FLOWDECISION) && $FLOWDECISION==true) {
 			// insert comment
 			if(trim($REMARK) != '')	$o->insertComment($REMARK, $flowid);
@@ -77,6 +102,7 @@ class PMFunc{
 	}
 	function updPullBackStatus($flowid,$o){
 		global $DB;
+		return true;
 	}
 	function updAcknowdgeJobStatus($flowid,$o){
 		global $DB;
