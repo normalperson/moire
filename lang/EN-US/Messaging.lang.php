@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by supervisor on 09-07-2014 16:10:29*/
+/*Last Modified by uat_customer1 on 10-07-2014 19:18:59*/
 $translate = array (
   'Messages' => 'Messages',
   'VIEW ALL' => 'VIEW ALL',
@@ -13,5 +13,6 @@ $translate = array (
   'Send' => 'Send',
   'Message sent successfully' => 'Message sent successfully',
   'You\'ve received a new message' => 'You\'ve received a new message',
+  'NO MESSAGES' => 'NO MESSAGES',
 );
 ?>

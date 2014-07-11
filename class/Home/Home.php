@@ -123,7 +123,7 @@ class Home{
 		}
 		$arrcnt = array_count_values($result);
 
-		if($arrcnt[0] == 8) $showgraph = false; // if no data
+		if(isset($arrcnt[0]) && $arrcnt[0] == 8) $showgraph = false; // if no data
 		$data[] = array("name" => $name, "data" => $result);
 
 		$HTML->addJS('js/highcharts.js');
