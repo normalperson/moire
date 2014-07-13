@@ -13,7 +13,7 @@ class DBO_InputType_Select2 extends DBO_InputType{
 		$ret .= 
 "<script type='text/javascript'>
 (function () {
-	$('#{$name}').select2();
+	$('#{$name}').select2({allowClear: true});
 })();
 </script>";
 
