@@ -23,6 +23,7 @@ function html_header($headerTemplate='header.html'){
 		$HTML->addJS('js/moment.min.js');
 		$HTML->addJS('js/jquery.inputmask.js');
 		$HTML->addJS('js/jquery.inputmask.numeric.extensions.js');
+		$HTML->addJS('js/accounting.min.js');
 		$HTML->addJS('js/script.js');
 		$HTML->addJS('js/init.js');
 		$HTML->addJS('js/moire.js');

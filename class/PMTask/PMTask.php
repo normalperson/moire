@@ -163,6 +163,7 @@ class PMTask {
 								<a tabindex='-1' href='{$this->classurl}/startEvent?id={$s['id']}&type=PM_Event'>
 									<i class='menu-icon fa fa-plus' title='".tl('Start Event',false,self::$tl)."'></i>
 									<span class='mm-text'>".tl($s['name'],true,self::$tl)."</span>
+									<div class='clearfix'></div>
 								</a>
 							</li>";
 			}
@@ -176,7 +177,8 @@ class PMTask {
 				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
 								<a tabindex='-1' href='{$this->classurl}/caseFlowList?id={$a['id']}&type=PM_Activity'>
 									<i class='menu-icon fa fa-pencil-square-o' title='".tl('User Activity',false,self::$tl)."'></i>
-									<span class='mm-text'>".tl($a['name'],true,self::$tl)."</span>{$pendingBadge}
+									{$pendingBadge}<span class='mm-text'>".tl($a['name'],true,self::$tl)."</span>
+									<div class='clearfix'></div>
 								</a>
 							</li>";
 			}
@@ -189,7 +191,8 @@ class PMTask {
 				$currhtml .= "<li ".(($focusThis) ? "class='active'" : '').">
 								<a tabindex='-1' href='{$this->classurl}/caseFlowList?id={$e['id']}&type=PM_Event'>
 									<i class='menu-icon fa fa-play-circle-o' title='".tl('Intermediate Event',false,self::$tl)."'></i>
-									<span class='mm-text'>".tl($e['name'],true,self::$tl)."</span>{$pendingBadge}
+									{$pendingBadge}<span class='mm-text'>".tl($e['name'],true,self::$tl)."</span>
+									<div class='clearfix'></div>
 								</a>
 							</li>";
 			}
@@ -200,8 +203,8 @@ class PMTask {
 
 			$html .= "<li class='mm-dropdown ".(($focusWF) ? 'open active' : '')."'>
 						<a tabindex='-1' href='#'>
-							<span class='mm-text'>".tl($d['name'],true,self::$tl)."</span>
-							{$pendingBadge}
+							{$pendingBadge}<span class='mm-text'>".tl($d['name'],true,self::$tl)."</span>
+							<div class='clearfix'></div>
 						</a>
 						<ul>
 							{$currhtml}
@@ -215,7 +218,8 @@ class PMTask {
 		$html = "<li class='mm-dropdown mm-dropdown-root tasklistingLI ".((!empty($_GET['webc']) && $_GET['webc'] == __CLASS__) ? 'open active' : '')."'>
 					<a href='#'>
 						<i class='menu-icon fa fa-tasks'></i>
-						<span class='mm-text mmc-dropdown-delay animated fadeIn'>".tl('Task',true,self::$tl)."</span>{$pendingBadge}
+						{$pendingBadge}<span class='mm-text mmc-dropdown-delay animated fadeIn'>".tl('Task',true,self::$tl)."</span>
+						<div class='clearfix'></div>
 					</a>
 					<ul class='mmc-dropdown-delay animated fadeInLeft'>
 						{$html}
