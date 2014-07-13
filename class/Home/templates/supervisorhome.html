@@ -44,29 +44,7 @@
 		</div> <!-- /.stat-panel -->			
 		</a>
 	</div>
-	<div class="col-sm-3">
-		<a href="{$Home->getFlowUrl(4,'PM_Activity')}">
-		<div class="stat-panel">
-			<!-- Success background. vertically centered text -->
-			<div class="stat-cell bg-info valign-middle">
-				<!-- Stat panel bg icon -->
-				<i class="fa fa-gavel bg-icon"></i>
-				<!-- Extra large text -->
-				<span class="text-xlg">
-					<strong>
-<!-- 		  			  Activity name   : "Work in progress "
-		                  Activity ID : 4 -->		
-							{$Home->getActivityData(4,'totalcount')}
-					</strong>
-				</span><br>
-				<!-- Big text -->
-				<span class="text-bg">{'Jobs'|tl:true:'home'}</span><br>
-				<!-- Small text -->
-				<span class="text-sm">{'work in progress'|tl:true:'home'}</span>
-			</div> <!-- /.stat-cell -->
-		</div> <!-- /.stat-panel -->	
-		</a>
-	</div>
+	
 	<div class="col-sm-3">
 		<a href="{$Home->getFlowUrl(6,'PM_Activity')}">
 		<div class="stat-panel">
@@ -90,13 +68,42 @@
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
 		</a>
-	</div>			
+	</div>	
+
+	<div class="col-sm-3">
+		<a href="{$Home->getFlowUrl(4,'PM_Activity')}">
+		<div class="stat-panel">
+			<!-- Success background. vertically centered text -->
+			<div class="stat-cell bg-info valign-middle">
+				<!-- Stat panel bg icon -->
+				<i class="fa fa-gavel bg-icon"></i>
+				<!-- Extra large text -->
+				<span class="text-xlg">
+					<strong>
+<!-- 		  			  Activity name   : "Work in progress "
+		                  Activity ID : 4 -->		
+							{$Home->getActivityData(4,'totalcount')}
+					</strong>
+				</span><br>
+				<!-- Big text -->
+				<span class="text-bg">{'Jobs'|tl:true:'home'}</span><br>
+				<!-- Small text -->
+				<span class="text-sm">{'work in progress'|tl:true:'home'}</span>
+			</div> <!-- /.stat-cell -->
+		</div> <!-- /.stat-panel -->	
+		</a>
+	</div>
+			
 </div>
 <!-- monthly sales and my performance -->
 <div class="row">
 	<!-- monthly sales -->
-	<div class="col-md-6">
+	<div class="col-md-12">
 		{$Home->renderJobByCat()}	
+	</div>
+
+	<div class="col-md-6">
+		{$Home->renderMyPerformance()}	
 	</div>
 
 	<!-- myperformance -->

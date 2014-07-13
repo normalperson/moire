@@ -12,7 +12,10 @@ function dbo_customeracceptance_custom_edit($table, $cols, $wheres){
 	$REMARK = $cols['remark'];
 	unset($cols['remark']);
 	
-	if ($cols['js_decision'] == 'Accept') $cols['js_status'] = 'COMPLETED';
+	if ($cols['js_decision'] == 'Accept') {
+		$cols['js_status'] = 'COMPLETED';
+		$cols['js_completiondate'] = $DB->GetOne("select now()");
+	}
 	else {
 		$cols['js_status'] = 'REQUIREMENT VERIFICATION';		
 	}

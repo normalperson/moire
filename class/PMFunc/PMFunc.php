@@ -240,6 +240,7 @@ $(function () {
 		$data = array(
 			'js_status'=>'COMPLETED',
 			'js_decision'=>'Auto Accept',
+			'js_completiondate' => $DB->GetOne("select now()")
 		);
 		return $DB->doUpdate('mjobssheet', $data, array('js_id'=>$case->casekey));
 	}
