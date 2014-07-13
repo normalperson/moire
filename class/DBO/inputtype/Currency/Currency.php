@@ -13,7 +13,8 @@ class DBO_InputType_Currency extends DBO_InputType{
 (function () {
 	var \$actualinp = $('#{$name}');
 	$('#{$namedisp}').on('blur change',function () {
-		var formatted = accounting.formatMoney($(this).val() ".($option ? ",".$option : '').");
+		var currval = $(this).val(),
+			formatted = (currval) ? accounting.formatMoney(currval ".($option ? ",".$option : '').") : '';
 		$(this).val(formatted);
 		\$actualinp.val(formatted.replace(/[^0-9.]/g, ''));
 	}).change();
