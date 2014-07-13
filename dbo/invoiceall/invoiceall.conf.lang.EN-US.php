@@ -8,6 +8,7 @@ $dbo->cols['iv_orgid']->caption->set('default', 'Customer', 'text');
 $dbo->cols['iv_amount']->caption->set('default', 'Amount', 'text');
 $dbo->cols['iv_paid']->caption->set('default', 'Paid', 'text');
 $dbo->cols['iv_paydate']->caption->set('default', 'Payment Date', 'text');
+$dbo->cols['printbutton']->caption->set('default', ' ', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

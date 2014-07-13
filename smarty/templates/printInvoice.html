@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+#print_task_container{
+	font-family: Segoe UI,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+	width: 21cm;
+	color:#000000;
+}
+
+table.print_task_table{
+	border-spacing: 10px;
+    border-collapse: separate;
+}
+
+table.print_task_table th{
+	height:30px;
+	text-align:left;
+	padding:5px;
+	background-color:#d5dde5;
+	-webkit-print-color-adjust: exact;
+	vertical-align:top;
+}
+
+table.print_task_table td{
+	vertical-align:top;
+	padding:5px;
+}
+
+table.print_task_table td th{
+	background-color:transparent;
+	text-align:left;
+}
+
+table.print_task_table ul.pj_ul{
+	margin:0px;
+	padding:0px;
+	list-style-type:none;
+}
+
+table.invoice_table > thead > tr > th, table.invoice_table > tfoot > tr > th{
+	border-top:2px solid #EEEEEE;
+	border-bottom:2px solid #EEEEEE;
+	padding:3px;
+	vertical-align:middle;
+	text-align:center;
+}
+
+@media print{
+	body{
+		background-color:white;
+	}
+	#main-navbar{
+		display:none;
+	}
+	#main-menu{
+		display:none;
+	}
+	#main-menu-bg{
+		display:none;
+	}
+	div.slimScrollDiv{
+		display:none;
+	}
+	#content-wrapper{
+		position:absolute;
+	}
+	#print_task_container{
+	}
+	div.print_button_container{
+		display:none;
+	}
+}
+</style>
+</head>
+<body>
+<div id="print_task_container">
+<div style="text-align:right;" class="print_button_container">
+	<input type="button" class="btn btn-primary" onclick="window.print();" value="Print"/></div>
+<table class="print_task_table" width="100%">
+	<tr>
+		<td align="center">
+			<table>
+				<tr>
+					<td valign="top"><img src="/{$APP}/image/printInvoice_logo.png" style="width:100%"/></td>
+					<td align="center" valign="top">
+						<div style="text-align:center;"><span style="font-weight:bold;font-size:1.2em;">P&amp;D DYNAMIC SDN BHD</span><span style="padding-left:10px;font-size:0.8em;">683705-P</span></div>
+						<div style="text-align:center;">NO.199, JALAN KIP 6,</div>
+						<div style="text-align:center;">TAMAN PERINDUSTRIAN KIP</div>
+						<div style="text-align:center;">52200 KUALA LUMPUR</div>
+						<div style="text-align:center;">Tel : 03-62774755 &nbsp; Fax : 03-62742915 &nbsp;&nbsp;&nbsp;&nbsp; Email : pdgroup@pddynamic.com</div>
+						<div style="text-align:center;font-weight:bold;font-size:1.5em;">INVOICE / DO</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td valign="top">
+						<table cellpadding="0" cellspacing="0">
+							<tr>
+								<td align="right">Name : </td>
+								<td>{$customerData['org_name']}</td>
+							</tr>
+							<tr>
+								<td align="right">Address : </td>
+								<td>{$customerData['org_address']}</td>
+							</tr>
+							<tr>
+								<td align="right">Contact : </td>
+								<td>{$customerData['org_contactno']}</td>
+							</tr>
+						</table>
+					</td>
+					<td valign="top" width="35%">
+						<table cellpadding="0" cellspacing="0">
+							<tr>
+								<td align="right">No. : </td>
+								<td>{$data['iv_id']}</td>
+							</tr>
+							<tr>
+								<td align="right">Date. : </td>
+								<td>{$data['iv_invoicedate']|date_format:"d-m-Y"}</td>
+							</tr>
+							<tr>
+								<td align="right">Page. : </td>
+								<td>1</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" class="invoice_table" border="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th>ITEM<br />No.</th>
+						<th>Description</th>
+						<th>QTY</th>
+						<th>U/PRICE</th>
+						<th>AMOUNT</th>
+					</tr>
+				</thead>
+				<tbody>
+{foreach $jobData as $no=>$row}
+					<tr>
+						<td align="right">{$no+1}</td>
+						<td align="left">{$row['js_description']} ({$row['pmc_id']})</td>
+						<td align="right">1</td>
+						<td align="right">{$row['js_price']|number_format:2}</td>
+						<td align="right">{$row['js_price']|number_format:2}</td>
+					</tr>
+{/foreach}
+					<tr>
+						<td colspan="5"><span style="font-style:italic">Note: This is computer Official Receipt. no Signature required. Thank you for your business support!!!<br />E.&amp; O.E</span>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="3"></th>
+						<th>Total</th>
+						<th>{$total_price|number_format:2}</th>
+					</tr>
+				</tfoot>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%">
+				<tr>
+					<td valign="top">
+						<div>&nbsp;</div>
+						<div>Notes : </div>
+						<div>1. All cheques should be crossed and made payable to P&amp;D DYNAMIC SDN BHD</div>
+						<div>2. Goods sold are neither returnable nor refundable. Otherwise a cancellation fee of 20% on purchase price will be imposed.</div>
+						<div>3. We reserved the right to charge interest at 1 1/2% per month on overdue accounts.</div>
+						<div style="color:red">4. This is a computer Official Receipt. No Signature required. E. &amp; O.E</div>
+						<div>&nbsp;</div>
+						<div style="font-weight:bold;">For P&amp;D DYNAMIC SDN BHD</div>
+						<div style="height:100px;width:300px;border-bottom:2px solid black;">&nbsp;</div>
+						<div style="width:300px;border-bottom:2px solid black;text-align:center;">AUTHORISED SIGNATURES(S)</div>
+					</td>
+					<td valign="bottom"><div style="height:180px;">&nbsp;</div><img src="/{$APP}/image/printInvoice_chop.png"/></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>
