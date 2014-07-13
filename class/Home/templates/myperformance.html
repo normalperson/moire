@@ -17,7 +17,8 @@
 <script type="text/javascript">
 $( document ).ready(function() {
     var data = {$data},
-    showgraph = {$showgraph};
+    showgraph = {$showgraph},
+    gtitle = "{'My performance'|tl:false:'widget'}";
 {literal}
 	if(showgraph){
 		$('#myperformance').highcharts({
@@ -27,7 +28,7 @@ $( document ).ready(function() {
 		        plotShadow: false
 		    },
 		    title: {
-		        text: 'My performance'
+		        text: gtitle
 		    },
 		    tooltip: {
 			    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -44,7 +45,7 @@ $( document ).ready(function() {
 		    },
 		    series: [{
 		        type: 'pie',
-		        name: 'My performance',
+		        name: gtitle,
 		        data: data
 		    }]
 		});

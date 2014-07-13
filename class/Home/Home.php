@@ -206,8 +206,8 @@ class Home{
 
 		$showgraph = true;
 		// artist performance sql
-		$sql = "select cast( sum(case when pmf_due_date >= pmf_end_date then 1 else 0 end) as integer) as exceedsla,
-				cast ( sum(case when pmf_due_date < pmf_end_date then 1 else 0 end) as integer) as withinsla
+		$sql = "select cast( sum(case when pmf_end_date >= pmf_due_date then 1 else 0 end) as integer) as exceedsla,
+				cast ( sum(case when pmf_end_date < pmf_due_date then 1 else 0 end) as integer) as withinsla
 				from fcpmcaseflow
 				join fcuser on pmf_end_by = usr_userid
 				where pmf_start_date > ( date_trunc('month', current_date) )::date
@@ -218,14 +218,13 @@ class Home{
 		$result = $DB->GetRow($sql,array($USER->userid), PDO::FETCH_ASSOC);
 
 		$data = array();
-		if(!empty($result) && $result['exceedsla'] != 0 && $result['withinsla'] != 0){
+		if(!empty($result) && ( $result['exceedsla'] != 0 || $result['withinsla'] != 0 ) ){
 			$data[] = array('Comply with SLA', $result['withinsla']);
 			$data[] = array('Exceed SLA', $result['exceedsla']);
 
 		}else{
 			$showgraph = false;
 		}			
-
 		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
 		$smarty->assign('data',json_encode($data)); 

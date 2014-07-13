@@ -87,7 +87,17 @@ $(function () {
 				if (result === null) return;
 				postData({'canceljob':1, 'cancelremark':result});
 			},
-			className: 'bootbox-sm'
+			className: 'bootbox-sm',
+			buttons : {
+				'cancel': {
+		            label: '".tl('Cancel', false, 'PMFunc')."',
+		            className: 'btn-default'
+		        },
+		        'confirm': {
+		            label: '".tl('OK', false, 'PMFunc')."',
+		            className: 'btn-primary'
+		        }
+			}
 		});
 	})
 })
@@ -240,6 +250,7 @@ $(function () {
 		$data = array(
 			'js_status'=>'COMPLETED',
 			'js_decision'=>'Auto Accept',
+			'js_completiondate' => $DB->GetOne("select now()")
 		);
 		return $DB->doUpdate('mjobssheet', $data, array('js_id'=>$case->casekey));
 	}

@@ -4,10 +4,11 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'clientorg';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
+$dbo->fileSaveMode = 511;
 $dbo->table = 'fcorg';
 $dbo->key = array('org_id');
 $dbo->sql = 'select * from fcorg where org_external = \'Y\'';
-$dbo->col = array('org_id', 'org_type', 'org_external', 'org_name', 'org_parentid', 'org_primaryid', 'org_address', 'org_contactno', 'org_status', 'org_lccode');
+$dbo->col = array('org_id', 'org_type', 'org_external', 'org_name', 'org_parentid', 'org_primaryid', 'org_address', 'org_contactno', 'org_status', 'org_lccode', 'org_concode');
 $dbo->colList = array('org_name', 'org_address', 'org_contactno', 'org_status');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
@@ -177,6 +178,17 @@ $dbo->cols['org_lccode']->option->listMethod = 'text';
 $dbo->cols['org_lccode']->option->detailMethod = 'text';
 $dbo->cols['org_lccode']->option->newMethod = 'text';
 $dbo->cols['org_lccode']->option->editMethod = 'text';
+$dbo->cols['org_concode'] = new DBO_COL('org_concode', 'varchar', '-1', '28');
+$dbo->cols['org_concode']->inputTypeDefault = 'text';
+$dbo->cols['org_concode']->searchMode = 'exact';
+$dbo->cols['org_concode']->capContClassDefault = array();
+$dbo->cols['org_concode']->valContClassDefault = array();
+$dbo->cols['org_concode']->option->defaultMethod = 'text';
+$dbo->cols['org_concode']->option->searchMethod = 'text';
+$dbo->cols['org_concode']->option->listMethod = 'text';
+$dbo->cols['org_concode']->option->detailMethod = 'text';
+$dbo->cols['org_concode']->option->newMethod = 'text';
+$dbo->cols['org_concode']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

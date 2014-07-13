@@ -37,6 +37,8 @@ $dbo->cols['pmf_timer_due_date']->caption->set('default', 'pmf_timer_due_date', 
 $dbo->cols['pmf_timer_due_count']->caption->set('default', 'pmf_timer_due_count', 'text');
 $dbo->cols['isdue']->caption->set('default', ' ', 'text');
 $dbo->cols['casedesc']->caption->set('default', 'Job Description', 'text');
+$dbo->cols['js_assignto']->caption->set('default', 'Assign to', 'text');
+$dbo->cols['js_orgid']->caption->set('default', 'Customer Name', 'text');
 
 $dbo->titleList = ' ';
 $dbo->titleDetail = 'Detail';
