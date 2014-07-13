@@ -87,7 +87,17 @@ $(function () {
 				if (result === null) return;
 				postData({'canceljob':1, 'cancelremark':result});
 			},
-			className: 'bootbox-sm'
+			className: 'bootbox-sm',
+			buttons : {
+				'cancel': {
+		            label: '".tl('Cancel', false, 'PMFunc')."',
+		            className: 'btn-default'
+		        },
+		        'confirm': {
+		            label: '".tl('OK', false, 'PMFunc')."',
+		            className: 'btn-primary'
+		        }
+			}
 		});
 	})
 })

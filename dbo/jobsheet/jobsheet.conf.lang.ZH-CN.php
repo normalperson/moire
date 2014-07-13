@@ -70,9 +70,10 @@ $dbo->cols['js_code']->caption->set('default', '订单编号', 'text');
 $dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
 $dbo->cols['js_price']->caption->set('default', '价格', 'text');
 $dbo->cols['pmc_id']->caption->set('default', 'Job ID', 'text');
-$dbo->cols['js_outputtype']->caption->set('default', 'Output type', 'text');
-$dbo->cols['js_outputwidth']->caption->set('default', 'Output width (mm)', 'text');
-$dbo->cols['js_outputheight']->caption->set('default', 'Output height (mm)', 'text');
+$dbo->cols['js_outputtype']->caption->set('default', '输入种类', 'text');
+$dbo->cols['js_outputwidth']->caption->set('default', '输入宽度 (mm)', 'text');
+$dbo->cols['js_outputheight']->caption->set('default', '输入高度 (mm)', 'text');
+$dbo->cols['js_qcchecked']->caption->set('default', 'js_qcchecked', 'text');
 
 $dbo->titleList = '订单列表';
 $dbo->titleDetail = 'Job Detail';
