@@ -233,8 +233,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 	foreach ($cols as $k=>$v) {
 		if (substr($k,0,6) == '__map_') unset($cols[$k]);
 	}
-	// assign the price
-	$cols['js_price'] = $_POST['js_price'];
+	
 	
 	$remark = $cols['remark']; // get the remark and insert after insert queue
 	unset($cols['remark']); // unset remark
@@ -256,6 +255,32 @@ function dbo_jobsheet_custom_new($table, $cols){
 	$currmth = date('Ym');
 	$ind = $DB->getOne("select coalesce(max(js_month_occur),0)+1 from mjobsheet 
 	where to_char(js_request_date,'YYYYMM') = :0", array($currmth));
+
+	// assign the price
+	$cols['js_price'] = $_POST['js_price'];
+	/*handle currency by region*/
+	// get base currency
+	$sql = "select set_val from fcsetting where set_code= :0";
+	$basecurr = $DB->GetOne($sql,array('CURRENCYBASE'), PDO::FETCH_ASSOC);
+	$sql = "select rg_code,rg_currency,rg_convert from fcorg join mregion on org_region = rg_code where org_id = :0";
+	$rowdata = $DB->GetRow($sql,array($USER->orgid), PDO::FETCH_ASSOC);
+
+	$cols['js_currency'] = $rowdata['rg_currency'];
+
+	// determine whether need to calculate conversion
+	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
+		// convert
+		$sql = "select cr_rate from fccurrency where cr_code = :0";
+		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
+
+		$cols['js_finalprice'] =  bcdiv($_POST['js_price'], $rate, 2);
+		$cols['js_rate'] = $rate;
+
+	}else{
+		$cols['js_finalprice'] = $_POST['js_price'];
+		$cols['js_rate'] = 1;
+	}
+
 	
 	$cols['js_code'] = $currmth.str_pad($ind, 4, "0", STR_PAD_LEFT);
 	$cols['js_month_occur'] = $ind;
@@ -343,7 +368,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 
 // yet to modify
 function dbo_jobsheet_custom_edit($table, $cols, $wheres){
-	global $DB,$REMARK,$FLOWDECISION;
+	global $DB,$REMARK,$FLOWDECISION,$USER;
 	$ret = array();
 	$jobid = $wheres["js_id"];
 	// handle file upload if empty 
@@ -379,6 +404,28 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	// output requirement handling part 1
 	$outputreq = $cols['joboutput'];
 	unset($cols['joboutput']);	
+
+	// get base currency
+	$sql = "select set_val from fcsetting where set_code= :0";
+	$basecurr = $DB->GetOne($sql,array('CURRENCYBASE'), PDO::FETCH_ASSOC);
+	$sql = "select rg_code,rg_currency,rg_convert from fcorg join mregion on org_region = rg_code where org_id = :0";
+	$rowdata = $DB->GetRow($sql,array($USER->orgid), PDO::FETCH_ASSOC);
+
+	$cols['js_currency'] = $rowdata['rg_currency'];
+
+	// determine whether need to calculate conversion
+	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
+		// convert
+		$sql = "select cr_rate from fccurrency where cr_code = :0";
+		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
+
+		$cols['js_finalprice'] =  bcdiv($_POST['js_price'], $rate, 2);
+		$cols['js_rate'] = $rate;
+
+	}else{
+		$cols['js_finalprice'] = $_POST['js_price'];
+		$cols['js_rate'] = 1;
+	}
 
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){

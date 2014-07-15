@@ -1,15 +1,4 @@
 <?php
-function currencyConversion($clientid, $price){
-	global $DB;
-
-	// get customer region
-	$sql = "select * from fcorg where org_id = :0";
-	// get the indicator whether need to do conversion
-
-	// calculate the conversion
-
-	// return the final price and currency code
-}
 function getUserAvatarImage($userid) {
 
 	$imgfile = IMAGE_HREF.'/default_avatar.png';
