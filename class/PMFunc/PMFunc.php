@@ -260,6 +260,11 @@ $(function () {
 		return true;
 	}
 	
+	function emailInvoice() {
+		sendMailFromTemplate('EMAIL_JOB_INVOICE');
+		return true;
+	}
+	
 }
 
 

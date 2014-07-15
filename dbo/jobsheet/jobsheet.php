@@ -163,7 +163,8 @@ function dbo_jobsheet_customize(&$dbo){
 	$dbo->newModifier = 'dbo_jobsheet_custom_new';
 	$dbo->editModifier = 'dbo_jobsheet_custom_edit';
 	
-	global $USER;
+	global $USER, $DB;
+	
 	if ($USER->rolename == 'Customer') {
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
@@ -178,6 +179,20 @@ function dbo_jobsheet_customize(&$dbo){
 		$dbo->cols['jobcategory']->mandatoryDefault = 0;
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = $dbo->cols['js_mcid']->option->defaultMethod;
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = $dbo->cols['js_mcid']->option->default;
+	}
+	
+	
+	if (!empty($_GET['referjs'])) {
+		$sql = "select * from (".$dbo->sql.") as qr where js_id = :0";
+		$referrs = $DB->getRow($sql, array($_GET['referjs']), PDO::FETCH_ASSOC);
+		if ($referrs) {
+			foreach ($dbo->colNew as $c) {
+				if (!empty($referrs[$c])) {
+					$dbo->cols[$c]->defaultNewValueMethod = 'text';
+					$dbo->cols[$c]->defaultNewValue = $referrs[$c];
+				}
+			}
+		}
 	}
 	
 }
