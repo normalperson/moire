@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 03-07-2014 20:30:16*/
+/*Last Modified by uat_supervisor1 on 14-07-2014 03:31:39*/
 $translate = array (
   'Admin Setup' => '主管设置',
   'Setting' => '设置',
@@ -35,5 +35,7 @@ $translate = array (
   'Translation' => 'Translation',
   'User related setting' => '',
   'User related setup' => '',
+  'Invoice' => 'Invoice',
+  'Debtors Aging' => 'Debtors Aging',
 );
 ?>

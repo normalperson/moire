@@ -239,8 +239,8 @@ class Home{
 		$smarty = $this->initSmarty();
 		$showgraph = true;
 		// artist performance sql
-		$sql = "select cast( sum(case when pmf_due_date >= pmf_end_date then 1 else 0 end) as integer) as exceedsla,
-				cast ( sum(case when pmf_due_date < pmf_end_date then 1 else 0 end) as integer) as withinsla,
+		$sql = "select cast( sum(case when pmf_end_date >= pmf_due_date then 1 else 0 end) as integer) as exceedsla,
+				cast ( sum(case when pmf_end_date < pmf_due_date then 1 else 0 end) as integer) as withinsla,
 				usr_name as artist
 				from fcpmcaseflow
 				join fcuser on pmf_end_by = usr_userid

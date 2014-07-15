@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 13-07-2014 02:24:49*/
+/*Last Modified by esp on 14-07-2014 22:50:25*/
 $translate = array (
   'Jobs' => '订单',
   'checked' => '检查',
@@ -19,7 +19,7 @@ $translate = array (
   'completed' => '完成',
   'pending completion' => '尚待完成',
   'pending acknowledgement' => '挂起的确认',
-  'received' => '收到',
+  'received' => '总数',
   'pending verification' => '等待确认',
   'work in progress' => '进行中',
   'pending customer acceptance' => '以待客户验收',
