@@ -13,9 +13,8 @@ function populateInput(obj,elemt,value,readonly){
 			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
 		}else{
 			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
-
 		}
-	}		
+	}
 
 	// append to data div
 	elemt.append($element);
@@ -75,12 +74,21 @@ function displayCartonDetail($col, $colVal, $data=array(), $html=null){
 
 	return $html;
 }
+
+function showActionButtons($col, $colVal, $data=array(), $html=null) {
+	$ret = '<button class="btn btn-labeled btn-primary" style="min-width:85px;" form="noform" onclick="printJobPreview('.$data['js_id'].');"><span class="btn-label icon fa fa-print"></span>Print</button>';
+	global $USER;
+	if ($USER->inGroup('REQUEST_NEWJOB')) $ret.= "<a class='btn' href='../PMTask/startEvent?id=1&type=PM_Event&referjs={$data['js_id']}'>".tl('Create New Jobsheet',false)."</a>";
+	
+	return $ret;
+}
+
 function showFileHistory($col, $colVal, $data=array(), $html=null){
 	$docUI = new DocManUI();
 	$html = $docUI->getFileList($data['js_id'],'js_id');
-
 	return $html;
 }
+
 function showPercentageDet($col, $colVal, $data=array(), $html=null){
 
 	$newhtml = '<div id="dbo_jobsheet_detail_cont_js_distortion_value" class="value_container" inputtype="text" inputtypesize="">'.$colVal.' %</div>';

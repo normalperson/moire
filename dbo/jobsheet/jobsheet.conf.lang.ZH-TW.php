@@ -57,7 +57,7 @@ $dbo->cols['js_height']->caption->set('default', 'Height', 'text');
 $dbo->cols['js_manrequiretime']->caption->set('default', 'js_manrequiretime', 'text');
 $dbo->cols['js_requiretime']->caption->set('default', '預計所需時間', 'text');
 $dbo->cols['filehistory']->caption->set('default', 'File history', 'text');
-$dbo->cols['filehistory']->caption->setTabCaption('default', 'File History', 'text');
+$dbo->cols['filehistory']->caption->setTabCaption('default', '文件歷史', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
 $dbo->cols['js_jobcolor']->caption->set('default', '訂單颜色', 'text');
 $dbo->cols['joboutput']->caption->set('default', '輸出要求', 'text');

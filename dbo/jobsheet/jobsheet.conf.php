@@ -22,7 +22,7 @@ group by jc_jsid) a on js_id = a.jc_jsid
 left join (
 select string_agg(jo_outputcode,\', \' order by jo_id) joboutput,jo_jsid from mjoboutput
 group by jo_id) b on js_id = b.jo_jsid';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'attachment', 'remark', 'info', 'filehistory', 'pmc_id', 'jobcategory', 'joboutput', '__map_mjobbarcode__jbc_jsid__', '__map_mjobbarcode__jbc_btcode__', '__map_mjobbarcode__jbc_value__');
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_rate', 'attachment', 'remark', 'info', 'filehistory', 'pmc_id', 'jobcategory', 'joboutput', '__map_mjobbarcode__jbc_jsid__', '__map_mjobbarcode__jbc_btcode__', '__map_mjobbarcode__jbc_value__');
 $dbo->colList = array('js_description', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_primcat');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
@@ -123,6 +123,9 @@ $dbo->recordPerPage = 10;
 $dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
+$dbo->defaultDateFormat = 'yyyy-mm-dd';
+$dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
+$dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'ZH-CN';
 $dbo->render = array();
 $dbo->detailBack = 'Back';
@@ -959,7 +962,8 @@ $dbo->cols['js_outputtype']->option->detailMethod = 'text';
 $dbo->cols['js_outputtype']->option->newMethod = 'text';
 $dbo->cols['js_outputtype']->option->editMethod = 'text';
 $dbo->cols['js_outputwidth'] = new DBO_COL('js_outputwidth', 'int4', '4', '-1');
-$dbo->cols['js_outputwidth']->inputTypeDefault = 'text';
+$dbo->cols['js_outputwidth']->displayDataType = 'int';
+$dbo->cols['js_outputwidth']->inputTypeDefault = 'TextInputControl';
 $dbo->cols['js_outputwidth']->mandatoryNew = 1;
 $dbo->cols['js_outputwidth']->mandatoryEdit = 1;
 $dbo->cols['js_outputwidth']->searchMode = 'exact';
@@ -972,7 +976,8 @@ $dbo->cols['js_outputwidth']->option->detailMethod = 'text';
 $dbo->cols['js_outputwidth']->option->newMethod = 'text';
 $dbo->cols['js_outputwidth']->option->editMethod = 'text';
 $dbo->cols['js_outputheight'] = new DBO_COL('js_outputheight', 'int4', '4', '-1');
-$dbo->cols['js_outputheight']->inputTypeDefault = 'text';
+$dbo->cols['js_outputheight']->displayDataType = 'int';
+$dbo->cols['js_outputheight']->inputTypeDefault = 'TextInputControl';
 $dbo->cols['js_outputheight']->mandatoryNew = 1;
 $dbo->cols['js_outputheight']->mandatoryEdit = 1;
 $dbo->cols['js_outputheight']->searchMode = 'exact';
@@ -1000,6 +1005,18 @@ $dbo->cols['js_qcchecked']->option->listMethod = 'text';
 $dbo->cols['js_qcchecked']->option->detailMethod = 'text';
 $dbo->cols['js_qcchecked']->option->newMethod = 'text';
 $dbo->cols['js_qcchecked']->option->editMethod = 'text';
+$dbo->cols['js_currency'] = new DBO_COL('js_currency', 'varchar', '-1', '54');
+$dbo->cols['js_currency']->inputTypeDefault = 'text';
+$dbo->cols['js_currency']->capContClassDefault = array();
+$dbo->cols['js_currency']->valContClassDefault = array();
+$dbo->cols['js_finalprice'] = new DBO_COL('js_finalprice', 'numeric', '-1', '1310728');
+$dbo->cols['js_finalprice']->inputTypeDefault = 'text';
+$dbo->cols['js_finalprice']->capContClassDefault = array();
+$dbo->cols['js_finalprice']->valContClassDefault = array();
+$dbo->cols['js_rate'] = new DBO_COL('js_rate', 'numeric', '-1', '1310728');
+$dbo->cols['js_rate']->inputTypeDefault = 'text';
+$dbo->cols['js_rate']->capContClassDefault = array();
+$dbo->cols['js_rate']->valContClassDefault = array();
 
 // support multiple language. only caption
 global $LANG;

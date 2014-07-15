@@ -5,7 +5,7 @@ require_once(dirname(__FILE__).'/header.inc.php');
 require_once(dirname(__FILE__).'/inc/generalFunc.php');
 require_once(dirname(__FILE__).'/inc/appFunc.php');
 $User->requireLogin();
-/*$User->group[] = 'ADMIN';*/
+$User->group[] = 'ADMIN';
 if ($USER->role == 'Customer') {
 	$accepted = $DB->getOne("select count(*) from mtncacceptance where tca_userid=:0 and 
 	tca_tcid in (select max(tc_id) from mtnc) and tca_result='AGREE'", array($USER->userid));

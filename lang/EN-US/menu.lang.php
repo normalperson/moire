@@ -1,5 +1,4 @@
 <?php
-/*Last Modified by admin on 15-07-2014 16:31:04*/
 $translate = array (
   'Admin Setup' => 'Admin Setup',
   'Setting' => 'Setting',

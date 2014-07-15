@@ -218,15 +218,16 @@ class Home{
 		$result = $DB->GetRow($sql,array($USER->userid), PDO::FETCH_ASSOC);
 
 		$data = array();
-		if(!empty($result) && ( $result['exceedsla'] != 0 || $result['withinsla'] != 0 ) ){
-			$data[] = array('Comply with SLA', $result['withinsla']);
-			$data[] = array('Exceed SLA', $result['exceedsla']);
+		$xAxis = array('Comply with SLA','Exceed SLA');
 
+		if(!empty($result) && ( $result['exceedsla'] != 0 || $result['withinsla'] != 0 ) ){
+			$data = array($result['withinsla'],$result['exceedsla']);
 		}else{
 			$showgraph = false;
 		}			
 		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
+		$smarty->assign('xAxis',json_encode($xAxis)); 
 		$smarty->assign('data',json_encode($data)); 
 		$smarty->assign('showgraph',json_encode($showgraph)); 
 		$smarty->assign('Home',$this); 

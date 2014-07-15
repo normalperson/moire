@@ -241,11 +241,13 @@ function genDetailTableDisplay($colname, $currval, $rs, $html) {
 	return $smarty->fetch("dbodetaildisplay.html");
 }
 
-function genDetailTableInput($colname, $currval, $rs, $html) {
+function genDetailTableInput($colname, $currval, $rs, $html, $dbo) {
 	global $DB, $DETAIL_SETUP;
 	if (empty($DETAIL_SETUP[$colname])) return $html;
 	$d = $DETAIL_SETUP[$colname];
 	$data = array();
+	$defval = $dbo->cols[$colname]->getDefaultValue($dbo->state);
+	if ($defval) $currval = $defval;
 	if ($currval) $data = $DB->getArray("select * from {$d['table']} where {$d['fkcol']} = :0 order by 1", array($currval), PDO::FETCH_ASSOC);
 	if (!empty($_POST['detail'][$d['fkcol']]['data'])) $data = $_POST['detail'][$d['fkcol']]['data'];
 

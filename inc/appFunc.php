@@ -138,4 +138,8 @@ function calculateCompletion($jsid) {
 	return $due->format('j-M-Y g:i A');
 }
 
+function generateInvoiceHTML($jsid) {
+	
+}
+
 ?>
