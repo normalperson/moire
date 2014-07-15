@@ -13,6 +13,7 @@ $dbo->cols['org_type']->caption->set('default', 'org_type', 'text');
 $dbo->cols['org_external']->caption->set('default', 'External', 'text');
 $dbo->cols['org_lccode']->caption->set('default', 'org_lccode', 'text');
 $dbo->cols['org_concode']->caption->set('default', 'org_concode', 'text');
+$dbo->cols['org_region']->caption->set('default', 'Region', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
