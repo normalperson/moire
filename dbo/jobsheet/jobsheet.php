@@ -257,7 +257,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 	where to_char(js_request_date,'YYYYMM') = :0", array($currmth));
 
 	// assign the price
-	$cols['js_price'] = $_POST['js_price'];
+	$price = $cols['js_price'];
 	/*handle currency by region*/
 	// get base currency
 	$sql = "select set_val from fcsetting where set_code= :0";
@@ -273,11 +273,11 @@ function dbo_jobsheet_custom_new($table, $cols){
 		$sql = "select cr_rate from fccurrency where cr_code = :0";
 		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
-		$cols['js_finalprice'] =  bcdiv($_POST['js_price'], $rate, 2);
+		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
 
 	}else{
-		$cols['js_finalprice'] = $_POST['js_price'];
+		$cols['js_finalprice'] = $price;
 		$cols['js_rate'] = 1;
 	}
 
@@ -387,7 +387,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 		if (substr($k,0,6) == '__map_') unset($cols[$k]);
 	}
 	// assign the price
-	$cols['js_price'] = $_POST['js_price'];
+	$price = $cols['js_price'];
 	$cols['js_status'] = 'REQUIREMENT VERIFICATION'; // after customer change
 	
 	$REMARK = $cols['remark']; // get the remark and insert after insert queue
@@ -419,11 +419,11 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 		$sql = "select cr_rate from fccurrency where cr_code = :0";
 		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
-		$cols['js_finalprice'] =  bcdiv($_POST['js_price'], $rate, 2);
+		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
 
 	}else{
-		$cols['js_finalprice'] = $_POST['js_price'];
+		$cols['js_finalprice'] = $price;
 		$cols['js_rate'] = 1;
 	}
 
@@ -562,9 +562,9 @@ $( document ).ready(function() {
 		$categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes();calPrice();}),
 		$requiredmin = $('#requiredmin'),
 		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime'),
-		//$priceinput = $('#dbo_jobsheet_new_js_price, #dbo_jobsheet_edit_js_price');
-		$priceinput = $('<input type="hidden" name="js_price" />');
-		$form = $('#dbo_jobsheet_newform,#dbo_jobsheet_editform').append($priceinput);
+		$priceinput = $('#dbo_jobsheet_new_js_price, #dbo_jobsheet_edit_js_price');
+		//$priceinput = $('<input type="hidden" name="js_price" />');
+		//$form = $('#dbo_jobsheet_newform,#dbo_jobsheet_editform').append($priceinput);
 
 
 	// estimated time calculation
