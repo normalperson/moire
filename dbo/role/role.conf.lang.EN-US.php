@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
-$dbo->cols['rol_id']->caption->set('default', 'rol_id', 'text');
+$dbo->cols['rol_id']->caption->set('default', 'Role ID', 'text');
 $dbo->cols['rol_code']->caption->set('default', 'Role Code', 'text');
 $dbo->cols['rol_desc']->caption->set('default', 'Role Desc', 'text');
 $dbo->cols['rol_permission']->caption->set('default', 'Permission', 'text');
