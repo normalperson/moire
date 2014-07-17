@@ -77,7 +77,6 @@ class PMFunc{
 		echo 
 "<script type='text/javascript'>
 $(function () {
-	console.log($('#dbo_jobsheet_edit_cancel'));
 	$('#dbo_jobsheet_edit_cancel').removeAttr('onclick').removeClass('button').addClass('btn btn-danger').click(function (e) {
 		e.stopPropagation();
 		e.preventDefault();
@@ -263,6 +262,14 @@ $(function () {
 	function emailInvoice() {
 		sendMailFromTemplate('EMAIL_JOB_INVOICE');
 		return true;
+	}
+	
+	function autoCancelJob($flowid, $o) {	
+		global $DB;
+		$data = array(
+			'js_status'=>'CANCELLED',
+		);
+		return $DB->doUpdate('mjobsheet', $data, array('js_id'=>$o->casekey));
 	}
 	
 }

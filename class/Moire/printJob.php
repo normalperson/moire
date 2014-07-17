@@ -46,6 +46,12 @@ $rs['customer_remark'] = $DB->getOne("select pmcc_comment from fcpmcase join fcp
 // barcode
 $barcodeRS = $DB->getArrayAssoc("select jbc_btcode, bt_name, jbc_value from mjobbarcode join mbarcodetype on jbc_btcode = bt_code where jbc_jsid = :0", array($jsid));
 $rs['barcode_array'] = $barcodeRS?$barcodeRS:array();
+
+$companyname = $DB->GetOne("select org_name from fcorg where org_external = 'N' and org_parentid = 0",null, PDO::FETCH_ASSOC);
+$rs['companyname'] = $companyname;
+
+$companyadd = $DB->GetOne("select org_address from fcorg where org_external = 'N' and org_parentid = 0",null, PDO::FETCH_ASSOC);
+$rs['companyaddress'] = $companyadd;
 // carton
 // carton - image
 require_once(INCLUDE_DIR.'/Image.inc.php');
