@@ -433,8 +433,6 @@ $( document ).ready(function() {
 		else $this.closest('tr').css('background-color','#FFFFFF');
 	});
 	$('#dbo_artistsetup_new_usr_userid, #dbo_artistsetup_edit_usr_userid').blur(function(){
-		console.log('inside here');
-		console.log( $(this).val() );
 		$(this).val( $(this).val().toUpperCase() );
 	});
 });
