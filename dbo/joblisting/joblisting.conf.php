@@ -44,7 +44,6 @@ $dbo->canNewGroup = array();
 $dbo->canEditGroup = array();
 $dbo->canDeleteGroup = array();
 $dbo->showSearch = true;
-$dbo->exportFormat = array('csv', 'pdf');
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';
 $dbo->titleNew = 'New Job';

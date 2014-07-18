@@ -404,6 +404,13 @@ class Home{
 		}
 		return $url;
 	}
+	function getWIP(){
+		global $DB;
+		$sql = "select count(*) from mjobsheet where js_Status = :0";
+		$wipcnt = $DB->GetOne($sql,array('WORK IN PROGRESS'), PDO::FETCH_ASSOC);
+
+		return $wipcnt;
+	}
 	function getEventData($eventid,$column){
 		global $DB,$EVENT,$USER;
 

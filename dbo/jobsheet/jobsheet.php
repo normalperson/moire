@@ -342,10 +342,12 @@ function dbo_jobsheet_custom_new($table, $cols){
 
 		// output requirement handling part 2
 		$oparr = explode(",",$outputreq);
-		foreach ($oparr as $key => $value) {
-			// insert into mjoboutput
-			$opdata = array('jo_jsid' => $jobid, 'jo_outputcode' => $value);
-			$ok = $DB->doInsert('mjoboutput', $opdata);
+		if(!empty($oparr)){
+			foreach ($oparr as $key => $value) {
+				// insert into mjoboutput
+				$opdata = array('jo_jsid' => $jobid, 'jo_outputcode' => trim($value) );
+				$ok = $DB->doInsert('mjoboutput', $opdata);
+			}
 		}
 		foreach ($cartonarr as $key => $value) {
 			$cartondata = array(
