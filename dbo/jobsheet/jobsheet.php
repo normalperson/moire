@@ -618,9 +618,10 @@ $( document ).ready(function() {
 			}
 			$categoryjob.filter(':checked').each(function () {
 				var clid = $(this).val();
-				if( parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]) > price ) 
+				console.log(clid + ' '+parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]));
+				if( parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]) > price ) {
 					price = parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]);					
-
+				}
 				// get the barcode total price and add the output category price
 				if (jstimemap['JOBCAT'][clid]['pricecat'] == 'UNIT') {
 					if (jstimemap['JOBCAT'][clid]['title'].toUpperCase() == 'BARCODE') {
