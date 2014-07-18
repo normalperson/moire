@@ -183,7 +183,7 @@ function neworgrole(){
 	$tblrole = $tableprefix.$rolepostname;
 
 	
-	$roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where lower(rol_name) = 'customer' ");
+	$roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where lower(rol_name) in  ('customer viewer','customer coordinator') ");
 
 	$roleHTML = "<select id='userrole_1' name='userrole_1'>";
 	foreach ($roledata as $data){
@@ -260,7 +260,7 @@ function editorgrole($param1,$param12,$param3){
 			$orgHTML .= "</select>"; 
 
 			//$roledata = $DB->GetArray("select rol_id,rol_code,rol_name from $tblrole where rol_status = :0 ",array('ACTIVE'));
-			$roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where lower(rol_name) = 'customer' ");
+			$roledata = $DB->GetArray("select rol_id,rol_name from $tblrole where lower(rol_name) in  ('customer viewer','customer coordinator') ");
 
 			$roleHTML = "<select id='userrole_$num' name='userrole_$num'>";
 			foreach ($roledata as $data){
