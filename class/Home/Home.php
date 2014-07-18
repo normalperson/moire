@@ -123,7 +123,7 @@ class Home{
 		}
 		$arrcnt = array_count_values($result);
 
-		if($arrcnt[0] == 8) $showgraph = false; // if no data
+		if(isset($arrcnt[0]) && $arrcnt[0] == 8) $showgraph = false; // if no data
 		$data[] = array("name" => $name, "data" => $result);
 
 		$HTML->addJS('js/highcharts.js');
@@ -206,8 +206,8 @@ class Home{
 
 		$showgraph = true;
 		// artist performance sql
-		$sql = "select cast( sum(case when pmf_due_date >= pmf_end_date then 1 else 0 end) as integer) as exceedsla,
-				cast ( sum(case when pmf_due_date < pmf_end_date then 1 else 0 end) as integer) as withinsla
+		$sql = "select cast( sum(case when pmf_end_date >= pmf_due_date then 1 else 0 end) as integer) as exceedsla,
+				cast ( sum(case when pmf_end_date < pmf_due_date then 1 else 0 end) as integer) as withinsla
 				from fcpmcaseflow
 				join fcuser on pmf_end_by = usr_userid
 				where pmf_start_date > ( date_trunc('month', current_date) )::date
@@ -218,16 +218,16 @@ class Home{
 		$result = $DB->GetRow($sql,array($USER->userid), PDO::FETCH_ASSOC);
 
 		$data = array();
-		if(!empty($result) && $result['exceedsla'] != 0 && $result['withinsla'] != 0){
-			$data[] = array('Comply with SLA', $result['withinsla']);
-			$data[] = array('Exceed SLA', $result['exceedsla']);
+		$xAxis = array('Comply with SLA','Exceed SLA');
 
+		if(!empty($result) && ( $result['exceedsla'] != 0 || $result['withinsla'] != 0 ) ){
+			$data = array($result['withinsla'],$result['exceedsla']);
 		}else{
 			$showgraph = false;
 		}			
-
 		$HTML->addJS('js/highcharts.js');
 		$smarty = $this->initSmarty();
+		$smarty->assign('xAxis',json_encode($xAxis)); 
 		$smarty->assign('data',json_encode($data)); 
 		$smarty->assign('showgraph',json_encode($showgraph)); 
 		$smarty->assign('Home',$this); 
@@ -240,8 +240,8 @@ class Home{
 		$smarty = $this->initSmarty();
 		$showgraph = true;
 		// artist performance sql
-		$sql = "select cast( sum(case when pmf_due_date >= pmf_end_date then 1 else 0 end) as integer) as exceedsla,
-				cast ( sum(case when pmf_due_date < pmf_end_date then 1 else 0 end) as integer) as withinsla,
+		$sql = "select cast( sum(case when pmf_end_date >= pmf_due_date then 1 else 0 end) as integer) as exceedsla,
+				cast ( sum(case when pmf_end_date < pmf_due_date then 1 else 0 end) as integer) as withinsla,
 				usr_name as artist
 				from fcpmcaseflow
 				join fcuser on pmf_end_by = usr_userid

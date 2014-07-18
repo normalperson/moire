@@ -17,38 +17,49 @@
 <script type="text/javascript">
 $( document ).ready(function() {
     var data = {$data},
-    showgraph = {$showgraph};
+    category = {$xAxis},
+    showgraph = {$showgraph},
+    gtitle = "{'My performance'|tl:false:'widget'}",
+    ytitle = "{'Performance'|tl:false:'widget'}",
+    dataname ="{'Performance data'|tl:false:'widget'}" ;
 {literal}
 	if(showgraph){
-		$('#myperformance').highcharts({
-		    chart: {
-		        plotBackgroundColor: null,
-		        plotBorderWidth: null,
-		        plotShadow: false
-		    },
-		    title: {
-		        text: 'My performance'
-		    },
-		    tooltip: {
-			    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
-			    valueSuffix: gsuffix
-		    },
-		    plotOptions: {
-		        pie: {
-		            allowPointSelect: true,
-		            cursor: 'pointer',
-		            dataLabels: {
-		                enabled: false
-		            },
-		            showInLegend: true
-		        }
-		    },
-		    series: [{
-		        type: 'pie',
-		        name: 'My performance',
-		        data: data
-		    }]
-		});
+        $('#myperformance').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: gtitle
+            },
+            xAxis: {
+                categories: category
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Performance'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: dataname,
+                data: data
+    
+            }]
+        });
 	}
 	else{
 		$('#myperformance').append($('#nograph_myperformance').removeClass("hidden"));

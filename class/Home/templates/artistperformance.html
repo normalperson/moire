@@ -20,14 +20,15 @@
 $( document ).ready(function() {
     var data = {$data},
     category = {$xAxis},
-    showgraph = {$showgraph};
+    showgraph = {$showgraph},
+    gtitle = "{'Artist performance'|tl:false:'widget'}";
     if(showgraph){
     	$('#artistperformance').highcharts({
             chart: {
                 type: 'bar'
             },
             title: {
-                text: 'Artist performance'
+                text: gtitle
             },
             xAxis: {
                 categories: category

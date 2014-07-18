@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 15-07-2014 16:52:48*/
+/*Last Modified by uat_customer1 on 10-07-2014 19:18:59*/
 $translate = array (
   'Notifications' => 'Notifications',
   'VIEW ALL' => 'VIEW ALL',

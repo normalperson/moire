@@ -2,3 +2,5 @@
 /smarty/templates_c/
 #ignore windows thumnail
 *.db
+#ignore info/tmp
+/info/tmp/

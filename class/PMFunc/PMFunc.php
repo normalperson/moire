@@ -77,7 +77,6 @@ class PMFunc{
 		echo 
 "<script type='text/javascript'>
 $(function () {
-	console.log($('#dbo_jobsheet_edit_cancel'));
 	$('#dbo_jobsheet_edit_cancel').removeAttr('onclick').removeClass('button').addClass('btn btn-danger').click(function (e) {
 		e.stopPropagation();
 		e.preventDefault();
@@ -87,7 +86,17 @@ $(function () {
 				if (result === null) return;
 				postData({'canceljob':1, 'cancelremark':result});
 			},
-			className: 'bootbox-sm'
+			className: 'bootbox-sm',
+			buttons : {
+				'cancel': {
+		            label: '".tl('Cancel', false, 'PMFunc')."',
+		            className: 'btn-default'
+		        },
+		        'confirm': {
+		            label: '".tl('OK', false, 'PMFunc')."',
+		            className: 'btn-primary'
+		        }
+			}
 		});
 	})
 })
@@ -188,13 +197,14 @@ $(function () {
 		$imageinfo = $img->getImage('boxtype',$carid);
 
 
-		$sql = "select * from mcartonvariable where carv_carid = :0";
+		$sql = "select * from mcartonvariable where carv_carid = :0 order by carv_code";
 		$var = $DB->GetArray($sql,array($carid), PDO::FETCH_ASSOC);
 
 		if($jobid != 0){
 			$sql = "select * from mjscartonvalue
 					where carval_carid = :0
-					and carval_jsid = :1";
+					and carval_jsid = :1
+					order by carval_carcode";
 			$value = $DB->GetArray($sql,array($carid,$jobid), PDO::FETCH_ASSOC);				
 		}
 
@@ -240,6 +250,7 @@ $(function () {
 		$data = array(
 			'js_status'=>'COMPLETED',
 			'js_decision'=>'Auto Accept',
+			'js_completiondate' => $DB->GetOne("select now()")
 		);
 		return $DB->doUpdate('mjobssheet', $data, array('js_id'=>$case->casekey));
 	}
@@ -247,6 +258,19 @@ $(function () {
 	function notifyCustomerAck($flowid, $case) {
 		sendMailFromTemplate('NOTIFY_CUSTOMER_ACK');
 		return true;
+	}
+	
+	function emailInvoice() {
+		sendMailFromTemplate('EMAIL_JOB_INVOICE');
+		return true;
+	}
+	
+	function autoCancelJob($flowid, $o) {	
+		global $DB;
+		$data = array(
+			'js_status'=>'CANCELLED',
+		);
+		return $DB->doUpdate('mjobsheet', $data, array('js_id'=>$o->casekey));
 	}
 	
 }

@@ -7,27 +7,29 @@ $dbo->id = $dboID;
 $dbo->fileSaveMode = 511;
 $dbo->table = 'fcpmcaseflow';
 $dbo->key = array('pmf_id', 'pmf_pmcid');
-$dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions, case when pmf_due_date is not null and pmf_due_date <= now() then \'Y\' else \'N\' end as isdue,
-	case when pmc_casetype = \'jobsheet\' then (select case when js_code is null then \'\' else js_code||\' - \' end ||case when length(js_description) < 23 then js_description else substring(js_description,0,20)||\'...\' end from mjobsheet where js_id = pmc_casekey)  else concat(pmc_casetype,\'::\',pmc_casekey) end as casedesc from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
-	where pmf_obj_id = 4 and pmf_obj_type = \'PM_Event\' and pmf_end_date is null
+$dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions,c.js_assignto,c.js_orgid, case when pmf_due_date is not null and pmf_due_date <= now() then \'Y\' else \'N\' end as isdue,
+	case when pmc_casetype = \'jobsheet\' then (select case when js_code is null then \'\' else js_code||\' - \' end ||case when length(js_description) < 23 then js_description else substring(js_description,0,20)||\'...\' end from mjobsheet where js_id = pmc_casekey)  else concat(pmc_casetype,\'::\',pmc_casekey) end as casedesc from fcpmcase a 
+	join mjobsheet c on pmc_casekey = js_id
+	join fcpmcaseflow b on pmf_pmcid=pmc_id 
+	where pmf_obj_id = 2 and pmf_obj_type = \'PM_Event\' and pmf_end_date is null
 	and (
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id) = 0 or
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id and 
-				(pmfa_userid is null or pmfa_userid = \'uat_supervisor1\') and 
-				(pmfa_rolid is null or pmfa_rolid=\'19\') and
+				(pmfa_userid is null or pmfa_userid = \'uat_artist1\') and 
+				(pmfa_rolid is null or pmfa_rolid=\'20\') and
 				(pmfa_orgid is null or pmfa_orgid=\'1\') and
-				(pmfa_pmscode is null or pmfa_pmscode in (\'REQUEST_NEWJOB\',\'SUPHOME\',\'ADMIN\'))
+				(pmfa_pmscode is null or pmfa_pmscode in (\'ARTHOME\',\'ADMIN\'))
 			) > 0)
 	order by pmf_due_date, pmf_start_date';
-$dbo->col = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date', 'pmf_end_by', 'pmf_end_pmfid', 'pmf_from_event_gateway', 'pmf_last_timer_check_date', 'pmf_timer_due_date', 'pmf_timer_due_count', 'urgency', 'actions', 'isdue', 'casedesc');
-$dbo->colList = array('urgency', 'pmc_id', 'casedesc', 'pmc_created_date', 'pmc_created_by', 'pmf_start_date', 'pmf_due_date', 'actions');
+$dbo->col = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date', 'pmf_end_by', 'pmf_end_pmfid', 'pmf_from_event_gateway', 'pmf_last_timer_check_date', 'pmf_timer_due_date', 'pmf_timer_due_count', 'urgency', 'actions', 'js_assignto', 'js_orgid', 'isdue', 'casedesc');
+$dbo->colList = array('urgency', 'pmc_id', 'js_orgid', 'casedesc', 'pmc_created_date', 'pmc_created_by', 'pmf_start_date', 'pmf_due_date', 'js_assignto', 'actions');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
 $dbo->colDetail = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
 $dbo->colNew = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
 $dbo->colEdit = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
-$dbo->colSearch = array('pmc_id', 'casedesc', 'pmf_start_date', 'isdue');
+$dbo->colSearch = array('pmc_id', 'js_assignto', 'casedesc', 'js_orgid', 'pmf_start_date', 'isdue');
 $dbo->colExport = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
 $dbo->colSort = array();
 $dbo->canSearch = true;
@@ -46,6 +48,7 @@ $dbo->titleDetail = 'Detail';
 $dbo->titleNew = 'New Record';
 $dbo->titleEdit = 'Edit Record';
 $dbo->titleSearch = 'Search Record';
+$dbo->layoutSearch = '1|1';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'AlwaysList';
 $dbo->pageLinkCount = 7;
@@ -53,7 +56,7 @@ $dbo->recordPerPage = 10;
 $dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
-$dbo->lang = 'ZH-CN';
+$dbo->lang = 'EN-US';
 $dbo->render = array();
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
@@ -481,6 +484,34 @@ $dbo->cols['casedesc']->option->listMethod = 'text';
 $dbo->cols['casedesc']->option->detailMethod = 'text';
 $dbo->cols['casedesc']->option->newMethod = 'text';
 $dbo->cols['casedesc']->option->editMethod = 'text';
+$dbo->cols['js_assignto'] = new DBO_COL('js_assignto', 'varchar', '-1', '54');
+$dbo->cols['js_assignto']->inputTypeDefault = 'select';
+$dbo->cols['js_assignto']->searchMode = 'exact';
+$dbo->cols['js_assignto']->capContClassDefault = array();
+$dbo->cols['js_assignto']->valContClassDefault = array();
+$dbo->cols['js_assignto']->option->default = 'select usr_userid, usr_name 
+from fcuser join fcuserorgrole on usr_userid = uor_usrid 
+join fcrole on rol_id = uor_rolid 
+where lower(rol_name) = \'artist\'';
+$dbo->cols['js_assignto']->option->defaultMethod = 'sql';
+$dbo->cols['js_assignto']->option->searchMethod = 'text';
+$dbo->cols['js_assignto']->option->listMethod = 'text';
+$dbo->cols['js_assignto']->option->detailMethod = 'text';
+$dbo->cols['js_assignto']->option->newMethod = 'text';
+$dbo->cols['js_assignto']->option->editMethod = 'text';
+$dbo->cols['js_orgid'] = new DBO_COL('js_orgid', 'int4', '4', '-1');
+$dbo->cols['js_orgid']->inputTypeDefault = 'select';
+$dbo->cols['js_orgid']->searchMode = 'exact';
+$dbo->cols['js_orgid']->capContClassDefault = array();
+$dbo->cols['js_orgid']->valContClassDefault = array();
+$dbo->cols['js_orgid']->option->default = 'select org_id,org_name from fcorg
+	where org_external = \'Y\'';
+$dbo->cols['js_orgid']->option->defaultMethod = 'sql';
+$dbo->cols['js_orgid']->option->searchMethod = 'text';
+$dbo->cols['js_orgid']->option->listMethod = 'text';
+$dbo->cols['js_orgid']->option->detailMethod = 'text';
+$dbo->cols['js_orgid']->option->newMethod = 'text';
+$dbo->cols['js_orgid']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

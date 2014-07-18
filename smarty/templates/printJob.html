@@ -65,6 +65,30 @@ table.print_task_table ul.pj_ul{
 		display:none;
 	}
 }
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.btn-primary {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
 </style>
 </head>
 <body>
@@ -73,17 +97,30 @@ table.print_task_table ul.pj_ul{
 	<input type="button" class="btn btn-primary" onclick="window.print();" value="Print"/></div>
 <table class="print_task_table">
 	<tr>
-		<td width="50%" rowspan="2"><img src="/{$APP}/image/logo.png" style="width:100%"/>
-			No. 4, Jalan IKS M7, Taman IKS Merdeka,
-			<br> 75350 Melaka
+		<td width="50%" rowspan="2">
+			<table>
+				<tr>
+					<td style="border:1px solid black">						
+						<p><h2>{$data.org_name}</h2></p>
+						<p>Address: {$data.org_address}</p>
+					</td>
+				</tr>
+				<tr>
+					<td style="border:1px solid black">
+						Purchase from
+						<p><h4>{$data.companyname}</h4></p>
+						<p>{$data.companyaddress}</p>
+					</td>	
+				</tr>
+			</table>
 		</td>
-		<th>Job Summary</th>
+		<th>Purchase Order</th>
 	</tr>
 	<tr>
 		<td>
 			<table>
 				<tr>
-					<th>Job Code</th>
+					<th>PO Number / Job Code</th>
 					<td>{$data['js_code']}</td>
 				</tr>
 				<tr>
@@ -95,8 +132,8 @@ table.print_task_table ul.pj_ul{
 					<td>{$data['js_description']}</td>
 				</tr>
 				<tr>
-					<th>Customer Name</th>
-					<td>{$data['org_name']}</td>
+					<th>Price</th>
+					<td>{$data['js_currency']} {$data['js_finalprice']|number_format:2}</td>
 				</tr>
 			</table>
 		</td>
@@ -256,7 +293,7 @@ table.print_task_table ul.pj_ul{
 				</tr>
 				<tr>
 					<th>Carton Preview</th>
-					<td><img src="{$data['carton_img_src']}" style="width:100%"/></td>
+					<td>{if {$data['carton_img_src']} != 'File not found'} <img src="{$data['carton_img_src']}" style="width:100%"/> {/if}</td>
 				</tr>
 				<tr>
 					<th>Carton Dimension</th>

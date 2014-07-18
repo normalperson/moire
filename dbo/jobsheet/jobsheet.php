@@ -29,7 +29,7 @@ function populateInput(obj,elemt,value,readonly){
 		$element = $('<div class="form-group" ><label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']" ><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');
 	}else{
 		if(readonly){
-			$element = $('<div class="form-group" > <label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');		
+			$element = $('<label class="col-md-2" for="'+obj.carv_carid+'_'+obj.carv_code+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+obj.carv_carid+'_'+obj.carv_code+'" name="carcode['+obj.carv_code+']"  value="'+accounting.formatNumber(value.caval_value,2)+'" readonly><span class="input-group-addon">'+obj.carv_unit+'</span></div>');		
 		}else{
 			$element = $('<div class="form-group" > <label class="col-md-2 mandatory" for="'+inpid+'">'+obj.carv_code+' </label> <div class="input-group col-md-5"><input type="text" class="form-control" id="'+inpid+'" name="carcode['+obj.carv_code+']"  value="'+value.caval_value+'"><span class="input-group-addon">'+obj.carv_unit+'</span></div></div>');		
 		}		
@@ -149,8 +149,13 @@ function showRequiredMinute($col, $colVal, $data=array(), $html=null){
 }
 
 function showPrice($col, $colVal, $data, $html) {
+	global $USER,$DB;
+	// get the currency code by org
+	$sql = "select case when rg_convert = 'N' and rg_currency != 'MYR' then rg_currency else 'MYR' end currencycode
+			from fcorg join mregion on org_region = rg_code where org_id = :0";
+	$currcode = $DB->GetOne($sql,array($USER->orgid), PDO::FETCH_ASSOC);			
 	$fronthtml = substr($html,0, strpos($html, '</div>'));
-	$html = '<span class="input-group-addon">'.tl('RM',false,'newjob').'</span>'.$fronthtml.'</div>';
+	$html = '<span class="input-group-addon">'.tl($currcode,false,'newjob').'</span>'.$fronthtml.'</div>';
 	$html = '<div class="input-group">'.$html.'</div>';
 	return $html;
 }
@@ -163,7 +168,8 @@ function dbo_jobsheet_customize(&$dbo){
 	$dbo->newModifier = 'dbo_jobsheet_custom_new';
 	$dbo->editModifier = 'dbo_jobsheet_custom_edit';
 	
-	global $USER;
+	global $USER, $DB;
+	
 	if ($USER->rolename == 'Customer') {
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
@@ -178,6 +184,20 @@ function dbo_jobsheet_customize(&$dbo){
 		$dbo->cols['jobcategory']->mandatoryDefault = 0;
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = $dbo->cols['js_mcid']->option->defaultMethod;
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = $dbo->cols['js_mcid']->option->default;
+	}
+	
+	
+	if (!empty($_GET['referjs'])) {
+		$sql = "select * from (".$dbo->sql.") as qr where js_id = :0";
+		$referrs = $DB->getRow($sql, array($_GET['referjs']), PDO::FETCH_ASSOC);
+		if ($referrs) {
+			foreach ($dbo->colNew as $c) {
+				if (!empty($referrs[$c])) {
+					$dbo->cols[$c]->defaultNewValueMethod = 'text';
+					$dbo->cols[$c]->defaultNewValue = $referrs[$c];
+				}
+			}
+		}
 	}
 	
 }
@@ -218,8 +238,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 	foreach ($cols as $k=>$v) {
 		if (substr($k,0,6) == '__map_') unset($cols[$k]);
 	}
-	// assign the price
-	$cols['js_price'] = $_POST['js_price'];
+	
 	
 	$remark = $cols['remark']; // get the remark and insert after insert queue
 	unset($cols['remark']); // unset remark
@@ -241,6 +260,32 @@ function dbo_jobsheet_custom_new($table, $cols){
 	$currmth = date('Ym');
 	$ind = $DB->getOne("select coalesce(max(js_month_occur),0)+1 from mjobsheet 
 	where to_char(js_request_date,'YYYYMM') = :0", array($currmth));
+
+	// assign the price
+	$price = $cols['js_price'];
+	/*handle currency by region*/
+	// get base currency
+	$sql = "select set_val from fcsetting where set_code= :0";
+	$basecurr = $DB->GetOne($sql,array('CURRENCYBASE'), PDO::FETCH_ASSOC);
+	$sql = "select rg_code,rg_currency,rg_convert from fcorg join mregion on org_region = rg_code where org_id = :0";
+	$rowdata = $DB->GetRow($sql,array($USER->orgid), PDO::FETCH_ASSOC);
+
+	$cols['js_currency'] = $rowdata['rg_currency'];
+
+	// determine whether need to calculate conversion
+	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
+		// convert
+		$sql = "select cr_rate from fccurrency where cr_code = :0";
+		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
+
+		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
+		$cols['js_rate'] = $rate;
+
+	}else{
+		$cols['js_finalprice'] = $price;
+		$cols['js_rate'] = 1;
+	}
+
 	
 	$cols['js_code'] = $currmth.str_pad($ind, 4, "0", STR_PAD_LEFT);
 	$cols['js_month_occur'] = $ind;
@@ -328,7 +373,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 
 // yet to modify
 function dbo_jobsheet_custom_edit($table, $cols, $wheres){
-	global $DB,$REMARK,$FLOWDECISION;
+	global $DB,$REMARK,$FLOWDECISION,$USER;
 	$ret = array();
 	$jobid = $wheres["js_id"];
 	// handle file upload if empty 
@@ -347,7 +392,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 		if (substr($k,0,6) == '__map_') unset($cols[$k]);
 	}
 	// assign the price
-	$cols['js_price'] = $_POST['js_price'];
+	$price = $cols['js_price'];
 	$cols['js_status'] = 'REQUIREMENT VERIFICATION'; // after customer change
 	
 	$REMARK = $cols['remark']; // get the remark and insert after insert queue
@@ -364,6 +409,28 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	// output requirement handling part 1
 	$outputreq = $cols['joboutput'];
 	unset($cols['joboutput']);	
+
+	// get base currency
+	$sql = "select set_val from fcsetting where set_code= :0";
+	$basecurr = $DB->GetOne($sql,array('CURRENCYBASE'), PDO::FETCH_ASSOC);
+	$sql = "select rg_code,rg_currency,rg_convert from fcorg join mregion on org_region = rg_code where org_id = :0";
+	$rowdata = $DB->GetRow($sql,array($USER->orgid), PDO::FETCH_ASSOC);
+
+	$cols['js_currency'] = $rowdata['rg_currency'];
+
+	// determine whether need to calculate conversion
+	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
+		// convert
+		$sql = "select cr_rate from fccurrency where cr_code = :0";
+		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
+
+		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
+		$cols['js_rate'] = $rate;
+
+	}else{
+		$cols['js_finalprice'] = $price;
+		$cols['js_rate'] = 1;
+	}
 
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
@@ -500,9 +567,9 @@ $( document ).ready(function() {
 		$categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes();calPrice();}),
 		$requiredmin = $('#requiredmin'),
 		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime'),
-		//$priceinput = $('#dbo_jobsheet_new_js_price, #dbo_jobsheet_edit_js_price');
-		$priceinput = $('<input type="hidden" name="js_price" />');
-		$form = $('#dbo_jobsheet_newform,#dbo_jobsheet_editform').append($priceinput);
+		$priceinput = $('#dbo_jobsheet_new_js_price, #dbo_jobsheet_edit_js_price');
+		//$priceinput = $('<input type="hidden" name="js_price" />');
+		//$form = $('#dbo_jobsheet_newform,#dbo_jobsheet_editform').append($priceinput);
 
 
 	// estimated time calculation

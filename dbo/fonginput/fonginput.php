@@ -17,4 +17,12 @@ $dbo->render();
 	// echo htmlentities($ret);
 	// echo '</pre>';
 // }
+
+$rs = $DB->getRowAssoc("select * from fcmenu where mn_id = 83");
+unset($rs['mn_id']);
+foreach($rs as $key=>$col){
+	if(strlen($col)==0) unset($rs[$key]);
+}
+$sql = $DB->genInsert('fcmenu', $rs);
+d($sql);
 ?>

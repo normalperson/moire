@@ -3441,8 +3441,7 @@ SELECT pg_catalog.setval('fcdbaudit_dba_id_seq', 1, false);
 --
 
 COPY fcdoc (fd_id, fd_created_date, fd_created_by, fd_refid, fd_reftype, fd_description, fd_file_name, fd_file_ext, fd_tags, fd_file_size) FROM stdin;
-147	2014-07-07 15:49:41.33-07	uat_customer1	129	js_id	\N	Nescafe.rar	rar		790.0000
-148	2014-07-08 01:50:18.07-07	uat_artist1	129	js_id	Artwork job done	Nescafe.rar	rar		790.0000
+151	2014-07-08 19:27:17.78-07	uat_customer1	132	js_id	\N	Nescafe.rar	rar		790.0000
 \.
 
 
@@ -3450,7 +3449,7 @@ COPY fcdoc (fd_id, fd_created_date, fd_created_by, fd_refid, fd_reftype, fd_desc
 -- Name: fcdoc_fd_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcdoc_fd_id_seq', 148, true);
+SELECT pg_catalog.setval('fcdoc_fd_id_seq', 151, true);
 
 
 --
@@ -3732,6 +3731,7 @@ QCLIST	FINELINETEXT	ROOT	Fine Line / Text passed	ACTIVE	164
 QCLIST	REVERSEDLINE	ROOT	Reverse Line / Text passed	ACTIVE	165
 QCLIST	SPEELING	ROOT	Speeling passed	ACTIVE	166
 QCLIST	EMULSION	ROOT	Emulsion Surface passed	ACTIVE	167
+JOBSTATUS	CANCELLED	ROOT	CANCELLED	ACTIVE	168
 \.
 
 
@@ -3739,7 +3739,7 @@ QCLIST	EMULSION	ROOT	Emulsion Surface passed	ACTIVE	167
 -- Name: fclookup_lu_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fclookup_lu_id_seq', 167, true);
+SELECT pg_catalog.setval('fclookup_lu_id_seq', 168, true);
 
 
 --
@@ -3856,7 +3856,6 @@ COPY fcpmactivity (pmat_id, pmat_pmwfid, pmat_pmslid, pmat_name, pmat_type, pmat
 11	1	\N	Notify Supervisor and Manager On Late WIP	SCRIPT	notifyLateWIP	\N	N	N	\N
 12	1	\N	Notify Supervisor and Manager On Late QC Check	SCRIPT	notifyLateQC	\N	N	N	\N
 13	1	\N	Auto Accept	SCRIPT	autoCustomerAccept	\N	N	N	\N
-2	1	1	Pending resolution 	USER	pendingRevert	\N	Y	N	The job has successfully been sent back for verification.
 4	1	3	Work in progress 	USER	wip	[[REQTIMEART]]	Y	Y	The job has successfully been sent to QC for verification.
 10	1	3	Rework in progress	USER	wip	[[REQTIMEQC]]	Y	Y	The job has successfully been sent to QC for verification.
 5	1	4	Pending check (QC)	USER	pendingQC	[[REQTIMEQC]]	Y	Y	The job has successfully been [[QCDEC_DISP]].
@@ -3864,6 +3863,7 @@ COPY fcpmactivity (pmat_id, pmat_pmwfid, pmat_pmslid, pmat_name, pmat_type, pmat
 9	1	2	Reassign Artist	USER	reassign	\N	Y	Y	The job has successfully been assigned to artist.
 14	1	\N	Notify Customer Task Acknowledged	SCRIPT	notifyCustomerAck	\N	N	N	\N
 1	1	2	Requirement verification	USER	reqVerification	PT15M	Y	Y	The job has successfully been [[RVDEC_DISP]].
+2	1	1	Pending resolution 	USER	pendingRevert	\N	Y	N	The job has successfully been [[CUSTRESODEC_DISP]].
 \.
 
 
@@ -3879,7 +3879,7 @@ SELECT pg_catalog.setval('fcpmactivity_pmat_id_seq', 14, true);
 --
 
 COPY fcpmcase (pmc_id, pmc_created_date, pmc_created_by, pmc_casekey, pmc_casetype, pmc_parentid, pmc_pmwfid, pmc_start_pmevid, pmc_start_date, pmc_end_pmevid, pmc_end_date, pmc_closed) FROM stdin;
-151	2014-07-07 15:49:41-07	uat_customer1	129	jobsheet	\N	1	1	2014-07-07 15:49:41-07	\N	\N	N
+154	2014-07-08 19:27:17-07	uat_customer1	132	jobsheet	\N	1	1	2014-07-08 19:27:17-07	\N	\N	N
 \.
 
 
@@ -3887,7 +3887,7 @@ COPY fcpmcase (pmc_id, pmc_created_date, pmc_created_by, pmc_casekey, pmc_casety
 -- Name: fcpmcase_pmc_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcase_pmc_id_seq', 151, true);
+SELECT pg_catalog.setval('fcpmcase_pmc_id_seq', 154, true);
 
 
 --
@@ -3895,9 +3895,7 @@ SELECT pg_catalog.setval('fcpmcase_pmc_id_seq', 151, true);
 --
 
 COPY fcpmcasecomment (pmcc_id, pmcc_pmcid, pmcc_parentid, pmcc_created_date, pmcc_created_by, pmcc_comment, pmcc_pin, pmcc_pin_date, pmcc_pin_by, pmcc_delete, pmcc_pmfid) FROM stdin;
-252	151	\N	2014-07-07 15:49:41-07	uat_customer1	1234	\N	\N	\N	N	1132
-253	151	\N	2014-07-08 01:49:19-07	uat_supervisor1	Artist1	\N	\N	\N	N	1133
-254	151	\N	2014-07-08 01:50:18-07	uat_artist1	1234	\N	\N	\N	N	1140
+260	154	\N	2014-07-08 19:27:18-07	uat_customer1	Urgent!	\N	\N	\N	N	1158
 \.
 
 
@@ -3905,7 +3903,7 @@ COPY fcpmcasecomment (pmcc_id, pmcc_pmcid, pmcc_parentid, pmcc_created_date, pmc
 -- Name: fcpmcasecomment_pmcc_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcasecomment_pmcc_id_seq', 254, true);
+SELECT pg_catalog.setval('fcpmcasecomment_pmcc_id_seq', 260, true);
 
 
 --
@@ -3943,16 +3941,8 @@ SELECT pg_catalog.setval('fcpmcaseflag_pmcf_id_seq', 44, true);
 --
 
 COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_prev_pmcnid, pmf_start_date, pmf_end_date, pmf_end_status, pmf_due_date, pmf_last_perform_date, pmf_end_by, pmf_end_pmfid, pmf_from_event_gateway, pmf_last_timer_check_date, pmf_timer_due_date, pmf_timer_due_count) FROM stdin;
-1132	151	1	PM_Event	\N	\N	2014-07-07 15:49:41-07	2014-07-07 15:49:41-07	DONE	\N	2014-07-07 15:49:41-07	uat_customer1	1132	N	\N	\N	\N
-1133	151	1	PM_Activity	1132	1	2014-07-07 15:49:41-07	2014-07-08 01:49:20-07	DONE	2014-07-07 16:04:41-07	2014-07-08 01:49:19-07	uat_supervisor1	1133	N	\N	2014-07-07 16:04:41-07	\N
-1134	151	1	PM_Gateway	1133	2	2014-07-08 01:49:20-07	2014-07-08 01:49:20-07	DONE	\N	2014-07-08 01:49:20-07	uat_supervisor1	1134	N	\N	\N	\N
-1135	151	2	PM_Gateway	1134	4	2014-07-08 01:49:20-07	2014-07-08 01:49:20-07	DONE	\N	2014-07-08 01:49:20-07	uat_supervisor1	1135	N	\N	\N	\N
-1137	151	3	PM_Event	1135	6	2014-07-08 01:49:20-07	2014-07-08 01:49:49-07	INTERRUPT	\N	2014-07-08 01:49:20-07	uat_artist1	1136	Y	2014-07-08 01:49:20-07	2014-07-08 09:05:00-07	\N
-1136	151	2	PM_Event	1135	5	2014-07-08 01:49:20-07	2014-07-08 01:49:49-07	DONE	2014-07-08 09:01:00-07	2014-07-08 01:49:49-07	uat_artist1	1136	Y	\N	\N	\N
-1138	151	4	PM_Gateway	1136	14	2014-07-08 01:49:49-07	2014-07-08 01:49:49-07	DONE	\N	2014-07-08 01:49:49-07	uat_artist1	1138	N	\N	\N	\N
-1139	151	14	PM_Activity	1138	15	2014-07-08 01:49:49-07	2014-07-08 01:49:52-07	DONE	\N	2014-07-08 01:49:49-07	uat_artist1	1139	N	\N	\N	\N
-1140	151	4	PM_Activity	1139	34	2014-07-08 01:49:52-07	2014-07-08 01:50:18-07	DONE	2014-07-08 13:00:00-07	2014-07-08 01:50:18-07	uat_artist1	1140	N	\N	2014-07-08 13:00:00-07	\N
-1141	151	5	PM_Activity	1140	17	2014-07-08 01:50:18-07	\N	\N	2014-07-08 10:20:00-07	\N	\N	\N	N	\N	2014-07-08 10:20:00-07	\N
+1158	154	1	PM_Event	\N	\N	2014-07-08 19:27:17-07	2014-07-08 19:27:17-07	DONE	\N	2014-07-08 19:27:17-07	uat_customer1	1158	N	\N	\N	\N
+1159	154	1	PM_Activity	1158	1	2014-07-08 19:27:17-07	\N	\N	2014-07-09 09:15:00-07	\N	\N	\N	N	\N	2014-07-09 09:15:00-07	\N
 \.
 
 
@@ -3960,7 +3950,7 @@ COPY fcpmcaseflow (pmf_id, pmf_pmcid, pmf_obj_id, pmf_obj_type, pmf_previd, pmf_
 -- Name: fcpmcaseflow_pmf_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 1141, true);
+SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 1159, true);
 
 
 --
@@ -3968,11 +3958,8 @@ SELECT pg_catalog.setval('fcpmcaseflow_pmf_id_seq', 1141, true);
 --
 
 COPY fcpmcaseflowassign (pmfa_id, pmfa_pmfid, pmfa_userid, pmfa_orgid, pmfa_rolid, pmfa_pmscode) FROM stdin;
-228	1132	\N	\N	\N	REQUEST_NEWJOB
-229	1133	\N	1	19	\N
-230	1136	uat_artist1	\N	\N	\N
-231	1140	uat_artist1	\N	\N	\N
-232	1141	\N	1	18	\N
+242	1158	\N	\N	\N	REQUEST_NEWJOB
+243	1159	\N	1	19	\N
 \.
 
 
@@ -3980,7 +3967,7 @@ COPY fcpmcaseflowassign (pmfa_id, pmfa_pmfid, pmfa_userid, pmfa_orgid, pmfa_roli
 -- Name: fcpmcaseflowassign_pmfa_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmcaseflowassign_pmfa_id_seq', 232, true);
+SELECT pg_catalog.setval('fcpmcaseflowassign_pmfa_id_seq', 243, true);
 
 
 --
@@ -4003,7 +3990,6 @@ COPY fcpmconnector (pmcn_id, pmcn_from_type, pmcn_from_id, pmcn_to_type, pmcn_to
 5	PM_Gateway	2	PM_Event	2	1	NORMAL	\N
 17	PM_Activity	4	PM_Activity	5	1	NORMAL	\N
 6	PM_Gateway	2	PM_Event	3	2	NORMAL	\N
-7	PM_Activity	2	PM_Activity	1	1	NORMAL	\N
 18	PM_Activity	5	PM_Gateway	5	1	NORMAL	\N
 8	PM_Event	3	PM_Activity	8	1	NORMAL	\N
 9	PM_Activity	8	PM_Gateway	3	1	NORMAL	\N
@@ -4031,6 +4017,9 @@ COPY fcpmconnector (pmcn_id, pmcn_from_type, pmcn_from_id, pmcn_to_type, pmcn_to
 16	PM_Gateway	4	PM_Activity	10	2	NORMAL	\N
 15	PM_Gateway	4	PM_Activity	14	1	NORMAL	4::false
 34	PM_Activity	14	PM_Activity	4	1	NORMAL	\N
+7	PM_Activity	2	PM_Gateway	7	1	NORMAL	\N
+36	PM_Gateway	7	PM_Activity	1	1	NORMAL	5::false
+37	PM_Gateway	7	PM_Event	12	2	NORMAL	5::true
 \.
 
 
@@ -4038,7 +4027,7 @@ COPY fcpmconnector (pmcn_id, pmcn_from_type, pmcn_from_id, pmcn_to_type, pmcn_to
 -- Name: fcpmconnector_pmcn_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmconnector_pmcn_id_seq', 34, true);
+SELECT pg_catalog.setval('fcpmconnector_pmcn_id_seq', 37, true);
 
 
 --
@@ -4057,6 +4046,7 @@ COPY fcpmevent (pmev_id, pmev_pmwfid, pmev_pmslid, pmev_name, pmev_type, pmev_ty
 2	1	3	Acknowledge Job	INTERMEDIATE	\N	updAcknowdgeJobStatus	PT1M	Y	Y	\N	\N	\N	\N
 7	1	\N	Late Requirement Verification Timer	TIMER	NONINTERRUPTING	\N	PT15M	Y	N	1	N	\N	\N
 3	1	\N	Late Job Acknowledgement	TIMER	\N	\N	PT5M	Y	N	\N	\N	\N	\N
+12	1	\N	Job Canceled	END	\N	\N	\N	N	N	\N	\N	\N	\N
 \.
 
 
@@ -4064,7 +4054,7 @@ COPY fcpmevent (pmev_id, pmev_pmwfid, pmev_pmslid, pmev_name, pmev_type, pmev_ty
 -- Name: fcpmevent_pmev_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmevent_pmev_id_seq', 11, true);
+SELECT pg_catalog.setval('fcpmevent_pmev_id_seq', 12, true);
 
 
 --
@@ -4078,6 +4068,7 @@ COPY fcpmgateway (pmgw_id, pmgw_pmwfid, pmgw_pmslid, pmgw_name, pmgw_type, pmgw_
 4	1	\N	Check Is Reverted Case	EXCLUSIVE	DIVERGENCE
 5	1	\N	Check QC Result	EXCLUSIVE	DIVERGENCE
 6	1	\N	Check Customer Acceptance	EXCLUSIVE	DIVERGENCE
+7	1	\N	Check Customer Resolution	EXCLUSIVE	DIVERGENCE
 \.
 
 
@@ -4085,7 +4076,7 @@ COPY fcpmgateway (pmgw_id, pmgw_pmwfid, pmgw_pmslid, pmgw_name, pmgw_type, pmgw_
 -- Name: fcpmgateway_pmgw_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcpmgateway_pmgw_id_seq', 6, true);
+SELECT pg_catalog.setval('fcpmgateway_pmgw_id_seq', 7, true);
 
 
 --
@@ -4261,6 +4252,7 @@ COPY fcrule (ru_id, ru_name, ru_true_msg, ru_false_msg, ru_data) FROM stdin;
 2	QC check decision	Revert	Forward to customer	[{"oper":"&&","clausetype":"udv","clausecode":"QCDEC","clauseoper":"==","clauseval":"Revert"}]
 3	Customer acceptance decision?	Accept	Revert	[{"oper":"&&","clausetype":"udv","clausecode":"CUSTDEC","clauseoper":"==","clauseval":"Accept"}]
 4	Is reverted job?	Yes	No	[{"oper":"&&","clausetype":"udv","clausecode":"JS_WIP_BEFORE","clauseoper":"==","clauseval":"Y"}]
+5	Customer Resolution Cancelled?	Cancelled	Not Cancelled	[{"oper":"&&","clausetype":"udv","clausecode":"CUSTRESODEC","clauseoper":"==","clauseval":"Cancel"}]
 \.
 
 
@@ -4268,7 +4260,7 @@ COPY fcrule (ru_id, ru_name, ru_true_msg, ru_false_msg, ru_data) FROM stdin;
 -- Name: fcrule_ru_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcrule_ru_id_seq', 4, true);
+SELECT pg_catalog.setval('fcrule_ru_id_seq', 5, true);
 
 
 --
@@ -4324,6 +4316,8 @@ JS_REQUESTOR_USERID	Job Requestor Userid	sql	select usr_userid from mjobsheet jo
 JS_ASSIGNED_ARTIST_USERID	Job Assigned Artist Userid	sql	select usr_userid from mjobsheet join fcuser on js_assignto = usr_userid where js_id = {$CASEKEY}	CELL	\N	\N	\N	USERID
 JS_EST_COMPLETE_TIME	Job estimate completion time	php	calculateCompletion({$CASEKEY})	CELL	\N	\N	\N	\N
 JS_REQUESTOR_NAME	Job Requestor Name	sql	select usr_name from mjobsheet join fcuser on js_request_by = usr_userid where js_id = {$CASEKEY}	CELL	\N	\N	\N	\N
+CUSTRESODEC_DISP	Customer Resolution Decision Display	sql	select case when js_decision='Cancel' then 'cancelled' else 'sent back for verification' end from mjobsheet where js_id = {$CASEKEY}	CELL	\N	\N	\N	\N
+CUSTRESODEC	Customer resolution decision	sql	select js_decision from mjobsheet where js_id = {$CASEKEY}	CELL	lookup	text	Cancel	\N
 \.
 
 
@@ -4352,7 +4346,6 @@ uat_supervisor3	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 22:56:56.546
 uat_manager2	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 23:44:37.191-07	UAT Manager2	dannyfoo@phiorion.com	2014-07-01 00:59:39-07	\N	\N	\N	a:0:{}	ACTIVE	\N
 fongcustomer	c3bb51e80fb8801251e17d265e6a84cdd3a65200	2014-06-21 04:09:47.371-07	Fong Customer	fong_yeh@hotmail.com	2014-06-21 04:10:15-07	2014-06-21 04:10:06-07	\N	\N	a:4:{s:7:"dbosess";a:1:{s:8:"jobsheet";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}}s:13:"PMTask_taskid";s:1:"1";s:15:"PMTask_tasktype";s:8:"PM_Event";s:9:"dboconfig";a:0:{}}	ACTIVE	\N
 uat_supervisor4	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 22:58:23.837-07	Uat supervisor 4	dannyfoo@phiorion.com	2014-06-25 21:29:16-07	2014-06-25 21:27:03-07	\N	\N	a:0:{}	ACTIVE	\N
-uat_qc1	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 06:50:16.091-07	Quality Assurance 1	dannyfoo@phiorion.com	2014-07-02 21:41:29-07	2014-07-02 21:41:04-07	\N	\N	a:0:{}	ACTIVE	\N
 uat_customer5	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 22:54:37.241-07	Uat customer 5	dannyfoo@phiorion.com	2014-07-03 23:01:58-07	2014-07-03 20:52:54-07	\N	\N	a:0:{}	ACTIVE	\N
 uat_supervisor5	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 22:58:54.09-07	Uat supervisor 5	dannyfoo@phiorion.com	2014-07-04 00:36:18-07	2014-07-04 00:35:54-07	\N	\N	a:0:{}	ACTIVE	EN-US
 artist2	09c04a14fff8cbd7d0235da2c01bfd31d7826824	2014-06-09 06:35:00.767-07	Artist 2	dannyfoo@phiorion.com	2014-06-30 01:40:49-07	2014-06-29 23:46:07-07	2014-06-22 07:37:16-07	\N	a:7:{s:7:"dbosess";a:5:{s:26:"pmtask_caseflow_list_event";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:3:"wip";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:121;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}s:8:"jobsheet";a:4:{s:6:"lastid";a:1:{s:5:"js_id";i:121;}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:6:"detail";}s:11:"flowsummary";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:6:{s:6:"pmc_id";s:0:"";s:7:"js_code";s:0:"";s:9:"js_status";s:0:"";s:15:"js_request_date";s:0:"";s:14:"js_description";s:0:"";s:10:"js_primcat";s:0:"";}s:5:"state";s:4:"list";}}s:13:"PMTask_taskid";s:2:"10";s:15:"PMTask_tasktype";s:11:"PM_Activity";s:9:"dboconfig";a:0:{}s:13:"PMTask_flowid";s:4:"1015";s:4:"type";s:11:"PM_Activity";s:6:"actvid";s:1:"4";}	ACTIVE	\N
@@ -4369,10 +4362,11 @@ uat_customer2	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 22:48:01.232-0
 uat_customer4	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 22:54:11.918-07	Uat customer 4	dannyfoo@phiorion.com	2014-06-30 20:19:04-07	2014-07-01 07:57:09-07	\N	\N	a:0:{}	ACTIVE	\N
 admin	d033e22ae348aeb5660fc2140aec35850c4da997	2013-08-14 18:55:18.85-07	Administrator	dannyfoo@phiorion.com	2014-07-03 00:39:08-07	2014-07-02 21:33:34-07	2014-06-24 03:01:03-07	ADMIN	a:0:{}	ACTIVE	EN-US
 newcust	5001bb8bbc319f44083f121452b480400657668a	2014-07-03 00:39:05.684-07	New customer in chinese	cust@cust.com	2014-07-03 00:39:22-07	2014-07-03 00:39:16-07	2014-07-03 00:39:12-07	\N	a:0:{}	ACTIVE	ZH-CN
-esp	9afb9d02e0ce944228e1001d2b103b3bb9aa7def	2014-06-21 03:25:38.5-07	Eng Shi Ping	dannyfoo@phiorion.com	2014-07-08 01:19:22-07	2014-07-08 01:16:52-07	2014-07-07 16:14:56-07	\N	a:3:{s:7:"dbosess";a:1:{s:9:"pendingQC";a:4:{s:6:"lastid";a:1:{s:5:"js_id";s:3:"129";}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"edit";}}s:7:"dboload";s:9:"pendingQC";s:9:"dboconfig";a:0:{}}	ACTIVE	EN-US
-uat_supervisor1	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 02:27:46.394-07	UAT Supervisor	dannyfoo@phiorion.com	2014-07-08 01:49:24-07	2014-07-08 01:49:06-07	2014-07-08 01:49:00-07	\N	a:0:{}	ACTIVE	EN-US
-uat_artist1	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 02:29:02.912-07	UAT Artist1	dannyfoo@phiorion.com	2014-07-08 01:16:50-07	2014-07-08 01:49:42-07	2014-06-24 04:04:06-07	\N	a:0:{}	ACTIVE	\N
-uat_customer1	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 22:50:43.739-07	Uat customer 1	dannyfoo@phiorion.com	2014-07-07 15:49:46-07	2014-07-07 15:47:49-07	2014-07-01 07:42:58-07	\N	a:0:{}	ACTIVE	EN-US
+uat_qc1	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 06:50:16.091-07	Quality Assurance 1	dannyfoo@phiorion.com	2014-07-08 01:56:49-07	2014-07-08 01:56:13-07	\N	\N	a:0:{}	ACTIVE	\N
+uat_supervisor1	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 02:27:46.394-07	UAT Supervisor	dannyfoo@phiorion.com	2014-07-08 01:54:34-07	2014-07-08 01:53:56-07	2014-07-08 01:49:00-07	\N	a:0:{}	ACTIVE	EN-US
+uat_artist1	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 02:29:02.912-07	UAT Artist1	dannyfoo@phiorion.com	2014-07-08 01:56:08-07	2014-07-08 01:55:52-07	2014-07-08 01:54:54-07	\N	a:0:{}	ACTIVE	\N
+esp	9afb9d02e0ce944228e1001d2b103b3bb9aa7def	2014-06-21 03:25:38.5-07	Eng Shi Ping	dannyfoo@phiorion.com	2014-07-11 02:05:16-07	2014-07-10 20:38:53-07	2014-07-07 16:14:56-07	\N	a:4:{s:7:"dbosess";a:2:{s:20:"pmtask_caseflow_list";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:4:"list";}s:8:"jobsheet";a:4:{s:6:"lastid";a:0:{}s:4:"sort";a:0:{}s:6:"search";a:0:{}s:5:"state";s:3:"new";}}s:13:"PMTask_taskid";s:1:"1";s:15:"PMTask_tasktype";s:8:"PM_Event";s:9:"dboconfig";a:0:{}}	ACTIVE	EN-US
+uat_customer1	5001bb8bbc319f44083f121452b480400657668a	2014-06-21 22:50:43.739-07	Uat customer 1	dannyfoo@phiorion.com	2014-07-10 19:19:06-07	2014-07-08 19:25:12-07	2014-07-01 07:42:58-07	\N	a:0:{}	ACTIVE	EN-US
 \.
 
 
@@ -4470,18 +4464,19 @@ COPY fcuserdiary (di_id, di_created, di_created_by, di_userid, di_duedate, di_ca
 78	2014-06-22 09:23:15.418-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "Test job" job is still pending since 22-Jun-2014 03:55 PM.</p><p><br></p>	READ	2014-06-22 09:23:15.418-07	\N	3
 79	2014-06-22 09:23:15.884-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "UAT job by ENG -1 " job is still pending since 22-Jun-2014 07:05 PM.</p><p><br></p>	READ	2014-06-22 09:23:15.884-07	\N	3
 80	2014-06-22 09:23:16.288-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "Test revert job" job is still pending since 22-Jun-2014 07:08 PM.</p><p><br></p>	READ	2014-06-22 09:23:16.288-07	\N	3
-129	2014-07-02 21:43:11.029-07	*moire	uat_customer1	\N	NOTICE	[MOIRE] Job Acknowledgement	<p>Dear Uat customer 1,</p><p>This email is to inform that your job request "Check fields" is now confirmed and acknowledged. </p><p><br></p><p>Estimate Time Required : 300 minutes (Working hour)</p><p>Estimate Completion Time : 3-Jul-2014 5:43 PM</p><div><br></div>	READ	2014-07-02 21:43:11.029-07	\N	3
-130	2014-07-02 23:08:34.973-07	*moire	uat_customer1	\N	NOTICE	[MOIRE] Job Acknowledgement	<p>Dear Uat customer 1,</p><p>This email is to inform that your job request "new job exceed SLA" is now confirmed and acknowledged. </p><p><br></p><p>Estimate Time Required : 240 minutes (Working hour)</p><p>Estimate Completion Time : 4-Jul-2014 9:08 AM</p><div><br></div>	READ	2014-07-02 23:08:34.973-07	\N	3
 81	2014-06-22 09:23:16.682-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "sad" job is still pending since 22-Jun-2014 10:25 PM.</p><p><br></p>	READ	2014-06-22 09:23:16.682-07	\N	3
 82	2014-06-22 09:23:17.087-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "asddsa" job is still pending since 22-Jun-2014 10:26 PM.</p><p><br></p>	READ	2014-06-22 09:23:17.087-07	\N	3
 83	2014-06-22 09:23:17.477-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "1" job is still pending since 22-Jun-2014 10:27 PM.</p><p><br></p>	READ	2014-06-22 09:23:17.477-07	\N	3
+129	2014-07-02 21:43:11.029-07	*moire	uat_customer1	\N	NOTICE	[MOIRE] Job Acknowledgement	<p>Dear Uat customer 1,</p><p>This email is to inform that your job request "Check fields" is now confirmed and acknowledged. </p><p><br></p><p>Estimate Time Required : 300 minutes (Working hour)</p><p>Estimate Completion Time : 3-Jul-2014 5:43 PM</p><div><br></div>	DELETED	2014-07-02 21:43:11.029-07	\N	3
 84	2014-06-22 09:23:17.848-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "12asd" job is still pending since 22-Jun-2014 10:29 PM.</p><p><br></p>	READ	2014-06-22 09:23:17.848-07	\N	3
 88	2014-06-22 09:23:18.464-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "Oder 2 by eng" job is still pending since 22-Jun-2014 10:25 PM.</p><p><br></p>	READ	2014-06-22 09:23:18.464-07	\N	3
 95	2014-06-30 02:43:22.135222-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "Esp case" job is still pending since 21-Jun-2014 10:17 AM.</p><p><br></p>	READ	2014-06-30 02:43:22.135222-07	\N	3
 97	2014-06-30 02:43:23.010533-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "Test job" job is still pending since 22-Jun-2014 03:55 AM.</p><p><br></p>	READ	2014-06-30 02:43:23.010533-07	\N	3
 98	2014-06-30 02:43:23.760528-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "UAT job by ENG -1 " job is still pending since 22-Jun-2014 07:05 AM.</p><p><br></p>	READ	2014-06-30 02:43:23.760528-07	\N	3
 99	2014-06-30 02:43:24.525236-07	*moire	uat_supervisor1	\N	NOTICE	[MOIRE] Late Requirement Verification Notification	<p>Dear Manager,</p><p>This email is to notify that the requirement verification for the "Test revert job" job is still pending since 22-Jun-2014 07:08 AM.</p><p><br></p>	READ	2014-06-30 02:43:24.525236-07	\N	3
-131	2014-07-08 01:49:51.813-07	*moire	uat_customer1	\N	NOTICE	[MOIRE] Job Acknowledgement	<p>Dear Uat customer 1,</p><p>This email is to inform that your job request "New job test printer" is now confirmed and acknowledged. </p><p><br></p><p>Estimate Time Required : 240 minutes (Working hour)</p><p>Estimate Completion Time : 8-Jul-2014 1:00 PM</p><div><br></div>	UNREAD	2014-07-08 01:49:51.813-07	\N	3
+132	2014-07-08 01:54:43.772-07	*moire	uat_customer1	\N	NOTICE	[MOIRE] Job Acknowledgement	<p>Dear Uat customer 1,</p><p>This email is to inform that your job request "test quality control list" is now confirmed and acknowledged. </p><p><br></p><p>Estimate Time Required : 240 minutes (Working hour)</p><p>Estimate Completion Time : 8-Jul-2014 1:00 PM</p><div><br></div>	DELETED	2014-07-08 01:54:43.772-07	\N	3
+131	2014-07-08 01:49:51.813-07	*moire	uat_customer1	\N	NOTICE	[MOIRE] Job Acknowledgement	<p>Dear Uat customer 1,</p><p>This email is to inform that your job request "New job test printer" is now confirmed and acknowledged. </p><p><br></p><p>Estimate Time Required : 240 minutes (Working hour)</p><p>Estimate Completion Time : 8-Jul-2014 1:00 PM</p><div><br></div>	DELETED	2014-07-08 01:49:51.813-07	\N	3
+130	2014-07-02 23:08:34.973-07	*moire	uat_customer1	\N	NOTICE	[MOIRE] Job Acknowledgement	<p>Dear Uat customer 1,</p><p>This email is to inform that your job request "new job exceed SLA" is now confirmed and acknowledged. </p><p><br></p><p>Estimate Time Required : 240 minutes (Working hour)</p><p>Estimate Completion Time : 4-Jul-2014 9:08 AM</p><div><br></div>	DELETED	2014-07-02 23:08:34.973-07	\N	3
 \.
 
 
@@ -4489,7 +4484,7 @@ COPY fcuserdiary (di_id, di_created, di_created_by, di_userid, di_duedate, di_ca
 -- Name: fcuserdiary_di_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcuserdiary_di_id_seq', 131, true);
+SELECT pg_catalog.setval('fcuserdiary_di_id_seq', 132, true);
 
 
 --
@@ -5465,6 +5460,20 @@ COPY fcuserlogin (ul_id, ul_userid, ul_ip, ul_success, ul_created, last_modified
 969	uat_supervisor1	127.0.0.1	Y	2014-07-08 01:49:06.639-07	2014-07-08 01:49:06.639-07	\N	N	\N
 970	uat_artist1	127.0.0.1	Y	2014-07-08 01:49:42.201-07	2014-07-08 01:49:42.201-07	\N	N	\N
 971	esp	127.0.0.1	Y	2014-07-08 01:16:52.587-07	2014-07-08 01:16:52.587-07	\N	N	\N
+972	uat_artist1	127.0.0.1	Y	2014-07-08 01:21:26.094-07	2014-07-08 01:21:26.094-07	\N	N	\N
+973	uat_qc1	127.0.0.1	Y	2014-07-08 01:21:34.51-07	2014-07-08 01:21:34.51-07	\N	N	\N
+974	esp	127.0.0.1	Y	2014-07-08 01:22:56.245-07	2014-07-08 01:22:56.245-07	\N	N	\N
+975	uat_customer1	127.0.0.1	Y	2014-07-08 01:24:18.344-07	2014-07-08 01:24:18.344-07	\N	N	\N
+976	esp	127.0.0.1	Y	2014-07-08 01:24:44.519-07	2014-07-08 01:24:44.519-07	\N	N	\N
+977	uat_customer1	127.0.0.1	Y	2014-07-08 01:37:58.98-07	2014-07-08 01:37:58.98-07	\N	N	\N
+978	uat_supervisor1	127.0.0.1	Y	2014-07-08 01:53:56.683-07	2014-07-08 01:53:56.683-07	\N	N	\N
+979	uat_artist1	127.0.0.1	Y	2014-07-08 01:54:38.637-07	2014-07-08 01:54:38.637-07	\N	N	\N
+980	uat_artist1	127.0.0.1	N	2014-07-08 01:54:51.855-07	2014-07-08 01:54:51.855-07	\N	N	\N
+981	uat_artist1	127.0.0.1	Y	2014-07-08 01:55:52.448-07	2014-07-08 01:55:52.448-07	\N	N	\N
+982	uat_qc1	127.0.0.1	Y	2014-07-08 01:56:13.153-07	2014-07-08 01:56:13.153-07	\N	N	\N
+983	uat_customer1	127.0.0.1	Y	2014-07-08 01:58:14.543-07	2014-07-08 01:58:14.543-07	\N	N	\N
+984	uat_customer1	127.0.0.1	Y	2014-07-08 19:25:12.725-07	2014-07-08 19:25:12.725-07	\N	N	\N
+985	esp	127.0.0.1	Y	2014-07-10 20:38:53.422-07	2014-07-10 20:38:53.422-07	\N	N	\N
 \.
 
 
@@ -5472,7 +5481,7 @@ COPY fcuserlogin (ul_id, ul_userid, ul_ip, ul_success, ul_created, last_modified
 -- Name: fcuserlogin_ul_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcuserlogin_ul_id_seq', 971, true);
+SELECT pg_catalog.setval('fcuserlogin_ul_id_seq', 985, true);
 
 
 --
@@ -5562,7 +5571,7 @@ COPY fcusersession (us_id, us_sessid, us_userid, us_ip, us_active, us_created, u
 796	v2ekh5la55i8voeb4ufut56ak5	artist2	192.168.0.128	Y	2014-06-29 23:46:07.456-07	2014-06-29 23:46:07-07	\N
 546	niamb5anjmlro4064p35o08ik6	fongsupervisor	192.168.0.148	Y	2014-06-21 06:52:33.397-07	2014-06-21 06:52:33-07	\N
 822	mclranlibq8n29dcqous479j13	uat_customer4	203.106.158.254	Y	2014-06-30 19:57:09.3224-07	2014-07-01 07:57:09-07	\N
-866	hq1fe2cc46153niigrou5j1hi1	esp	127.0.0.1	Y	2014-07-08 01:16:52.705-07	2014-07-08 01:16:52-07	\N
+879	hq1fe2cc46153niigrou5j1hi1	esp	127.0.0.1	Y	2014-07-10 20:38:53.569-07	2014-07-10 20:38:53-07	\N
 \.
 
 
@@ -5570,7 +5579,7 @@ COPY fcusersession (us_id, us_sessid, us_userid, us_ip, us_active, us_created, u
 -- Name: fcusersession_us_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('fcusersession_us_id_seq', 866, true);
+SELECT pg_catalog.setval('fcusersession_us_id_seq', 879, true);
 
 
 --
@@ -5843,6 +5852,8 @@ SELECT pg_catalog.setval('mcustprinter_cp_id_seq', 1, false);
 --
 
 COPY mjobbarcode (jbc_id, jbc_jsid, jbc_btcode, jbc_value) FROM stdin;
+51	132	CODE39	EN2481101
+52	132	CODE128	28811011
 \.
 
 
@@ -5850,7 +5861,7 @@ COPY mjobbarcode (jbc_id, jbc_jsid, jbc_btcode, jbc_value) FROM stdin;
 -- Name: mjobbarcode_jbc_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('mjobbarcode_jbc_id_seq', 50, true);
+SELECT pg_catalog.setval('mjobbarcode_jbc_id_seq', 52, true);
 
 
 --
@@ -5858,7 +5869,8 @@ SELECT pg_catalog.setval('mjobbarcode_jbc_id_seq', 50, true);
 --
 
 COPY mjobcat (jc_id, jc_jsid, jc_jclid) FROM stdin;
-278	129	2
+281	132	6
+282	132	2
 \.
 
 
@@ -5866,7 +5878,7 @@ COPY mjobcat (jc_id, jc_jsid, jc_jclid) FROM stdin;
 -- Name: mjobcat_jc_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('mjobcat_jc_id_seq', 278, true);
+SELECT pg_catalog.setval('mjobcat_jc_id_seq', 282, true);
 
 
 --
@@ -5894,7 +5906,7 @@ SELECT pg_catalog.setval('mjobcatlookup_jcl_id_seq', 8, true);
 --
 
 COPY mjoboutput (jo_id, jo_jsid, jo_outputcode) FROM stdin;
-105	129	
+108	132	2
 \.
 
 
@@ -5921,7 +5933,7 @@ SELECT pg_catalog.setval('mjoboutputlookup_jol_id_seq', 3, true);
 --
 
 COPY mjobsheet (js_id, js_orgid, js_ctid, js_request_date, js_request_by, js_title, js_model, js_description, js_material_provided, js_color_1, js_color_2, js_color_3, js_color_4, js_color_5, js_angle_1, js_angle_2, js_angle_3, js_angle_4, js_angle_5, js_bleeding, js_bleeding_remark, js_distortion, js_distortion_value, js_diecut_ind, js_diecut_no, js_trapping_size, js_primcat, js_status, js_completiondate, js_assignto, js_carid, js_decision, js_width, js_height, js_requiretime, js_request_dateinmth, js_jobcolor, js_lpi, js_mcid, js_code, js_month_occur, js_price, js_outputtype, js_outputwidth, js_outputheight, js_qcchecked) FROM stdin;
-129	9	\N	2014-07-07 15:49:41.33-07	uat_customer1	\N	\N	New job test printer	\N	#221100	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	Y	\N	\N	2	PENDING QC CHECK	\N	uat_artist1	\N	Assign	23	12	240	Jul-2014	1	\N	1	2014070001	1	5.0000	\N	\N	\N	\N
+132	9	\N	2014-07-08 19:27:17.78-07	uat_customer1	\N	\N	Nescafe carton box	\N	#221100	#441122	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	Y	\N	\N	2	REQUIREMENT VERIFICATION	\N	\N	\N	\N	\N	\N	300	Jul-2014	2	\N	\N	2014070001	1	25.0000	IMGSETTLE	1700	3000	\N
 \.
 
 
@@ -5929,7 +5941,7 @@ COPY mjobsheet (js_id, js_orgid, js_ctid, js_request_date, js_request_by, js_tit
 -- Name: mjobsheet_js_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('mjobsheet_js_id_seq', 129, true);
+SELECT pg_catalog.setval('mjobsheet_js_id_seq', 132, true);
 
 
 --
@@ -6037,7 +6049,7 @@ SELECT pg_catalog.setval('pndcontact_ct_id_seq', 6, true);
 -- Name: pndjoboutput_jo_id_seq; Type: SEQUENCE SET; Schema: pnd; Owner: pnd
 --
 
-SELECT pg_catalog.setval('pndjoboutput_jo_id_seq', 105, true);
+SELECT pg_catalog.setval('pndjoboutput_jo_id_seq', 108, true);
 
 
 --
