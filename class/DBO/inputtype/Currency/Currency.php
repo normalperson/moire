@@ -6,7 +6,7 @@ class DBO_InputType_Currency extends DBO_InputType{
 		$o = $dbo->cols[$col];
 		$option = ($o->format) ? $o->format : false;
 		$namedisp = $name."_disp";
-		$ret = $HTML->genInput('hidden', $name, $value, $ext);
+		$ret = $HTML->genInput('text', $name, $value, 'style="display:none"');
 		$ret .= $HTML->genInput('text', $namedisp, $value, $ext);
 		$ret .= 
 "<script type='text/javascript'>
@@ -16,7 +16,7 @@ class DBO_InputType_Currency extends DBO_InputType{
 		var currval = $(this).val(),
 			formatted = (currval) ? accounting.formatMoney(currval ".($option ? ",".$option : '').") : '';
 		$(this).val(formatted);
-		\$actualinp.val(formatted.replace(/[^0-9.]/g, ''));
+		\$actualinp.val(formatted.replace(/[^0-9.]/g, '')).keyup(); //keyup for jquery validation
 	}).change();
 })();
 </script>";
