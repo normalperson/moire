@@ -388,7 +388,7 @@ usrVal.init({
 // other row background color change to normal and checkbox untick
 // 
 
-(function (){		
+$( document ).ready(function() {
 	$(document.body).on('click', '#userorgrole input[type=checkbox]', function() {
 	    console.log('inside here');
 		$tablerow = $('#userorgrole tr');
@@ -398,7 +398,12 @@ usrVal.init({
 		if($this.prop('checked')) $this.closest('tr').css('background-color','#428bca');
 		else $this.closest('tr').css('background-color','#FFFFFF');
 	});
-})();
+	$('#dbo_clientuser_new_usr_userid, #dbo_clientuser_edit_usr_userid').blur(function(){
+		console.log('inside here');
+		console.log( $(this).val() );
+		$(this).val( $(this).val().toUpperCase() );
+	});
+});
 function addrow(){
 	var rowCount = $('#userorgrole tr').length;
 	var itemCount =0;
