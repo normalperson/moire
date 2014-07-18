@@ -10,9 +10,10 @@ $dbo->key = array('car_id');
 $dbo->sql = 'select a.*, car_id as "__map_mcartonvariable__carv_carid__",
 null as "__map_mcartonvariable__carv_code__", 
 null as "__map_mcartonvariable__carv_unit__",
+null as "__map_mcartonvariable__carv_seq__",
 \'\' as file
 from mcarton a';
-$dbo->col = array('car_id', 'car_name', 'car_status', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', 'file');
+$dbo->col = array('car_id', 'car_name', 'car_status', '__map_mcartonvariable__carv_carid__', '__map_mcartonvariable__carv_code__', '__map_mcartonvariable__carv_unit__', '__map_mcartonvariable__carv_seq__', 'file');
 $dbo->colList = array('car_name', 'car_status');
 $dbo->colListEdit = array('car_status');
 $dbo->colListNew = array();
@@ -25,7 +26,7 @@ $dbo->colExport = array('car_id', 'car_name', '__map_mcartonvariable__carv_carid
 $dbo->colSort = array();
 $dbo->canSearch = false;
 $dbo->canNew = true;
-$dbo->canEdit = false;
+$dbo->canEdit = true;
 $dbo->canDelete = true;
 $dbo->canDetail = false;
 $dbo->canListEdit = true;
@@ -46,6 +47,9 @@ $dbo->recordPerPage = 10;
 $dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
+$dbo->defaultDateFormat = 'yyyy-mm-dd';
+$dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
+$dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
 $dbo->render = array();
 $dbo->detailBack = 'Back';
@@ -158,6 +162,18 @@ $dbo->cols['car_status']->option->listMethod = 'text';
 $dbo->cols['car_status']->option->detailMethod = 'text';
 $dbo->cols['car_status']->option->newMethod = 'text';
 $dbo->cols['car_status']->option->editMethod = 'text';
+$dbo->cols['__map_mcartonvariable__carv_seq__'] = new DBO_COL('__map_mcartonvariable__carv_seq__', 'unknown', '-2', '-1');
+$dbo->cols['__map_mcartonvariable__carv_seq__']->inputTypeDefault = 'text';
+$dbo->cols['__map_mcartonvariable__carv_seq__']->mandatoryDefault = 1;
+$dbo->cols['__map_mcartonvariable__carv_seq__']->searchMode = 'exact';
+$dbo->cols['__map_mcartonvariable__carv_seq__']->capContClassDefault = array();
+$dbo->cols['__map_mcartonvariable__carv_seq__']->valContClassDefault = array();
+$dbo->cols['__map_mcartonvariable__carv_seq__']->option->defaultMethod = 'text';
+$dbo->cols['__map_mcartonvariable__carv_seq__']->option->searchMethod = 'text';
+$dbo->cols['__map_mcartonvariable__carv_seq__']->option->listMethod = 'text';
+$dbo->cols['__map_mcartonvariable__carv_seq__']->option->detailMethod = 'text';
+$dbo->cols['__map_mcartonvariable__carv_seq__']->option->newMethod = 'text';
+$dbo->cols['__map_mcartonvariable__carv_seq__']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

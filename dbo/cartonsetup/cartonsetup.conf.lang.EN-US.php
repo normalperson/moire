@@ -9,6 +9,7 @@ $dbo->cols['__map_mcartonvariable__carv_code__']->caption->set('default', 'Varia
 $dbo->cols['__map_mcartonvariable__carv_unit__']->caption->set('default', 'Unit', 'text');
 $dbo->cols['file']->caption->set('default', 'Picture', 'text');
 $dbo->cols['car_status']->caption->set('default', 'Status', 'text');
+$dbo->cols['__map_mcartonvariable__carv_seq__']->caption->set('default', 'Sequence', 'text');
 
 $dbo->titleList = 'List Carton';
 $dbo->titleDetail = 'Detail';

@@ -197,14 +197,15 @@ $(function () {
 		$imageinfo = $img->getImage('boxtype',$carid);
 
 
-		$sql = "select * from mcartonvariable where carv_carid = :0 order by carv_code";
+		$sql = "select * from mcartonvariable where carv_carid = :0 order by carv_seq";
 		$var = $DB->GetArray($sql,array($carid), PDO::FETCH_ASSOC);
 
 		if($jobid != 0){
 			$sql = "select * from mjscartonvalue
+					join mcartonvariable on carval_carcode = carv_code and carval_carid = carv_carid
 					where carval_carid = :0
 					and carval_jsid = :1
-					order by carval_carcode";
+					order by carv_seq";
 			$value = $DB->GetArray($sql,array($carid,$jobid), PDO::FETCH_ASSOC);				
 		}
 
