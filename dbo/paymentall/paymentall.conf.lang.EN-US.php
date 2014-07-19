@@ -1,18 +1,12 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
-$dbo->cols['iv_id']->caption->set('default', 'ID', 'text');
-$dbo->cols['iv_invoicedate']->caption->set('default', 'Invoice Date', 'text');
-$dbo->cols['iv_created']->caption->set('default', 'Record Creation Time', 'text');
-$dbo->cols['iv_orgid']->caption->set('default', 'Customer', 'text');
-$dbo->cols['iv_amount']->caption->set('default', 'Amount', 'text');
-$dbo->cols['iv_paid']->caption->set('default', 'Paid', 'text');
-$dbo->cols['iv_paydate']->caption->set('default', 'Payment Date', 'text');
-$dbo->cols['printbutton']->caption->set('default', ' ', 'text');
-$dbo->cols['iv_currency']->caption->set('default', 'iv_currency', 'text');
-$dbo->cols['iv_jsid']->caption->set('default', 'iv_jsid', 'text');
-$dbo->cols['paydisable']->caption->set('default', 'paydisable', 'text');
-$dbo->cols['real_iv_orgid']->caption->set('default', 'real_iv_orgid', 'text');
+$dbo->cols['pay_id']->caption->set('default', 'ID', 'text');
+$dbo->cols['pay_created']->caption->set('default', 'Record Time', 'text');
+$dbo->cols['pay_amount']->caption->set('default', 'Amount', 'text');
+$dbo->cols['pay_allocatedamount']->caption->set('default', 'Allocated Amount', 'text');
+$dbo->cols['pay_orgid']->caption->set('default', 'Company', 'text');
+$dbo->cols['ivids']->caption->set('default', 'ivids', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
