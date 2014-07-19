@@ -620,7 +620,8 @@ $( document ).ready(function() {
 			}
 			$categoryjob.filter(':checked').each(function () {
 				var clid = $(this).val();
-				if( parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]) > price ) 
+				console.log(clid + ' '+parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]));
+				if( parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]) > price ) {
 					price = parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]);					
 
 			});

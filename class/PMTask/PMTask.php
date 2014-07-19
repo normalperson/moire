@@ -625,7 +625,7 @@ $(function () {
 
 		$caseid = false;
 		$this->renderTopBar(null, null, $GLOBAL['PMTask_flowid'], $caseid);
-		if ($caseid) {
+		if ($caseid && !empty($case->activeFlow[$GLOBAL['PMTask_flowid']])) {
 			$case = new PM_Case($caseid);
 			$flowarr_before = array_keys($case->activeFlow);
 			$currid = $case->activeFlow[$GLOBAL['PMTask_flowid']]['pmf_obj_id'];
@@ -778,7 +778,7 @@ $(function () {
 				}
 				else if ($o->type == 'TIMER') {
 					$icon = 'fa-clock-o';
-					$action = '';
+					$action = '&nbsp;';
 				}
 				else if ($o->type == 'END') {
 					$icon = 'fa-circle-o';

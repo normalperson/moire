@@ -85,6 +85,7 @@ function showActionButtons($col, $colVal, $data=array(), $html=null) {
 	if (!empty($data['pmc_id'])) {	
 		include_once(CLASS_DIR.DS.'PMTask'.DS.'PMTask.php');	
 		$ret .= PMTask::showTimelineButton($data['pmc_id']);
+		$ret .= PMTask::showCommentButton($data['pmc_id']);
 	}
 	return $ret."</div>";
 }

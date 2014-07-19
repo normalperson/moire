@@ -51,9 +51,7 @@ function html_header($headerTemplate='header.html'){
 		
 		$HTML->smarty->assign('PMTask', $PMTask);
 		
-		
 		$HTML->genHeader($headerTemplate);
-
 	}
 }
 
