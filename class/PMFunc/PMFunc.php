@@ -77,7 +77,6 @@ class PMFunc{
 		echo 
 "<script type='text/javascript'>
 $(function () {
-	console.log($('#dbo_jobsheet_edit_cancel'));
 	$('#dbo_jobsheet_edit_cancel').removeAttr('onclick').removeClass('button').addClass('btn btn-danger').click(function (e) {
 		e.stopPropagation();
 		e.preventDefault();
@@ -198,13 +197,15 @@ $(function () {
 		$imageinfo = $img->getImage('boxtype',$carid);
 
 
-		$sql = "select * from mcartonvariable where carv_carid = :0";
+		$sql = "select * from mcartonvariable where carv_carid = :0 order by carv_seq";
 		$var = $DB->GetArray($sql,array($carid), PDO::FETCH_ASSOC);
 
 		if($jobid != 0){
 			$sql = "select * from mjscartonvalue
+					join mcartonvariable on carval_carcode = carv_code and carval_carid = carv_carid
 					where carval_carid = :0
-					and carval_jsid = :1";
+					and carval_jsid = :1
+					order by carv_seq";
 			$value = $DB->GetArray($sql,array($carid,$jobid), PDO::FETCH_ASSOC);				
 		}
 
@@ -263,6 +264,14 @@ $(function () {
 	function emailInvoice() {
 		sendMailFromTemplate('EMAIL_JOB_INVOICE');
 		return true;
+	}
+	
+	function autoCancelJob($flowid, $o) {	
+		global $DB;
+		$data = array(
+			'js_status'=>'CANCELLED',
+		);
+		return $DB->doUpdate('mjobsheet', $data, array('js_id'=>$o->casekey));
 	}
 	
 }

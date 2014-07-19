@@ -3,7 +3,19 @@ require(dirname(__FILE__).DIRECTORY_SEPARATOR.'customeracceptance.conf.php');
 
 # customization
 function dbo_customeracceptance_customize(&$dbo){
+	global $USER,$DB;
 	$dbo->editModifier = 'dbo_customeracceptance_custom_edit';
+	$sql = "select case when org_created < now() - interval '3 months' then 0 else 1 end
+			from fcorg
+			where org_id = :0";
+	$allowrevert = $DB->GetOne($sql,array($USER->orgid), PDO::FETCH_ASSOC);
+	if($allowrevert){
+			$dbo->cols['js_decision']->option->default = 'Accept
+		Revert';
+	}else{
+			$dbo->cols['js_decision']->option->default = 'Accept';
+	}
+
 }
 
 function dbo_customeracceptance_custom_edit($table, $cols, $wheres){

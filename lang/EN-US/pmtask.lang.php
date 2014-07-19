@@ -28,5 +28,6 @@ $translate = array (
   'The job has successfully been assigned to artist.' => 'The job has successfully been assigned to artist.',
   'The job has successfully been canceled.' => 'The job has successfully been canceled.',
   'The job has successfully been cancelled.' => 'The job has successfully been cancelled.',
+  'You\'ve received a new task' => 'You\'ve received a new task',
 );
 ?>

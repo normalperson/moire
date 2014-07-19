@@ -71,7 +71,6 @@
 	</div>	
 
 	<div class="col-sm-3">
-		<a href="{$Home->getFlowUrl(4,'PM_Activity')}">
 		<div class="stat-panel">
 			<!-- Success background. vertically centered text -->
 			<div class="stat-cell bg-success valign-middle">
@@ -80,9 +79,7 @@
 				<!-- Extra large text -->
 				<span class="text-xlg">
 					<strong>
-<!-- 		  			  Activity name   : "Work in progress "
-		                  Activity ID : 4 -->		
-							{$Home->getActivityData(4,'totalcount')}
+							{$Home->getWIP()}
 					</strong>
 				</span><br>
 				<!-- Big text -->
@@ -91,7 +88,6 @@
 				<span class="text-sm">{'work in progress'|tl:true:'home'}</span>
 			</div> <!-- /.stat-cell -->
 		</div> <!-- /.stat-panel -->	
-		</a>
 	</div>
 			
 </div>

@@ -149,8 +149,13 @@ function showRequiredMinute($col, $colVal, $data=array(), $html=null){
 }
 
 function showPrice($col, $colVal, $data, $html) {
+	global $USER,$DB;
+	// get the currency code by org
+	$sql = "select case when rg_convert = 'N' and rg_currency != 'MYR' then rg_currency else 'MYR' end currencycode
+			from fcorg join mregion on org_region = rg_code where org_id = :0";
+	$currcode = $DB->GetOne($sql,array($USER->orgid), PDO::FETCH_ASSOC);			
 	$fronthtml = substr($html,0, strpos($html, '</div>'));
-	$html = '<span class="input-group-addon">'.tl('RM',false,'newjob').'</span>'.$fronthtml.'</div>';
+	$html = '<span class="input-group-addon">'.tl($currcode,false,'newjob').'</span>'.$fronthtml.'</div>';
 	$html = '<div class="input-group">'.$html.'</div>';
 	return $html;
 }
@@ -257,7 +262,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 	where to_char(js_request_date,'YYYYMM') = :0", array($currmth));
 
 	// assign the price
-	$cols['js_price'] = $_POST['js_price'];
+	$price = $cols['js_price'];
 	/*handle currency by region*/
 	// get base currency
 	$sql = "select set_val from fcsetting where set_code= :0";
@@ -273,11 +278,11 @@ function dbo_jobsheet_custom_new($table, $cols){
 		$sql = "select cr_rate from fccurrency where cr_code = :0";
 		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
-		$cols['js_finalprice'] =  bcdiv($_POST['js_price'], $rate, 2);
+		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
 
 	}else{
-		$cols['js_finalprice'] = $_POST['js_price'];
+		$cols['js_finalprice'] = $price;
 		$cols['js_rate'] = 1;
 	}
 
@@ -337,10 +342,12 @@ function dbo_jobsheet_custom_new($table, $cols){
 
 		// output requirement handling part 2
 		$oparr = explode(",",$outputreq);
-		foreach ($oparr as $key => $value) {
-			// insert into mjoboutput
-			$opdata = array('jo_jsid' => $jobid, 'jo_outputcode' => $value);
-			$ok = $DB->doInsert('mjoboutput', $opdata);
+		if(!empty($oparr)){
+			foreach ($oparr as $key => $value) {
+				// insert into mjoboutput
+				$opdata = array('jo_jsid' => $jobid, 'jo_outputcode' => trim($value) );
+				$ok = $DB->doInsert('mjoboutput', $opdata);
+			}
 		}
 		foreach ($cartonarr as $key => $value) {
 			$cartondata = array(
@@ -387,7 +394,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 		if (substr($k,0,6) == '__map_') unset($cols[$k]);
 	}
 	// assign the price
-	$cols['js_price'] = $_POST['js_price'];
+	$price = $cols['js_price'];
 	$cols['js_status'] = 'REQUIREMENT VERIFICATION'; // after customer change
 	
 	$REMARK = $cols['remark']; // get the remark and insert after insert queue
@@ -419,11 +426,11 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 		$sql = "select cr_rate from fccurrency where cr_code = :0";
 		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
-		$cols['js_finalprice'] =  bcdiv($_POST['js_price'], $rate, 2);
+		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
 
 	}else{
-		$cols['js_finalprice'] = $_POST['js_price'];
+		$cols['js_finalprice'] = $price;
 		$cols['js_rate'] = 1;
 	}
 
@@ -562,9 +569,9 @@ $( document ).ready(function() {
 		$categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes();calPrice();}),
 		$requiredmin = $('#requiredmin'),
 		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime'),
-		//$priceinput = $('#dbo_jobsheet_new_js_price, #dbo_jobsheet_edit_js_price');
-		$priceinput = $('<input type="hidden" name="js_price" />');
-		$form = $('#dbo_jobsheet_newform,#dbo_jobsheet_editform').append($priceinput);
+		$priceinput = $('#dbo_jobsheet_new_js_price, #dbo_jobsheet_edit_js_price');
+		//$priceinput = $('<input type="hidden" name="js_price" />');
+		//$form = $('#dbo_jobsheet_newform,#dbo_jobsheet_editform').append($priceinput);
 
 
 	// estimated time calculation
@@ -616,15 +623,17 @@ $( document ).ready(function() {
 				if( parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]) > price ) 
 					price = parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]);					
 
+			});
+
+			$categoryjob.filter(':checked').each(function () {
+				var clid = $(this).val();
 				// get the barcode total price and add the output category price
 				if (jstimemap['JOBCAT'][clid]['pricecat'] == 'UNIT') {
 					if (jstimemap['JOBCAT'][clid]['title'].toUpperCase() == 'BARCODE') {
 						price += parseFloat(jstimemap['JOBCAT'][clid]['price'][0]) * $('#detail-jbc_jsid-table > tbody > tr').length;
 					}
 				}			
-
 			});
-
 
 			$priceinput.val(price);
 		}

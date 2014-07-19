@@ -34,6 +34,7 @@ if($currentOrgExternal=='Y'){
 	$bind[] = $currentOrgId;
 }
 $rs = $DB->getRowAssoc($sql, $bind);
+
 if(!$rs) die('Job not found!');
 // category
 $catRS = $DB->getArrayAssoc("select jcl_id, jcl_title from mjobcat join mjobcatlookup on jc_jclid = jcl_id where jc_jsid = :0", array($jsid));
@@ -43,18 +44,28 @@ $outputRS = $DB->getArrayAssoc("select lu_code, lu_title from mjoboutput join fc
 $rs['output_array'] = $outputRS?$outputRS:array();
 // remark
 $rs['customer_remark'] = $DB->getOne("select pmcc_comment from fcpmcase join fcpmcasecomment on pmc_id = pmcc_pmcid where pmc_casekey = :0 and pmc_casetype = 'jobsheet' order by pmcc_id asc limit 1 offset 0", array($jsid));
+
 // barcode
 $barcodeRS = $DB->getArrayAssoc("select jbc_btcode, bt_name, jbc_value from mjobbarcode join mbarcodetype on jbc_btcode = bt_code where jbc_jsid = :0", array($jsid));
 $rs['barcode_array'] = $barcodeRS?$barcodeRS:array();
+
+$companyname = $DB->GetOne("select org_name from fcorg where org_external = 'N' and org_parentid = 0",null, PDO::FETCH_ASSOC);
+$rs['companyname'] = $companyname;
+
+$companyadd = $DB->GetOne("select org_address from fcorg where org_external = 'N' and org_parentid = 0",null, PDO::FETCH_ASSOC);
+$rs['companyaddress'] = $companyadd;
+
 // carton
 // carton - image
 require_once(INCLUDE_DIR.'/Image.inc.php');
 $img = new Image();
 $imageinfo = $img->getImage('boxtype', $rs['js_carid']);
 $rs['carton_img_src'] = str_replace('\\', '/', $imageinfo);
+
 // carton - dimension
 $cartonRS = $DB->getArrayAssoc("select carv_code, caval_value, carv_unit from mjscartonvalue join mcartonvariable on carval_carcode = carv_code and carval_carid = carv_carid where carval_jsid = :0", array($jsid));
 $rs['carton_dimension_array'] = $cartonRS?$cartonRS:array();
+
 // pr($cartonRS);
 if($rs['js_requiretime']){
 	// yow locale
@@ -63,7 +74,7 @@ if($rs['js_requiretime']){
 	// $locale = new FCLocale();
 	$LOCALE->dateTimeAdd($dt, $adt);
 	$rs['preferredcompletiondatetime'] = $dt->format('Y-m-d H:i:s');
-	
+	#$rs['preferredcompletiondatetime'] = 'sample time';
 	// no locale
 	// $dt = new DateTime($rs['js_request_date']);
 	// $dt->add(new DateInterval('PT'.$rs['js_requiretime'].'M'));
@@ -71,6 +82,7 @@ if($rs['js_requiretime']){
 }else{
 	$rs['preferredcompletiondatetime'] = $rs['js_request_date'];
 }
+
 $smarty->assign('data', $rs);
 $smarty->display('printJob.html');
 ?>

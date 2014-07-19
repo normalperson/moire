@@ -171,6 +171,16 @@ class AppMenu extends Menu{
 		return "<img src='{$imgfile}' alt=\"{$USER->name}\" />";
 	}
 
+	function genOrgRoleToggle() {
+		global $USER;
+		$ret = array();
+		foreach ($USER->availableOrgRole as $r) {
+			if ($r['uor_id']!= $USER->userorgroleid)
+				$ret[] = "<li><a href='/".APP."?switchuor={$r['uor_id']}'><i class='dropdown-icon fa fa-retweet'></i>&nbsp;&nbsp;Switch To {$r['org_name']} - {$r['rol_name']}</a></li>";
+		}
+		return implode(" ", $ret);
+	}
+
 	function genClock($source = 'CLIENT', $useJSTime = false) {
 		global $LOCALE;
 		static $clockCount;
