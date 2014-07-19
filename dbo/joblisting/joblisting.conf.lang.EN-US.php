@@ -78,6 +78,7 @@ $dbo->cols['js_qcchecked']->caption->set('default', 'Quality control list', 'tex
 $dbo->cols['js_currency']->caption->set('default', 'Currency', 'text');
 $dbo->cols['js_finalprice']->caption->set('default', 'Price', 'text');
 $dbo->cols['js_rate']->caption->set('default', 'js_rate', 'text');
+$dbo->cols['js_totalinch']->caption->set('default', 'Total inch<sup>2</sup>', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';

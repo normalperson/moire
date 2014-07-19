@@ -22,12 +22,12 @@ group by jc_jsid) a on js_id = a.jc_jsid
 left join (
 select string_agg(jo_outputcode,\', \' order by jo_id) joboutput,jo_jsid from mjoboutput
 group by jo_jsid) b on js_id = b.jo_jsid';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_rate', 'pmc_id', 'filehistory', 'jobcategory', 'joboutput', 'printbutton', '__map_mjobbarcode__jbc_jsid__', '__map_mjobbarcode__jbc_btcode__', '__map_mjobbarcode__jbc_value__');
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_rate', 'js_totalinch', 'pmc_id', 'filehistory', 'jobcategory', 'joboutput', 'printbutton', '__map_mjobbarcode__jbc_jsid__', '__map_mjobbarcode__jbc_btcode__', '__map_mjobbarcode__jbc_value__');
 $dbo->colList = array('pmc_id', 'js_code', 'js_description', 'js_primcat', 'js_status', 'jobcategory', 'js_currency', 'js_finalprice', 'js_request_date', 'js_orgid', 'js_assignto', 'printbutton');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('js_description', 'pmc_id', 'js_code', 'js_request_by', 'js_request_date', 'js_mcid', 'js_jobcolor', 'joboutput', 'jobcategory', 'js_requiretime', 'js_trapping_size', 'js_lpi', 'js_outputtype', 'js_outputwidth', 'js_outputheight', '__map_mjobbarcode__jbc_jsid__', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_width', 'js_height', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
+$dbo->colDetail = array('js_description', 'pmc_id', 'js_code', 'js_request_by', 'js_request_date', 'js_mcid', 'js_jobcolor', 'joboutput', 'jobcategory', 'js_finalprice', 'js_requiretime', 'js_trapping_size', 'js_lpi', 'js_outputtype', 'js_outputwidth', 'js_outputheight', '__map_mjobbarcode__jbc_jsid__', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_qcchecked', 'js_totalinch', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
 $dbo->colNew = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid');
 $dbo->colEdit = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
 $dbo->colSearch = array('pmc_id', 'js_code', 'js_status', 'js_request_date', 'js_description', 'js_primcat', 'js_orgid', 'js_assignto');
@@ -55,7 +55,7 @@ $dbo->layoutDetail = '4;
 2|2;
 2|2;
 2|2;
-4;
+2|2;
 2|2;
 2|1|1;
 4;
@@ -63,7 +63,7 @@ $dbo->layoutDetail = '4;
 1|1|1|1;
 4;
 4;
-2|2;
+4;
 4;
 2|2;
 =
@@ -973,6 +973,8 @@ $dbo->cols['js_currency']->option->detailMethod = 'text';
 $dbo->cols['js_currency']->option->newMethod = 'text';
 $dbo->cols['js_currency']->option->editMethod = 'text';
 $dbo->cols['js_finalprice'] = new DBO_COL('js_finalprice', 'numeric', '-1', '1310728');
+$dbo->cols['js_finalprice']->displayDetailModifierMethod = 'phpfunc';
+$dbo->cols['js_finalprice']->displayDetailModifier = 'showPriceDet';
 $dbo->cols['js_finalprice']->inputTypeDefault = 'text';
 $dbo->cols['js_finalprice']->searchMode = 'exact';
 $dbo->cols['js_finalprice']->capContClassDefault = array();
@@ -994,6 +996,17 @@ $dbo->cols['js_rate']->option->listMethod = 'text';
 $dbo->cols['js_rate']->option->detailMethod = 'text';
 $dbo->cols['js_rate']->option->newMethod = 'text';
 $dbo->cols['js_rate']->option->editMethod = 'text';
+$dbo->cols['js_totalinch'] = new DBO_COL('js_totalinch', 'numeric', '-1', '1310728');
+$dbo->cols['js_totalinch']->inputTypeDefault = 'text';
+$dbo->cols['js_totalinch']->searchMode = 'exact';
+$dbo->cols['js_totalinch']->capContClassDefault = array();
+$dbo->cols['js_totalinch']->valContClassDefault = array();
+$dbo->cols['js_totalinch']->option->defaultMethod = 'text';
+$dbo->cols['js_totalinch']->option->searchMethod = 'text';
+$dbo->cols['js_totalinch']->option->listMethod = 'text';
+$dbo->cols['js_totalinch']->option->detailMethod = 'text';
+$dbo->cols['js_totalinch']->option->newMethod = 'text';
+$dbo->cols['js_totalinch']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

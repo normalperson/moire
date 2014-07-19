@@ -67,6 +67,10 @@ $dbo->cols['js_outputtype']->caption->set('default', 'js_outputtype', 'text');
 $dbo->cols['js_outputwidth']->caption->set('default', 'js_outputwidth', 'text');
 $dbo->cols['js_outputheight']->caption->set('default', 'js_outputheight', 'text');
 $dbo->cols['js_qcchecked']->caption->set('default', 'js_qcchecked', 'text');
+$dbo->cols['js_currency']->caption->set('default', 'js_currency', 'text');
+$dbo->cols['js_finalprice']->caption->set('default', 'js_finalprice', 'text');
+$dbo->cols['js_rate']->caption->set('default', 'js_rate', 'text');
+$dbo->cols['js_totalinch']->caption->set('default', 'Total Inch<sup>2</sup>', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
