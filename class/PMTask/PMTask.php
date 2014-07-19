@@ -778,7 +778,7 @@ $(function () {
 				}
 				else if ($o->type == 'TIMER') {
 					$icon = 'fa-clock-o';
-					$action = '';
+					$action = '&nbsp;';
 				}
 				else if ($o->type == 'END') {
 					$icon = 'fa-circle-o';
