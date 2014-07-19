@@ -623,14 +623,18 @@ $( document ).ready(function() {
 				if( parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]) > price ) 
 					price = parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]);					
 
+			});
+
+			$categoryjob.filter(':checked').each(function () {
+				var clid = $(this).val();
 				// get the barcode total price and add the output category price
 				if (jstimemap['JOBCAT'][clid]['pricecat'] == 'UNIT') {
 					if (jstimemap['JOBCAT'][clid]['title'].toUpperCase() == 'BARCODE') {
 						price += parseFloat(jstimemap['JOBCAT'][clid]['price'][0]) * $('#detail-jbc_jsid-table > tbody > tr').length;
 					}
 				}			
-
 			});
+
 
 
 			$priceinput.val(price);
