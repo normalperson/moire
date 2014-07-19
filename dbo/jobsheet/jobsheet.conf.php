@@ -692,6 +692,7 @@ $dbo->cols['js_carid']->option->newMethod = 'text';
 $dbo->cols['js_carid']->option->editMethod = 'text';
 $dbo->cols['jobcategory'] = new DBO_COL('jobcategory', 'varchar', '-1', '-1');
 $dbo->cols['jobcategory']->inputTypeDefault = 'PixelAdminCheckboxInline';
+$dbo->cols['jobcategory']->mandatoryDefault = 1;
 $dbo->cols['jobcategory']->searchMode = 'exact';
 $dbo->cols['jobcategory']->capContClassDefault = array();
 $dbo->cols['jobcategory']->valContClassDefault = array();
