@@ -233,7 +233,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 
 	*/
 	// handle file upload if empty 
-	if(!empty($cols['attachment']['name'])) {
+	if($cols['attachment'] == '') {
 		/*$ret = "Attachement cannot be empty";
 		return $ret;*/
 		unset($cols['attachment']);
@@ -241,9 +241,9 @@ function dbo_jobsheet_custom_new($table, $cols){
 	else{
 		$attachment = json_decode($cols['attachment'],true);
 		// validate rar or zip format
-
 		unset($cols['attachment']); 
 	}
+
 	
 	foreach ($cols as $k=>$v) {
 		if (substr($k,0,6) == '__map_') unset($cols[$k]);
@@ -389,15 +389,15 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$ret = array();
 	$jobid = $wheres["js_id"];
 	// handle file upload if empty 
-	if(!empty($cols['attachment']['name'])) {
+	if($cols['attachment'] == '') {
 		/*$ret = "Attachement cannot be empty";
 		return $ret;*/
 		unset($cols['attachment']);
 	}
 	else{
-		unset($cols['attachment']);
+		$attachment = json_decode($cols['attachment'],true);
 		// validate rar or zip format
-		// upload the the right place...
+		unset($cols['attachment']); 
 	}
 
 	foreach ($cols as $k=>$v) {
@@ -521,6 +521,11 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 				'carval_jsid' => $jobid
 			);
 			$ok = $DB->doInsert('mjscartonvalue', $cartondata);			
+		}
+		if(isset($attachment) && $attachment!=''){
+			// upload the the right place...
+			$doc = new DocumentManager();
+			$doc->saveMultipleFile($attachment,$jobid,'js_id');
 		}
 
 		$FLOWDECISION=true;

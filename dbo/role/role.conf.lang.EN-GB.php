@@ -10,6 +10,7 @@ $dbo->cols['last_synchronized_date']->caption->set('default', 'last_synchronized
 $dbo->cols['record_synchronized']->caption->set('default', 'record_synchronized', 'text');
 $dbo->cols['cloud_refid']->caption->set('default', 'cloud_refid', 'text');
 $dbo->cols['rol_status']->caption->set('default', 'Status', 'text');
+$dbo->cols['rol_name']->caption->set('default', 'rol_name', 'text');
 
 $dbo->titleList = 'List Role';
 $dbo->titleDetail = 'Detail';
@@ -22,6 +23,17 @@ $dbo->text->editCancel = 'Cancel';
 $dbo->text->editSubmit = 'Save';
 $dbo->text->newCancel = 'Cancel';
 $dbo->text->newSubmit = 'Save';
+$dbo->text->listSubmit = 'Submit';
 $dbo->text->detailCancel = 'Back';
+$dbo->text->detailDelete = 'Delete';
+$dbo->text->listEdit = 'Edit';
+$dbo->text->listDelete = 'Delete';
+$dbo->text->listDetail = 'Detail';
+$dbo->text->messageAfterNew = '';
+$dbo->text->messageAfterEdit = '';
+$dbo->text->messageAfterDelete = '';
+$dbo->text->defaultMessageAfterNew = 'Record created.';
+$dbo->text->defaultMessageAfterEdit = 'Record updated.';
+$dbo->text->defaultMessageAfterDelete = 'Record deleted.';
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
-$dbo->cols['rol_id']->caption->set('default', 'Role ID', 'text');
+$dbo->cols['rol_id']->caption->set('default', 'rol_id', 'text');
 $dbo->cols['rol_code']->caption->set('default', 'Role Code', 'text');
 $dbo->cols['rol_desc']->caption->set('default', 'Role Desc', 'text');
 $dbo->cols['rol_permission']->caption->set('default', 'Permission', 'text');
@@ -10,7 +10,7 @@ $dbo->cols['last_synchronized_date']->caption->set('default', 'last_synchronized
 $dbo->cols['record_synchronized']->caption->set('default', 'record_synchronized', 'text');
 $dbo->cols['cloud_refid']->caption->set('default', 'cloud_refid', 'text');
 $dbo->cols['rol_status']->caption->set('default', 'Status', 'text');
-$dbo->cols['rol_name']->caption->set('default', 'Role name', 'text');
+$dbo->cols['rol_name']->caption->set('default', 'rol_name', 'text');
 
 $dbo->titleList = 'List Role';
 $dbo->titleDetail = 'Detail';

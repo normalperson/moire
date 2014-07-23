@@ -1,7 +1,8 @@
 <?php
-/*Last Modified by uat_supervisor1 on 13-07-2014 02:21:39*/
+/*Last Modified by uat_customer1 on 19-07-2014 14:57:29*/
 $translate = array (
   'Notifications' => 'Notifications',
   'VIEW ALL' => 'VIEW ALL',
+  'NO NOTIFICATION' => 'NO NOTIFICATION',
 );
 ?>
