@@ -15,6 +15,7 @@ $dbo->cols['paydisable']->caption->set('default', 'paydisable', 'text');
 $dbo->cols['real_iv_orgid']->caption->set('default', 'real_iv_orgid', 'text');
 $dbo->cols['paidamount']->caption->set('default', 'paidamount', 'text');
 $dbo->cols['unpaidamount']->caption->set('default', 'unpaidamount', 'text');
+$dbo->cols['date_trunc']->caption->set('default', 'date_trunc', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

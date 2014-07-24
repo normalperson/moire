@@ -19,7 +19,7 @@ class Moire{
 	// currently every job should has 1 invoice generated on client accepting or auto accepting
 	function invoice_generate($jsid=false){
 		global $DB;
-		$DB->showsql=1;
+		// $DB->showsql=1;
 		$jobRS = $DB->getRowAssoc("select js_orgid, js_currency, js_finalprice from mjobsheet where js_id = :0", array($jsid));
 		if(!$jobRS) return false;
 		// $DB->beginTrans();

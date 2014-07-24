@@ -23,8 +23,8 @@ if($currentOrgExternal=='Y'){
 $rs = $DB->getRowAssoc($sql, $bind);
 if(!$rs) die('Invoice not found!');
 // customer
-$customerRS = $DB->getRowAssoc("select * from fcorg where org_id = :0", array($rs['iv_orgid']));
-$jobRS = $DB->getArrayAssoc("select js_description, js_price, pmc_id from mjobsheet join fcpmcase on pmc_casekey = js_id and pmc_casetype = 'jobsheet' where js_completiondate between :0 and :1 and js_orgid = :2", array(date('Y-m-01', strtotime($rs['iv_invoicedate'])), date('Y-m-t', strtotime($rs['iv_invoicedate'])), $rs['iv_orgid']));
+$customerRS = $DB->getRowAssoc("select * from fcorg left join mregion on org_region = rg_code where org_id = :0", array($rs['iv_orgid']));
+$jobRS = $DB->getArrayAssoc("select js_description, js_price, pmc_id from mjobsheet join fcpmcase on pmc_casekey = js_id and pmc_casetype = 'jobsheet' where js_id = :0", array($rs['iv_jsid']));
 $total_price = 0;
 foreach($jobRS as $row){
 	$total_price += $row['js_price'];
