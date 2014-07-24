@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+#print_task_container{
+	font-family: Segoe UI,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+	width: 21cm;
+	color:#000000;
+}
+
+table.print_task_table{
+	border-spacing: 10px;
+    border-collapse: separate;
+}
+
+table.print_task_table th{
+	height:30px;
+	text-align:left;
+	padding:5px;
+	background-color:#d5dde5;
+	-webkit-print-color-adjust: exact;
+	vertical-align:top;
+}
+
+table.print_task_table td{
+	vertical-align:top;
+	padding:2px 3px;
+}
+
+table.print_task_table td th{
+	background-color:transparent;
+	text-align:left;
+}
+
+table.print_task_table ul.pj_ul{
+	margin:0px;
+	padding:0px;
+	list-style-type:none;
+}
+
+table.invoice_table > thead > tr > th, table.invoice_table > tfoot > tr > th{
+	border-top:2px solid #EEEEEE;
+	border-bottom:2px solid #EEEEEE;
+	padding:3px;
+	vertical-align:middle;
+	text-align:center;
+}
+
+@media print{
+	body{
+		background-color:white;
+	}
+	#main-navbar{
+		display:none;
+	}
+	#main-menu{
+		display:none;
+	}
+	#main-menu-bg{
+		display:none;
+	}
+	div.slimScrollDiv{
+		display:none;
+	}
+	#content-wrapper{
+		position:absolute;
+	}
+	#print_task_container{
+	}
+	div.print_button_container{
+		display:none;
+	}
+}
+</style>
+</head>
+<body>
+<div id="print_task_container">
+<div style="text-align:right;" class="print_button_container">
+	<input type="button" class="btn btn-primary" onclick="window.print();" value="Print"/></div>
+<table class="print_task_table" width="100%">
+	<tr>
+		<td align="center">
+			<table>
+				<tr>
+					<td valign="top"><img src="/{$APP}/image/printInvoice_logo.png" style="width:100%"/></td>
+					<td align="center" valign="top">
+						<div style="text-align:center;"><span style="font-weight:bold;font-size:1.2em;">P&amp;D DYNAMIC SDN BHD</span><span style="padding-left:10px;font-size:0.8em;">683705-P</span></div>
+						<div style="text-align:center;">NO.199, JALAN KIP 6,</div>
+						<div style="text-align:center;">TAMAN PERINDUSTRIAN KIP</div>
+						<div style="text-align:center;">52200 KUALA LUMPUR</div>
+						<div style="text-align:center;">Tel : 03-62774755 &nbsp; Fax : 03-62742915</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td valign="top" style="border:2px solid grey;border-radius:10px;">
+						<table cellpadding="0" cellspacing="0">
+							<tr>
+								<td colspan="2">{$customerData['org_name']}</td>
+							</tr>
+							<tr>
+								<td colspan="2">{$customerData['org_address']}</td>
+							</tr>
+							<tr>
+								<td colspan="2">&nbsp;</td>
+							</tr>
+							<tr>
+								<td>Tel : </td>
+								<td>{$customerData['org_contactno']}</td>
+							</tr>
+						</table>
+					</td>
+					<td valign="top" width="45%">
+						<div style="font-size:2em;font-weight:bold;text-align:right;">STATEMENT OF ACCOUNT</div>
+						<div>&nbsp;</div>
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td>TERM</td>
+								<td>MONTH</td>
+								<td align="right">PAGE</td>
+								<td align="center">DATE</td>
+							</tr>
+							<tr>
+								<td>30 DAYS</td>
+								<td>{$soa_date}</td>
+								<td align="right">1</td>
+								<td align="center">{$date}</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" class="invoice_table" border="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th align="left">DATE</th>
+						<th align="left">REF. NO.</th>
+						<th align="left">DESCRIPTION</th>
+						<th align="right">DEBIT</th>
+						<th align="right">CREDIT</th>
+						<th align="right">BALANCE</th>
+					</tr>
+				</thead>
+				<tbody>
+{assign var=amount_accu value=0}
+{foreach $invoiceData as $no=>$row}
+	{assign var=amount_accu value=$amount_accu+$row.iv_amount}
+					<tr>
+						<td align="left">{$row.iv_invoicedate|date_format:"%d/%m/%Y"}</td>
+						<td align="left">{$row.invoice_no}</td>
+						<td align="left">{$row.js_description}</td>
+						<td align="right">{$row.iv_amount|number_format:2}</td>
+						<td align="right">a</td>
+						<td align="right">{$amount_accu|number_format:2}</td>
+					</tr>
+{/foreach}
+					<tr>
+						<td colspan="6">&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan="6">{$customerData.cr_name|upper} : {$total_amount_word|upper}</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="4"></th>
+						<th>Total</th>
+						<th>{$customerData.cr_code} {$amount_accu|number_format:2}</th>
+					</tr>
+				</tfoot>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table border="1" style="width:100%">
+				<tr>
+{foreach $arrearData as $no=>$row}
+					<td width="16%">
+						<div style="text-align:right;">{$row.month}</div>
+						<div style="text-align:right;">{$row.amount|number_format:2}</div>
+					</td>
+	{if $no==5}
+				</tr><tr>
+	{/if}
+{/foreach}
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div>WE SHALL BE GRATEFUL IF YOU WILL LET US HAVE PAYMENT AS SOON AS POSSIBLE.</div>
+			<div>ANY DISCREPANCY IN THIS STATEMENT PLEASE INFORM US IN WRITING WITHIN 10 DAYS.</div>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>
