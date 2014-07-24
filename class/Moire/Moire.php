@@ -44,7 +44,6 @@ class Moire{
 		global $DB;
 		$smarty = new Smarty();
 		$smarty->caching = false;
-		// die(DOC_DIR.DS.'smarty'.DS.'templates');
 		$smarty->setTemplateDir(DOC_DIR.DS.'smarty'.DS.'templates');
 		$smarty->setCompileDir(DOC_DIR.DS.'smarty'.DS.'templates_c');
 		$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
@@ -62,30 +61,55 @@ class Moire{
 		$smarty->assign('customerData', $customerRS);
 
 		$ret = $smarty->fetch('printInvoice.html');
+		// echo $ret;
+		return $ret;
+	}
+	
+	function soa_as_html($orgID){
+		global $DB;
+		$smarty = new Smarty();
+		$smarty->caching = false;
+		$smarty->setTemplateDir(DOC_DIR.DS.'smarty'.DS.'templates');
+		$smarty->setCompileDir(DOC_DIR.DS.'smarty'.DS.'templates_c');
+		$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
+		$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
+		$smarty->assign('APP', APP);
+		
+		$pndRS = $DB->getRowAssoc("select org_id, org_name, org_address, org_contactno from fcorg where org_external = 'N' and org_parentid = 0");
+		$smarty->assign('pndData', $pndRS);
+		
+		$orgRS = $DB->getRowAssoc("select org_id, org_name, org_address, org_contactno, rg_currency, cr_code, cr_name from fcorg left join mregion on org_region = rg_code left join fccurrency on rg_currency = cr_code where org_id = :0", array($orgID));
+		if(!$orgRS) return false;
+		$smarty->assign('customerData', $orgRS);
+		$smarty->assign('date', date('d/m/Y'));
+		$smarty->assign('soa_date', date('M Y'));
+		
+		$invoiceRS = $DB->getArrayAssoc("select iv_id, lpad(iv_id::text, 8, '0') as invoice_no, iv_invoicedate, iv_amount, 0 as credit, js_description 
+from minvoice join mjobsheet on iv_jsid = js_id where iv_orgid = :0 and iv_paid != 'Y' order by iv_invoicedate asc, iv_id asc", array($orgID));
+		$smarty->assign('invoiceData', $invoiceRS);
+		$totalAmount = 0;
+		foreach($invoiceRS as $row){
+			$totalAmount += $row['iv_amount'];
+		}
+		$smarty->assign('total_amount_word', $this->convertNumberToCurrency($totalAmount).' ONLY');
+		
+		$arrearsArray = array();
+		for($i=12;$i>0;$i--){
+			$time = strtotime("-".$i." month");
+			$startDate = date('Y-m-01', $time);
+			$endDate = date('Y-m-t', $time);
+			$sum = $DB->getOne("select coalesce(sum(coalesce(iv_amount, 0)), 0) from minvoice where iv_orgid = :0 and iv_paid !='Y' and iv_invoicedate between :1 and :2", array($orgID, $startDate, $endDate));
+			$arrearsArray[] = array('month'=>date('F', $time), 'amount'=>$sum);
+		}
+		$smarty->assign('arrearData', $arrearsArray);
+
+		$ret = $smarty->fetch('soa.html');
 		echo $ret;
 		return $ret;
 	}
 	
-	// $month=YYYYMMDD, $orgID
-	function generate_soa($month=false, $orgID=false){
-		global $DB;
-		if($month===false){
-			$soaDate = date('Y-m-01', strtotime('last month'));
-		}
-		$startDate = date('Y-m-01', strtotime($soaDate));
-		$endDate = date('Y-m-t', strtotime($soaDate));
-		$whereArr = array("org_external = 'Y'");
-		if($orgID) $whereArr[] = "org_id = ".$orgID;
-		$orgRS = $DB->getArrayAssoc("select org_id, org_name, org_contactno, org_address from fcorg where ".implode(' and ', $whereArr));
-		if(!$orgRS) return false;
-		foreach($orgRS as $org){
-			$DB->execute("delete from msoa where soa_orgid = :0 and soa_soadate = :1", array($org['org_id'], $startDate));
-			$DB->execute("insert into msoa (soa_orgid, soa_soadate) values (:0, :1)", array($org['org_id'], $startDate));
-			// $DB->execute("");
-		}
-	}
-	
-	function soa_as_html(){
+	function genInvoiceNumber($invID){
+		return sprintf('%08d', $invID);
 	}
 	
 	// to allocate unallocated payment

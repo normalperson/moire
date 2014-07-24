@@ -121,7 +121,10 @@ function dbo_joblisting_customize(&$dbo){
 	
 	if($currentOrgExternal=='Y'){
 		$dbo->whereSQL = "js_orgid = ".$USER->orgid;
-	}	
+		$dbo->colSearch = array('pmc_id', 'js_code', 'js_status', 'js_request_date', 'js_description', 'js_primcat', 'js_assignto');
+	}else{
+		$dbo->colSearch = array('pmc_id', 'js_code', 'js_status', 'js_request_date', 'js_description', 'js_primcat', 'js_orgid', 'js_assignto');
+	}
 
 	if( isset($_GET['active']) && $_GET['active'] == 'true' ){
 		$GLOBAL['actvorder'] = true;
