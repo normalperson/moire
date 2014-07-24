@@ -7,6 +7,7 @@ $dbo->cols['pay_amount']->caption->set('default', 'Amount', 'text');
 $dbo->cols['pay_allocatedamount']->caption->set('default', 'Allocated Amount', 'text');
 $dbo->cols['pay_orgid']->caption->set('default', 'Company', 'text');
 $dbo->cols['ivids']->caption->set('default', 'ivids', 'text');
+$dbo->cols['pay_status']->caption->set('default', 'pay_status', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

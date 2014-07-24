@@ -28,5 +28,12 @@ function fonginput_customize(&$dbo){
 
 require_once(DOC_DIR.DS.'class'.DS.'Moire'.DS.'Moire.php');
 $moire = new Moire();
-$moire->invoice_generate(133);
+// $moire->invoice_generate(133);
+
+vd($moire->convertNumberToCurrency(12111122.01));
+vd($moire->convertNumberToCurrency(12111122.21));
+vd($moire->convertNumberToCurrency(12111122.1));
+vd($moire->convertNumberToCurrency(12111122.123));
+vd($moire->convertNumberToCurrency(12111122.125));
+vd($moire->convertNumberToCurrency(12111122.127));
 ?>

@@ -7,12 +7,12 @@ $dbo->id = $dboID;
 $dbo->fileSaveMode = 511;
 $dbo->table = 'mpayment';
 $dbo->key = array('pay_id');
-$dbo->sql = 'select pay_id, pay_created, pay_amount, pay_allocatedamount, pay_orgid, 
+$dbo->sql = 'select pay_id, pay_created, pay_amount, pay_allocatedamount, pay_orgid, pay_status, 
 string_agg(to_char(pi_ivid, \'999\'), \', \') as ivids 
 from mpayment left join mpaymentinvoice on pay_id = pi_payid 
-group by pay_id, pay_created, pay_amount, pay_allocatedamount, pay_orgid';
-$dbo->col = array('pay_id', 'pay_created', 'pay_amount', 'pay_allocatedamount', 'pay_orgid', 'ivids');
-$dbo->colList = array('pay_orgid', 'pay_amount', 'pay_allocatedamount', 'pay_created');
+group by pay_id, pay_created, pay_amount, pay_allocatedamount, pay_orgid, pay_status';
+$dbo->col = array('pay_id', 'pay_created', 'pay_amount', 'pay_allocatedamount', 'pay_orgid', 'pay_status', 'ivids');
+$dbo->colList = array('pay_orgid', 'pay_amount', 'pay_allocatedamount', 'pay_created', 'pay_status');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
@@ -132,6 +132,19 @@ $dbo->cols['ivids']->option->listMethod = 'text';
 $dbo->cols['ivids']->option->detailMethod = 'text';
 $dbo->cols['ivids']->option->newMethod = 'text';
 $dbo->cols['ivids']->option->editMethod = 'text';
+$dbo->cols['pay_status'] = new DBO_COL('pay_status', 'varchar', '-1', '8');
+$dbo->cols['pay_status']->inputTypeDefault = 'text';
+$dbo->cols['pay_status']->searchMode = 'exact';
+$dbo->cols['pay_status']->capContClassDefault = array();
+$dbo->cols['pay_status']->valContClassDefault = array();
+$dbo->cols['pay_status']->option->default = 'A/Active
+D/Deleted';
+$dbo->cols['pay_status']->option->defaultMethod = 'text';
+$dbo->cols['pay_status']->option->searchMethod = 'text';
+$dbo->cols['pay_status']->option->listMethod = 'text';
+$dbo->cols['pay_status']->option->detailMethod = 'text';
+$dbo->cols['pay_status']->option->newMethod = 'text';
+$dbo->cols['pay_status']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

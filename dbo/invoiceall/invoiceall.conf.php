@@ -8,8 +8,8 @@ $dbo->fileSaveMode = 511;
 $dbo->table = 'minvoice';
 $dbo->key = array('iv_id');
 $dbo->sql = 'select minvoice.*, \'\' as printbutton, case when iv_paid=\'Y\' then \' disabled\'  else \'\' end as paydisable, 
-(select sum(pi_amount) from mpaymentinvoice where pi_ivid = iv_id) as paidamount, 
-iv_amount - (select sum(pi_amount) from mpaymentinvoice where pi_ivid = iv_id) as unpaidamount 
+coalesce((select sum(pi_amount) from mpaymentinvoice where pi_ivid = iv_id), 0) as paidamount, 
+iv_amount - (select coalesce(sum(pi_amount), 0) from mpaymentinvoice where pi_ivid = iv_id) as unpaidamount 
 from minvoice ';
 $dbo->col = array('iv_id', 'iv_invoicedate', 'iv_created', 'iv_orgid', 'iv_amount', 'iv_paid', 'iv_paydate', 'iv_currency', 'iv_jsid', 'printbutton', 'paydisable', 'paidamount', 'unpaidamount');
 $dbo->colList = array('iv_orgid', 'iv_invoicedate', 'iv_amount', 'iv_paid', 'iv_paydate', 'printbutton');
@@ -23,9 +23,9 @@ $dbo->colSearch = array('iv_orgid', 'iv_invoicedate', 'iv_paid', 'iv_paydate');
 $dbo->colExport = array('iv_id', 'iv_invoicedate', 'iv_created', 'iv_orgid', 'iv_amount', 'iv_paid', 'iv_paydate');
 $dbo->colSort = array('iv_id', 'iv_invoicedate');
 $dbo->canSearch = true;
-$dbo->canNew = true;
-$dbo->canEdit = true;
-$dbo->canDelete = false;
+$dbo->canNew = false;
+$dbo->canEdit = false;
+$dbo->canDelete = true;
 $dbo->canDetail = false;
 $dbo->canListEdit = false;
 $dbo->canListNew = false;
@@ -111,6 +111,7 @@ $dbo->cols['iv_orgid']->option->detailMethod = 'text';
 $dbo->cols['iv_orgid']->option->newMethod = 'text';
 $dbo->cols['iv_orgid']->option->editMethod = 'text';
 $dbo->cols['iv_amount'] = new DBO_COL('iv_amount', 'numeric', '-1', '1310728');
+$dbo->cols['iv_amount']->displayListModifier = '{iv_amount} ({unpaidamount})';
 $dbo->cols['iv_amount']->inputTypeDefault = 'text';
 $dbo->cols['iv_amount']->attributeEdit = array('readonly'=>array(''));
 $dbo->cols['iv_amount']->searchMode = 'exact';
@@ -149,7 +150,7 @@ $dbo->cols['iv_paydate']->option->newMethod = 'text';
 $dbo->cols['iv_paydate']->option->editMethod = 'text';
 $dbo->cols['printbutton'] = new DBO_COL('printbutton', 'unknown', '-2', '-1');
 $dbo->cols['printbutton']->displayListModifierMethod = 'text';
-$dbo->cols['printbutton']->displayListModifier = '<button form="noform" class="btn btn-labeled btn-primary" style="min-width:85px;" onclick="printInvoicePreview({iv_id});"><span class="btn-label icon fa fa-print"></span>Print</button> <button form="noform" class="btn btn-labeled btn-primary" style="min-width:85px;" onclick="document.location=\'paymentadm?dboid=paymentall&dbostate=new&orgid={iv_orgid}&amount={iv_amount}\';" {paydisable}><span class="btn-label icon fa fa-money"></span>Pay</button>';
+$dbo->cols['printbutton']->displayListModifier = '<button form="noform" class="btn btn-labeled btn-primary" style="min-width:85px;" onclick="printInvoicePreview({iv_id});"><span class="btn-label icon fa fa-print"></span>Print</button> <button form="noform" class="btn btn-labeled btn-primary" style="min-width:85px;" onclick="document.location=\'paymentadm?dboid=paymentall&dbostate=new&orgid={iv_orgid}&amount={unpaidamount}\';" {paydisable}><span class="btn-label icon fa fa-money"></span>Pay</button>';
 $dbo->cols['printbutton']->inputTypeDefault = 'text';
 $dbo->cols['printbutton']->searchMode = 'exact';
 $dbo->cols['printbutton']->capContClassDefault = array();
@@ -206,12 +207,26 @@ $dbo->cols['real_iv_orgid']->option->newMethod = 'text';
 $dbo->cols['real_iv_orgid']->option->editMethod = 'text';
 $dbo->cols['paidamount'] = new DBO_COL('paidamount', 'numeric', '-1', '-1');
 $dbo->cols['paidamount']->inputTypeDefault = 'text';
+$dbo->cols['paidamount']->searchMode = 'exact';
 $dbo->cols['paidamount']->capContClassDefault = array();
 $dbo->cols['paidamount']->valContClassDefault = array();
+$dbo->cols['paidamount']->option->defaultMethod = 'text';
+$dbo->cols['paidamount']->option->searchMethod = 'text';
+$dbo->cols['paidamount']->option->listMethod = 'text';
+$dbo->cols['paidamount']->option->detailMethod = 'text';
+$dbo->cols['paidamount']->option->newMethod = 'text';
+$dbo->cols['paidamount']->option->editMethod = 'text';
 $dbo->cols['unpaidamount'] = new DBO_COL('unpaidamount', 'numeric', '-1', '-1');
 $dbo->cols['unpaidamount']->inputTypeDefault = 'text';
+$dbo->cols['unpaidamount']->searchMode = 'exact';
 $dbo->cols['unpaidamount']->capContClassDefault = array();
 $dbo->cols['unpaidamount']->valContClassDefault = array();
+$dbo->cols['unpaidamount']->option->defaultMethod = 'text';
+$dbo->cols['unpaidamount']->option->searchMethod = 'text';
+$dbo->cols['unpaidamount']->option->listMethod = 'text';
+$dbo->cols['unpaidamount']->option->detailMethod = 'text';
+$dbo->cols['unpaidamount']->option->newMethod = 'text';
+$dbo->cols['unpaidamount']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

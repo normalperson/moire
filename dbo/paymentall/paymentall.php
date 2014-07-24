@@ -4,6 +4,7 @@ require(dirname(__FILE__).DIRECTORY_SEPARATOR.'paymentall.conf.php');
 # customization
 function dbo_paymentall_customize(&$dbo){
 	$dbo->newModifier = 'dbo_paymentall_custom_new';
+	$dbo->deleteModifier = 'dbo_paymentall_custom_delete';
 }
 
 function dbo_paymentall_custom_new($table, $cols){
@@ -26,6 +27,19 @@ function dbo_paymentall_custom_new($table, $cols){
 	}
 	
 	// return array('dev');
+	return $ret;
+}
+
+function dbo_paymentall_custom_delete($table, $wheres){
+	global $DB;
+	$ret = array();
+	
+	$DB->doUpdateAudit($table, array('pay_status'=>'D'), $wheres, array('pay_status'));
+	$DB->execute("update minvoice set iv_paid = 'N', iv_paydate = null where iv_id in (select pi_ivid from mpaymentinvoice where pi_payid = :0)", array($wheres['pay_id']));
+	$ok = $DB->doDelete('mpaymentinvoice', array('pi_payid'=>$wheres['pay_id']));
+	if(!$ok){
+		$ret[] = $DB->lastError;
+	}
 	return $ret;
 }
 
