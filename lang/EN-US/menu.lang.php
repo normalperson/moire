@@ -1,4 +1,5 @@
 <?php
+/*Last Modified by esp on 24-07-2014 18:10:25*/
 $translate = array (
   'Admin Setup' => 'Admin Setup',
   'Setting' => 'Setting',
@@ -38,5 +39,8 @@ $translate = array (
   'Debtors Aging' => 'Debtors Aging',
   'Currency Setup' => 'Currency Setup',
   'Region Setup' => 'Region Setup',
+  'Payment' => 'Payment',
+  'Billing' => 'Billing',
+  'Statement' => 'Statement',
 );
 ?>
