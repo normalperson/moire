@@ -19,9 +19,9 @@ class Moire{
 	// currently every job should has 1 invoice generated on client accepting or auto accepting
 	function invoice_generate($jsid=false){
 		global $DB;
+		$DB->showsql=1;
 		$jobRS = $DB->getRowAssoc("select js_orgid, js_currency, js_finalprice from mjobsheet where js_id = :0", array($jsid));
 		if(!$jobRS) return false;
-		$DB->showsql=1;
 		// $DB->beginTrans();
 		$invoiceRS = $DB->getRowAssoc("select minvoice.* from minvoice where iv_jsid = :0", array($jsid));
 		
@@ -84,7 +84,7 @@ class Moire{
 		$smarty->assign('date', date('d/m/Y'));
 		$smarty->assign('soa_date', date('M Y'));
 		
-		$invoiceRS = $DB->getArrayAssoc("select iv_id, lpad(iv_id::text, 8, '0') as invoice_no, iv_invoicedate, iv_amount, 0 as credit, js_description 
+		$invoiceRS = $DB->getArrayAssoc("select iv_id, 'INV'||lpad(iv_id::text, 8, '0') as invoice_no, iv_invoicedate, iv_amount, 0 as credit, js_description 
 from minvoice join mjobsheet on iv_jsid = js_id where iv_orgid = :0 and iv_paid != 'Y' order by iv_invoicedate asc, iv_id asc", array($orgID));
 		$smarty->assign('invoiceData', $invoiceRS);
 		$totalAmount = 0;
