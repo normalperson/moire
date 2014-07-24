@@ -79,7 +79,7 @@ $dbo->cols['org_name']->option->detailMethod = 'text';
 $dbo->cols['org_name']->option->newMethod = 'text';
 $dbo->cols['org_name']->option->editMethod = 'text';
 $dbo->cols['button'] = new DBO_COL('button', 'unknown', '-2', '-1');
-$dbo->cols['button']->displayListModifier = '<button form="noform" class="btn btn-labeled btn-primary" style="min-width:85px;" onclick="document.location=\'?orgid={org_id}\';"><span class="btn-label icon fa-file-text"></span>Statement</button>';
+$dbo->cols['button']->displayListModifier = '<button form="noform" class="btn btn-labeled btn-primary" style="min-width:85px;" onclick="window.open(\'?nosoaorg=1&orgid={org_id}\', \'\', \'width=1024,height=700\')"><span class="btn-label icon fa-file-text"></span>Statement</button>';
 $dbo->cols['button']->inputTypeDefault = 'text';
 $dbo->cols['button']->searchMode = 'exact';
 $dbo->cols['button']->capContClassDefault = array();
