@@ -319,8 +319,8 @@ class Home{
 	function activeOrder(){
 		global $DB,$USER;
 		//vd($USER->orgid);
-		$sql = "select count(*) from mjobsheet where js_orgid = :0 and js_status != :1 and js_status != :2 and js_status != :3";
-		$cnt = $DB->GetOne($sql,array($USER->orgid,'COMPLETED','PENDING CUSTOMER RESOLUTION','PENDING ACCEPTANCE'), PDO::FETCH_ASSOC);
+		$sql = "select count(*) from mjobsheet where js_orgid = :0 and js_status != :1 and js_status != :2 and js_status != :3 and js_status != :4";
+		$cnt = $DB->GetOne($sql,array($USER->orgid,'COMPLETED','PENDING CUSTOMER RESOLUTION','PENDING ACCEPTANCE','CANCELLED'), PDO::FETCH_ASSOC);
 		return $cnt;
 		
 	}
