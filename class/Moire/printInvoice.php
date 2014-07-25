@@ -27,7 +27,7 @@ $customerRS = $DB->getRowAssoc("select * from fcorg left join mregion on org_reg
 $jobRS = $DB->getArrayAssoc("select js_description, js_price, js_finalprice, pmc_id from mjobsheet join fcpmcase on pmc_casekey = js_id and pmc_casetype = 'jobsheet' where js_id = :0", array($rs['iv_jsid']));
 $total_price = 0;
 foreach($jobRS as $row){
-	$total_price += $row['js_price'];
+	$total_price += $row['js_finalprice'];
 }
 // pr($customerRS);
 // pr($jobRS);
