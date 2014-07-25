@@ -63,7 +63,8 @@ class Moire{
 		$smarty->assign('APP', APP);
 		
 		// invoice, jobsheet
-		$dataRS = $DB->getRowAssoc("select * from minvoice join mjobsheet on iv_jsid = js_id join fcpmcase on pmc_casekey = js_id and pmc_casetype = 'jobsheet'");
+		$dataRS = $DB->getRowAssoc("select * from minvoice join mjobsheet on iv_jsid = js_id join fcpmcase on pmc_casekey = js_id and pmc_casetype = 'jobsheet' where iv_id = :0", array($ivID));
+		if(!$dataRS) return false;
 		$smarty->assign('data', $dataRS);
 		$smarty->assign('jobData', array($dataRS));
 		$smarty->assign('total_price', $dataRS['iv_amount']);
