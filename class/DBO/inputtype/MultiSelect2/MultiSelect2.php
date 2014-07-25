@@ -10,13 +10,16 @@ class DBO_InputType_MultiSelect2 extends DBO_InputType{
 		if(strlen($optionString)) $options = $dbo->genOption($optionMethod, $optionString, $data);
 		$ext .= " multiple ";
 		$name .= "[]";
-		$ret .= $HTML->genInput("select", $name, $options, $value, $ext);
+		$val = explode(',', $value);
+		$val = array_map('trim', $val);
+		$ret .= $HTML->genInput("select", $name, $options, $val, $ext);
+		$option = ($dbo->cols[$col]->format) ? $dbo->cols[$col]->format : false;
 		$ret .= 
 "<script type='text/javascript'>
 (function () {
 	var name = '#{$name}';
 	if(name.indexOf('[') !== -1) name = name.replace(/(\[|\])/g, '\\\\$1');
-	$(name).select2();
+	$(name).select2(".(($option)? $option : '').");
 })();
 </script>";
 

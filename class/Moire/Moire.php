@@ -24,10 +24,10 @@ class Moire{
 	global $CASEKEY, $DB;
 		$case = new fake();
 		$CASEKEY = $case->casekey = '211';
-		$DB->showSQL=true;
+		// $DB->showSQL=true;
 		$f->emailInvoice(null, $case);
 		
-		echo generateInvoiceHTML($case->casekey);
+		// echo generateInvoiceHTML($case->casekey);
 	}
 	
 	function generateInvoice(){
@@ -82,9 +82,7 @@ class Moire{
 		// customer
 		$customerRS = $DB->getRowAssoc("select * from fcorg join mregion on org_region = rg_code where org_id = :0", array($dataRS['iv_orgid']));
 		$smarty->assign('customerData', $customerRS);
-
 		$ret = $smarty->fetch('printInvoice.html');
-		echo $ret;
 		return $ret;
 	}
 	
