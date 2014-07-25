@@ -1,5 +1,8 @@
 <?php
 require_once(dirname(__FILE__).'/../../init.inc.php');
+	class fake {
+			var $casekey;
+		}
 /*
 Moire class will handle invoicing, payment and billing here because moire is not using standard method.
 */
@@ -15,6 +18,15 @@ class Moire{
 	)
 	
 	*/
+	
+	function generateInvoice(){
+		global $DB;
+		$sql = "select js_id from mjobsheet where js_status = :0";
+		$jsidarr = $DB->GetArray($sql,array('COMPLETED'), PDO::FETCH_ASSOC);
+		foreach ($jsidarr as $key => $value) {
+			$this->invoice_generate($value['js_id']);
+		}
+	}
 	// generate invoice by job (mjobsheet)
 	// currently every job should has 1 invoice generated on client accepting or auto accepting
 	function invoice_generate($jsid=false){
@@ -40,7 +52,7 @@ class Moire{
 		$DB->showsql=0;
 	}
 	
-	function invoice_as_html($ivID){
+	function invoice_as_html($ivID, $showprint = true){
 		global $DB;
 		$smarty = new Smarty();
 		$smarty->caching = false;
@@ -56,13 +68,11 @@ class Moire{
 		$smarty->assign('data', $dataRS);
 		$smarty->assign('jobData', array($dataRS));
 		$smarty->assign('total_price', $dataRS['iv_amount']);
-		
+		$smarty->assign('showprint', $showprint);
 		// customer
 		$customerRS = $DB->getRowAssoc("select * from fcorg join mregion on org_region = rg_code where org_id = :0", array($dataRS['iv_orgid']));
 		$smarty->assign('customerData', $customerRS);
-
 		$ret = $smarty->fetch('printInvoice.html');
-		echo $ret;
 		return $ret;
 	}
 	

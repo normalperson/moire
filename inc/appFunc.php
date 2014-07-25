@@ -97,22 +97,39 @@ function sendMailFromTemplate($mtcode) {
 			}
 			$mail = new Email();
 			// vd($mail); $fromarr['emailadd'], $fromarr['name']
-			$recipientArr = array(array('emailadd'=>$recp, 'name'=>''));
-			if($recpcc)
-				$recipientArr[] = array('emailadd'=>$recpcc, 'name'=>'');
-			$ret = $mail->sendEmail_bySMTP(
-				$fromarr=array('emailadd'=>'noreply@moiregc.com.my', 'name'=>'no-reply-moire'),
-				$replytoarr='',
-				$toaddarr=$recipientArr,
-				$subject,
-				$content,
-				$altbody='',
-				$attachmentpath='',
-				$smtpauth=true,
-				$host=$emailSetting['EMAILHOST'],
-				$port=$emailSetting['EMAILPORT'],
-				$username=$emailSetting['EMAILUSERNAME'],
-				$password=$emailSetting['EMAILPASSWORD']);
+			
+			$recparr = explode(',',$recp);
+			$recparr = array_map('trim', $recparr);
+			$recparr = array_filter($recparr);
+			$recpccarr = explode(',',$recpcc);
+			$recpccarr = array_map('trim', $recpccarr);
+			$recpccarr = array_filter($recpccarr);
+			
+			// combine recp and cc, since do not support cc yet
+			$recparr = array_merge($recparr, $recpccarr);
+			if ($recparr) {
+				$recipientArr = array();
+				foreach ($recparr as $r) {
+					$er = explode(':',$r);
+					if (count($er) == 2) list($ignoreid,$r) = $er;
+					$recipientArr[] = array('emailadd'=>$r, 'name'=>'');
+				}
+					
+				$ret = $mail->sendEmail_bySMTP(
+					$fromarr=array('emailadd'=>'noreply@moiregc.com.my', 'name'=>'no-reply-moire'),
+					$replytoarr='',
+					$toaddarr=$recipientArr,
+					$subject,
+					$content,
+					$altbody='',
+					$attachmentpath='',
+					$smtpauth=true,
+					$host=$emailSetting['EMAILHOST'],
+					$port=$emailSetting['EMAILPORT'],
+					$username=$emailSetting['EMAILUSERNAME'],
+					$password=$emailSetting['EMAILPASSWORD']);
+				// vd($ret);
+			}
 		}
 		
 		$rs['mt_internal_userid'] = $udv->parse($rs['mt_internal_userid']);
@@ -139,7 +156,11 @@ function calculateCompletion($jsid) {
 }
 
 function generateInvoiceHTML($jsid) {
-	
+	global $DB;
+	$ivid = $DB->getOne("select * from minvoice where iv_jsid = :0", array($jsid));
+	require_once(CLASS_DIR.DS.'Moire'.DS.'Moire.php');
+	$m = new Moire();
+	return $m->invoice_as_html($ivid, false);
 }
 
 ?>

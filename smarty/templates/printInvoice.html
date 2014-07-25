@@ -76,8 +76,10 @@ table.invoice_table > thead > tr > th, table.invoice_table > tfoot > tr > th{
 </head>
 <body>
 <div id="print_task_container">
+{if $showprint}
 <div style="text-align:right;" class="print_button_container">
 	<input type="button" class="btn btn-primary" onclick="window.print();" value="Print"/></div>
+{/if}
 <table class="print_task_table" width="100%">
 	<tr>
 		<td align="center">

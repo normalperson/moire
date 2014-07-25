@@ -4,6 +4,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'mail_template';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
+$dbo->fileSaveMode = 511;
 $dbo->table = 'mmailtemplate';
 $dbo->key = array('mt_code');
 $dbo->sql = 'select * from mmailtemplate';
@@ -41,6 +42,9 @@ $dbo->recordPerPage = 10;
 $dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = 9;
+$dbo->defaultDateFormat = 'yyyy-mm-dd';
+$dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
+$dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
 $dbo->render = array();
 $dbo->searchCancel = 'Reset';
@@ -80,7 +84,7 @@ $dbo->cols['mt_recipient_to']->inputTypeDefault = 'MultiSelect2';
 $dbo->cols['mt_recipient_to']->searchMode = 'exact';
 $dbo->cols['mt_recipient_to']->capContClassDefault = array();
 $dbo->cols['mt_recipient_to']->valContClassDefault = array();
-$dbo->cols['mt_recipient_to']->option->default = 'select usr_email, usr_name, \'Users\' from fcuser where usr_email is not null 
+$dbo->cols['mt_recipient_to']->option->default = 'select  usr_userid||\':\'||usr_email as usr_email, usr_name, \'Users\' from fcuser where usr_email is not null 
 union all
 select \'[[\'||udv_code||\']]\', udv_name, \'UDV\' from fcudv where udv_cat = \'EMAIL_RECIPIENT\'
 order by 3, 2';
@@ -95,7 +99,7 @@ $dbo->cols['mt_recipient_cc']->inputTypeDefault = 'MultiSelect2';
 $dbo->cols['mt_recipient_cc']->searchMode = 'exact';
 $dbo->cols['mt_recipient_cc']->capContClassDefault = array();
 $dbo->cols['mt_recipient_cc']->valContClassDefault = array();
-$dbo->cols['mt_recipient_cc']->option->default = 'select usr_email, usr_name, \'Users\' from fcuser where usr_email is not null 
+$dbo->cols['mt_recipient_cc']->option->default = 'select  usr_userid||\':\'||usr_email as usr_email, usr_name, \'Users\' from fcuser where usr_email is not null 
 union all
 select \'[[\'||udv_code||\']]\', udv_name, \'UDV\' from fcudv where udv_cat = \'EMAIL_RECIPIENT\'
 order by 3, 2';

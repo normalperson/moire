@@ -179,8 +179,8 @@ function dbo_jobsheet_customize(&$dbo){
 	$dbo->editModifier = 'dbo_jobsheet_custom_edit';
 	
 	global $USER, $DB;
-	
-	if ($USER->rolename == 'Customer') {
+	if ($USER->rolename == 'Customer coordinator') {
+
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
 		$dbo->cols['jobcategory']->mandatoryDefault = 1;
