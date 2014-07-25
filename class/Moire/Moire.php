@@ -57,11 +57,11 @@ class Moire{
 		$smarty->assign('total_price', $dataRS['iv_amount']);
 		
 		// customer
-		$customerRS = $DB->getRowAssoc("select * from fcorg where org_id = :0", array($dataRS['iv_orgid']));
+		$customerRS = $DB->getRowAssoc("select * from fcorg join mregion on org_region = rg_code where org_id = :0", array($dataRS['iv_orgid']));
 		$smarty->assign('customerData', $customerRS);
 
 		$ret = $smarty->fetch('printInvoice.html');
-		// echo $ret;
+		echo $ret;
 		return $ret;
 	}
 	
