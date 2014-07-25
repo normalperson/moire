@@ -1,5 +1,8 @@
 <?php
 require_once(dirname(__FILE__).'/../../init.inc.php');
+	class fake {
+			var $casekey;
+		}
 /*
 Moire class will handle invoicing, payment and billing here because moire is not using standard method.
 */
@@ -15,6 +18,18 @@ class Moire{
 	)
 	
 	*/
+	function testyys() {
+		require_once(CLASS_DIR.DS.'PMFunc'.DS.'PMFunc.php');
+		$f = new PMFunc();
+	global $CASEKEY, $DB;
+		$case = new fake();
+		$CASEKEY = $case->casekey = '211';
+		$DB->showSQL=true;
+		$f->emailInvoice(null, $case);
+		
+		echo generateInvoiceHTML($case->casekey);
+	}
+	
 	function generateInvoice(){
 		global $DB;
 		$sql = "select js_id from mjobsheet where js_status = :0";

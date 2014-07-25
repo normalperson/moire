@@ -100,6 +100,7 @@ function sendMailFromTemplate($mtcode) {
 			$recipientArr = array(array('emailadd'=>$recp, 'name'=>''));
 			if($recpcc)
 				$recipientArr[] = array('emailadd'=>$recpcc, 'name'=>'');
+				// vd($recipientArr);
 			$ret = $mail->sendEmail_bySMTP(
 				$fromarr=array('emailadd'=>'noreply@moiregc.com.my', 'name'=>'no-reply-moire'),
 				$replytoarr='',
@@ -139,7 +140,11 @@ function calculateCompletion($jsid) {
 }
 
 function generateInvoiceHTML($jsid) {
-	
+	global $DB;
+	$ivid = $DB->getOne("select * from minvoice where iv_jsid = :0", array($jsid));
+	require_once(CLASS_DIR.DS.'Moire'.DS.'Moire.php');
+	$m = new Moire();
+	return $m->invoice_as_html($ivid);
 }
 
 ?>

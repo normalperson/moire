@@ -261,7 +261,10 @@ $(function () {
 		return true;
 	}
 	
-	function emailInvoice() {
+	function emailInvoice($flowid, $case) {
+		require_once(CLASS_DIR.DS.'Moire'.DS.'Moire.php');
+		$m = new Moire();
+		$m->invoice_generate($case->casekey);
 		sendMailFromTemplate('EMAIL_JOB_INVOICE');
 		return true;
 	}
