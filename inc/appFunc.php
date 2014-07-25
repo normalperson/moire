@@ -128,7 +128,6 @@ function sendMailFromTemplate($mtcode) {
 					$port=$emailSetting['EMAILPORT'],
 					$username=$emailSetting['EMAILUSERNAME'],
 					$password=$emailSetting['EMAILPASSWORD']);
-				vd($ret);
 				// vd($ret);
 			}
 		}
@@ -161,7 +160,7 @@ function generateInvoiceHTML($jsid) {
 	$ivid = $DB->getOne("select * from minvoice where iv_jsid = :0", array($jsid));
 	require_once(CLASS_DIR.DS.'Moire'.DS.'Moire.php');
 	$m = new Moire();
-	return $m->invoice_as_html($ivid);
+	return $m->invoice_as_html($ivid, false);
 }
 
 ?>

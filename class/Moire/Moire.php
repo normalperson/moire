@@ -18,17 +18,6 @@ class Moire{
 	)
 	
 	*/
-	function testyys() {
-		require_once(CLASS_DIR.DS.'PMFunc'.DS.'PMFunc.php');
-		$f = new PMFunc();
-	global $CASEKEY, $DB;
-		$case = new fake();
-		$CASEKEY = $case->casekey = '211';
-		// $DB->showSQL=true;
-		$f->emailInvoice(null, $case);
-		
-		// echo generateInvoiceHTML($case->casekey);
-	}
 	
 	function generateInvoice(){
 		global $DB;
@@ -63,7 +52,7 @@ class Moire{
 		$DB->showsql=0;
 	}
 	
-	function invoice_as_html($ivID){
+	function invoice_as_html($ivID, $showprint = true){
 		global $DB;
 		$smarty = new Smarty();
 		$smarty->caching = false;
@@ -78,7 +67,7 @@ class Moire{
 		$smarty->assign('data', $dataRS);
 		$smarty->assign('jobData', array($dataRS));
 		$smarty->assign('total_price', $dataRS['iv_amount']);
-		
+		$smarty->assign('showprint', $showprint);
 		// customer
 		$customerRS = $DB->getRowAssoc("select * from fcorg join mregion on org_region = rg_code where org_id = :0", array($dataRS['iv_orgid']));
 		$smarty->assign('customerData', $customerRS);

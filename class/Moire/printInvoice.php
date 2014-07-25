@@ -35,6 +35,7 @@ $smarty->assign('data', $rs);
 $smarty->assign('customerData', $customerRS);
 $smarty->assign('jobData', $jobRS);
 $smarty->assign('total_price', $total_price);
+$smarty->assign('showprint', false);
 // pr($rs);
 $smarty->display('printInvoice.html');
 ?>
