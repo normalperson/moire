@@ -15,6 +15,14 @@ class Moire{
 	)
 	
 	*/
+	function generateInvoice(){
+		global $DB;
+		$sql = "select js_id from mjobsheet where js_status = :0";
+		$jsidarr = $DB->GetArray($sql,array('COMPLETED'), PDO::FETCH_ASSOC);
+		foreach ($jsidarr as $key => $value) {
+			$this->invoice_generate($value['js_id']);
+		}
+	}
 	// generate invoice by job (mjobsheet)
 	// currently every job should has 1 invoice generated on client accepting or auto accepting
 	function invoice_generate($jsid=false){
