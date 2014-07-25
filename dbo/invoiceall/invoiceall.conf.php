@@ -7,25 +7,25 @@ $dbo->id = $dboID;
 $dbo->fileSaveMode = 511;
 $dbo->table = 'minvoice';
 $dbo->key = array('iv_id');
-$dbo->sql = 'select minvoice.*, \'\' as printbutton, case when iv_paid=\'Y\' then \' disabled\'  else \'\' end as paydisable, 
+$dbo->sql = 'select iv_id, date_trunc(\'day\', iv_invoicedate) as iv_invoicedate, date_trunc(\'day\', iv_created) as iv_created, iv_orgid, iv_amount, iv_paid, date_trunc(\'day\', iv_paydate) as iv_paydate, iv_currency, iv_jsid, \'\' as printbutton, case when iv_paid=\'Y\' then \' disabled\'  else \'\' end as paydisable, 
 coalesce((select sum(pi_amount) from mpaymentinvoice where pi_ivid = iv_id), 0) as paidamount, 
 iv_amount - (select coalesce(sum(pi_amount), 0) from mpaymentinvoice where pi_ivid = iv_id) as unpaidamount 
 from minvoice ';
 $dbo->col = array('iv_id', 'iv_invoicedate', 'iv_created', 'iv_orgid', 'iv_amount', 'iv_paid', 'iv_paydate', 'iv_currency', 'iv_jsid', 'printbutton', 'paydisable', 'paidamount', 'unpaidamount');
-$dbo->colList = array('iv_orgid', 'iv_invoicedate', 'iv_amount', 'iv_paid', 'iv_paydate', 'printbutton');
+$dbo->colList = array('iv_orgid', 'iv_invoicedate', 'iv_amount', 'iv_paid', 'printbutton');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('iv_id', 'iv_invoicedate', 'iv_created', 'iv_orgid', 'iv_amount', 'iv_paid', 'iv_paydate');
-$dbo->colNew = array('iv_id', 'iv_invoicedate', 'iv_created', 'iv_orgid', 'iv_amount', 'iv_paid', 'iv_paydate');
-$dbo->colEdit = array('iv_invoicedate', 'iv_orgid', 'iv_amount', 'iv_paid', 'iv_paydate');
+$dbo->colDetail = array('iv_id', 'iv_invoicedate', 'iv_created', 'iv_orgid', 'iv_amount', 'iv_paid');
+$dbo->colNew = array('iv_id', 'iv_invoicedate', 'iv_created', 'iv_orgid', 'iv_amount', 'iv_paid');
+$dbo->colEdit = array('iv_invoicedate', 'iv_orgid', 'iv_amount', 'iv_paid');
 $dbo->colSearch = array('iv_orgid', 'iv_invoicedate', 'iv_paid', 'iv_paydate');
-$dbo->colExport = array('iv_id', 'iv_invoicedate', 'iv_created', 'iv_orgid', 'iv_amount', 'iv_paid', 'iv_paydate');
+$dbo->colExport = array('iv_id', 'iv_invoicedate', 'iv_created', 'iv_orgid', 'iv_amount', 'iv_paid');
 $dbo->colSort = array('iv_id', 'iv_invoicedate');
 $dbo->canSearch = true;
 $dbo->canNew = false;
 $dbo->canEdit = false;
-$dbo->canDelete = true;
+$dbo->canDelete = false;
 $dbo->canDetail = false;
 $dbo->canListEdit = false;
 $dbo->canListNew = false;
@@ -149,8 +149,8 @@ $dbo->cols['iv_paydate']->option->detailMethod = 'text';
 $dbo->cols['iv_paydate']->option->newMethod = 'text';
 $dbo->cols['iv_paydate']->option->editMethod = 'text';
 $dbo->cols['printbutton'] = new DBO_COL('printbutton', 'unknown', '-2', '-1');
-$dbo->cols['printbutton']->displayListModifierMethod = 'text';
-$dbo->cols['printbutton']->displayListModifier = '<button form="noform" class="btn btn-labeled btn-primary" style="min-width:85px;" onclick="printInvoicePreview({iv_id});"><span class="btn-label icon fa fa-print"></span>Print</button> <button form="noform" class="btn btn-labeled btn-primary" style="min-width:85px;" onclick="document.location=\'paymentadm?dboid=paymentall&dbostate=new&orgid={iv_orgid}&amount={unpaidamount}\';" {paydisable}><span class="btn-label icon fa fa-money"></span>Pay</button>';
+$dbo->cols['printbutton']->displayListModifierMethod = 'phpscr';
+$dbo->cols['printbutton']->displayListModifier = 'invoiceall_button({iv_id}, {iv_orgid}, {unpaidamount}, {iv_paid})';
 $dbo->cols['printbutton']->inputTypeDefault = 'text';
 $dbo->cols['printbutton']->searchMode = 'exact';
 $dbo->cols['printbutton']->capContClassDefault = array();
@@ -227,6 +227,17 @@ $dbo->cols['unpaidamount']->option->listMethod = 'text';
 $dbo->cols['unpaidamount']->option->detailMethod = 'text';
 $dbo->cols['unpaidamount']->option->newMethod = 'text';
 $dbo->cols['unpaidamount']->option->editMethod = 'text';
+$dbo->cols['date_trunc'] = new DBO_COL('date_trunc', 'timestamptz', '8', '-1');
+$dbo->cols['date_trunc']->inputTypeDefault = 'text';
+$dbo->cols['date_trunc']->searchMode = 'exact';
+$dbo->cols['date_trunc']->capContClassDefault = array();
+$dbo->cols['date_trunc']->valContClassDefault = array();
+$dbo->cols['date_trunc']->option->defaultMethod = 'text';
+$dbo->cols['date_trunc']->option->searchMethod = 'text';
+$dbo->cols['date_trunc']->option->listMethod = 'text';
+$dbo->cols['date_trunc']->option->detailMethod = 'text';
+$dbo->cols['date_trunc']->option->newMethod = 'text';
+$dbo->cols['date_trunc']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

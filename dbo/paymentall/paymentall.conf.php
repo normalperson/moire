@@ -7,7 +7,7 @@ $dbo->id = $dboID;
 $dbo->fileSaveMode = 511;
 $dbo->table = 'mpayment';
 $dbo->key = array('pay_id');
-$dbo->sql = 'select pay_id, pay_created, pay_amount, pay_allocatedamount, pay_orgid, pay_status, 
+$dbo->sql = 'select pay_id, date_trunc(\'day\', pay_created) as pay_created, pay_amount, pay_allocatedamount, pay_orgid, pay_status, 
 string_agg(to_char(pi_ivid, \'999\'), \', \') as ivids 
 from mpayment left join mpaymentinvoice on pay_id = pi_payid 
 group by pay_id, pay_created, pay_amount, pay_allocatedamount, pay_orgid, pay_status';
@@ -71,7 +71,8 @@ $dbo->cols['pay_id']->option->detailMethod = 'text';
 $dbo->cols['pay_id']->option->newMethod = 'text';
 $dbo->cols['pay_id']->option->editMethod = 'text';
 $dbo->cols['pay_created'] = new DBO_COL('pay_created', 'timestamptz', '8', '-1');
-$dbo->cols['pay_created']->inputTypeDefault = 'text';
+$dbo->cols['pay_created']->displayDataType = 'date';
+$dbo->cols['pay_created']->inputTypeDefault = 'date';
 $dbo->cols['pay_created']->searchMode = 'exact';
 $dbo->cols['pay_created']->capContClassDefault = array();
 $dbo->cols['pay_created']->valContClassDefault = array();

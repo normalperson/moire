@@ -29,6 +29,16 @@ function dbo_invoiceall_custom_edit($table, $cols, $wheres){
 	return $ret;
 }
 
+function invoiceall_button($ivid, $orgid, $unpaidamount, $paid){
+	global $USER, $DB;
+	$ret = "<button form=\"noform\" class=\"btn btn-labeled btn-primary\" style=\"min-width:85px;\" onclick=\"printInvoicePreview({$ivid});\"><span class=\"btn-label icon fa fa-print\"></span>Print</button>";
+	$isExternal = $DB->getOne("select org_external from fcorg where org_id = :0", array($USER->orgid));
+	if($isExternal=='N'){
+		$ret .= " <button form=\"noform\" class=\"btn btn-labeled btn-primary\" style=\"min-width:85px;\" onclick=\"document.location='paymentadm?dboid=paymentall&dbostate=new&orgid={$orgid}&amount={$unpaidamount}';\"".($paid=='Y'?' disabled':'')."><span class=\"btn-label icon fa fa-money\"></span>Pay</button>";
+	}
+	return $ret;
+}
+
 # final rendering
 $dbo->render();
 ?>
