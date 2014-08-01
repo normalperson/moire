@@ -283,17 +283,18 @@ function dbo_jobsheet_custom_new($table, $cols){
 	$cols['js_currency'] = $rowdata['rg_currency'];
 
 	// determine whether need to calculate conversion
-	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
-		// convert
-		$sql = "select cr_rate from fccurrency where cr_code = :0";
-		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
+	// get rate
+	$sql = "select cr_rate from fccurrency where cr_code = :0";
+	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
+
+	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
 		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
 
 	}else{
 		$cols['js_finalprice'] = $price;
-		$cols['js_rate'] = 1;
+		$cols['js_rate'] = $rate;
 	}
 
 	
@@ -430,18 +431,19 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 
 	$cols['js_currency'] = $rowdata['rg_currency'];
 
+	// get rate
+	$sql = "select cr_rate from fccurrency where cr_code = :0";
+	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
+
 	// determine whether need to calculate conversion
 	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
-		// convert
-		$sql = "select cr_rate from fccurrency where cr_code = :0";
-		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
 		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
 
 	}else{
 		$cols['js_finalprice'] = $price;
-		$cols['js_rate'] = 1;
+		$cols['js_rate'] = $rate;
 	}
 
 	$ok = $DB->doUpdate($table, $cols, $wheres);

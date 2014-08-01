@@ -47,7 +47,7 @@ function lookup_org_with_amount(){
 	global $DB;
 	$rs = $DB->getArrayNum("select org_id, org_name||' ['||org_id||']' from fcorg");
 	foreach($rs as $key=>$row){
-		$currency = $DB->getOne("select rg_currency from fcorg join mregion on org_region = rg_code");
+		$currency = $DB->getOne("select rg_currency from fcorg join mregion on org_region = rg_code where org_id = :0",array($row[0]));
 		$amount = $DB->getOne("select sum(iv_amount)-sum(COALESCE(pi_amount, 0)) 
 from minvoice left join mpaymentinvoice on iv_id = pi_ivid 
 where iv_orgid = :0 and iv_paid != 'Y'", array($row[0]));
