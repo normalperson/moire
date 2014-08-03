@@ -4,30 +4,29 @@ require_once(dirname(__FILE__).'/../../init.inc.php');
 class Report{
 	function __construct(){
 	}	
-	function jobstatusreport(){
+	function dailycallsummary(){
 		html_header();
-		$dbo = dbo_include('tmp_jobstatusreport');
+		$dbo = dbo_include('rpt_dailycallsummary');
+	}	
+	function dailycallsummaryDet(){
+		html_header();
+		$dbo = dbo_include('rpt_dailycallsummary_det');
 	}
-	function custsalereport(){
+	function dailysalesummary(){
 		html_header();
-		$dbo = dbo_include('tmp_customersalesbycategory');
+		$dbo = dbo_include('rpt_dailysalesummary_2');
 	}
-	function salebycategory(){
+	function salecalldetail(){
 		html_header();
-		$dbo = dbo_include('tmp_monthsalesbycategory');
+		$dbo = dbo_include('rpt_salecalldetail');
 	}
-	function salebycustomer(){
+	function jobdetail(){
 		html_header();
-		$dbo = dbo_include('tmp_monthsalesbycustomer');
-
+		$dbo = dbo_include('rpt_jobdetail');
 	}
-	function dailysale(){
+	function dailyjobsummary(){
 		html_header();
-		$dbo = dbo_include('tmp_dailysalereport');		
-	}
-	function dailyuseractivity(){
-		html_header();
-		$dbo = dbo_include('tmp_dailyactivity');			
+		$dbo = dbo_include('rpt_dailyjobsummary');	
 	}
 	
 }

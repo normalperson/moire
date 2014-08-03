@@ -1,0 +1,294 @@
+html, body, #container, #body {
+	height : 100%;
+}
+.navbar {
+	margin-bottom : 0;
+}
+#mainTaskDiv  {
+	width : 100%;
+	display: table;
+	height:100%;
+}
+#rowTaskDiv{
+		display: table-row;
+}
+#contentFrame {
+	height:100%;
+}
+#sideDiv {
+	width : 350px;
+	padding : 0;
+	padding-bottom: 30px;
+	background-color : #3d3d3d;
+	color : white;
+	display:table-cell;
+	vertical-align:top;
+}
+
+#sideDiv > .nav-tabs > li > a{
+	color : #fff;
+}
+
+#sideDiv > .nav-tabs > li.active > a{
+	color : #000;
+}
+
+#contentDiv{
+	display:table-cell;
+	padding-bottom : 22px;
+	vertical-align:top;
+}
+
+
+
+#caseListing a {
+	color : #FAFAFA;
+	text-decoration: none;
+}
+
+#caseListing li.list-case>a:hover, #caseListing li.list-case>a:focus {
+	background-color: #303030;
+}
+
+#caseListing li.list-case>a:hover, #caseListing li.list-case>a:focus{
+	background-color: #575757;
+}
+
+#caseListing li.list-case.active>a {
+	background-color: #645D5D;
+}
+
+#caseListing .fa {
+	color : #A0A0A0;
+}
+
+
+#taskListing a {
+	color : #FAFAFA;
+	text-decoration: none;
+}
+
+#taskListing .fa {
+	color : #A0A0A0;
+}
+
+#taskListing .list-icon-collapse , #taskListing .list-icon-expand {
+	color : #FAFAFA;
+}
+
+#taskListing li.list-workflow>a:hover, #taskListing li.list-workflow>a:focus {
+	background-color: #303030;
+}
+
+#taskListing li.list-activity>a:hover, #taskListing li.list-activity>a:focus,
+#taskListing li.list-event>a:hover, #taskListing li.list-event>a:focus {
+	background-color: #575757;
+}
+
+#taskListing li.list-activity.active>a,
+#taskListing li.list-event.active>a  {
+	background-color: #D64635;
+}
+
+
+#taskListing .badge {
+	margin-left : 10px;
+}
+#taskListing .list-workflow>a>.badge {
+	margin-right : 10px;
+}
+
+#taskListing .badge.normal {
+	background-color : #629E4A;
+	border: 1px solid #134E21;
+}
+#taskListing .badge.urgent {
+	background-color : #DB2C2C;
+	border: 1px solid #4E1818;
+}
+#taskListing .list-workflow > a > .list-icon-collapse{
+	display : none;
+}
+#taskListing .list-workflow > a.collapsed > .list-icon-expand{
+	display : none;
+}
+#taskListing .list-workflow > a.collapsed > .list-icon-collapse{
+	display : inline;
+}
+
+#taskListing  .list-workflow:not(:last-of-type) {
+	border-bottom: 1px solid #535353;
+}
+
+#taskListing .list-activity > a, #taskListing .list-event > a{
+	padding-left : 45px;
+}
+
+#taskListing .list-activity >a>span , #taskListing .list-workflow >a>span, #taskListing .list-event >a>span {
+	word-break : break-all;
+}
+
+#taskListing li.list-workflow>a:hover, #taskListing li.list-workflow>a:focus {
+	background-color: #303030;
+}
+
+#taskListing li.list-activity>a:hover, #taskListing li.list-activity>a:focus,
+#taskListing li.list-event>a:hover, #taskListing li.list-event>a:focus {
+	background-color: #575757;
+}
+
+#taskListing li.list-activity.active>a,
+#taskListing li.list-event.active>a  {
+	background-color: #D64635;
+}
+
+#taskListing li.list-activity.active>a>.badge,
+#taskListing li.list-event.active>a>.badge  {
+	color : #fff;
+}
+#contentFrame{
+	border : 0;
+	width : 100%;
+}
+
+.widget-comments .comment, .widget-comments .comment-reply-area {
+	margin: 0 -20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 13px;
+}
+.widget-comments .comment>.comment , .widget-comments .comment>.comment-reply-area{
+	margin-left: 26px!important;
+}
+
+.widget-comments .comment-avatar {
+	display: block;
+	float: left;
+	height: 32px;
+	position: relative;
+	width: 32px;
+}
+.widget-comments span.comment-avatar{
+	font-size: 1.8em;
+	text-align: center;
+}
+
+.widget-comments .comment-body {
+	float: none;
+	margin-left: 46px;
+	position: relative;
+}
+
+.widget-comments .comment-body:before {
+	border-color: rgba(0, 0, 0, 0) #E4E4E4 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+	border-style: solid;
+	border-width: 6px 6px 6px 0;
+	content: "";
+	display: block;
+	height: 0;
+	left: -6px;
+	position: absolute;
+	top: 11px;
+	width: 0;
+}
+
+
+
+.widget-comments .comment-text {
+	border: 1px solid #E4E4E4;
+	border-radius: 2px;
+	padding: 7px 12px 8px;
+}
+
+.widget-comments a {
+	text-decoration: none;
+}
+
+.widget-comments .comment-heading {
+	font-size: 12px;
+	padding-bottom: 2px;
+}
+
+.widget-comments .comment-heading>a{
+	color : #007FFF;
+}
+
+.widget-comments .comment-heading>a.self{
+	color : #D33737;
+}
+
+.widget-comments .comment-heading span {
+	color: #AAA;
+	display: inline-block;
+	font-size: 11px;
+	margin-left: 5px;
+}
+
+.widget-comments .comment-footer, .widget-comments .comment-footer a {
+	color: #AAA;
+}
+.widget-comments .comment-footer {
+	display: block;
+	font-size: 12px;
+	padding: 4px 12px 0;
+}
+
+.widget-comments .comment-list-footer {
+	margin-top : 10px;
+}
+
+.widget-comments .comment-reply-area {
+	display : none;
+}
+
+.widget-comments .comment-reply-close{
+	margin-right : 10px;
+}
+
+.widget-comments .comment-new-textarea , .widget-comments .comment-reply-textarea{
+	width:100%;
+}
+
+.widget-comments .comment.unread > .comment-body > .comment-text {
+	/* Chrome, Safari, Opera */
+	-webkit-animation-name: colorblink;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: 10;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-play-state: running;
+	/* Standard syntax */
+	animation-name: colorblink;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-iteration-count: 10;
+	animation-direction: alternate;
+	animation-play-state: running;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes colorblink
+{
+from {background: #FFF;}
+to {background: #FFF8DC;}
+}
+/* Standard syntax */
+@keyframes colorblink
+{
+from {background: #FFF;}
+to {background: #FFF8DC;}
+}
+
+#caseNavList > .input-group {
+	margin : 10px;
+	border-bottom: 1px solid #4D4D4D;
+}
+
+#caseNavList > .input-group > input,  #caseNavList > .input-group  button{
+	background-color: transparent;
+	color : #B3B3B3;
+	border : 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
