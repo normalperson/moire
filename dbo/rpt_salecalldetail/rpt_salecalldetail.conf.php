@@ -4,7 +4,6 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'rpt_salecalldetail';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
-$dbo->fileSaveMode = 511;
 $dbo->table = 'mjobsheet ';
 $dbo->key = array();
 $dbo->sql = 'select mjobsheet.*, fcorg.*,
@@ -54,16 +53,15 @@ $dbo->titleEdit = 'Edit Record';
 $dbo->titleSearch = 'Search Record';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
-$dbo->pageLinkCount = 5;
-$dbo->recordPerPage = 50;
-$dbo->showRecordNo = 1;
+$dbo->pageLinkCount = '5';
+$dbo->recordPerPage = '50';
+$dbo->showRecordNo = '1';
 $dbo->defaultState = 'list';
-$dbo->maxSortCount = 9;
+$dbo->maxSortCount = '9';
 $dbo->defaultDateFormat = 'yyyy-mm-dd';
 $dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
 $dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
-$dbo->render = array();
 $dbo->searchCancel = 'Reset';
 $dbo->searchSubmit = 'Search';
 $dbo->detailBack = 'Back';
@@ -776,7 +774,10 @@ $dbo->cols['jobcategory']->inputTypeDefault = 'text';
 $dbo->cols['jobcategory']->searchMode = 'exact';
 $dbo->cols['jobcategory']->capContClassDefault = array();
 $dbo->cols['jobcategory']->valContClassDefault = array();
-$dbo->cols['jobcategory']->option->defaultMethod = 'text';
+$dbo->cols['jobcategory']->option->default = 'select jcl_id, jcl_title 
+from mjobcatlookup
+order by jcl_title';
+$dbo->cols['jobcategory']->option->defaultMethod = 'sql';
 $dbo->cols['jobcategory']->option->searchMethod = 'text';
 $dbo->cols['jobcategory']->option->listMethod = 'text';
 $dbo->cols['jobcategory']->option->detailMethod = 'text';
@@ -787,7 +788,10 @@ $dbo->cols['joboutput']->inputTypeDefault = 'text';
 $dbo->cols['joboutput']->searchMode = 'exact';
 $dbo->cols['joboutput']->capContClassDefault = array();
 $dbo->cols['joboutput']->valContClassDefault = array();
-$dbo->cols['joboutput']->option->defaultMethod = 'text';
+$dbo->cols['joboutput']->option->default = 'select jcl_id, jcl_title 
+from mjobcatlookup
+order by jcl_title';
+$dbo->cols['joboutput']->option->defaultMethod = 'sql';
 $dbo->cols['joboutput']->option->searchMethod = 'text';
 $dbo->cols['joboutput']->option->listMethod = 'text';
 $dbo->cols['joboutput']->option->detailMethod = 'text';
