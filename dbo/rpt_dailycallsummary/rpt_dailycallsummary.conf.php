@@ -4,87 +4,22 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'rpt_dailycallsummary';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
-$dbo->fileSaveMode = 511;
-$dbo->table = 'mjobsheet';
+$dbo->table = 'rpt_dailycallsummary';
 $dbo->key = array();
-$dbo->sql = 'select totaljob.completiondate, 
-totaljob.astotaljob, totalprice.astotalprice, totalinch.astotalinch,
-totaljob.eutotaljob, totalprice.eutotalprice, totalinch.eutotalinch,
-totaljob.lctotaljob, totalprice.lctotalprice, totalinch.lctotalinch,
-totalinmyr.astotalpriceinmyr+totalinmyr.eutotalpriceinmyr+totalinmyr.lctotalpriceinmyr as totalpriceinmyr,
-totalinusd.astotalpriceinusd+totalinusd.eutotalpriceinusd+totalinusd.lctotalpriceinusd as totalpriceinusd
-from crosstab (\'
-select trimdatetime(js_completiondate),rg_code,count(*) as totaljob
-from mjobsheet 
-join fcorg on js_orgid = org_id
-join mregion on org_region = rg_code
-where js_status = \'\'COMPLETED\'\'
-and rg_code = any (\'\'{ASIA, LOCAL, EURO}\'\')
-and org_external = \'\'Y\'\'
-group by rg_code,trimdatetime(js_completiondate)
-order by 1,2,3\')
-as totaljob(completiondate date, astotaljob bigint,eutotaljob bigint, lctotaljob bigint)
-full outer join 
-crosstab (\'
-select trimdatetime(js_completiondate),rg_code,sum(js_finalprice) as totalprice
-from mjobsheet 
-join fcorg on js_orgid = org_id
-join mregion on org_region = rg_code
-where js_status = \'\'COMPLETED\'\'
-and rg_code = any (\'\'{ASIA, LOCAL, EURO}\'\')
-and org_external = \'\'Y\'\'
-group by rg_code,trimdatetime(js_completiondate)
-order by 1,2\')
-as totalprice(completiondate date, astotalprice numeric,eutotalprice numeric, lctotalprice numeric) on totaljob.completiondate = totalprice.completiondate
-full outer join 
-crosstab (\'
-select trimdatetime(js_completiondate),rg_code,sum(js_totalinch) as inch
-from mjobsheet 
-join fcorg on js_orgid = org_id
-join mregion on org_region = rg_code
-where js_status = \'\'COMPLETED\'\'
-and rg_code = any (\'\'{ASIA, LOCAL, EURO}\'\')
-and org_external = \'\'Y\'\'
-group by rg_code,trimdatetime(js_completiondate)
-order by 1,2\')
-as totalinch(completiondate date, astotalinch numeric,eutotalinch numeric, lctotalinch numeric) on totalprice.completiondate = totalinch.completiondate
-full outer join 
-crosstab (\'
-select trimdatetime(js_completiondate),rg_code,sum( usdtomyr(js_finalprice,js_rate,js_currency) ) as amtinMYR
-from mjobsheet 
-join fcorg on js_orgid = org_id
-join mregion on org_region = rg_code
-where js_status = \'\'COMPLETED\'\'
-and rg_code = any (\'\'{ASIA, LOCAL, EURO}\'\')
-and org_external = \'\'Y\'\'
-group by rg_code,trimdatetime(js_completiondate)
-order by 1,2\')
-as totalinmyr(completiondate date, astotalpriceinmyr numeric,eutotalpriceinmyr numeric, lctotalpriceinmyr numeric) on totalinch.completiondate = totalinmyr.completiondate
-full outer join 
-crosstab (\'
-select trimdatetime(js_completiondate),rg_code,sum( myrtousd(js_finalprice,js_rate,js_currency) ) as amtinUSD
-from mjobsheet 
-join fcorg on js_orgid = org_id
-join mregion on org_region = rg_code
-where js_status = \'\'COMPLETED\'\'
-and rg_code = any (\'\'{ASIA, LOCAL, EURO}\'\')
-and org_external = \'\'Y\'\'
-group by rg_code,trimdatetime(js_completiondate)
-order by 1,2\')
-as totalinusd(completiondate date, astotalpriceinusd numeric,eutotalpriceinusd numeric, lctotalpriceinusd numeric) on totalinmyr.completiondate = totalinusd.completiondate';
-$dbo->col = array('completiondate', 'astotaljob', 'astotalprice', 'astotalinch', 'eutotaljob', 'eutotalprice', 'eutotalinch', 'lctotaljob', 'lctotalprice', 'lctotalinch', 'totalpriceinmyr', 'totalpriceinusd');
-$dbo->colList = array('completiondate', 'astotaljob', 'astotalprice', 'astotalinch', 'eutotaljob', 'eutotalprice', 'eutotalinch', 'lctotaljob', 'lctotalprice', 'lctotalinch', 'totalpriceinmyr', 'totalpriceinusd');
+$dbo->sql = 'select * from rpt_dailycallsummary';
+$dbo->col = array('rpt_completiondate', 'rpt_astotaljob', 'rpt_astotalprice', 'rpt_astotalinch', 'rpt_eutotaljob', 'rpt_eutotalprice', 'rpt_eutotalinch', 'rpt_lctotaljob', 'rpt_lctotalprice', 'rpt_lctotalinch', 'rpt_callid', 'rpt_totalpriceinmyr', 'rpt_totalpriceinusd');
+$dbo->colList = array('rpt_completiondate', 'rpt_astotaljob', 'rpt_astotalprice', 'rpt_astotalinch', 'rpt_eutotaljob', 'rpt_eutotalprice', 'rpt_eutotalinch', 'rpt_lctotaljob', 'rpt_lctotalprice', 'rpt_lctotalinch', 'rpt_totalpriceinmyr', 'rpt_totalpriceinusd');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('completiondate', 'astotaljob', 'astotalprice', 'astotalinch', 'eutotaljob', 'eutotalprice', 'eutotalinch', 'lctotaljob', 'lctotalprice', 'lctotalinch');
-$dbo->colNew = array('completiondate', 'astotaljob', 'astotalprice', 'astotalinch', 'eutotaljob', 'eutotalprice', 'eutotalinch', 'lctotaljob', 'lctotalprice', 'lctotalinch');
-$dbo->colEdit = array('completiondate', 'astotaljob', 'astotalprice', 'astotalinch', 'eutotaljob', 'eutotalprice', 'eutotalinch', 'lctotaljob', 'lctotalprice', 'lctotalinch');
-$dbo->colSearch = array('completiondate');
-$dbo->colExport = array('completiondate', 'astotaljob', 'astotalprice', 'astotalinch', 'eutotaljob', 'eutotalprice', 'eutotalinch', 'lctotaljob', 'lctotalprice', 'lctotalinch');
+$dbo->colDetail = array();
+$dbo->colNew = array();
+$dbo->colEdit = array();
+$dbo->colSearch = array('rpt_completiondate');
+$dbo->colExport = array();
 $dbo->colSort = array();
-$dbo->colSum = array('astotaljob', 'astotalprice', 'astotalinch', 'eutotaljob', 'eutotalprice', 'eutotalinch', 'lctotaljob', 'lctotalprice', 'lctotalinch', 'totalpriceinmyr', 'totalpriceinusd');
-$dbo->colSumPage = array('astotaljob', 'astotalprice', 'astotalinch', 'eutotaljob', 'eutotalprice', 'eutotalinch', 'lctotaljob', 'lctotalprice', 'lctotalinch', 'totalpriceinmyr', 'totalpriceinusd');
+$dbo->colSum = array();
+$dbo->colSumPage = array();
 $dbo->colAvg = array();
 $dbo->colAvgPage = array();
 $dbo->canSearch = true;
@@ -105,16 +40,15 @@ $dbo->titleEdit = 'Edit Record';
 $dbo->titleSearch = 'Search Record';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
-$dbo->pageLinkCount = 5;
-$dbo->recordPerPage = 50;
-$dbo->showRecordNo = 1;
+$dbo->pageLinkCount = '5';
+$dbo->recordPerPage = '50';
+$dbo->showRecordNo = '1';
 $dbo->defaultState = 'search';
-$dbo->maxSortCount = 9;
+$dbo->maxSortCount = '9';
 $dbo->defaultDateFormat = 'yyyy-mm-dd';
 $dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
 $dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
-$dbo->render = array();
 $dbo->searchCancel = 'Reset';
 $dbo->searchSubmit = 'Search';
 $dbo->detailBack = 'Back';
@@ -126,7 +60,7 @@ $dbo->newSubmit = 'Submit';
 
 $dbo->cols['completiondate'] = new DBO_COL('completiondate', 'date', '4', '-1');
 $dbo->cols['completiondate']->inputTypeDefault = 'rangedate';
-$dbo->cols['completiondate']->mandatorySearch = 1;
+$dbo->cols['completiondate']->mandatorySearch = '1';
 $dbo->cols['completiondate']->searchMode = 'exact';
 $dbo->cols['completiondate']->capContClassDefault = array();
 $dbo->cols['completiondate']->valContClassDefault = array();
@@ -274,6 +208,160 @@ $dbo->cols['totalpriceinusd']->option->listMethod = 'text';
 $dbo->cols['totalpriceinusd']->option->detailMethod = 'text';
 $dbo->cols['totalpriceinusd']->option->newMethod = 'text';
 $dbo->cols['totalpriceinusd']->option->editMethod = 'text';
+$dbo->cols['rpt_completiondate'] = new DBO_COL('rpt_completiondate', 'date', '4', '-1');
+$dbo->cols['rpt_completiondate']->inputTypeDefault = 'rangedate';
+$dbo->cols['rpt_completiondate']->searchMode = 'exact';
+$dbo->cols['rpt_completiondate']->capContClassDefault = array();
+$dbo->cols['rpt_completiondate']->valContClassDefault = array();
+$dbo->cols['rpt_completiondate']->option->defaultMethod = 'text';
+$dbo->cols['rpt_completiondate']->option->searchMethod = 'text';
+$dbo->cols['rpt_completiondate']->option->listMethod = 'text';
+$dbo->cols['rpt_completiondate']->option->detailMethod = 'text';
+$dbo->cols['rpt_completiondate']->option->newMethod = 'text';
+$dbo->cols['rpt_completiondate']->option->editMethod = 'text';
+$dbo->cols['rpt_astotaljob'] = new DBO_COL('rpt_astotaljob', 'int4', '4', '-1');
+$dbo->cols['rpt_astotaljob']->displayDataType = 'int';
+$dbo->cols['rpt_astotaljob']->inputTypeDefault = 'text';
+$dbo->cols['rpt_astotaljob']->searchMode = 'exact';
+$dbo->cols['rpt_astotaljob']->capContClassDefault = array();
+$dbo->cols['rpt_astotaljob']->valContClassDefault = array();
+$dbo->cols['rpt_astotaljob']->option->defaultMethod = 'text';
+$dbo->cols['rpt_astotaljob']->option->searchMethod = 'text';
+$dbo->cols['rpt_astotaljob']->option->listMethod = 'text';
+$dbo->cols['rpt_astotaljob']->option->detailMethod = 'text';
+$dbo->cols['rpt_astotaljob']->option->newMethod = 'text';
+$dbo->cols['rpt_astotaljob']->option->editMethod = 'text';
+$dbo->cols['rpt_astotalprice'] = new DBO_COL('rpt_astotalprice', 'numeric', '-1', '1310728');
+$dbo->cols['rpt_astotalprice']->displayDataType = 'currency';
+$dbo->cols['rpt_astotalprice']->inputTypeDefault = 'text';
+$dbo->cols['rpt_astotalprice']->searchMode = 'exact';
+$dbo->cols['rpt_astotalprice']->capContClassDefault = array();
+$dbo->cols['rpt_astotalprice']->valContClassDefault = array();
+$dbo->cols['rpt_astotalprice']->option->defaultMethod = 'text';
+$dbo->cols['rpt_astotalprice']->option->searchMethod = 'text';
+$dbo->cols['rpt_astotalprice']->option->listMethod = 'text';
+$dbo->cols['rpt_astotalprice']->option->detailMethod = 'text';
+$dbo->cols['rpt_astotalprice']->option->newMethod = 'text';
+$dbo->cols['rpt_astotalprice']->option->editMethod = 'text';
+$dbo->cols['rpt_astotalinch'] = new DBO_COL('rpt_astotalinch', 'numeric', '-1', '1310728');
+$dbo->cols['rpt_astotalinch']->displayDataType = 'currency';
+$dbo->cols['rpt_astotalinch']->inputTypeDefault = 'text';
+$dbo->cols['rpt_astotalinch']->searchMode = 'exact';
+$dbo->cols['rpt_astotalinch']->capContClassDefault = array();
+$dbo->cols['rpt_astotalinch']->valContClassDefault = array();
+$dbo->cols['rpt_astotalinch']->option->defaultMethod = 'text';
+$dbo->cols['rpt_astotalinch']->option->searchMethod = 'text';
+$dbo->cols['rpt_astotalinch']->option->listMethod = 'text';
+$dbo->cols['rpt_astotalinch']->option->detailMethod = 'text';
+$dbo->cols['rpt_astotalinch']->option->newMethod = 'text';
+$dbo->cols['rpt_astotalinch']->option->editMethod = 'text';
+$dbo->cols['rpt_eutotaljob'] = new DBO_COL('rpt_eutotaljob', 'int4', '4', '-1');
+$dbo->cols['rpt_eutotaljob']->displayDataType = 'int';
+$dbo->cols['rpt_eutotaljob']->inputTypeDefault = 'text';
+$dbo->cols['rpt_eutotaljob']->searchMode = 'exact';
+$dbo->cols['rpt_eutotaljob']->capContClassDefault = array();
+$dbo->cols['rpt_eutotaljob']->valContClassDefault = array();
+$dbo->cols['rpt_eutotaljob']->option->defaultMethod = 'text';
+$dbo->cols['rpt_eutotaljob']->option->searchMethod = 'text';
+$dbo->cols['rpt_eutotaljob']->option->listMethod = 'text';
+$dbo->cols['rpt_eutotaljob']->option->detailMethod = 'text';
+$dbo->cols['rpt_eutotaljob']->option->newMethod = 'text';
+$dbo->cols['rpt_eutotaljob']->option->editMethod = 'text';
+$dbo->cols['rpt_eutotalprice'] = new DBO_COL('rpt_eutotalprice', 'numeric', '-1', '1310728');
+$dbo->cols['rpt_eutotalprice']->displayDataType = 'currency';
+$dbo->cols['rpt_eutotalprice']->inputTypeDefault = 'text';
+$dbo->cols['rpt_eutotalprice']->searchMode = 'exact';
+$dbo->cols['rpt_eutotalprice']->capContClassDefault = array();
+$dbo->cols['rpt_eutotalprice']->valContClassDefault = array();
+$dbo->cols['rpt_eutotalprice']->option->defaultMethod = 'text';
+$dbo->cols['rpt_eutotalprice']->option->searchMethod = 'text';
+$dbo->cols['rpt_eutotalprice']->option->listMethod = 'text';
+$dbo->cols['rpt_eutotalprice']->option->detailMethod = 'text';
+$dbo->cols['rpt_eutotalprice']->option->newMethod = 'text';
+$dbo->cols['rpt_eutotalprice']->option->editMethod = 'text';
+$dbo->cols['rpt_eutotalinch'] = new DBO_COL('rpt_eutotalinch', 'numeric', '-1', '1310728');
+$dbo->cols['rpt_eutotalinch']->displayDataType = 'currency';
+$dbo->cols['rpt_eutotalinch']->inputTypeDefault = 'text';
+$dbo->cols['rpt_eutotalinch']->searchMode = 'exact';
+$dbo->cols['rpt_eutotalinch']->capContClassDefault = array();
+$dbo->cols['rpt_eutotalinch']->valContClassDefault = array();
+$dbo->cols['rpt_eutotalinch']->option->defaultMethod = 'text';
+$dbo->cols['rpt_eutotalinch']->option->searchMethod = 'text';
+$dbo->cols['rpt_eutotalinch']->option->listMethod = 'text';
+$dbo->cols['rpt_eutotalinch']->option->detailMethod = 'text';
+$dbo->cols['rpt_eutotalinch']->option->newMethod = 'text';
+$dbo->cols['rpt_eutotalinch']->option->editMethod = 'text';
+$dbo->cols['rpt_lctotaljob'] = new DBO_COL('rpt_lctotaljob', 'int4', '4', '-1');
+$dbo->cols['rpt_lctotaljob']->displayDataType = 'currency';
+$dbo->cols['rpt_lctotaljob']->inputTypeDefault = 'text';
+$dbo->cols['rpt_lctotaljob']->searchMode = 'exact';
+$dbo->cols['rpt_lctotaljob']->capContClassDefault = array();
+$dbo->cols['rpt_lctotaljob']->valContClassDefault = array();
+$dbo->cols['rpt_lctotaljob']->option->defaultMethod = 'text';
+$dbo->cols['rpt_lctotaljob']->option->searchMethod = 'text';
+$dbo->cols['rpt_lctotaljob']->option->listMethod = 'text';
+$dbo->cols['rpt_lctotaljob']->option->detailMethod = 'text';
+$dbo->cols['rpt_lctotaljob']->option->newMethod = 'text';
+$dbo->cols['rpt_lctotaljob']->option->editMethod = 'text';
+$dbo->cols['rpt_lctotalprice'] = new DBO_COL('rpt_lctotalprice', 'numeric', '-1', '1310728');
+$dbo->cols['rpt_lctotalprice']->displayDataType = 'currency';
+$dbo->cols['rpt_lctotalprice']->inputTypeDefault = 'text';
+$dbo->cols['rpt_lctotalprice']->searchMode = 'exact';
+$dbo->cols['rpt_lctotalprice']->capContClassDefault = array();
+$dbo->cols['rpt_lctotalprice']->valContClassDefault = array();
+$dbo->cols['rpt_lctotalprice']->option->defaultMethod = 'text';
+$dbo->cols['rpt_lctotalprice']->option->searchMethod = 'text';
+$dbo->cols['rpt_lctotalprice']->option->listMethod = 'text';
+$dbo->cols['rpt_lctotalprice']->option->detailMethod = 'text';
+$dbo->cols['rpt_lctotalprice']->option->newMethod = 'text';
+$dbo->cols['rpt_lctotalprice']->option->editMethod = 'text';
+$dbo->cols['rpt_lctotalinch'] = new DBO_COL('rpt_lctotalinch', 'numeric', '-1', '1310728');
+$dbo->cols['rpt_lctotalinch']->displayDataType = 'currency';
+$dbo->cols['rpt_lctotalinch']->inputTypeDefault = 'text';
+$dbo->cols['rpt_lctotalinch']->searchMode = 'exact';
+$dbo->cols['rpt_lctotalinch']->capContClassDefault = array();
+$dbo->cols['rpt_lctotalinch']->valContClassDefault = array();
+$dbo->cols['rpt_lctotalinch']->option->defaultMethod = 'text';
+$dbo->cols['rpt_lctotalinch']->option->searchMethod = 'text';
+$dbo->cols['rpt_lctotalinch']->option->listMethod = 'text';
+$dbo->cols['rpt_lctotalinch']->option->detailMethod = 'text';
+$dbo->cols['rpt_lctotalinch']->option->newMethod = 'text';
+$dbo->cols['rpt_lctotalinch']->option->editMethod = 'text';
+$dbo->cols['rpt_callid'] = new DBO_COL('rpt_callid', 'int4', '4', '-1');
+$dbo->cols['rpt_callid']->inputTypeDefault = 'text';
+$dbo->cols['rpt_callid']->searchMode = 'exact';
+$dbo->cols['rpt_callid']->capContClassDefault = array();
+$dbo->cols['rpt_callid']->valContClassDefault = array();
+$dbo->cols['rpt_callid']->option->defaultMethod = 'text';
+$dbo->cols['rpt_callid']->option->searchMethod = 'text';
+$dbo->cols['rpt_callid']->option->listMethod = 'text';
+$dbo->cols['rpt_callid']->option->detailMethod = 'text';
+$dbo->cols['rpt_callid']->option->newMethod = 'text';
+$dbo->cols['rpt_callid']->option->editMethod = 'text';
+$dbo->cols['rpt_totalpriceinmyr'] = new DBO_COL('rpt_totalpriceinmyr', 'numeric', '-1', '1310728');
+$dbo->cols['rpt_totalpriceinmyr']->displayDataType = 'currency';
+$dbo->cols['rpt_totalpriceinmyr']->inputTypeDefault = 'text';
+$dbo->cols['rpt_totalpriceinmyr']->searchMode = 'exact';
+$dbo->cols['rpt_totalpriceinmyr']->capContClassDefault = array();
+$dbo->cols['rpt_totalpriceinmyr']->valContClassDefault = array();
+$dbo->cols['rpt_totalpriceinmyr']->option->defaultMethod = 'text';
+$dbo->cols['rpt_totalpriceinmyr']->option->searchMethod = 'text';
+$dbo->cols['rpt_totalpriceinmyr']->option->listMethod = 'text';
+$dbo->cols['rpt_totalpriceinmyr']->option->detailMethod = 'text';
+$dbo->cols['rpt_totalpriceinmyr']->option->newMethod = 'text';
+$dbo->cols['rpt_totalpriceinmyr']->option->editMethod = 'text';
+$dbo->cols['rpt_totalpriceinusd'] = new DBO_COL('rpt_totalpriceinusd', 'numeric', '-1', '1310728');
+$dbo->cols['rpt_totalpriceinusd']->displayDataType = 'currency';
+$dbo->cols['rpt_totalpriceinusd']->inputTypeDefault = 'text';
+$dbo->cols['rpt_totalpriceinusd']->searchMode = 'exact';
+$dbo->cols['rpt_totalpriceinusd']->capContClassDefault = array();
+$dbo->cols['rpt_totalpriceinusd']->valContClassDefault = array();
+$dbo->cols['rpt_totalpriceinusd']->option->defaultMethod = 'text';
+$dbo->cols['rpt_totalpriceinusd']->option->searchMethod = 'text';
+$dbo->cols['rpt_totalpriceinusd']->option->listMethod = 'text';
+$dbo->cols['rpt_totalpriceinusd']->option->detailMethod = 'text';
+$dbo->cols['rpt_totalpriceinusd']->option->newMethod = 'text';
+$dbo->cols['rpt_totalpriceinusd']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;
