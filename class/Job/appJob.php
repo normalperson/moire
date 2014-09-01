@@ -8,7 +8,7 @@ function genRptCallSummary() { // temp
 	$yesterday = date('Y-m-d',strtotime("-1 days"));
 	echo 'yesterday = '.$yesterday.'<br>';
 
-	$sql = "perform gendailycallsummary('".$yesterday."')";
+	$sql = "select gendailycallsummary('".$yesterday."')";
 	$ok = $DB->Execute($sql);
 
 	// if not ok insert log

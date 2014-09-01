@@ -22,6 +22,7 @@ $dbo->titleEdit = 'Edit Record';
 $dbo->titleSearch = 'Search Record';
 $dbo->text->searchCancel = 'Cancel';
 $dbo->text->searchSubmit = 'Search';
+$dbo->text->searchToggle = 'Search';
 $dbo->text->editCancel = 'Cancel';
 $dbo->text->editSubmit = 'Save';
 $dbo->text->newCancel = 'Cancel';
@@ -29,6 +30,7 @@ $dbo->text->newSubmit = 'Save';
 $dbo->text->listSubmit = 'Submit';
 $dbo->text->detailCancel = 'Back';
 $dbo->text->detailDelete = 'Delete ';
+$dbo->text->listNew = 'New';
 $dbo->text->listEdit = 'Edit';
 $dbo->text->listDelete = 'Delete';
 $dbo->text->listDetail = 'Detail';
@@ -38,6 +40,10 @@ $dbo->text->messageAfterDelete = '';
 $dbo->text->defaultMessageAfterNew = 'Record created.';
 $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';
+$dbo->text->sum = 'Total';
+$dbo->text->sumPage = 'Total';
+$dbo->text->avg = 'Average';
+$dbo->text->avgPage = 'Average';
 $dbo->text->listNewEditSubmit = 'Save';
 
 ?>

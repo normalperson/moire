@@ -225,9 +225,9 @@ class DocManUI {
 				$(file.previewElement).find('.dz-remove').click(function (e) {
 					var i =	uploaded.indexOf(fileObj);
 					if (i > -1) uploaded.splice(i, 1);
-					\$dropzoneInput.val(JSON.stringify(uploaded));
+					\$dropzoneInput.val((uploaded && uploaded.length>0) ? JSON.stringify(uploaded) : '');
 				})
-				\$dropzoneInput.val(JSON.stringify(uploaded));
+				\$dropzoneInput.val((uploaded && uploaded.length>0) ? JSON.stringify(uploaded) : '');
 			}
 		}
 	});

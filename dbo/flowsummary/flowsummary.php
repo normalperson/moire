@@ -89,9 +89,10 @@ function showPercentageDet($col, $colVal, $data=array(), $html=null){
 function showPriceDet($col, $colVal, $data, $html) {
 	global $USER,$DB;
 	// get the currency code by org
-	$sql = "select case when rg_convert = 'N' and rg_currency != 'MYR' then rg_currency else 'MYR' end currencycode
+
+	$sql = "select rg_currency as currencycode
 			from fcorg join mregion on org_region = rg_code where org_id = :0";
-	$currcode = $DB->GetOne($sql,array($USER->orgid), PDO::FETCH_ASSOC);			
+	$currcode = $DB->GetOne($sql,array($data['js_orgid']), PDO::FETCH_ASSOC);			
 
 	$html = $currcode.' :'.$html;
 	return $html;

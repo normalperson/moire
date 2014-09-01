@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 13-07-2014 03:09:32*/
+/*Last Modified by uat_customer4 on 05-08-2014 20:18:12*/
 $translate = array (
   'Artwork job' => '美工订单',
   'New Job' => '新增订单',
@@ -28,5 +28,6 @@ $translate = array (
   'The job has successfully been assigned to artist.' => '分配于美工员成功',
   'The job has successfully been canceled.' => '订单取消成功',
   'The job has successfully been cancelled.' => '订单取消成功',
+  'You\'ve received a new task' => 'You\'ve received a new task',
 );
 ?>

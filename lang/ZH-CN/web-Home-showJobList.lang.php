@@ -1,6 +1,7 @@
 <?php
-/*Last Modified by uat_customer1 on 15-07-2014 19:36:12*/
+/*Last Modified by MY025_SUPER on 08-08-2014 15:19:56*/
 $translate = array (
   'Create New Jobsheet' => 'Create New Jobsheet',
+  'Print' => 'Print',
 );
 ?>
