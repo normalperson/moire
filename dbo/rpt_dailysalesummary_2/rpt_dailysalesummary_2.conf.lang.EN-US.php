@@ -11,6 +11,7 @@ $dbo->cols['inch']->caption->set('default', 'Total Inch <sup>2</sup>', 'text');
 $dbo->cols['amtinusd']->caption->set('default', 'Total price in USD', 'text');
 $dbo->cols['amtinmyr']->caption->set('default', 'Total price in MYR', 'text');
 $dbo->cols['completiondate']->caption->set('default', 'Date', 'text');
+$dbo->cols['org_name']->caption->set('default', 'org_name', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

@@ -6,7 +6,7 @@ $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
 $dbo->table = 'mjobsheet';
 $dbo->key = array();
-$dbo->sql = 'select trimdatetime(js_completiondate) as completiondate,js_orgid,rg_code,
+$dbo->sql = 'select trimdatetime(js_completiondate) as completiondate,js_orgid, org_name, rg_code,
 js_currency,
 count(*) as totaljob,sum(js_finalprice) as totalprice,sum(js_totalinch) as inch ,
 sum( myrtousd(js_finalprice,js_rate,js_currency) ) as amtinUSD,
@@ -16,9 +16,9 @@ join fcorg on js_orgid = org_id
 join mregion on org_region = rg_code
 where js_status = \'COMPLETED\'
 and org_external = \'Y\'
-group by rg_code,trimdatetime(js_completiondate),js_currency,js_orgid
+group by rg_code,trimdatetime(js_completiondate),js_currency,js_orgid, org_name 
 order by trimdatetime(js_completiondate)';
-$dbo->col = array('completiondate', 'js_orgid', 'rg_code', 'js_currency', 'totaljob', 'totalprice', 'inch', 'amtinusd', 'amtinmyr');
+$dbo->col = array('completiondate', 'js_orgid', 'org_name', 'rg_code', 'js_currency', 'totaljob', 'totalprice', 'inch', 'amtinusd', 'amtinmyr');
 $dbo->colList = array('completiondate', 'js_orgid', 'rg_code', 'js_currency', 'totaljob', 'totalprice', 'inch', 'amtinmyr', 'amtinusd');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
@@ -71,7 +71,7 @@ $dbo->editSubmit = 'Edit';
 $dbo->listEditSubmit = 'Submit';
 $dbo->newCancel = 'Cancel';
 $dbo->newSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'getnodearr', 'content_53dfa9f5815224_57402229', 'customerlink', 'dbo_rpt_dailysalesummary_2_customize');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'getnodearr', 'content_54043467939e06_72277515', 'customerlink', 'dbo_rpt_dailysalesummary_2_customize');
 
 $dbo->cols['trimdatetime'] = new DBO_COL('trimdatetime', 'date', '4', '-1');
 $dbo->cols['trimdatetime']->inputTypeDefault = 'text';
@@ -85,8 +85,8 @@ $dbo->cols['trimdatetime']->option->detailMethod = 'text';
 $dbo->cols['trimdatetime']->option->newMethod = 'text';
 $dbo->cols['trimdatetime']->option->editMethod = 'text';
 $dbo->cols['js_orgid'] = new DBO_COL('js_orgid', 'int4', '4', '-1');
-$dbo->cols['js_orgid']->displayListModifierMethod = 'phpfunc';
-$dbo->cols['js_orgid']->displayListModifier = 'customerLink';
+$dbo->cols['js_orgid']->displayListModifierMethod = 'text';
+$dbo->cols['js_orgid']->displayListModifier = '<a href="salecalldetail?customer={js_orgid}&completiondate={completiondate}" >{org_name}</a>';
 $dbo->cols['js_orgid']->inputTypeDefault = 'select';
 $dbo->cols['js_orgid']->searchMode = 'exact';
 $dbo->cols['js_orgid']->capContClassDefault = array();
@@ -195,6 +195,17 @@ $dbo->cols['completiondate']->option->listMethod = 'text';
 $dbo->cols['completiondate']->option->detailMethod = 'text';
 $dbo->cols['completiondate']->option->newMethod = 'text';
 $dbo->cols['completiondate']->option->editMethod = 'text';
+$dbo->cols['org_name'] = new DBO_COL('org_name', 'varchar', '-1', '2004');
+$dbo->cols['org_name']->inputTypeDefault = 'text';
+$dbo->cols['org_name']->searchMode = 'exact';
+$dbo->cols['org_name']->capContClassDefault = array();
+$dbo->cols['org_name']->valContClassDefault = array();
+$dbo->cols['org_name']->option->defaultMethod = 'text';
+$dbo->cols['org_name']->option->searchMethod = 'text';
+$dbo->cols['org_name']->option->listMethod = 'text';
+$dbo->cols['org_name']->option->detailMethod = 'text';
+$dbo->cols['org_name']->option->newMethod = 'text';
+$dbo->cols['org_name']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;
