@@ -708,6 +708,10 @@ $( document ).ready(function() {
 	});
 	setTrappingProp();
 	setOutputtypeProp();
+	//setDieCut();
+
+
+	
 	
 	// angle enabling
 	var $lpiInp = $('#dbo_jobsheet_new_js_lpi, #dbo_jobsheet_edit_js_lpi');
@@ -783,6 +787,18 @@ $( document ).ready(function() {
 		setCartonProp();
 	})
 	setCartonProp();
+
+	$('[name="dbo_jobsheet_new_js_diecut_ind"], [name="dbo_jobsheet_edit_js_diecut_ind"]').change(function(){
+		$this = $(this);
+		if($this.val() == 'Y')	$cartonTypeInp.val('').prop('disabled', true).change();
+		else{
+			if ($outputjob.filter(':checked').filter(function () {
+				if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
+				jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'MASTER CARD') return true;
+				return false;
+			}).length > 0) $cartonTypeInp.prop('disabled', false).change();
+		}	
+	});
 	
 	
 });
