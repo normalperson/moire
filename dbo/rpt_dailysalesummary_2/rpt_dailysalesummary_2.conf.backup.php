@@ -85,8 +85,8 @@ $dbo->cols['trimdatetime']->option->detailMethod = 'text';
 $dbo->cols['trimdatetime']->option->newMethod = 'text';
 $dbo->cols['trimdatetime']->option->editMethod = 'text';
 $dbo->cols['js_orgid'] = new DBO_COL('js_orgid', 'int4', '4', '-1');
-$dbo->cols['js_orgid']->displayListModifierMethod = 'phpfunc';
-$dbo->cols['js_orgid']->displayListModifier = 'customerLink';
+$dbo->cols['js_orgid']->displayListModifierMethod = 'text';
+$dbo->cols['js_orgid']->displayListModifier = '<a href="salecalldetail?customer={js_orgid}&completiondate={completiondate}" >{org_name}</a>';
 $dbo->cols['js_orgid']->inputTypeDefault = 'select';
 $dbo->cols['js_orgid']->searchMode = 'exact';
 $dbo->cols['js_orgid']->capContClassDefault = array();
@@ -197,8 +197,15 @@ $dbo->cols['completiondate']->option->newMethod = 'text';
 $dbo->cols['completiondate']->option->editMethod = 'text';
 $dbo->cols['org_name'] = new DBO_COL('org_name', 'varchar', '-1', '2004');
 $dbo->cols['org_name']->inputTypeDefault = 'text';
+$dbo->cols['org_name']->searchMode = 'exact';
 $dbo->cols['org_name']->capContClassDefault = array();
 $dbo->cols['org_name']->valContClassDefault = array();
+$dbo->cols['org_name']->option->defaultMethod = 'text';
+$dbo->cols['org_name']->option->searchMethod = 'text';
+$dbo->cols['org_name']->option->listMethod = 'text';
+$dbo->cols['org_name']->option->detailMethod = 'text';
+$dbo->cols['org_name']->option->newMethod = 'text';
+$dbo->cols['org_name']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

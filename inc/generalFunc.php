@@ -1,4 +1,23 @@
 <?php
+global $DATEFORMAT;
+$DATEFORMAT['datetime'] = array(
+	'php'=>'j-M-Y g:i A',
+	'sql'=>'FMDD-Mon-YYYY FMHH:MI AM',
+	'dbo'=>'d-mon-yyyy h12:min AP',
+	'moment'=>'D-MMM-YYYY h:mm A',
+);
+$DATEFORMAT['date'] = array(
+	'php'=>'j-M-Y',
+	'sql'=>'FMDD-Mon-YYYY',
+	'dbo'=>'d-mon-yyyy',
+	'datepicker'=>'d-M-yyyy',
+	'moment'=>'D-MMM-YYYY',
+);
+function globalFormatDate($d, $formattype = 'datetime') {
+	global $DATEFORMAT;
+	$d = ($d instanceof DateTime) ? $d : new DateTime($d);
+	return $d->format($DATEFORMAT[$formattype]['php']);
+}
   /**
   * Push with associative array  
   * @param array $arr

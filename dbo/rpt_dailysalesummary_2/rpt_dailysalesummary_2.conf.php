@@ -71,7 +71,7 @@ $dbo->editSubmit = 'Edit';
 $dbo->listEditSubmit = 'Submit';
 $dbo->newCancel = 'Cancel';
 $dbo->newSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'getnodearr', 'content_54043467939e06_72277515', 'customerlink', 'dbo_rpt_dailysalesummary_2_customize');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'customerlink', 'dbo_rpt_dailysalesummary_2_customize');
 
 $dbo->cols['trimdatetime'] = new DBO_COL('trimdatetime', 'date', '4', '-1');
 $dbo->cols['trimdatetime']->inputTypeDefault = 'text';
@@ -184,7 +184,7 @@ $dbo->cols['amtinmyr']->option->detailMethod = 'text';
 $dbo->cols['amtinmyr']->option->newMethod = 'text';
 $dbo->cols['amtinmyr']->option->editMethod = 'text';
 $dbo->cols['completiondate'] = new DBO_COL('completiondate', 'date', '4', '-1');
-$dbo->cols['completiondate']->inputTypeDefault = 'rangedate';
+$dbo->cols['completiondate']->inputTypeDefault = 'BootstrapDateRange';
 $dbo->cols['completiondate']->mandatorySearch = '1';
 $dbo->cols['completiondate']->searchMode = 'exact';
 $dbo->cols['completiondate']->capContClassDefault = array();
