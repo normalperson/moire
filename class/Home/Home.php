@@ -388,6 +388,12 @@ class Home{
 		if( isset($GLOBAL['dbosess']['joblisting']) && count($GLOBAL['dbosess']['joblisting']) > 0 ) unset($GLOBAL['dbosess']['joblisting']);
 		dbo_include('joblisting');
 	}
+	function showJobWIP(){
+		global $GLOBAL;
+		html_header();
+		dbo_include('jobwip');
+
+	}
 	function getTotalJob(){
 		global $DB;
 		$sql = "select count(*) from mjobsheet";

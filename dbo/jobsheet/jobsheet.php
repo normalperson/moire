@@ -151,7 +151,7 @@ function showRequiredMinute($col, $colVal, $data=array(), $html=null){
 function showPrice($col, $colVal, $data, $html) {
 	global $USER,$DB;
 	// get the currency code by org
-	$sql = "select case when rg_convert = 'N' and rg_currency != 'MYR' then rg_currency else 'MYR' end currencycode
+	$sql = "select rg_currency as currencycode
 			from fcorg join mregion on org_region = rg_code where org_id = :0";
 	$currcode = $DB->GetOne($sql,array($USER->orgid), PDO::FETCH_ASSOC);			
 	$fronthtml = substr($html,0, strpos($html, '</div>'));
@@ -162,9 +162,10 @@ function showPrice($col, $colVal, $data, $html) {
 function showPriceDet($col, $colVal, $data, $html) {
 	global $USER,$DB;
 	// get the currency code by org
-	$sql = "select case when rg_convert = 'N' and rg_currency != 'MYR' then rg_currency else 'MYR' end currencycode
+
+	$sql = "select rg_currency as currencycode
 			from fcorg join mregion on org_region = rg_code where org_id = :0";
-	$currcode = $DB->GetOne($sql,array($USER->orgid), PDO::FETCH_ASSOC);			
+	$currcode = $DB->GetOne($sql,array($data['js_orgid']), PDO::FETCH_ASSOC);			
 
 	$html = $currcode.' :'.$html;
 	return $html;
@@ -283,17 +284,18 @@ function dbo_jobsheet_custom_new($table, $cols){
 	$cols['js_currency'] = $rowdata['rg_currency'];
 
 	// determine whether need to calculate conversion
-	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
-		// convert
-		$sql = "select cr_rate from fccurrency where cr_code = :0";
-		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
+	// get rate
+	$sql = "select cr_rate from fccurrency where cr_code = :0";
+	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
+
+	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
 		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
 
 	}else{
 		$cols['js_finalprice'] = $price;
-		$cols['js_rate'] = 1;
+		$cols['js_rate'] = $rate;
 	}
 
 	
@@ -430,18 +432,19 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 
 	$cols['js_currency'] = $rowdata['rg_currency'];
 
+	// get rate
+	$sql = "select cr_rate from fccurrency where cr_code = :0";
+	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
+
 	// determine whether need to calculate conversion
 	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
-		// convert
-		$sql = "select cr_rate from fccurrency where cr_code = :0";
-		$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
 		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
 
 	}else{
 		$cols['js_finalprice'] = $price;
-		$cols['js_rate'] = 1;
+		$cols['js_rate'] = $rate;
 	}
 
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -705,6 +708,10 @@ $( document ).ready(function() {
 	});
 	setTrappingProp();
 	setOutputtypeProp();
+	//setDieCut();
+
+
+	
 	
 	// angle enabling
 	var $lpiInp = $('#dbo_jobsheet_new_js_lpi, #dbo_jobsheet_edit_js_lpi');
@@ -780,6 +787,18 @@ $( document ).ready(function() {
 		setCartonProp();
 	})
 	setCartonProp();
+
+	$('[name="dbo_jobsheet_new_js_diecut_ind"], [name="dbo_jobsheet_edit_js_diecut_ind"]').change(function(){
+		$this = $(this);
+		if($this.val() == 'Y')	$cartonTypeInp.val('').prop('disabled', true).change();
+		else{
+			if ($outputjob.filter(':checked').filter(function () {
+				if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
+				jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'MASTER CARD') return true;
+				return false;
+			}).length > 0) $cartonTypeInp.prop('disabled', false).change();
+		}	
+	});
 	
 	
 });
