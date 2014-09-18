@@ -28,6 +28,15 @@ class Report{
 		html_header();
 		$dbo = dbo_include('rpt_dailyjobsummary');	
 	}
+	function performancesummary(){
+		html_header();
+		$dbo = dbo_include('rpt_performance');	
+	}
+	function performancedet(){
+		html_header();
+		$dbo = dbo_include('rpt_performance_det');	
+
+	}
 	
 }
 
