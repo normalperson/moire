@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 03-08-2014 18:07:21*/
+/*Last Modified by esp on 18-09-2014 11:38:02*/
 $translate = array (
   'Admin Setup' => 'Admin Setup',
   'Setting' => 'Setting',
@@ -46,5 +46,6 @@ $translate = array (
   'Daily call report' => 'Daily call report',
   'Daily sale report' => 'Daily sale report',
   'Daily job report' => 'Daily job report',
+  'Performance report' => 'Performance report',
 );
 ?>
