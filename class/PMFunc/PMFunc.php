@@ -246,6 +246,11 @@ $(function () {
 		return true;
 	}
 	
+	function notifyCustomerAcceptance() {
+		sendMailFromTemplate('NOTIFY_CUST_ACCEPTANCE');
+		return true;
+	}
+	
 	function autoCustomerAccept($flowid, $case) {
 		global $DB;
 		$data = array(
