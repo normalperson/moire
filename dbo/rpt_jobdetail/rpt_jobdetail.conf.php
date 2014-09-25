@@ -18,7 +18,7 @@ group by jc_jsid) a on js_id = a.jc_jsid
 left join (
 select string_agg(jo_outputcode,\', \' order by jo_id) joboutput,jo_jsid from mjoboutput
 group by jo_jsid) b on js_id = b.jo_jsid
-where org_external = \'Y\'';
+';
 $dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_rate', 'js_totalinch', 'org_id', 'org_type', 'org_external', 'org_name', 'org_parentid', 'org_primaryid', 'org_address', 'org_contactno', 'org_status', 'org_lccode', 'org_concode', 'org_region', 'org_created', 'jobcategory', 'joboutput', 'totalbarcode');
 $dbo->colList = array('js_orgid', 'js_request_date', 'js_completiondate', 'js_description', 'js_jobcolor', 'jobcategory', 'joboutput', 'js_currency', 'totalbarcode', 'js_rate', 'js_finalprice', 'js_totalinch');
 $dbo->colListEdit = array();
@@ -34,6 +34,7 @@ $dbo->colSum = array('totalbarcode', 'js_finalprice', 'js_totalinch');
 $dbo->colSumPage = array('totalbarcode', 'js_finalprice', 'js_totalinch');
 $dbo->colAvg = array();
 $dbo->colAvgPage = array();
+$dbo->colGroupable = array();
 $dbo->canSearch = true;
 $dbo->canNew = false;
 $dbo->canEdit = false;
@@ -62,6 +63,7 @@ $dbo->defaultDateFormat = 'yyyy-mm-dd';
 $dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
 $dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
+$dbo->pdfEngine = 'dompdf';
 $dbo->searchCancel = 'Reset';
 $dbo->searchSubmit = 'Search';
 $dbo->detailBack = 'Back';
@@ -70,7 +72,8 @@ $dbo->editSubmit = 'Edit';
 $dbo->listEditSubmit = 'Submit';
 $dbo->newCancel = 'Cancel';
 $dbo->newSubmit = 'Submit';
-$dbo->whereSQL = 'js_status = \'COMPLETED\' and js_request_date > \'2014-07-14\' and js_request_date <= cast(\'2014-07-14\' as date) + interval \'1 day\'';
+$dbo->whereSQL = 'js_status = \'CANCELLED\' and js_request_date > \'2014-07-14\' and js_request_date <= cast(\'2014-07-14\' as date) + interval \'1 day\'';
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'dbo_rpt_jobdetail_customize');
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
 $dbo->cols['js_id']->inputTypeDefault = 'text';
@@ -821,6 +824,13 @@ $dbo->saveDir = dirname(dirname(__FILE__));
 $dbo->run();
 
 /*
+# enable overwriting DBO class
+class DBO_custom_rpt_jobdetail extends DBO{
+	function __construct(){
+		parent::__construct();
+	}
+}
+
 $dbo->newModifier = 'dbo_rpt_jobdetail_custom_new';
 function dbo_rpt_jobdetail_custom_new($table, $cols){
 	global $DB;
