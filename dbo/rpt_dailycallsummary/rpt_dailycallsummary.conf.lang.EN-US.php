@@ -14,10 +14,10 @@ $dbo->cols['lctotalinch']->caption->set('default', 'Local Total Inch<sup>2</sup>
 $dbo->cols['totalpriceinmyr']->caption->set('default', 'Total price in MYR', 'text');
 $dbo->cols['totalpriceinusd']->caption->set('default', 'Total price in USD', 'text');
 $dbo->cols['rpt_completiondate']->caption->set('default', 'Date', 'text');
-$dbo->cols['rpt_astotaljob']->caption->set('default', 'Asia total job', 'text');
+$dbo->cols['rpt_astotaljob']->caption->set('default', 'total job', 'text');
 $dbo->cols['rpt_astotalprice']->caption->set('default', 'Asia total price', 'text');
-$dbo->cols['rpt_astotalinch']->caption->set('default', 'Asia total inch<sup>2</sup>', 'text');
-$dbo->cols['rpt_eutotaljob']->caption->set('default', 'Euro total job', 'text');
+$dbo->cols['rpt_astotalinch']->caption->set('default', 'New caption', 'text');
+$dbo->cols['rpt_eutotaljob']->caption->set('default', 'rpt_eutotaljob', 'text');
 $dbo->cols['rpt_eutotalprice']->caption->set('default', 'Euro total price', 'text');
 $dbo->cols['rpt_eutotalinch']->caption->set('default', 'Euro total inch', 'text');
 $dbo->cols['rpt_lctotaljob']->caption->set('default', 'Local total job', 'text');
