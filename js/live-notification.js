@@ -2,7 +2,7 @@ $(function () {
 	var loc = window.location, wsurl;
 	if (loc.protocol === "https:") wsurl = "wss:";
 	else wsurl = "ws:";
-	wsurl += "//" + loc.host+':'+ws.port;
+	wsurl += "//" + loc.host+':8080';
 	var conn = new ab.Session(wsurl,
 		function() {
 			conn.subscribe(ss, function(topic, data) {

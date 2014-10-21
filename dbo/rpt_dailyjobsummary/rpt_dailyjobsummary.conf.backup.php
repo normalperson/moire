@@ -9,12 +9,13 @@ $dbo->key = array();
 $dbo->sql = 'select cast(js_request_date as date),count(*) totalRequest, 
 sum(case when js_Status = \'COMPLETED\' then 1 else 0 end) as totalcomplete,
 sum(case when js_status = \'CANCELLED\' then 1 else 0 end) as totalcancel,
-sum(case when js_status != \'COMPLETED\' and js_status != \'CANCELLED\' then 1 else 0 end) as totalinprogress
+sum(case when js_status != \'COMPLETED\' and js_status != \'CANCELLED\' then 1 else 0 end) as totalinprogress,
+sum( revertedjob(js_id) ) as revertedjob
 from mjobsheet
 group by cast(js_request_date as date)
 order by cast(js_request_date as date)';
-$dbo->col = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress');
-$dbo->colList = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress');
+$dbo->col = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob');
+$dbo->colList = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
@@ -66,10 +67,10 @@ $dbo->editSubmit = 'Edit';
 $dbo->listEditSubmit = 'Submit';
 $dbo->newCancel = 'Cancel';
 $dbo->newSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'getnodearr', 'content_53dfa9f5815224_57402229', 'jobsummarylink', 'dbo_rpt_dailyjobsummary_customize');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'jobsummarylink', 'dbo_rpt_dailyjobsummary_customize');
 
 $dbo->cols['js_request_date'] = new DBO_COL('js_request_date', 'date', '4', '-1');
-$dbo->cols['js_request_date']->inputTypeDefault = 'rangedate';
+$dbo->cols['js_request_date']->inputTypeDefault = 'BootstrapDateRange';
 $dbo->cols['js_request_date']->searchMode = 'exact';
 $dbo->cols['js_request_date']->capContClassDefault = array();
 $dbo->cols['js_request_date']->valContClassDefault = array();
@@ -133,6 +134,17 @@ $dbo->cols['totalinprogress']->option->listMethod = 'text';
 $dbo->cols['totalinprogress']->option->detailMethod = 'text';
 $dbo->cols['totalinprogress']->option->newMethod = 'text';
 $dbo->cols['totalinprogress']->option->editMethod = 'text';
+$dbo->cols['revertedjob'] = new DBO_COL('revertedjob', 'int8', '8', '-1');
+$dbo->cols['revertedjob']->inputTypeDefault = 'text';
+$dbo->cols['revertedjob']->searchMode = 'exact';
+$dbo->cols['revertedjob']->capContClassDefault = array();
+$dbo->cols['revertedjob']->valContClassDefault = array();
+$dbo->cols['revertedjob']->option->defaultMethod = 'text';
+$dbo->cols['revertedjob']->option->searchMethod = 'text';
+$dbo->cols['revertedjob']->option->listMethod = 'text';
+$dbo->cols['revertedjob']->option->detailMethod = 'text';
+$dbo->cols['revertedjob']->option->newMethod = 'text';
+$dbo->cols['revertedjob']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

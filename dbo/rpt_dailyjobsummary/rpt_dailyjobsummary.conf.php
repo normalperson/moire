@@ -9,12 +9,13 @@ $dbo->key = array();
 $dbo->sql = 'select cast(js_request_date as date),count(*) totalRequest, 
 sum(case when js_Status = \'COMPLETED\' then 1 else 0 end) as totalcomplete,
 sum(case when js_status = \'CANCELLED\' then 1 else 0 end) as totalcancel,
-sum(case when js_status != \'COMPLETED\' and js_status != \'CANCELLED\' then 1 else 0 end) as totalinprogress
+sum(case when js_status != \'COMPLETED\' and js_status != \'CANCELLED\' then 1 else 0 end) as totalinprogress,
+sum( revertedjob(js_id) ) as revertedjob
 from mjobsheet
 group by cast(js_request_date as date)
 order by cast(js_request_date as date)';
-$dbo->col = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress');
-$dbo->colList = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress');
+$dbo->col = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob');
+$dbo->colList = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
@@ -133,6 +134,19 @@ $dbo->cols['totalinprogress']->option->listMethod = 'text';
 $dbo->cols['totalinprogress']->option->detailMethod = 'text';
 $dbo->cols['totalinprogress']->option->newMethod = 'text';
 $dbo->cols['totalinprogress']->option->editMethod = 'text';
+$dbo->cols['revertedjob'] = new DBO_COL('revertedjob', 'int8', '8', '-1');
+$dbo->cols['revertedjob']->displayListModifierMethod = 'phpfunc';
+$dbo->cols['revertedjob']->displayListModifier = 'jobsummarylink';
+$dbo->cols['revertedjob']->inputTypeDefault = 'text';
+$dbo->cols['revertedjob']->searchMode = 'exact';
+$dbo->cols['revertedjob']->capContClassDefault = array();
+$dbo->cols['revertedjob']->valContClassDefault = array();
+$dbo->cols['revertedjob']->option->defaultMethod = 'text';
+$dbo->cols['revertedjob']->option->searchMethod = 'text';
+$dbo->cols['revertedjob']->option->listMethod = 'text';
+$dbo->cols['revertedjob']->option->detailMethod = 'text';
+$dbo->cols['revertedjob']->option->newMethod = 'text';
+$dbo->cols['revertedjob']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;

@@ -6,6 +6,7 @@ $dbo->cols['totalrequest']->caption->set('default', 'Total request', 'text');
 $dbo->cols['totalcomplete']->caption->set('default', 'Total completed', 'text');
 $dbo->cols['totalcancel']->caption->set('default', 'Total cancelled', 'text');
 $dbo->cols['totalinprogress']->caption->set('default', 'Total in progress', 'text');
+$dbo->cols['revertedjob']->caption->set('default', 'Reverted job', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
