@@ -11,7 +11,7 @@ require_once(dirname(__FILE__).'/init.inc.php');
 </head>
 <body>
 <?php
-$form = array('id'=>'', 'app'=>'', 'holder'=>'', 'licensekey'=>'', 'licensetype'=>'', 'users'=>'', 'created'=>'', 'expiry'=>'', 'activationcode'=>'');
+$form = array('id'=>'', 'app'=>'', 'holder'=>'', 'licensekey'=>randomString(12), 'licensetype'=>'', 'users'=>'', 'created'=>date('Ymd'), 'expiry'=>date('Ymd'), 'activationcode'=>randomString(12));
 if($_POST){
 	$form = $_POST;
 	if(!isset($_POST['activationcode'])) $form['activationcode'] = '';
@@ -54,6 +54,11 @@ if($_POST){
 		<td><input type="text" name="users" id="users" value="<?php echo $form['users']; ?>"/></td>
 	</tr>
 	<tr>
+		<th>Creation Date</th>
+		<td>:</td>
+		<td><input type="text" name="created" id="created" value="<?php echo $form['created']; ?>"/> <span style="font-style:italic;font-size:0.8em;">YYYYMMDD</span></td>
+	</tr>
+	<tr>
 		<th>Expiry</th>
 		<td>:</td>
 		<td><input type="text" name="expiry" id="expiry" value="<?php echo $form['expiry']; ?>"/> <span style="font-style:italic;font-size:0.8em;">YYYYMMDD</span></td>
@@ -93,7 +98,7 @@ EOD;
 	echo '<pre style="padding:10px 0px;">';
 	// echo htmlentities(str_replace(array('[CoreApp]', '[KEY]', '[ID]', '[APP]', '[HOLDER]', '[LICENSEKEY]', '[LICENSETYPE]', '[USERS]', '[CREATED]', '[EXPIRY]'), array($coreapp, $key, $form['id'], $form['app'], $form['holder'], $form['licensekey'], $form['licensetype'], $form['users'], $created, $form['expiry']), $template));
 	if(isset($form['submit'])) unset($form['submit']);
-	$form['created'] = date('Ymd');
+	$form['created'] = !empty($_POST['created'])?$_POST['created']:date('Ymd');
 	$licenseString = License::genLicenseString($form);
 	echo htmlentities($licenseString);
 	echo '</pre>';
