@@ -20,15 +20,17 @@ function dbo_rpt_performance_det_customize(&$dbo){
 			case 'complysla':
 				$dbo->whereSQL = "( ( timediffinmin(pmf_start_date, pmf_end_date) - timediffinmin(pmf_start_date, pmf_due_date) ) / timediffinmin(pmf_start_date, pmf_due_date) ) * 100 < 0 and pmf_end_by = '".$GLOBAL['endby']."' and pmf_start_date > '".$GLOBAL['sladate']."' and pmf_start_date <= cast('".$GLOBAL['sladate']."' as date) + interval '1 day'";
 				break;
-			case 'totalcancel':
-				$dbo->whereSQL = "js_status = 'CANCELLED' and js_request_date > '".$GLOBAL['requestdate']."' and js_request_date <= cast('".$GLOBAL['requestdate']."' as date) + interval '1 day'";
+			case 'within50':
+				$dbo->whereSQL = "( ( ( timediffinmin(pmf_start_date, pmf_end_date) - timediffinmin(pmf_start_date, pmf_due_date) ) / timediffinmin(pmf_start_date, pmf_due_date) ) * 100 ) > 0 
+								and ( ( ( timediffinmin(pmf_start_date, pmf_end_date) - timediffinmin(pmf_start_date, pmf_due_date) ) / timediffinmin(pmf_start_date, pmf_due_date) ) * 100 ) <= 50 and pmf_end_by = '".$GLOBAL['endby']."' and pmf_start_date > '".$GLOBAL['sladate']."' and pmf_start_date <= cast('".$GLOBAL['sladate']."' as date) + interval '1 day'";
 				break;
-			case 'totalinprogress':
-				$dbo->whereSQL = "js_status != 'CANCELLED' and js_status != 'COMPLETED' and js_request_date > '".$GLOBAL['requestdate']."' and js_request_date <= cast('".$GLOBAL['requestdate']."' as date) + interval '1 day'";
+			case 'within100':
+				$dbo->whereSQL = "( ( ( timediffinmin(pmf_start_date, pmf_end_date) - timediffinmin(pmf_start_date, pmf_due_date) ) / timediffinmin(pmf_start_date, pmf_due_date) ) * 100 ) > 50 
+								and ( ( ( timediffinmin(pmf_start_date, pmf_end_date) - timediffinmin(pmf_start_date, pmf_due_date) ) / timediffinmin(pmf_start_date, pmf_due_date) ) * 100 ) <= 100 and pmf_end_by = '".$GLOBAL['endby']."' and pmf_start_date > '".$GLOBAL['sladate']."' and pmf_start_date <= cast('".$GLOBAL['sladate']."' as date) + interval '1 day'";
 				break;			
 			default:
-			case 'totalinprogress':
-				$dbo->whereSQL = "js_request_date > '".$GLOBAL['requestdate']."' and js_request_date <= cast('".$GLOBAL['requestdate']."' as date) + interval '1 day'";
+			case 'morethan100':
+				$dbo->whereSQL = "( ( timediffinmin(pmf_start_date, pmf_end_date) - timediffinmin(pmf_start_date, pmf_due_date) ) / timediffinmin(pmf_start_date, pmf_due_date) ) * 100 > 100 and pmf_end_by = '".$GLOBAL['endby']."' and pmf_start_date > '".$GLOBAL['sladate']."' and pmf_start_date <= cast('".$GLOBAL['sladate']."' as date) + interval '1 day'";
 				break;			
 		}
 	}
