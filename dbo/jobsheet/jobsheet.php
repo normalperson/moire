@@ -657,7 +657,8 @@ $( document ).ready(function() {
 					}else if(jstimemap['JOBOUTP'][opid]['price'][5]=='UNIT'){
 						tmpPrice = parseFloat(jstimemap['JOBOUTP'][opid]['price'][6] * $('#detail-jbc_jsid-table > tbody > tr').length);
 					}
-					price += tmpPrice;
+					if(tmpPrice > price)
+						price = tmpPrice;
 				});
 				// console.log(jstimemap);
 			}
