@@ -63,7 +63,6 @@ $dbo->cols['js_jobcolor']->caption->set('default', '訂單颜色', 'text');
 $dbo->cols['joboutput']->caption->set('default', '輸出要求', 'text');
 $dbo->cols['js_lpi']->caption->set('default', '加網線數', 'text');
 $dbo->cols['__map_mjobbarcode__jbc_jsid__']->caption->set('default', '條碼', 'text');
-$dbo->cols['__map_mjobbarcode__jbc_btcode__']->caption->set('default', '類型', 'text');
 $dbo->cols['__map_mjobbarcode__jbc_value__']->caption->set('default', '輸入值', 'text');
 $dbo->cols['js_mcid']->caption->set('default', '印刷機名稱', 'text');
 $dbo->cols['js_code']->caption->set('default', '訂單編號', 'text');

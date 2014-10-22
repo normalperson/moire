@@ -956,3 +956,15 @@ div.dbo_theme_pixeladmin .dbo_edit >tbody > tr> th.caption:first-child{
 div.dbo_theme_pixeladmin td.value .form-group {
 	margin-bottom : 0;
 }
+
+span.dbo_info_caption{
+	margin-right:4px;
+	color:blue;
+	border:1px solid blue;
+	border-radius:20px;
+	padding:3px;
+	cursor:pointer;
+}
+span.dbo_info_caption:after{
+	content: " i";
+}
