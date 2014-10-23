@@ -571,6 +571,8 @@ foreach ($data as $key => $value) {
 			2=>$value['jol_price_color_2'],
 			3=>$value['jol_price_color_3'],
 			4=>$value['jol_price_color_4'],
+			5=>$value['jol_pricingtype'],
+			6=>$value['jol_price']
 		)
 	);
 }
@@ -583,14 +585,30 @@ $dbo->render();
 $( document ).ready(function() {
 	
 	var $colorjob = $('input[name=dbo_jobsheet_new_js_jobcolor], input[name=dbo_jobsheet_edit_js_jobcolor]').click(function () {calMinutes();calPrice();}),
-		$outputjob = $('input[name=dbo_jobsheet_new_joboutput\\[\\]], input[name=dbo_jobsheet_edit_joboutput\\[\\]]').click(function () {calMinutes();calPrice();}),
-		$categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes();calPrice();}),
+		$outputjob = $('input[name=dbo_jobsheet_new_joboutput\\[\\]], input[name=dbo_jobsheet_edit_joboutput\\[\\]]').click(function () {joChecked($(this));calMinutes();calPrice();}),
+		// $categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes();calPrice();}),
 		$requiredmin = $('#requiredmin'),
 		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime'),
 		$priceinput = $('#dbo_jobsheet_new_js_price, #dbo_jobsheet_edit_js_price');
 		//$priceinput = $('<input type="hidden" name="js_price" />');
 		//$form = $('#dbo_jobsheet_newform,#dbo_jobsheet_editform').append($priceinput);
-
+	
+	// barcode (6) and prepare artwork (2) doesn't allow other options checked together with them.
+	function joChecked(clickedCB){
+		if($outputjob.filter(':checked').length > 0){
+			$outputjob.filter(':checked').each(function(){
+				var currCLID = $(this).val();
+				// console.log(currCLID);
+				if(currCLID==2 || currCLID==6){
+					$outputjob.filter(':checked').each(function(){
+						if($(this).val()!=currCLID){
+							$(this).attr('checked', false);
+						}
+					});
+				}
+			});
+		}
+	}
 
 	// estimated time calculation
 	function calMinutes(){
@@ -598,7 +616,7 @@ $( document ).ready(function() {
 			var p1_maxmin = 0, p2_maxmin = 0;
 			// p1
 			var colorval = $colorjob.filter(':checked').val();
-			if (colorval && $categoryjob.filter(':checked').length > 0) {
+			/* if (colorval && $categoryjob.filter(':checked').length > 0) {
 				$categoryjob.filter(':checked').each(function () {
 					var clid = $(this).val();
 					if (typeof jstimemap['JOBCAT'][clid] != 'undefined' && 
@@ -607,7 +625,7 @@ $( document ).ready(function() {
 						p1_maxmin = jstimemap['JOBCAT'][clid]['time'][colorval];
 					}
 				})
-			}
+			} */
 			//p2 
 			$outputjob.filter(':checked').each(function () {
 				var olid = $(this).val();
@@ -625,25 +643,33 @@ $( document ).ready(function() {
 	
 	function calPrice() {
 		var price = 0;
+		var tmpPrice = 0;
 		if ($priceinput.length > 0) {
-			var colorval = $colorjob.filter(':checked').val();
+			// var colorval = $colorjob.filter(':checked').val();
 			if ($outputjob.filter(':checked').length > 0) {
 				// get the max price
 				$outputjob.filter(':checked').each(function () {
 					var opid = $(this).val();
-					if( parseFloat(jstimemap['JOBOUTP'][opid]['price'][colorval]) > price ) 
-						price = parseFloat(jstimemap['JOBOUTP'][opid]['price'][colorval]);
-					
+					// if( parseFloat(jstimemap['JOBOUTP'][opid]['price'][colorval]) > price ) 
+						// price = parseFloat(jstimemap['JOBOUTP'][opid]['price'][colorval]);
+					if(jstimemap['JOBOUTP'][opid]['price'][5]=='FIXED'){
+						tmpPrice = parseFloat(jstimemap['JOBOUTP'][opid]['price'][6]);
+					}else if(jstimemap['JOBOUTP'][opid]['price'][5]=='UNIT'){
+						tmpPrice = parseFloat(jstimemap['JOBOUTP'][opid]['price'][6] * $('#detail-jbc_jsid-table > tbody > tr').length);
+					}
+					if(tmpPrice > price)
+						price = tmpPrice;
 				});
+				// console.log(jstimemap);
 			}
-			$categoryjob.filter(':checked').each(function () {
+			/* $categoryjob.filter(':checked').each(function () {
 				var clid = $(this).val();
 				if( parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]) > price ) 
 					price = parseFloat(jstimemap['JOBCAT'][clid]['price'][colorval]);					
 
-			});
+			}); */
 
-			$categoryjob.filter(':checked').each(function () {
+			/* $categoryjob.filter(':checked').each(function () {
 				var clid = $(this).val();
 				// get the barcode total price and add the output category price
 				if (jstimemap['JOBCAT'][clid]['pricecat'] == 'UNIT') {
@@ -651,7 +677,7 @@ $( document ).ready(function() {
 						price += parseFloat(jstimemap['JOBCAT'][clid]['price'][0]) * $('#detail-jbc_jsid-table > tbody > tr').length;
 					}
 				}			
-			});
+			}); */
 
 			$priceinput.val(price);
 		}
@@ -661,7 +687,7 @@ $( document ).ready(function() {
 	$('#detail-jbc_jsid-table').on('removerow', function (){calPrice();})
 	
 	// color input enabling
-	function setColorInput(val) {
+	/* function setColorInput(val) {
 		var sel = parseInt(val);
 		$('input[id^=dbo_jobsheet_new_js_color_], input[id^=dbo_jobsheet_edit_js_color_]').prop('disabled', true);
 		if (val) {
@@ -677,37 +703,37 @@ $( document ).ready(function() {
 	$colorjob.click(function () {
 		setColorInput($colorjob.filter(':checked').val());
 	})
-	setColorInput($colorjob.filter(':checked').val());
+	setColorInput($colorjob.filter(':checked').val()); */
 	
 	
 	// trapping size enabling
 	var $trappingSizeInp = $('#dbo_jobsheet_new_js_trapping_size, #dbo_jobsheet_edit_js_trapping_size');
-	function setTrappingProp() {
+	/* function setTrappingProp() {
 		if ($categoryjob.filter(':checked').filter(function () {
 			if (typeof jstimemap['JOBCAT'][this.value] != 'undefined' &&
 			jstimemap['JOBCAT'][this.value]['title'].toUpperCase() == 'TRAPPING') return true;
 			return false;
 		}).length > 0) $trappingSizeInp.prop('disabled', false)
 		else $trappingSizeInp.val('').prop('disabled', true);
-	}
+	} */
 	// outputtype
-	var $outputtype = $('#dbo_jobsheet_new_js_outputtype, #dbo_jobsheet_edit_js_outputtype, #dbo_jobsheet_new_js_outputwidth, #dbo_jobsheet_edit_js_outputwidth,#dbo_jobsheet_new_js_outputheight,#dbo_jobsheet_edit_js_outputheight');
-	function setOutputtypeProp() {
+	// var $outputtype = $('#dbo_jobsheet_new_js_outputtype, #dbo_jobsheet_edit_js_outputtype, #dbo_jobsheet_new_js_outputwidth, #dbo_jobsheet_edit_js_outputwidth,#dbo_jobsheet_new_js_outputheight,#dbo_jobsheet_edit_js_outputheight');
+	/* function setOutputtypeProp() {
 		if ($outputjob.filter(':checked').filter(function () {
 			if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
 			jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'ARTWORK SEPERATION') return true;
 			return false;
 		}).length > 0) $outputtype.prop('disabled', false)
 		else $outputtype.val('').prop('disabled', true);
-	}
-	$categoryjob.click(function () {
+	} */
+	/* $categoryjob.click(function () {
 		setTrappingProp();
-	});
-	$outputjob.click(function () {
+	}); */
+	/* $outputjob.click(function () {
 		setOutputtypeProp();
-	});
-	setTrappingProp();
-	setOutputtypeProp();
+	}); */
+	// setTrappingProp();
+	// setOutputtypeProp();
 	//setDieCut();
 
 
