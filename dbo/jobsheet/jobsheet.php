@@ -21,7 +21,7 @@
 </style>
 <script type="text/javascript">
 var inpcnt = 0;
-function populateInput(obj,elemt,value,readonly){
+/*function populateInput(obj,elemt,value,readonly){
 	inpcnt++;
 	var inpid = 'carinp_'+inpcnt;
 	if(value==0){
@@ -80,8 +80,8 @@ function getCarton(carid, tbody, jobid,readonly){
 			showError('Error occurred');
 		}
 	});
-}
-$( document ).ready(function() {
+}*/
+/*$( document ).ready(function() {
   // Handler for .ready() called.
 	$('#dbo_jobsheet_new_js_carid').change(function(){
 		$this = $(this);	
@@ -96,7 +96,7 @@ $( document ).ready(function() {
 			getCarton($this.val(),'dbotab_jobsheet_edit_tbody_1');				
 		}else $('#cartonimage').remove();
 	})
-});
+});*/
 </script>
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'jobsheet.conf.php');
@@ -184,7 +184,7 @@ function dbo_jobsheet_customize(&$dbo){
 
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
-		$dbo->cols['jobcategory']->mandatoryDefault = 1;
+/*		$dbo->cols['jobcategory']->mandatoryDefault = 1;*/
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = 'sql';
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = 
 			'select mc_id, mc_name, org_name from mcustmachine join fcorg on mc_orgid = org_id where org_id ='.$USER->orgid.' order by 3,2';
@@ -192,7 +192,7 @@ function dbo_jobsheet_customize(&$dbo){
 	else {
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
-		$dbo->cols['jobcategory']->mandatoryDefault = 0;
+/*		$dbo->cols['jobcategory']->mandatoryDefault = 0;*/
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = $dbo->cols['js_mcid']->option->defaultMethod;
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = $dbo->cols['js_mcid']->option->default;
 	}
@@ -255,9 +255,9 @@ function dbo_jobsheet_custom_new($table, $cols){
 	unset($cols['remark']); // unset remark
 	unset($cols['info']); // unset image info
 	// category handling part 1
-	$cols['js_primcat'] = getPrimaryCat($cols['js_jobcolor'], $cols['jobcategory']);
-	$catstring = $cols['jobcategory'];
-	unset($cols['jobcategory']);
+	/*$cols['js_primcat'] = getPrimaryCat($cols['js_jobcolor'], $cols['jobcategory']);*/
+	/*$catstring = $cols['jobcategory'];
+	unset($cols['jobcategory']);*/
 
 	// output requirement handling part 1
 	$outputreq = $cols['joboutput'];
@@ -265,7 +265,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 	
 	$cols['js_orgid'] = $USER->orgid; // assign org id
 	$cartonarr = (!empty($_POST['carcode'])) ? $_POST['carcode'] : array(); // get the carton array
-	$cartonid = $cols['js_carid']; // get the carton id selected by user
+/*	$cartonid = $cols['js_carid']; // get the carton id selected by user*/
 	$cols['js_request_by'] = $USER->userid; // store the userid
 	
 	$currmth = date('Ym');
@@ -345,12 +345,12 @@ function dbo_jobsheet_custom_new($table, $cols){
 			}
 	
 		// category handling part 2
-		$catarr = explode(",",$catstring);
+		/*$catarr = explode(",",$catstring);
 		foreach ($catarr as $key => $value) {
 			// insert into mjobcat
 			$data = array('jc_jsid' => $jobid, 'jc_jclid' => $value);
 			$ok = $DB->doInsert('mjobcat', $data);
-		}
+		}*/
 
 		// output requirement handling part 2
 		$oparr = explode(",",$outputreq);
@@ -414,12 +414,12 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	unset($cols['info']); // unset image info
 	unset($cols['filehistory']);
 	$cartonarr = (!empty($_POST['carcode'])) ? $_POST['carcode'] : array(); // get the carton array
-	$cartonid = $cols['js_carid']; // get the carton id selected by user
+/*	$cartonid = $cols['js_carid']; // get the carton id selected by user*/
 	// category handling part 1
-	$cols['js_primcat'] = getPrimaryCat($cols['js_jobcolor'], $cols['jobcategory']);
+/*	$cols['js_primcat'] = getPrimaryCat($cols['js_jobcolor'], $cols['jobcategory']);
 	$catstring = $cols['jobcategory'];
 	unset($cols['jobcategory']);
-
+*/
 	// output requirement handling part 1
 	$outputreq = $cols['joboutput'];
 	unset($cols['joboutput']);	
@@ -492,15 +492,15 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	
 	
 		// category handling part 2
-		$catarr = explode(",",$catstring);
+		/*$catarr = explode(",",$catstring);*/
 		// delete the existing category
-		$sql = "delete from mjobcat where jc_jsid = :0 ";
+	/*	$sql = "delete from mjobcat where jc_jsid = :0 ";
 		$ok = $DB->Execute($sql,array($jobid));
 		foreach ($catarr as $key => $value) {
 			// insert into mjobcat
 			$data = array('jc_jsid' => $jobid, 'jc_jclid' => $value);
 			$ok = $DB->doInsert('mjobcat', $data);
-		}
+		}*/
 		// delete the existing output requirement
 		$sql = "delete from mjoboutput where jo_jsid = :0 ";
 		$ok = $DB->Execute($sql,array($jobid));
