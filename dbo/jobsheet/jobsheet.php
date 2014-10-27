@@ -595,8 +595,28 @@ $( document ).ready(function() {
 	
 	// barcode (6) and prepare artwork (2) doesn't allow other options checked together with them.
 	function joChecked(clickedCB){
-		if($outputjob.filter(':checked').length > 0){
-			$outputjob.filter(':checked').each(function(){
+		// if($outputjob.filter(':checked').length > 0){
+			// console.log($outputjob.filter(':checked').length);
+			if((clickedCB.val()==2 || clickedCB.val()==6)){
+				// console.log('checked '+clickedCB.val()+' '+clickedCB.is(':checked'));
+				// console.log(clickedCB.attr('checked'));
+				if(clickedCB.is(':checked')){
+					$outputjob.each(function(){
+						if($(this).val()!=clickedCB.val()){
+							$(this).attr('checked', false);
+							$(this).attr('disabled', true);
+						}
+					});
+				}else{
+					$outputjob.each(function(){
+						if($(this).val()!=clickedCB.val()){
+							$(this).attr('checked', false);
+							$(this).attr('disabled', false);
+						}
+					});
+				}
+			}
+			/* $outputjob.filter(':checked').each(function(){
 				var currCLID = $(this).val();
 				// console.log(currCLID);
 				if(currCLID==2 || currCLID==6){
@@ -606,8 +626,8 @@ $( document ).ready(function() {
 						}
 					});
 				}
-			});
-		}
+			}); */
+		// }
 	}
 
 	// estimated time calculation
