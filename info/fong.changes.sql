@@ -111,3 +111,53 @@ LANGUAGE plpgsql VOLATILE;
 
 ALTER FUNCTION pnd.generateMonthlyInvoice(timestamp with time zone)
   OWNER TO pnd;
+
+drop table if exists minvoicemonthjobsheet cascade;
+create table minvoicemonthjobsheet
+(
+	ij_id serial not null,
+	ij_imid integer,
+	ij_jsid integer,
+	ij_created timestamp with time zone default now(),
+	constraint minvoicemonthjobsheet_pkey primary key (ij_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE fcpage
+  OWNER TO pnd;
+  
+CREATE OR REPLACE FUNCTION generatemonthlyinvoice(p_month timestamp with time zone DEFAULT now())
+  RETURNS integer AS
+$BODY$
+declare
+v_ret integer default 0;
+--rec mjobsheet%rowtype;
+rec record;
+rec2 record;
+v_cnt integer default 0;
+v_imid integer;
+begin
+	--raise notice 'from %', to_date(to_char(p_month, 'YYYY-MM-01'), 'YYYY-MM-DD');
+	--raise notice 'to %', to_date(to_char(p_month, 'YYYY-MM-01'), 'YYYY-MM-DD') + interval '1 month' - interval '1 second';
+	for rec in (select distinct js_orgid from mjobsheet where js_completiondate between to_date(to_char(p_month, 'YYYY-MM-01'), 'YYYY-MM-DD') 
+	and to_date(to_char(p_month, 'YYYY-MM-01'), 'YYYY-MM-DD') + interval '1 month' - interval '1 second') loop
+		--raise notice 'found org_id %', rec.js_orgid;
+		select count(*) into v_cnt from minvoicemonth where im_orgid = rec.js_orgid and im_invoicedate = to_date(to_char(p_month, 'YYYY-MM-01'), 'YYYY-MM-DD') + interval '1 month' - interval '1 second';
+		if(v_cnt=0) then
+			--delete from minvoicemonth where im_orgid = rec.js_orgid and im_invoicedate = to_date(to_char(p_month, 'YYYY-MM-01'), 'YYYY-MM-DD') + interval '1 month' - interval '1 second';
+			insert into minvoicemonth (im_invoicedate, im_orgid) values (to_date(to_char(p_month, 'YYYY-MM-01'), 'YYYY-MM-DD') + interval '1 month' - interval '1 second', rec.js_orgid);
+		end if;
+		select max(im_id) into v_imid from minvoicemonth where im_orgid = rec.js_orgid and im_invoicedate = to_date(to_char(p_month, 'YYYY-MM-01'), 'YYYY-MM-DD') + interval '1 month' - interval '1 second';
+		delete from minvoicemonthjobsheet where ij_imid = v_imid;
+		insert into minvoicemonthjobsheet (ij_imid, ij_jsid) select v_imid, js_id from mjobsheet where js_orgid = rec.js_orgid and js_completiondate between to_date(to_char(p_month, 'YYYY-MM-01'), 'YYYY-MM-DD') 
+		and to_date(to_char(p_month, 'YYYY-MM-01'), 'YYYY-MM-DD') + interval '1 month' - interval '1 second';
+		v_ret := v_ret+1;
+	end loop;
+	return v_ret;
+end;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION generatemonthlyinvoice(timestamp with time zone)
+  OWNER TO pnd;

@@ -18,9 +18,12 @@ if($orgRS['org_external']=='Y'){
 		document.getElementById("dbo_soaorg").style.display = "";
 		</script><div>&nbsp;</div>';
 	}
-	if(isset($_GET['orgid'])){
+	if(isset($_GET['orgid']) && !isset($_GET['invoiceid'])){
 		$moire = new Moire();
 		$moire->soa_as_html($_GET['orgid']);
+	}else if(isset($_GET['orgid']) && isset($_GET['invoiceid'])){
+		$moire = new Moire();
+		$moire->invoicemonth_as_html($_GET['orgid'], $_GET['invoiceid']);
 	}
 }
 ?>

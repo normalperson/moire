@@ -119,6 +119,48 @@ from minvoice join mjobsheet on iv_jsid = js_id where iv_orgid = :0 and iv_paid 
 		return $ret;
 	}
 	
+	function invoicemonth_as_html($orgID, $invoiceID){
+		global $DB;
+		$smarty = new Smarty();
+		$smarty->caching = false;
+		$smarty->setTemplateDir(DOC_DIR.DS.'smarty'.DS.'templates');
+		$smarty->setCompileDir(DOC_DIR.DS.'smarty'.DS.'templates_c');
+		$smarty->setCacheDir(DOC_DIR.DS.'smarty'.DS.'cache');
+		$smarty->setConfigDir(DOC_DIR.DS.'smarty'.DS.'configs');
+		$smarty->assign('APP', APP);
+		
+		$pndRS = $DB->getRowAssoc("select org_id, org_name, org_address, org_contactno from fcorg where org_external = 'N' and org_parentid = 0");
+		$smarty->assign('pndData', $pndRS);
+		
+		$orgRS = $DB->getRowAssoc("select org_id, org_name, org_address, org_contactno, rg_currency, cr_code, cr_name from fcorg left join mregion on org_region = rg_code left join fccurrency on rg_currency = cr_code where org_id = :0", array($orgID));
+		if(!$orgRS) return false;
+		$smarty->assign('customerData', $orgRS);
+		$smarty->assign('invoiceNo', 'INV'.$this->genInvoiceNumber($invoiceID));
+		
+		$invoiceRS = $DB->getArrayAssoc("select im_id, 'INV'||lpad(im_id::text, 8, '0') as invoice_no, im_invoicedate, js_completiondate, js_finalprice, js_code, js_description 
+from minvoicemonth join minvoicemonthjobsheet on ij_imid = im_id join mjobsheet on ij_jsid = js_id where im_orgid = :0 and im_id = :1 and js_completiondate is not null order by im_invoicedate asc, js_id asc", array($orgID, $invoiceID));
+		$smarty->assign('invoiceData', $invoiceRS);
+		$totalAmount = 0;
+		foreach($invoiceRS as $row){
+			$totalAmount += $row['js_finalprice'];
+		}
+		$smarty->assign('total_amount_word', $this->convertNumberToCurrency($totalAmount).' ONLY');
+		
+		$arrearsArray = array();
+		for($i=12;$i>0;$i--){
+			$time = strtotime("-".$i." month");
+			$startDate = date('Y-m-01', $time);
+			$endDate = date('Y-m-t', $time);
+			$sum = $DB->getOne("select coalesce(sum(coalesce(iv_amount, 0)), 0) from minvoice where iv_orgid = :0 and iv_paid !='Y' and iv_invoicedate between :1 and :2", array($orgID, $startDate, $endDate));
+			$arrearsArray[] = array('month'=>date('F', $time), 'amount'=>$sum);
+		}
+		$smarty->assign('arrearData', $arrearsArray);
+
+		$ret = $smarty->fetch('invoicemonth.html');
+		echo $ret;
+		return $ret;
+	}
+	
 	function genInvoiceNumber($invID){
 		return sprintf('%08d', $invID);
 	}
