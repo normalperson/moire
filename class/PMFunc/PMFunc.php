@@ -71,7 +71,11 @@ class PMFunc{
 				'js_status'=>'CANCELLED',
 				'js_decision'=>'Cancel',
 			);
-			if (!empty($_POST['cancelremark']) && trim($_POST['cancelremark']) != '') $o->insertComment($_POST['cancelremark'], $flowid);
+			if (!empty($_POST['cancelremark']) && trim($_POST['cancelremark']) != '') {
+				$o->insertComment($_POST['cancelremark'], $flowid);
+				$cremark = array('js_cancelremark' => $_POST['cancelremark']);
+				$data = array_merge($data, $cremark);
+			}
 			return $DB->doUpdate('mjobsheet', $data, array('js_id'=>$o->casekey));
 		}
 		echo 

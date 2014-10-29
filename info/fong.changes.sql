@@ -161,3 +161,11 @@ $BODY$
   COST 100;
 ALTER FUNCTION generatemonthlyinvoice(timestamp with time zone)
   OWNER TO pnd;
+
+
+ALTER TABLE mjobsheet
+  ADD COLUMN js_cancelremark text;
+ALTER TABLE mjobsheet
+  ADD COLUMN js_forwardtocusttime timestamp with time zone;
+COMMENT ON COLUMN mjobsheet.js_cancelremark IS 'Cancel remark';
+COMMENT ON COLUMN mjobsheet.js_forwardtocusttime IS 'Forward to customer time';

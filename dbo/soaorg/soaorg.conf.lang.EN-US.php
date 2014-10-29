@@ -8,7 +8,7 @@ $dbo->cols['im_id']->caption->set('default', 'im_id', 'text');
 $dbo->cols['im_invoicedate']->caption->set('default', 'im_invoicedate', 'text');
 $dbo->cols['im_created']->caption->set('default', 'im_created', 'text');
 $dbo->cols['im_orgid']->caption->set('default', 'im_orgid', 'text');
-$dbo->cols['invoicedate']->caption->set('default', 'invoicedate', 'text');
+$dbo->cols['invoicedate']->caption->set('default', 'Invoice date', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

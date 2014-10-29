@@ -585,7 +585,7 @@ $dbo->render();
 $( document ).ready(function() {
 	
 	var $colorjob = $('input[name=dbo_jobsheet_new_js_jobcolor], input[name=dbo_jobsheet_edit_js_jobcolor]').click(function () {calMinutes();calPrice();}),
-		$outputjob = $('input[name=dbo_jobsheet_new_joboutput\\[\\]], input[name=dbo_jobsheet_edit_joboutput\\[\\]]').click(function () {joChecked($(this));calMinutes();calPrice();}),
+		$outputjob = $('input[name=dbo_jobsheet_new_joboutput\\[\\]], input[name=dbo_jobsheet_edit_joboutput\\[\\]]').click(function () {joChecked($(this));calMinutes();calPrice();setBarcodeProp();}),
 		// $categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes();calPrice();}),
 		$requiredmin = $('#requiredmin'),
 		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime'),
@@ -765,18 +765,18 @@ $( document ).ready(function() {
 		.add('#dbo_jobsheet_edit_js_angle_1, #dbo_jobsheet_edit_js_angle_2, #dbo_jobsheet_edit_js_angle_3, #dbo_jobsheet_edit_js_angle_4')
 		.add($lpiInp);
 	
-	function setAngleProp() {
+	/*function setAngleProp() {
 		if ($categoryjob.filter(':checked').filter(function () {
 			if (typeof jstimemap['JOBCAT'][this.value] != 'undefined' &&
 			jstimemap['JOBCAT'][this.value]['title'].toUpperCase() == 'MONOTONE') return true;
 			return false;
 		}).length > 0) $angleInp.prop('disabled', false)
 		else $angleInp.val('').prop('disabled', true);
-	}
-	$categoryjob.click(function () {
+	}*/
+	/*$categoryjob.click(function () {
 		setAngleProp();
-	})
-	setAngleProp();
+	})*/
+	/*setAngleProp();*/
 
 	// bleeding remark enabling
 	var $bleedingRemarkInp = $('#dbo_jobsheet_new_js_bleeding_remark, #dbo_jobsheet_edit_js_bleeding_remark');
@@ -790,7 +790,7 @@ $( document ).ready(function() {
 	// barcode enabling
 	var $barcodeTable = $('.dbo_edit #detail-jbc_jsid-table, .dbo_new #detail-jbc_jsid-table');
 	function setBarcodeProp() {
-		if ($categoryjob.filter(':checked').filter(function () {
+		if ($outputjob.filter(':checked').filter(function () {
 			if (typeof jstimemap['JOBCAT'][this.value] != 'undefined' &&
 			jstimemap['JOBCAT'][this.value]['title'].toUpperCase() == 'BARCODE') return true;
 			return false;
@@ -803,9 +803,6 @@ $( document ).ready(function() {
 			$barcodeTable.find(':input').prop('disabled', true);
 		}
 	}
-	$categoryjob.click(function () {
-		setBarcodeProp();
-	})
 	setBarcodeProp();
 	
 	

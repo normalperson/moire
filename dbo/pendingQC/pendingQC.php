@@ -20,6 +20,8 @@ function dbo_pendingQC_custom_edit($table, $cols, $wheres){
 		$cols['js_status'] = 'WORK IN PROGRESS';
 	}
 
+	$cols['js_forwardtocusttime'] = $DB->GetOne("select now()");
+
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
 		$ret[] = $DB->lastError;
