@@ -4,7 +4,6 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'pendingQC';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
-$dbo->fileSaveMode = 511;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, \'\' decision, \'\' remark,\'\' artwork from mjobsheet';
@@ -19,6 +18,11 @@ $dbo->colEdit = array('js_totalinch', 'js_decision', 'js_qcchecked', 'remark');
 $dbo->colSearch = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colExport = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colSort = array();
+$dbo->colSum = array();
+$dbo->colSumPage = array();
+$dbo->colAvg = array();
+$dbo->colAvgPage = array();
+$dbo->colGroupable = array();
 $dbo->canSearch = false;
 $dbo->canNew = false;
 $dbo->canEdit = true;
@@ -37,18 +41,19 @@ $dbo->titleEdit = 'QC verification';
 $dbo->titleSearch = 'Search Record';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
-$dbo->pageLinkCount = 7;
-$dbo->recordPerPage = 10;
-$dbo->showRecordNo = 1;
+$dbo->pageLinkCount = '7';
+$dbo->recordPerPage = '10';
+$dbo->showRecordNo = '1';
 $dbo->defaultState = 'list';
-$dbo->maxSortCount = 9;
+$dbo->maxSortCount = '9';
 $dbo->defaultDateFormat = 'yyyy-mm-dd';
 $dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
 $dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
-$dbo->render = array();
+$dbo->pdfEngine = 'dompdf';
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'getnodearr', 'content_53e48728669361_63789408', 'dbo_pendingqc_customize', 'dbo_pendingqc_custom_edit');
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
 $dbo->cols['js_id']->inputTypeDefault = 'text';
@@ -417,7 +422,7 @@ $dbo->cols['decision']->option->newMethod = 'text';
 $dbo->cols['decision']->option->editMethod = 'text';
 $dbo->cols['remark'] = new DBO_COL('remark', 'unknown', '-2', '-1');
 $dbo->cols['remark']->inputTypeDefault = 'text';
-$dbo->cols['remark']->mandatoryEdit = 1;
+$dbo->cols['remark']->mandatoryEdit = '1';
 $dbo->cols['remark']->searchMode = 'exact';
 $dbo->cols['remark']->capContClassDefault = array();
 $dbo->cols['remark']->valContClassDefault = array();
@@ -486,7 +491,7 @@ $dbo->cols['js_carid']->option->newMethod = 'text';
 $dbo->cols['js_carid']->option->editMethod = 'text';
 $dbo->cols['js_decision'] = new DBO_COL('js_decision', 'varchar', '-1', '54');
 $dbo->cols['js_decision']->inputTypeDefault = 'select';
-$dbo->cols['js_decision']->mandatoryEdit = 1;
+$dbo->cols['js_decision']->mandatoryEdit = '1';
 $dbo->cols['js_decision']->searchMode = 'exact';
 $dbo->cols['js_decision']->capContClassDefault = array();
 $dbo->cols['js_decision']->valContClassDefault = array();
@@ -691,7 +696,7 @@ $dbo->cols['js_rate']->option->newMethod = 'text';
 $dbo->cols['js_rate']->option->editMethod = 'text';
 $dbo->cols['js_totalinch'] = new DBO_COL('js_totalinch', 'numeric', '-1', '1310728');
 $dbo->cols['js_totalinch']->inputTypeDefault = 'text';
-$dbo->cols['js_totalinch']->attributeEdit = array('disabled'=>array(''));
+$dbo->cols['js_totalinch']->attributeEdit = array('readonly'=>array(''));
 $dbo->cols['js_totalinch']->searchMode = 'exact';
 $dbo->cols['js_totalinch']->capContClassDefault = array();
 $dbo->cols['js_totalinch']->valContClassDefault = array();
@@ -716,6 +721,13 @@ $dbo->saveDir = dirname(dirname(__FILE__));
 $dbo->run();
 
 /*
+# enable overwriting DBO class
+class DBO_custom_pendingQC extends DBO{
+	function __construct(){
+		parent::__construct();
+	}
+}
+
 $dbo->newModifier = 'dbo_pendingQC_custom_new';
 function dbo_pendingQC_custom_new($table, $cols){
 	global $DB;

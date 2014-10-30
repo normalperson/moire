@@ -85,5 +85,11 @@ $dbo->text->messageAfterDelete = '';
 $dbo->text->defaultMessageAfterNew = 'Record created.';
 $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';
+$dbo->text->sum = 'Total';
+$dbo->text->sumPage = 'Total (Page)';
+$dbo->text->sumPageGroup = 'Total (Group)';
+$dbo->text->avg = 'Average';
+$dbo->text->avgPage = 'Average (Page)';
+$dbo->text->avgPageGroup = 'Average (Group)';
 
 ?>

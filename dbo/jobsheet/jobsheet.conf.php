@@ -1189,12 +1189,26 @@ $dbo->cols['js_expectdelivery']->option->newMethod = 'text';
 $dbo->cols['js_expectdelivery']->option->editMethod = 'text';
 $dbo->cols['js_cancelremark'] = new DBO_COL('js_cancelremark', 'text', '-1', '-1');
 $dbo->cols['js_cancelremark']->inputTypeDefault = 'text';
+$dbo->cols['js_cancelremark']->searchMode = 'exact';
 $dbo->cols['js_cancelremark']->capContClassDefault = array();
 $dbo->cols['js_cancelremark']->valContClassDefault = array();
+$dbo->cols['js_cancelremark']->option->defaultMethod = 'text';
+$dbo->cols['js_cancelremark']->option->searchMethod = 'text';
+$dbo->cols['js_cancelremark']->option->listMethod = 'text';
+$dbo->cols['js_cancelremark']->option->detailMethod = 'text';
+$dbo->cols['js_cancelremark']->option->newMethod = 'text';
+$dbo->cols['js_cancelremark']->option->editMethod = 'text';
 $dbo->cols['js_forwardtocusttime'] = new DBO_COL('js_forwardtocusttime', 'timestamptz', '8', '-1');
 $dbo->cols['js_forwardtocusttime']->inputTypeDefault = 'text';
+$dbo->cols['js_forwardtocusttime']->searchMode = 'exact';
 $dbo->cols['js_forwardtocusttime']->capContClassDefault = array();
 $dbo->cols['js_forwardtocusttime']->valContClassDefault = array();
+$dbo->cols['js_forwardtocusttime']->option->defaultMethod = 'text';
+$dbo->cols['js_forwardtocusttime']->option->searchMethod = 'text';
+$dbo->cols['js_forwardtocusttime']->option->listMethod = 'text';
+$dbo->cols['js_forwardtocusttime']->option->detailMethod = 'text';
+$dbo->cols['js_forwardtocusttime']->option->newMethod = 'text';
+$dbo->cols['js_forwardtocusttime']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;
