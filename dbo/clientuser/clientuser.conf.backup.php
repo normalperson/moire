@@ -4,6 +4,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'clientuser';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
+$dbo->fileSaveMode = 511;
 $dbo->table = 'fcuser';
 $dbo->key = array('usr_userid');
 $dbo->sql = 'select fcuser.*,\'\' userRole, \'\' as currpassword, \'\' as password1, \'\' as password2 
@@ -17,13 +18,8 @@ $dbo->colDetail = array('usr_userid', 'usr_password', 'usr_created', 'usr_name',
 $dbo->colNew = array('usr_userid', 'password1', 'password2', 'usr_name', 'usr_email', 'userrole');
 $dbo->colEdit = array('usr_userid', 'usr_name', 'usr_email', 'usr_status', 'password1', 'password2', 'userrole');
 $dbo->colSearch = array('usr_userid', 'usr_name', 'usr_status');
-$dbo->colExport = array('usr_userid', 'usr_name', 'usr_email', 'usr_created', 'usr_status');
+$dbo->colExport = array('usr_userid', 'usr_password', 'usr_created', 'usr_name', 'usr_email', 'usr_last_active', 'usr_last_success_login', 'usr_last_fail_login', 'usr_group', 'usr_sessiondata', 'usr_status');
 $dbo->colSort = array();
-$dbo->colSum = array();
-$dbo->colSumPage = array();
-$dbo->colAvg = array();
-$dbo->colAvgPage = array();
-$dbo->colGroupable = array();
 $dbo->canSearch = true;
 $dbo->canNew = true;
 $dbo->canEdit = true;
@@ -35,7 +31,6 @@ $dbo->canNewGroup = array();
 $dbo->canEditGroup = array();
 $dbo->canDeleteGroup = array();
 $dbo->showSearch = true;
-$dbo->exportFormat = array('excel');
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
 $dbo->titleNew = 'New Record';
@@ -43,25 +38,21 @@ $dbo->titleEdit = 'Edit Record';
 $dbo->titleSearch = 'Search Record';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
-$dbo->pageLinkCount = '7';
-$dbo->recordPerPage = '100';
-$dbo->showRecordNo = '1';
+$dbo->pageLinkCount = 7;
+$dbo->recordPerPage = 10;
+$dbo->showRecordNo = 1;
 $dbo->defaultState = 'list';
-$dbo->maxSortCount = '9';
-$dbo->defaultDateFormat = 'yyyy-mm-dd';
-$dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
-$dbo->defaultTimeFormat = 'hh24:min:ss';
+$dbo->maxSortCount = 9;
 $dbo->lang = 'EN-US';
-$dbo->pdfEngine = 'dompdf';
+$dbo->render = array();
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
-$dbo->whereSQL = 'usr_userid in (\'uat_supervisor3\', \'STANLEY\', \'MY00012\', \'MY00010\', \'KN032\', \'lampard7824@gmail.com\', \'uat_qc2\', \'southern\', \'admin2\', \'MY00016\', \'uat_qc5\', \'SG00002\', \'MY00014\', \'MY00029\', \'uat_supervisor4\', \'ysyow\', \'natasha\', \'esp@phiorion.com\', \'customer\', \'PHP00001\', \'MY00023\', \'harry\', \'uat_supervisor2\', \'hongyee@phiorion.com\', \'thor@gmail.com\', \'fongsupervisor\', \'MY025_SUPER\', \'uat_customer4\', \'fong@phiorion.com\', \'MK036\', \'artist1\', \'KH888\', \'uat_customer1\', \'MY00025\', \'MK036_QC\', \'uat_artist5\', \'MY00011\', \'MY00017\', \'MY00020\', \'CN00002\', \'AH035\', \'MY00018\', \'SG00001\', \'uat_manager5\', \'MY00009\', \'nick\', \'MY00019\', \'uat_artist3\', \'qc\', \'supervisor\', \'fongadmin\', \'KH037\', \'MY00026\', \'uat_qc3\', \'KH037_SUPER\', \'uat_artist2\', \'CN00004\', \'MY00028\', \'yys1988@gmail.com\', \'yow@phiorion.com\', \'MY025\', \'CN00001\', \'MY00013\', \'uat_qc1\', \'uat_customer2\', \'fongartist\', \'uat_customer5\', \'LL033\', \'fred\', \'esp_supervisor\', \'esp_artist\', \'Deswell_Packaging\', \'moire\', \'uat_supervisor1\', \'uat_cust1\', \'MY00008\', \'Test\', \'artist2\', \'uat_manager4\', \'MY00004\', \'admin\', \'MY00021\', \'uat_artist1\', \'cw78832\', \'CN00003\', \'uat_customer3\', \'danny@phiorion.com\', \'uat_artist4\', \'TW00001\', \'uat_supervisor5\', \'severus\', \'espsupervisor\', \'superman@gmail.com\', \'MY00003\', \'DANIEL_TESTING\', \'MY00024\', \'uat_manager2\', \'tony\', \'uat_manager1\', \'MY00027\', \'MY00007\', \'BENNWONG\', \'albus\', \'uat_qc4\', \'MY00022\', \'esp\', \'uat_manager3\', \'MY00015\')';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'dbo_clientuser_customize', 'dbo_clientuser_custom_delete', 'dbo_clientuser_custom_new', 'dbo_clientuser_custom_edit', 'neworgrole', 'editorgrole');
+$dbo->whereSQL = 'usr_userid in (\'uat_supervisor3\', \'yys1988@gmail.com\', \'yow@phiorion.com\', \'lampard7824@gmail.com\', \'uat_qc2\', \'admin2\', \'uat_qc5\', \'uat_qc1\', \'uat_customer2\', \'fongartist\', \'uat_supervisor4\', \'uat_customer5\', \'ysyow\', \'natasha\', \'esp@phiorion.com\', \'fred\', \'fongcustomer\', \'esp_supervisor\', \'esp_artist\', \'customer\', \'uat_supervisor1\', \'uat_cust1\', \'harry\', \'uat_supervisor2\', \'hongyee@phiorion.com\', \'Test\', \'thor@gmail.com\', \'fongsupervisor\', \'uat_customer4\', \'fong@phiorion.com\', \'artist2\', \'uat_manager4\', \'artist1\', \'uat_customer1\', \'admin\', \'uat_artist5\', \'uat_artist1\', \'uat_customer3\', \'danny@phiorion.com\', \'uat_manager5\', \'nick\', \'uat_artist3\', \'uat_artist4\', \'qc\', \'supervisor\', \'uat_supervisor5\', \'severus\', \'fongadmin\', \'superman@gmail.com\', \'uat_manager2\', \'tony\', \'uat_manager1\', \'uat_qc3\', \'albus\', \'uat_qc4\', \'uat_artist2\', \'esp\', \'uat_manager3\')';
 
 $dbo->cols['usr_userid'] = new DBO_COL('usr_userid', 'varchar', '-1', '54');
 $dbo->cols['usr_userid']->inputTypeDefault = 'text';
-$dbo->cols['usr_userid']->mandatoryNew = '1';
-$dbo->cols['usr_userid']->mandatoryEdit = '1';
+$dbo->cols['usr_userid']->mandatoryNew = 1;
+$dbo->cols['usr_userid']->mandatoryEdit = 1;
 $dbo->cols['usr_userid']->searchMode = 'matchfront';
 $dbo->cols['usr_userid']->capContClassDefault = array();
 $dbo->cols['usr_userid']->valContClassDefault = array();
@@ -98,8 +89,8 @@ $dbo->cols['usr_created']->option->newMethod = 'text';
 $dbo->cols['usr_created']->option->editMethod = 'text';
 $dbo->cols['usr_name'] = new DBO_COL('usr_name', 'varchar', '-1', '104');
 $dbo->cols['usr_name']->inputTypeDefault = 'text';
-$dbo->cols['usr_name']->mandatoryNew = '1';
-$dbo->cols['usr_name']->mandatoryEdit = '1';
+$dbo->cols['usr_name']->mandatoryNew = 1;
+$dbo->cols['usr_name']->mandatoryEdit = 1;
 $dbo->cols['usr_name']->searchMode = 'matchfront';
 $dbo->cols['usr_name']->capContClassDefault = array();
 $dbo->cols['usr_name']->valContClassDefault = array();
@@ -111,8 +102,8 @@ $dbo->cols['usr_name']->option->newMethod = 'text';
 $dbo->cols['usr_name']->option->editMethod = 'text';
 $dbo->cols['usr_email'] = new DBO_COL('usr_email', 'varchar', '-1', '54');
 $dbo->cols['usr_email']->inputTypeDefault = 'text';
-$dbo->cols['usr_email']->mandatoryNew = '1';
-$dbo->cols['usr_email']->mandatoryEdit = '1';
+$dbo->cols['usr_email']->mandatoryNew = 1;
+$dbo->cols['usr_email']->mandatoryEdit = 1;
 $dbo->cols['usr_email']->searchMode = 'exact';
 $dbo->cols['usr_email']->capContClassDefault = array();
 $dbo->cols['usr_email']->valContClassDefault = array();
@@ -195,7 +186,7 @@ $dbo->cols['usr_langid']->option->newMethod = 'text';
 $dbo->cols['usr_langid']->option->editMethod = 'text';
 $dbo->cols['usr_status'] = new DBO_COL('usr_status', 'varchar', '-1', '36');
 $dbo->cols['usr_status']->inputTypeDefault = 'PixelAdminRadioInline';
-$dbo->cols['usr_status']->mandatoryEdit = '1';
+$dbo->cols['usr_status']->mandatoryEdit = 1;
 $dbo->cols['usr_status']->searchMode = 'exact';
 $dbo->cols['usr_status']->capContClassDefault = array();
 $dbo->cols['usr_status']->valContClassDefault = array();
@@ -220,7 +211,7 @@ $dbo->cols['password2']->option->newMethod = 'text';
 $dbo->cols['password2']->option->editMethod = 'text';
 $dbo->cols['password1'] = new DBO_COL('password1', 'unknown', '-2', '-1');
 $dbo->cols['password1']->inputTypeDefault = 'password';
-$dbo->cols['password1']->mandatoryNew = '1';
+$dbo->cols['password1']->mandatoryNew = 1;
 $dbo->cols['password1']->searchMode = 'exact';
 $dbo->cols['password1']->capContClassDefault = array();
 $dbo->cols['password1']->valContClassDefault = array();
@@ -308,13 +299,6 @@ $dbo->saveDir = dirname(dirname(__FILE__));
 $dbo->run();
 
 /*
-# enable overwriting DBO class
-class DBO_custom_clientuser extends DBO{
-	function __construct(){
-		parent::__construct();
-	}
-}
-
 $dbo->newModifier = 'dbo_clientuser_custom_new';
 function dbo_clientuser_custom_new($table, $cols){
 	global $DB;
