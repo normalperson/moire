@@ -14,6 +14,7 @@ $dbo->cols['jol_price_color_3']->caption->set('default', 'Price for 3 color', 't
 $dbo->cols['jol_price_color_4']->caption->set('default', 'Price for 4 color', 'text');
 $dbo->cols['jol_pricingtype']->caption->set('default', 'Pricing Type', 'text');
 $dbo->cols['jol_price']->caption->set('default', 'Unit/Fixed Price', 'text');
+$dbo->cols['jol_seq']->caption->set('default', 'Sequence', 'text');
 
 $dbo->titleList = 'List Job Output';
 $dbo->titleDetail = 'Detail';

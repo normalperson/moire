@@ -140,7 +140,7 @@ class Setting{
 	}
 	function cartonSetup(){
 		html_header();
-		$dbo = dbo_include('cartonsetup');
+		$dbo = dbo_include('cartontypesetup');
 	}
 	function lookupSetup(){
 		html_header();

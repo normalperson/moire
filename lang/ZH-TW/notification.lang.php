@@ -1,10 +1,11 @@
 <?php
-/*Last Modified by TW00001 on 26-08-2014 11:28:50*/
+/*Last Modified by esp on 04-11-2014 15:06:04*/
 $translate = array (
   'Notifications' => 'Notifications',
   'VIEW ALL' => 'VIEW ALL',
   'You\'ve received a new notification' => 'You\'ve received a new notification',
   'NOTICE' => 'NOTICE',
   'View Content' => 'View Content',
+  'NO NOTIFICATION' => 'NO NOTIFICATION',
 );
 ?>

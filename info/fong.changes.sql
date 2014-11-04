@@ -169,3 +169,14 @@ ALTER TABLE mjobsheet
   ADD COLUMN js_forwardtocusttime timestamp with time zone;
 COMMENT ON COLUMN mjobsheet.js_cancelremark IS 'Cancel remark';
 COMMENT ON COLUMN mjobsheet.js_forwardtocusttime IS 'Forward to customer time';
+
+ALTER TABLE mjoboutputlookup
+   ADD COLUMN jol_seq integer;
+
+ALTER TABLE mjobsheet
+   ALTER COLUMN js_diecut_ind TYPE character varying(50);
+
+delete from mcarton;
+
+ALTER TABLE mcarton
+   ADD COLUMN car_seq integer;

@@ -134,6 +134,27 @@ function showPercentage($col, $colVal, $data=array(), $html=null){
 	$html = '<div class="form-group">'.$html.'</div>';
 	return $html;
 }	
+function showLength($col, $colVal, $data=array(), $html=null){
+	$fronthtml = substr($html,0, strpos($html, '</div>'));
+	$html = $fronthtml.'<span class="input-group-addon">Length</span></div>';
+	$html = '<div class="form-group">'.$html.'</div>';
+	return $html;
+
+}	
+function showWidth($col, $colVal, $data=array(), $html=null){
+	$fronthtml = substr($html,0, strpos($html, '</div>'));
+	$html = $fronthtml.'<span class="input-group-addon">Width</span></div>';
+	$html = '<div class="form-group">'.$html.'</div>';
+	return $html;
+
+}	
+function showHeight($col, $colVal, $data=array(), $html=null){
+	$fronthtml = substr($html,0, strpos($html, '</div>'));
+	$html = $fronthtml.'<span class="input-group-addon">Height</span></div>';
+	$html = '<div class="form-group">'.$html.'</div>';
+	return $html;
+
+}	
 function showPercentageDet($col, $colVal, $data=array(), $html=null){
 
 	$newhtml = '<div id="dbo_jobsheet_detail_cont_js_distortion_value" class="value_container" inputtype="text" inputtypesize="">'.$colVal.' %</div>';
@@ -585,7 +606,7 @@ $dbo->render();
 $( document ).ready(function() {
 	
 	var $colorjob = $('input[name=dbo_jobsheet_new_js_jobcolor], input[name=dbo_jobsheet_edit_js_jobcolor]').click(function () {calMinutes();calPrice();}),
-		$outputjob = $('input[name=dbo_jobsheet_new_joboutput\\[\\]], input[name=dbo_jobsheet_edit_joboutput\\[\\]]').click(function () {joChecked($(this));calMinutes();calPrice();setBarcodeProp();}),
+		$outputjob = $('input[name=dbo_jobsheet_new_joboutput\\[\\]], input[name=dbo_jobsheet_edit_joboutput\\[\\]]').click(function () {calMinutes();calPrice();setBarcodeProp();}),
 		// $categoryjob = $('input[name=dbo_jobsheet_new_jobcategory\\[\\]], input[name=dbo_jobsheet_edit_jobcategory\\[\\]]').click(function () {calMinutes();calPrice();}),
 		$requiredmin = $('#requiredmin'),
 		$requireinput = $('#dbo_jobsheet_new_js_requiretime, #dbo_jobsheet_edit_js_requiretime'),
@@ -817,7 +838,7 @@ $( document ).ready(function() {
 	
 	
 	// carton type enabling
-	var $cartonTypeInp = $('#dbo_jobsheet_new_js_carid, #dbo_jobsheet_edit_js_carid');
+	/*var $cartonTypeInp = $('#dbo_jobsheet_new_js_carid, #dbo_jobsheet_edit_js_carid');
 	function setCartonProp() {
 		if ($outputjob.filter(':checked').filter(function () {
 			if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
@@ -829,7 +850,7 @@ $( document ).ready(function() {
 	$outputjob.click(function () {
 		setCartonProp();
 	})
-	setCartonProp();
+	setCartonProp();*/
 
 	$('[name="dbo_jobsheet_new_js_diecut_ind"], [name="dbo_jobsheet_edit_js_diecut_ind"]').change(function(){
 		$this = $(this);
