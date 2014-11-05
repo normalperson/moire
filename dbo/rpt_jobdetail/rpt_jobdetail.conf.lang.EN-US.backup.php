@@ -40,7 +40,7 @@ $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmt
 $dbo->cols['js_jobcolor']->caption->set('default', 'Color of job', 'text');
 $dbo->cols['js_lpi']->caption->set('default', 'js_lpi', 'text');
 $dbo->cols['js_mcid']->caption->set('default', 'js_mcid', 'text');
-$dbo->cols['js_code']->caption->set('default', 'js_code', 'text');
+$dbo->cols['js_code']->caption->set('default', 'Job Code', 'text');
 $dbo->cols['js_month_occur']->caption->set('default', 'js_month_occur', 'text');
 $dbo->cols['js_price']->caption->set('default', 'js_price', 'text');
 $dbo->cols['js_outputtype']->caption->set('default', 'js_outputtype', 'text');
@@ -67,6 +67,21 @@ $dbo->cols['org_created']->caption->set('default', 'org_created', 'text');
 $dbo->cols['jobcategory']->caption->set('default', 'Category', 'text');
 $dbo->cols['joboutput']->caption->set('default', 'Output requirement', 'text');
 $dbo->cols['totalbarcode']->caption->set('default', 'Total barcode', 'text');
+$dbo->cols['js_color_6']->caption->set('default', 'js_color_6', 'text');
+$dbo->cols['js_color_7']->caption->set('default', 'js_color_7', 'text');
+$dbo->cols['js_color_8']->caption->set('default', 'js_color_8', 'text');
+$dbo->cols['js_cartonsize_g']->caption->set('default', 'js_cartonsize_g', 'text');
+$dbo->cols['js_cartonsize_l1']->caption->set('default', 'js_cartonsize_l1', 'text');
+$dbo->cols['js_cartonsize_w2']->caption->set('default', 'js_cartonsize_w2', 'text');
+$dbo->cols['js_cartonsize_l3']->caption->set('default', 'js_cartonsize_l3', 'text');
+$dbo->cols['js_cartonsize_w4']->caption->set('default', 'js_cartonsize_w4', 'text');
+$dbo->cols['js_cartonsize_height']->caption->set('default', 'js_cartonsize_height', 'text');
+$dbo->cols['js_cartonsize_top']->caption->set('default', 'js_cartonsize_top', 'text');
+$dbo->cols['js_cartonsize_bottom']->caption->set('default', 'js_cartonsize_bottom', 'text');
+$dbo->cols['js_expectdelivery']->caption->set('default', 'js_expectdelivery', 'text');
+$dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text');
+$dbo->cols['js_forwardtocusttime']->caption->set('default', 'js_forwardtocusttime', 'text');
+$dbo->cols['js_color_9']->caption->set('default', 'js_color_9', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
@@ -95,7 +110,9 @@ $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';
 $dbo->text->sum = 'Total';
 $dbo->text->sumPage = 'Total';
+$dbo->text->sumPageGroup = 'Total (Group)';
 $dbo->text->avg = 'Average';
 $dbo->text->avgPage = 'Average';
+$dbo->text->avgPageGroup = 'Average (Group)';
 
 ?>

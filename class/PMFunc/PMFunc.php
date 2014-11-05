@@ -262,7 +262,7 @@ $(function () {
 			'js_decision'=>'Auto Accept',
 			'js_completiondate' => $DB->GetOne("select now()")
 		);
-		return $DB->doUpdate('mjobssheet', $data, array('js_id'=>$case->casekey));
+		return $DB->doUpdate('mjobsheet', $data, array('js_id'=>$case->casekey));
 	}
 	
 	function notifyCustomerAck($flowid, $case) {
