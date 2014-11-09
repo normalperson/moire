@@ -4,6 +4,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'jobsheet';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
+$dbo->configState = true;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, \'\' attachment, \'\' remark, \'\' info,
@@ -118,10 +119,9 @@ $dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
 $dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
 $dbo->pdfEngine = 'dompdf';
-$dbo->configState = true;
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'getnodearr', 'content_5458854daa18e2_72293892', 'displaycartonedit', 'displaycartondetail', 'showinfo', 'showfilehistory', 'showpercentage', 'showlength', 'showwidth', 'showheight', 'showpercentagedet', 'showrequiredminute', 'showprice', 'showpricedet', 'dbo_jobsheet_customize', 'dbo_jobsheet_custom_new', 'dbo_jobsheet_custom_edit');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54043467939e06_72277515', 'displaycartonedit', 'displaycartondetail', 'showinfo', 'showfilehistory', 'showpercentage', 'showlength', 'showwidth', 'showheight', 'showpercentagedet', 'showrequiredminute', 'showprice', 'showpricedet', 'dbo_jobsheet_customize', 'dbo_jobsheet_custom_new', 'dbo_jobsheet_custom_edit');
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
 $dbo->cols['js_id']->inputTypeDefault = 'text';
