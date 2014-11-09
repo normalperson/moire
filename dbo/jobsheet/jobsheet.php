@@ -18,6 +18,9 @@
 #detail-jbc_jsid-table.disabled > tbody, #detail-jbc_jsid-table.disabled > tfoot {
 	display:none;
 }
+#dbo_jobsheet_detail_cont_js_distortion{
+	font-family:FontAwesome,'Segoe UI','Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
 </style>
 <script type="text/javascript">
 var inpcnt = 0;
