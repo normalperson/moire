@@ -7,6 +7,12 @@ function jobsummarylink($col, $colVal, $data=array(), $html=null){
 	return $html;
 
 }
+function flowsummarylink($col, $colVal, $data=array(), $html=null){
+
+	$html = '<a href="flowdetail?fromcol='.$col.'&requestdate='.$data['js_request_date'].'" >'.number_format($colVal,0).'</a>';
+	return $html;
+
+}
 
 # customization
 function dbo_rpt_dailyjobsummary_customize(&$dbo){

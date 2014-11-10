@@ -33,6 +33,10 @@ function dbo_rpt_jobdetail_customize(&$dbo){
 				$dbo->whereSQL = "js_request_date > '".$GLOBAL['requestdate']."' and js_request_date <= cast('".$GLOBAL['requestdate']."' as date) + interval '1 day' and js_id in (
                                  select js_id from fcpmcaseflow join fcpmcase on pmf_pmcid = pmc_id join mjobsheet on js_id = pmc_casekey and pmc_casetype = 'jobsheet' where pmf_prev_pmcnid = 26)";
 				break;			
+			case 'internalrevertedjob':
+				$dbo->whereSQL = "js_request_date > '".$GLOBAL['requestdate']."' and js_request_date <= cast('".$GLOBAL['requestdate']."' as date) + interval '1 day' and js_id in (
+                                 select js_id from fcpmcaseflow join fcpmcase on pmf_pmcid = pmc_id join mjobsheet on js_id = pmc_casekey and pmc_casetype = 'jobsheet' where pmf_prev_pmcnid = 19)";
+				break;			
 			default:								
 		}
 	}

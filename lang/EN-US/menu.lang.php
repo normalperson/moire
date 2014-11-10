@@ -1,4 +1,5 @@
 <?php
+/*Last Modified by esp on 10-11-2014 15:33:38*/
 $translate = array (
   'Admin Setup' => 'Admin Setup',
   'Setting' => 'Setting',
@@ -46,5 +47,13 @@ $translate = array (
   'Daily sale report' => 'Daily sale report',
   'Daily job report' => 'Daily job report',
   'Performance report' => 'Performance report',
+  'Workflow Settings' => 'Workflow Settings',
+  'Workflow' => 'Workflow',
+  'Item' => 'Item',
+  'Item Setup' => 'Item Setup',
+  'Item Setup (Assembly)' => 'Item Setup (Assembly)',
+  'Vendor' => 'Vendor',
+  'Vendor Setup' => 'Vendor Setup',
+  'Vendor Item Setup' => 'Vendor Item Setup',
 );
 ?>

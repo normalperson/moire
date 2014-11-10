@@ -267,7 +267,6 @@ $dbo->cols['js_black']->option->newMethod = 'text';
 $dbo->cols['js_black']->option->editMethod = 'text';
 $dbo->cols['js_color_1'] = new DBO_COL('js_color_1', 'varchar', '-1', '16');
 $dbo->cols['js_color_1']->inputTypeDefault = 'text';
-$dbo->cols['js_color_1']->attributeDefault = array('maxlength'=>array(5));
 $dbo->cols['js_color_1']->searchMode = 'exact';
 $dbo->cols['js_color_1']->capContClassDefault = array();
 $dbo->cols['js_color_1']->valContClassDefault = array();

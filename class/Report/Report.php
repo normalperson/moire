@@ -21,8 +21,12 @@ class Report{
 		$dbo = dbo_include('rpt_salecalldetail');
 	}
 	function jobdetail(){
-		html_header();
+		html_header();		
 		$dbo = dbo_include('rpt_jobdetail');
+	}
+	function flowdetail(){
+		html_header();		
+		$dbo = dbo_include('rpt_flowdetail');
 	}
 	function dailyjobsummary(){
 		html_header();

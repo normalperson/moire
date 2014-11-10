@@ -4,18 +4,20 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'rpt_dailyjobsummary';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
+$dbo->configState = true;
 $dbo->table = 'mjobsheet';
 $dbo->key = array();
 $dbo->sql = 'select cast(js_request_date as date),count(*) totalRequest, 
 sum(case when js_Status = \'COMPLETED\' then 1 else 0 end) as totalcomplete,
 sum(case when js_status = \'CANCELLED\' then 1 else 0 end) as totalcancel,
 sum(case when js_status != \'COMPLETED\' and js_status != \'CANCELLED\' then 1 else 0 end) as totalinprogress,
-sum( revertedjob(js_id) ) as revertedjob
+sum( revertedjob(js_id) ) as revertedjob,
+sum( internalrevertedjob(js_id) ) as internalrevertedjob
 from mjobsheet
 group by cast(js_request_date as date)
 order by cast(js_request_date as date)';
-$dbo->col = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob');
-$dbo->colList = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob');
+$dbo->col = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob', 'internalrevertedjob');
+$dbo->colList = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob', 'internalrevertedjob');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
@@ -25,8 +27,8 @@ $dbo->colEdit = array('js_request_date', 'totalrequest', 'totalcomplete', 'total
 $dbo->colSearch = array('js_request_date');
 $dbo->colExport = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress');
 $dbo->colSort = array();
-$dbo->colSum = array('totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress');
-$dbo->colSumPage = array('totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress');
+$dbo->colSum = array('totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob', 'internalrevertedjob');
+$dbo->colSumPage = array('totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob', 'internalrevertedjob');
 $dbo->colAvg = array();
 $dbo->colAvgPage = array();
 $dbo->colGroupable = array();
@@ -67,7 +69,7 @@ $dbo->editSubmit = 'Edit';
 $dbo->listEditSubmit = 'Submit';
 $dbo->newCancel = 'Cancel';
 $dbo->newSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'jobsummarylink', 'dbo_rpt_dailyjobsummary_customize');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'jobsummarylink', 'flowsummarylink', 'dbo_rpt_dailyjobsummary_customize');
 
 $dbo->cols['js_request_date'] = new DBO_COL('js_request_date', 'date', '4', '-1');
 $dbo->cols['js_request_date']->inputTypeDefault = 'BootstrapDateRange';
@@ -136,7 +138,7 @@ $dbo->cols['totalinprogress']->option->newMethod = 'text';
 $dbo->cols['totalinprogress']->option->editMethod = 'text';
 $dbo->cols['revertedjob'] = new DBO_COL('revertedjob', 'int8', '8', '-1');
 $dbo->cols['revertedjob']->displayListModifierMethod = 'phpfunc';
-$dbo->cols['revertedjob']->displayListModifier = 'jobsummarylink';
+$dbo->cols['revertedjob']->displayListModifier = 'flowsummarylink';
 $dbo->cols['revertedjob']->inputTypeDefault = 'text';
 $dbo->cols['revertedjob']->searchMode = 'exact';
 $dbo->cols['revertedjob']->capContClassDefault = array();
@@ -147,6 +149,19 @@ $dbo->cols['revertedjob']->option->listMethod = 'text';
 $dbo->cols['revertedjob']->option->detailMethod = 'text';
 $dbo->cols['revertedjob']->option->newMethod = 'text';
 $dbo->cols['revertedjob']->option->editMethod = 'text';
+$dbo->cols['internalrevertedjob'] = new DBO_COL('internalrevertedjob', 'int8', '8', '-1');
+$dbo->cols['internalrevertedjob']->displayListModifierMethod = 'phpfunc';
+$dbo->cols['internalrevertedjob']->displayListModifier = 'flowsummarylink';
+$dbo->cols['internalrevertedjob']->inputTypeDefault = 'text';
+$dbo->cols['internalrevertedjob']->searchMode = 'exact';
+$dbo->cols['internalrevertedjob']->capContClassDefault = array();
+$dbo->cols['internalrevertedjob']->valContClassDefault = array();
+$dbo->cols['internalrevertedjob']->option->defaultMethod = 'text';
+$dbo->cols['internalrevertedjob']->option->searchMethod = 'text';
+$dbo->cols['internalrevertedjob']->option->listMethod = 'text';
+$dbo->cols['internalrevertedjob']->option->detailMethod = 'text';
+$dbo->cols['internalrevertedjob']->option->newMethod = 'text';
+$dbo->cols['internalrevertedjob']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;
