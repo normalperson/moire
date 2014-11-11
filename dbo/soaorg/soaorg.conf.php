@@ -51,7 +51,6 @@ $dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
 $dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
 $dbo->pdfEngine = 'dompdf';
-$dbo->configState = true;
 $dbo->searchCancel = 'Reset';
 $dbo->searchSubmit = 'Search';
 $dbo->detailBack = 'Back';
