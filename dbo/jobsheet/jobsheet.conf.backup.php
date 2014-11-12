@@ -120,7 +120,7 @@ $dbo->lang = 'EN-US';
 $dbo->pdfEngine = 'dompdf';
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'displaycartonedit', 'displaycartondetail', 'showinfo', 'showfilehistory', 'showpercentage', 'showlength', 'showwidth', 'showheight', 'showpercentagedet', 'showrequiredminute', 'showprice', 'showpricedet', 'dbo_jobsheet_customize', 'dbo_jobsheet_custom_new', 'dbo_jobsheet_custom_edit');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_5418feb308eb64_01401584', 'displaycartonedit', 'displaycartondetail', 'showinfo', 'showfilehistory', 'showpercentage', 'showlength', 'showwidth', 'showheight', 'showpercentagedet', 'showrequiredminute', 'showprice', 'showpricedet', 'dbo_jobsheet_customize', 'dbo_jobsheet_custom_new', 'dbo_jobsheet_custom_edit');
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
 $dbo->cols['js_id']->inputTypeDefault = 'text';
@@ -266,6 +266,7 @@ $dbo->cols['js_black']->option->newMethod = 'text';
 $dbo->cols['js_black']->option->editMethod = 'text';
 $dbo->cols['js_color_1'] = new DBO_COL('js_color_1', 'varchar', '-1', '16');
 $dbo->cols['js_color_1']->inputTypeDefault = 'text';
+$dbo->cols['js_color_1']->attributeDefault = array('maxlength'=>array(12), 'autocomplete'=>array('off'));
 $dbo->cols['js_color_1']->searchMode = 'exact';
 $dbo->cols['js_color_1']->capContClassDefault = array();
 $dbo->cols['js_color_1']->valContClassDefault = array();
@@ -278,6 +279,7 @@ $dbo->cols['js_color_1']->option->newMethod = 'text';
 $dbo->cols['js_color_1']->option->editMethod = 'text';
 $dbo->cols['js_color_2'] = new DBO_COL('js_color_2', 'varchar', '-1', '16');
 $dbo->cols['js_color_2']->inputTypeDefault = 'text';
+$dbo->cols['js_color_2']->attributeDefault = array('maxlength'=>array(12), 'autocomplete'=>array('off'));
 $dbo->cols['js_color_2']->searchMode = 'exact';
 $dbo->cols['js_color_2']->capContClassDefault = array();
 $dbo->cols['js_color_2']->valContClassDefault = array();
@@ -290,6 +292,7 @@ $dbo->cols['js_color_2']->option->newMethod = 'text';
 $dbo->cols['js_color_2']->option->editMethod = 'text';
 $dbo->cols['js_color_3'] = new DBO_COL('js_color_3', 'varchar', '-1', '16');
 $dbo->cols['js_color_3']->inputTypeDefault = 'text';
+$dbo->cols['js_color_3']->attributeDefault = array('maxlength'=>array(12), 'autocomplete'=>array('off'));
 $dbo->cols['js_color_3']->searchMode = 'exact';
 $dbo->cols['js_color_3']->capContClassDefault = array();
 $dbo->cols['js_color_3']->valContClassDefault = array();
@@ -302,6 +305,7 @@ $dbo->cols['js_color_3']->option->newMethod = 'text';
 $dbo->cols['js_color_3']->option->editMethod = 'text';
 $dbo->cols['js_color_4'] = new DBO_COL('js_color_4', 'varchar', '-1', '16');
 $dbo->cols['js_color_4']->inputTypeDefault = 'text';
+$dbo->cols['js_color_4']->attributeDefault = array('maxlength'=>array(12), 'autocomplete'=>array('off'));
 $dbo->cols['js_color_4']->searchMode = 'exact';
 $dbo->cols['js_color_4']->capContClassDefault = array();
 $dbo->cols['js_color_4']->valContClassDefault = array();
@@ -314,6 +318,7 @@ $dbo->cols['js_color_4']->option->newMethod = 'text';
 $dbo->cols['js_color_4']->option->editMethod = 'text';
 $dbo->cols['js_color_5'] = new DBO_COL('js_color_5', 'varchar', '-1', '16');
 $dbo->cols['js_color_5']->inputTypeDefault = 'text';
+$dbo->cols['js_color_5']->attributeDefault = array('maxlength'=>array(12), 'autocomplete'=>array('off'));
 $dbo->cols['js_color_5']->searchMode = 'exact';
 $dbo->cols['js_color_5']->capContClassDefault = array();
 $dbo->cols['js_color_5']->valContClassDefault = array();
@@ -589,7 +594,7 @@ $dbo->cols['js_refid']->option->newMethod = 'text';
 $dbo->cols['js_refid']->option->editMethod = 'text';
 $dbo->cols['attachment'] = new DBO_COL('attachment', 'unknown', '-2', '-1');
 $dbo->cols['attachment']->inputTypeDefault = 'Dropzone';
-$dbo->cols['attachment']->size = '50M/5';
+$dbo->cols['attachment']->size = '100M/5';
 $dbo->cols['attachment']->format = '.zip, .rar';
 $dbo->cols['attachment']->mandatoryNew = '1';
 $dbo->cols['attachment']->searchMode = 'exact';
@@ -1027,6 +1032,7 @@ $dbo->cols['js_totalinch']->option->newMethod = 'text';
 $dbo->cols['js_totalinch']->option->editMethod = 'text';
 $dbo->cols['js_color_6'] = new DBO_COL('js_color_6', 'varchar', '-1', '16');
 $dbo->cols['js_color_6']->inputTypeDefault = 'text';
+$dbo->cols['js_color_6']->attributeDefault = array('maxlength'=>array(12), 'autocomplete'=>array('off'));
 $dbo->cols['js_color_6']->searchMode = 'exact';
 $dbo->cols['js_color_6']->capContClassDefault = array();
 $dbo->cols['js_color_6']->valContClassDefault = array();
@@ -1039,6 +1045,7 @@ $dbo->cols['js_color_6']->option->newMethod = 'text';
 $dbo->cols['js_color_6']->option->editMethod = 'text';
 $dbo->cols['js_color_7'] = new DBO_COL('js_color_7', 'varchar', '-1', '16');
 $dbo->cols['js_color_7']->inputTypeDefault = 'text';
+$dbo->cols['js_color_7']->attributeDefault = array('maxlength'=>array(12), 'autocomplete'=>array('off'));
 $dbo->cols['js_color_7']->searchMode = 'exact';
 $dbo->cols['js_color_7']->capContClassDefault = array();
 $dbo->cols['js_color_7']->valContClassDefault = array();
@@ -1051,6 +1058,7 @@ $dbo->cols['js_color_7']->option->newMethod = 'text';
 $dbo->cols['js_color_7']->option->editMethod = 'text';
 $dbo->cols['js_color_8'] = new DBO_COL('js_color_8', 'varchar', '-1', '16');
 $dbo->cols['js_color_8']->inputTypeDefault = 'text';
+$dbo->cols['js_color_8']->attributeDefault = array('maxlength'=>array(12), 'autocomplete'=>array('off'));
 $dbo->cols['js_color_8']->searchMode = 'exact';
 $dbo->cols['js_color_8']->capContClassDefault = array();
 $dbo->cols['js_color_8']->valContClassDefault = array();
@@ -1196,6 +1204,7 @@ $dbo->cols['js_forwardtocusttime']->option->newMethod = 'text';
 $dbo->cols['js_forwardtocusttime']->option->editMethod = 'text';
 $dbo->cols['js_color_9'] = new DBO_COL('js_color_9', 'varchar', '-1', '16');
 $dbo->cols['js_color_9']->inputTypeDefault = 'text';
+$dbo->cols['js_color_9']->attributeDefault = array('maxlength'=>array(12), 'autocomplete'=>array('off'));
 $dbo->cols['js_color_9']->searchMode = 'exact';
 $dbo->cols['js_color_9']->capContClassDefault = array();
 $dbo->cols['js_color_9']->valContClassDefault = array();
@@ -1228,7 +1237,7 @@ class DBO_custom_jobsheet extends DBO{
 }
 
 $dbo->newModifier = 'dbo_jobsheet_custom_new';
-function dbo_jobsheet_custom_new($table, $cols){
+function dbo_jobsheet_custom_new($table, $cols, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -1239,7 +1248,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 }
 
 $dbo->editModifier = 'dbo_jobsheet_custom_edit';
-function dbo_jobsheet_custom_edit($table, $cols, $wheres){
+function dbo_jobsheet_custom_edit($table, $cols, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -1250,11 +1259,11 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 }
 
 $dbo->searchModifier = 'dbo_jobsheet_custom_search';
-function dbo_jobsheet_custom_search(&$search){
+function dbo_jobsheet_custom_search(&$search, $dbo){
 }
 
 $dbo->deleteModifier = 'dbo_jobsheet_custom_delete';
-function dbo_jobsheet_custom_delete($table, $wheres){
+function dbo_jobsheet_custom_delete($table, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);
