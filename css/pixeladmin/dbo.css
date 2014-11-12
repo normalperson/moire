@@ -733,6 +733,7 @@ div.dbo_theme_pixeladmin td.dbo_container_detail th.caption{
 	vertical-align: top;
 	padding-top: 10px;
 	padding-right: 30px;
+	width : 0%;
 
 }
 
@@ -796,6 +797,7 @@ div.dbo_theme_pixeladmin td.dbo_container_new th.caption{
 	text-align:left;
 	vertical-align: top;
 	padding-top: 10px;
+	width:0%;
 }
 
 div.dbo_theme_pixeladmin td.dbo_container_new th.caption div.mandatory:after, div.dbo_theme_pixeladmin td.dbo_container_new td.caption div.mandatory:after{

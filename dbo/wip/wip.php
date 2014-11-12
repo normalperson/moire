@@ -14,7 +14,7 @@ function dbo_wip_custom_edit($table, $cols, $wheres){
 	$jobid = $wheres["js_id"];
 	$REMARK = $cols['remark'];
 	unset($cols['remark']);
-		if(!empty($cols['artwork']['name'])) {
+	if(!empty($cols['artwork']['name'])) {
 		/*$ret = "Attachement cannot be empty";
 		return $ret;*/
 		unset($cols['artwork']);

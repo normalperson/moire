@@ -766,9 +766,10 @@ div.dbo_theme_pixeladmin td.dbo_container_search table.dbo_search tr > * {
 
 
 div.dbo_theme_pixeladmin td.dbo_container_search th.caption{
-	font-weight:normal;
+	font-family: Segoe UI Semibold, Open Sans;
+	font-weight:600;
 	text-align:left;
-
+	width : 0%;
 }
 
 div.dbo_theme_pixeladmin td.dbo_container_search th.caption div.mandatory:after, div.dbo_theme_pixeladmin td.dbo_container_search td.caption div.mandatory:after{
