@@ -1,0 +1,973 @@
+/* pixeladmin */
+div.dbo_theme_pixeladmin{
+}
+/*error message*/
+pre.dbo_error_new,
+pre.dbo_error_edit, 
+pre.dbo_error_delete {
+  background: #f2dede;
+  border-color: #ebccd1;
+  color: #b94a48;
+  background-size: 20px 20px;
+}
+/*info message*/
+div.dbo_after_new_message,
+div.dbo_after_edit_message,
+div.dbo_after_delete_message {
+  background: #d9edf7;
+  border-color: #bce8f1;
+  color: #3a87ad;
+  background-size: 20px 20px;
+  padding: 10px;
+}
+div.alignright {
+	text-align: right;
+}
+/*Apply to all the table */
+div.dbo_theme_pixeladmin >  table {
+	width:100%;
+	border-spacing:3px;
+    border-collapse:collapse;
+   	color:#222222;
+}
+div.dbo_theme_pixeladmin > table td, table th{
+    padding: 3px; /* 'cellpadding' equivalent */
+}
+
+div.dbo_theme_pixeladmin.dbo_container  {
+	padding : 30px;
+	background : #fff;
+	border: 1px solid #e4e4e4;
+	overflow : auto;
+	margin-bottom : 20px;
+}
+div.dbo_theme_pixeladmin .value {
+	padding-right : 50px;
+}
+
+div.dbo_theme_pixeladmin .form_button > * {
+	margin-right : 10px;
+}
+
+div.dbo_theme_pixeladmin div.value_container> input[type="text"],
+div.dbo_theme_pixeladmin div.value_container> input[type="password"],
+div.dbo_theme_pixeladmin div.value_container> input[type="search"],
+div.dbo_theme_pixeladmin div.value_container> input[type="date"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="datetime-local"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="month"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="time"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="week"],
+div.dbo_theme_pixeladmin div.value_container> input[type="color"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="email"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="number"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="tel"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="url"],
+div.dbo_theme_pixeladmin div.value_container> select,
+div.dbo_theme_pixeladmin div.value_container> textarea
+ {
+	width: 100%;
+	padding: 6px 12px;
+	font-size: 13px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #d6d6d6;
+	border-radius: 2px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+
+div.dbo_theme_pixeladmin div.value_container> input[type="text"],
+div.dbo_theme_pixeladmin div.value_container> input[type="password"],
+div.dbo_theme_pixeladmin div.value_container> input[type="search"],
+div.dbo_theme_pixeladmin div.value_container> input[type="date"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="datetime-local"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="month"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="time"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="week"],
+div.dbo_theme_pixeladmin div.value_container> input[type="color"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="email"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="number"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="tel"], 
+div.dbo_theme_pixeladmin div.value_container> input[type="url"],
+div.dbo_theme_pixeladmin div.value_container> select
+{
+	display: block;
+	height: 32px;
+}
+
+div.dbo_theme_pixeladmin div.value_container input[type="radio"] {
+	margin-right : 10px;
+}
+
+div.dbo_theme_pixeladmin div.value_container label {
+	font-weight : normal;
+}
+
+div.dbo_theme_pixeladmin div.value_container> input[type="text"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="password"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="search"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="date"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="datetime-local"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="month"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="time"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="week"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="color"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="email"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="number"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="tel"]:focus,
+div.dbo_theme_pixeladmin div.value_container> input[type="url"]:focus,
+div.dbo_theme_pixeladmin div.value_container> select:focus,
+div.dbo_theme_pixeladmin div.value_container> textarea:focus{
+	border-color: #1d89cf;
+	outline: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+div.dbo_theme_pixeladmin div.value_container> input[type="text"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="password"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="search"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="date"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="datetime-local"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="month"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="time"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="week"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="color"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="email"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="number"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="tel"][disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="url"][disabled],
+div.dbo_theme_pixeladmin div.value_container> select[disabled],
+div.dbo_theme_pixeladmin div.value_container> textarea[disabled],
+div.dbo_theme_pixeladmin div.value_container> input[type="text"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="password"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="search"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="date"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="datetime-local"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="month"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="time"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="week"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="color"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="email"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="number"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="tel"][readonly],
+div.dbo_theme_pixeladmin div.value_container> input[type="url"][readonly],
+div.dbo_theme_pixeladmin div.value_container> select[readonly],
+div.dbo_theme_pixeladmin div.value_container> textarea[readonly]{
+	cursor: not-allowed;
+	background-color: #eee;
+	opacity: 1;
+}
+div.dbo_theme_pixeladmin .button, div.dbo_theme_pixeladmin .button:focus, div.dbo_theme_pixeladmin .button:active {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: 400;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	padding: 6px 12px;
+	font-size: 13px;
+	line-height: 1.42857143;
+	border-radius: 2px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border-color: #1a7ab9;
+	border-bottom-color: #16689e;
+	background: #1d89cf;
+	background-image: -webkit-linear-gradient(top,#1e8cd3 0,#1a7ab9 100%);
+	background-image: linear-gradient(to bottom,#1e8cd3 0,#1a7ab9 100%);
+	background-repeat: repeat-x;
+	color: #fff;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+div.dbo_theme_pixeladmin .button:hover {
+	color: #ffffff;
+	border-color: #1871ab;
+	border-bottom-color: #12547e;
+	background: #1a7ab9 !important;
+	background-image: -webkit-linear-gradient(top, #1c83c6 0%, #1871ab 100%) !important;
+	background-image: linear-gradient(to bottom, #1c83c6 0%, #1871ab 100%) !important;
+	background-repeat: repeat-x;
+}
+
+div.dbo_theme_pixeladmin .button.disabled, div.dbo_theme_pixeladmin .button[disabled], div.dbo_theme_pixeladmin fieldset[disabled] .button {
+	cursor: not-allowed;
+	pointer-events: none;
+	opacity: .65;
+	filter: alpha(opacity=65);
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	background-color: #428bca;
+	border-color: #357ebd;
+}
+
+/* list */
+div.dbo_theme_pixeladmin td.dbo_container_list{
+}
+
+
+div.dbo_theme_pixeladmin table.dbo_list, div.dbo_theme_pixeladmin table.dbo_detail, div.dbo_theme_pixeladmin table.dbo_edit, div.dbo_theme_pixeladmin table.dbo_new{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border: 0px solid #4297d7;
+	width: 100%;
+	color: #222222;
+	border-spacing: 0px;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr{
+}
+
+
+
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr div.tool{
+	float:right;
+	padding : 10px 0;
+	min-height: 40px;
+}
+
+
+div.dbo_theme_pixeladmin table.dbo_list .tool > a, div.dbo_theme_pixeladmin table.dbo_list .tool > input {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: 400;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	padding: 6px 12px;
+	font-size: 13px;
+	border-radius: 2px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border-color: #ddd;
+	border-bottom-color: #cecece;
+	background: #f4f4f4;
+	background-image: -webkit-linear-gradient(top,#f4f4f4 0,#eaeaea 100%);
+	background-image: linear-gradient(to bottom,#f4f4f4 0,#eaeaea 100%);
+	background-repeat: repeat-x;
+	color: #555;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	font-style: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	min-height: 30px;
+	float:left;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list .tool > a:hover, div.dbo_theme_pixeladmin table.dbo_list .tool > input:hover {
+	color: #555;
+	border-color: #d5d5d5;
+	border-bottom-color: #bcbcbc;
+	background: #eaeaea!important;
+	background-image: -webkit-linear-gradient(top,#efefef 0,#e5e5e5 100%)!important;
+	background-image: linear-gradient(to bottom,#efefef 0,#e5e5e5 100%)!important;
+	background-repeat: repeat-x;
+	text-decoration: none;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr div.tool > a.search_link:before{
+	font-family: FontAwesome;
+	content: "\f002  ";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr div.tool > a.new_link:before{
+	font-family: FontAwesome;
+	content: "\f067  ";
+}
+
+
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr div.tool > a.export_link:before{
+	font-family: FontAwesome;
+	content: "\f019  ";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr div.tool > input.multiple_delete{
+	border-color: #f19a1f;
+	border-bottom-color: #e38b0e;
+	background: #f4b04f;
+	background-image: -webkit-linear-gradient(top,#f4b254 0,#f3a537 100%);
+	background-image: linear-gradient(to bottom,#f4b254 0,#f3a537 100%);
+	background-repeat: repeat-x;
+	color: #fff;
+	line-height:12px;
+}
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr div.tool > input.multiple_delete:hover{
+	border-color: #f09411;
+	border-bottom-color: #c2770c;
+	background: #f3a537!important;
+	background-image: -webkit-linear-gradient(top,#f3ac45 0,#f29f29 100%)!important;
+	background-image: linear-gradient(to bottom,#f3ac45 0,#f29f29 100%)!important;
+	background-repeat: repeat-x;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr > th{
+	border-bottom :2px solid #DDD;
+
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr.title{
+	background-color:#fff;
+	color:#000;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr.title > th, div.dbo_theme_pixeladmin table.dbo_list > thead > tr.title > td {
+	padding: 8px;
+	line-height: 1.428571429;
+	font-weight:600;
+	font-size: 1.0em;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > tbody > tr > td {
+	padding: 8px;
+	line-height: 1.428571429;
+}
+
+
+
+div.dbo_theme_pixeladmin table.dbo_list > tbody > tr{
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > tbody {
+	border : 1px solid #DDD;
+}
+div.dbo_theme_pixeladmin table.dbo_list > thead > tr.title {
+	border : 1px solid #DDD;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > tbody > tr > td{
+	border-top: 1px solid #DDD;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > tfoot > tr > td {
+	border-top : 1px solid #DDD;
+	vertical-align: top;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > tbody > tr:nth-child(odd){
+	background-color: #F9F9F9;
+	color:#222222;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > tbody > tr:nth-child(even){
+	background-color:#fff;
+	color:#222222;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > tbody > tr.active{
+	background-color:#acdd4a;
+	color:#ffffff;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list > tbody > tr:hover{
+	background-color:#719DEB;
+	color:#fff;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list th.recordnum{
+	text-align:left;
+	white-space:nowrap;
+}
+div.dbo_theme_pixeladmin table.dbo_list td.recordnum{
+	text-align:left;
+	white-space:nowrap;
+}
+div.dbo_theme_pixeladmin table.dbo_list .recordnum  > input {
+	margin-right : 5px;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list td.recordnum > div:after{
+	content:".";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list tbody td.tool{
+	padding-left:6px;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list tbody td.tool > a {
+	width : 22px; 
+	overflow : hidden;
+	padding: 1px 5px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 2px;
+	min-height:inherit;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list td.tool a.detail_link:before{
+	font-family: FontAwesome;
+	content: "\f05a";
+	margin-right:10px;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list td.tool a.edit_link:before{
+	font-family: FontAwesome;
+	content: "\f040";
+	margin-right:10px;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list td.tool a.delete_link:before,
+div.dbo_theme_pixeladmin table.dbo_list th.tool a.delete_link:before {
+	font-family: FontAwesome;
+	content: "\f014";
+	margin-right:10px;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging{
+	padding-left: 0;
+	margin: 10px 0;
+	border-radius: 0;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging > li{
+	display : inline;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging > li > a , div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging > li > span {
+	position: relative;
+	float: left;
+	padding: 5px 10px;
+	line-height: 1.42857143;
+	text-decoration: none;
+	color: #007FFF;
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	margin-left: -1px;
+	font-size: 13px;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging > li > a:hover{
+	color: #0059B3;
+	background-color: #E6E6E6;
+	border-color: #DDD;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging > li.currentpage > span , div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging > li.currentpage > a{
+	z-index: 2;
+	color: #999;
+	background-color: #F5F5F5;
+	border-color: #DDD;
+	cursor: default;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging > li.previouspage > span , div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging > li.nextpage > span {
+	color: #999;
+	background-color: #FFF;
+	border-color: #DDD;
+	cursor: not-allowed;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging > li.pagesummary > span {
+	z-index: 2;
+	color: #999;
+	background-color: #F5F5F5;
+	border-color: #DDD;
+	cursor: default;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sortable{
+	color:white;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sortable:after{
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc{
+	background:url(images/dbo/asc.png) no-repeat right center;
+	padding-right:13px;
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc{
+	background:url(images/dbo/desc.png) no-repeat right center;
+	padding-right:13px;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_1{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_1:after{
+	content:"1";
+	font-size:0.7em;
+	text-decoration:normal;
+	font-style:italic;
+	margin-left:5px;
+	color:#66ffcc;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_2{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_2:after{
+	content:"2";
+	font-size:0.7em;
+	text-decoration:normal;
+	font-style:italic;
+	margin-left:5px;
+	color:#66ffcc;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_3{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_3:after{
+	content:"3";
+	font-size:0.7em;
+	text-decoration:normal;
+	font-style:italic;
+	margin-left:5px;
+	color:#66ffcc;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_4{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_4:after{
+	content:"4";
+	font-size:0.7em;
+	text-decoration:normal;
+	font-style:italic;
+	margin-left:5px;
+	color:#66ffcc;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_5{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_5:after{
+	content:"5";
+	font-size:0.7em;
+	text-decoration:normal;
+	font-style:italic;
+	margin-left:5px;
+	color:#66ffcc;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_6{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_6:after{
+	content:"6";
+	font-size:0.7em;
+	text-decoration:normal;
+	font-style:italic;
+	margin-left:5px;
+	color:#66ffcc;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_7{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_7:after{
+	content:"7";
+	font-size:0.7em;
+	text-decoration:normal;
+	font-style:italic;
+	margin-left:5px;
+	color:#66ffcc;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_8{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_8:after{
+	content:"8";
+	font-size:0.7em;
+	text-decoration:normal;
+	font-style:italic;
+	margin-left:5px;
+	color:#66ffcc;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_9{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_9:after{
+	content:"9";
+	font-size:0.7em;
+	text-decoration:normal;
+	font-style:italic;
+	margin-left:5px;
+	color:#66ffcc;
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_1{
+	background:url(images/dbo/asc.png) no-repeat right center;
+	padding-right:13px;
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_1:after{
+	content:" [A1]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_1{
+	background:url(images/dbo/desc.png) no-repeat right center;
+	padding-right:13px;
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_1:after{
+	content:" [D1]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_2{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_2:after{
+	content:" [A2]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_2{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_2:after{
+	content:" [D2]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_3{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_3:after{
+	content:" [A3]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_3{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_3:after{
+	content:" [D3]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_4{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_4:after{
+	content:" [A4]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_4{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_4:after{
+	content:" [D4]";
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_5{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_5:after{
+	content:" [A5]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_5{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_5:after{
+	content:" [D5]";
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_6{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_6:after{
+	content:" [A6]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_6{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_6:after{
+	content:" [D6]";
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_7{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_7:after{
+	content:" [A7]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_7{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_7:after{
+	content:" [D7]";
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_8{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_8:after{
+	content:" [A8]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_8{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_8:after{
+	content:" [D8]";
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_9{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_9:after{
+	content:" [A9]";
+}
+
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_9{
+}
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_9:after{
+	content:" [D9]";
+}
+
+/* detail */
+td.dbo_container_detail td.form_button{
+ 
+}
+div.dbo_theme_pixeladmin td.dbo_container_detail{
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_detail table.dbo_detail tr > * {
+	padding-bottom: 15px;
+}
+
+
+div.dbo_theme_pixeladmin td.dbo_container_detail > fieldset{
+
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_detail > fieldset > legend{
+
+}
+div.dbo_theme_pixeladmin td.dbo_container_detail td.value {
+	vertical-align:top;
+	padding-top:10px;
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_detail th.caption{
+	text-align:right;
+	vertical-align: top;
+	padding-top: 10px;
+	padding-right: 30px;
+
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_detail td.form_button  input.detail_delete {
+	display : none;
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_detail .detail-setup-table .value_container {
+	padding-left : 5px;
+}
+
+
+/* search */
+
+
+div.dbo_theme_pixeladmin td.dbo_container_search input[type="text"], 
+div.dbo_theme_pixeladmin td.dbo_container_search input[type="password"], 
+div.dbo_theme_pixeladmin td.dbo_container_search select {
+	height: 31px;
+	padding: 5px 10px;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_search{
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_search table.dbo_search tr > * {
+	padding-bottom: 15px;
+}
+
+
+div.dbo_theme_pixeladmin td.dbo_container_search th.caption{
+	font-weight:normal;
+	text-align:left;
+
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_search th.caption div.mandatory:after, div.dbo_theme_pixeladmin td.dbo_container_search td.caption div.mandatory:after{
+	content:" *";
+	color:red;
+}
+
+
+
+/* new */
+
+div.dbo_theme_pixeladmin td.dbo_container_new{
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_new table.dbo_new > tbody > tr > * {
+	padding-bottom: 15px;
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_new td.value {
+	vertical-align:top;
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_new th.caption{
+	font-weight:normal;
+	text-align:left;
+	vertical-align: top;
+	padding-top: 10px;
+	width:0%;
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_new th.caption div.mandatory:after, div.dbo_theme_pixeladmin td.dbo_container_new td.caption div.mandatory:after{
+	content:" *";
+	color:red;
+}
+
+
+div.dbo_theme_pixeladmin td.dbo_container_new td.form_button{
+	text-align:right;
+}
+
+/* edit */
+div.dbo_theme_pixeladmin td.dbo_container_edit{
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_edit table.dbo_edit > tbody > tr > * {
+	padding-bottom: 15px;
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_edit td.value {
+	vertical-align:top;
+}
+
+
+div.dbo_theme_pixeladmin td.dbo_container_edit th.caption{
+	font-weight:normal;
+	text-align:left;
+	vertical-align: top;
+	padding-top: 10px;
+	width:0%;
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_edit th.caption div.mandatory:after, div.dbo_theme_pixeladmin td.dbo_container_edit td.caption div.mandatory:after{
+	content:" *";
+	color:red;
+}
+
+div.dbo_theme_pixeladmin td.dbo_container_edit td.form_button{
+	text-align:right;
+}
+
+/* delete */
+div.dbo_theme_pixeladmin td.dbo_container_delete{
+}
+
+/* Check box control */
+table.checkbox_container > tbody > tr {
+	/* display: inline-block; */
+	/* padding:0 10px; */
+}
+table.checkbox_container > tbody > tr > td > label input {
+	margin-right : 8px;
+}
+
+table.checkbox_container > tbody > tr > td label,
+table.checkbox_container > tbody > tr > td label {
+  display: block;
+  margin-bottom: 0;
+}
+table.checkbox_container > tbody > tr > td label:before,
+table.checkbox_container > tbody > tr > td label:before,
+table.checkbox_container > tbody > tr > td label:after,
+table.checkbox_container > tbody > tr > td label:after {
+  content: " ";
+  display: table;
+}
+table.checkbox_container > tbody > tr > td label:after,
+table.checkbox_container > tbody > tr > td label:after {
+  clear: both;
+}
+table.checkbox_container > tbody > tr > td,
+table.checkbox_container > tbody > tr > td {
+  margin-top: 0;
+}
+
+
+
+div.dbo_theme_pixeladmin table.radio_container td {
+	padding : 0;
+}
+
+/*tab control*/
+ul.dbotab_ul {
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+  background-color: transparent;
+}
+ul.dbotab_ul > li {
+  position: relative;
+  display: block;
+  float: left;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  margin-left: 0px;
+  margin-right: 6px;
+  padding: 0px;
+}
+ul.dbotab_ul > li > a {
+  position: relative;
+  display: block;
+  padding: 8px 20px;
+  border-radius: 2px;
+}
+
+ul.dbotab_ul > li.dbotab_active{
+  background-color: transparent;	
+}
+ul.dbotab_ul > li.dbotab_inactive{
+	background-color:transparent;
+}
+
+ul.dbotab_ul > li.dbotab_active > a {
+  text-decoration: none;
+  border-radius: 2px;
+  color: #ffffff;
+  background-color: #64bed8;
+}
+ul.dbotab_ul > li.dbotab_inactive > a {
+  text-decoration: none;
+  border-radius: 2px;
+  color: #777;
+  background-color: #dddddd;
+}
+
+ul.dbotab_ul > li.dbotab_active > a:hover,
+ul.dbotab_ul > li.dbotab_active > a:focus {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #64bed8;
+}
+
+div.dbo_theme_pixeladmin .has-error .value_container input[type="text"],
+div.dbo_theme_pixeladmin .has-error .value_container input[type="password"],
+div.dbo_theme_pixeladmin .has-error .value_container input[type="search"],
+div.dbo_theme_pixeladmin .has-error .value_container input[type="date"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="datetime-local"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="month"], 
+div.dbo_theme_pixeladmin .has-error .value_container  input[type="time"], 
+div.dbo_theme_pixeladmin .has-error .value_container  input[type="week"],
+div.dbo_theme_pixeladmin .has-error .value_container input[type="color"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="email"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="number"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="tel"], 
+div.dbo_theme_pixeladmin .has-error .value_container input[type="url"],
+div.dbo_theme_pixeladmin .has-error .value_container select,
+div.dbo_theme_pixeladmin .has-error .value_container textarea{
+	border-color: #d38e99 !important;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+
+div.dbo_theme_pixeladmin .dbo_new >tbody > tr> th.caption:first-child,
+div.dbo_theme_pixeladmin .dbo_edit >tbody > tr> th.caption:first-child{
+	min-width : 150px;
+}
+
+div.dbo_theme_pixeladmin td.value .form-group {
+	margin-bottom : 0;
+}
+
+span.dbo_info_caption{
+	margin-right:4px;
+	color:blue;
+	border:1px solid blue;
+	border-radius:20px;
+	padding:3px;
+	cursor:pointer;
+}
+span.dbo_info_caption:after{
+	content: " i";
+}
