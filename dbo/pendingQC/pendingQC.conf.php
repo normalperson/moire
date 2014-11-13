@@ -436,6 +436,7 @@ $dbo->cols['artwork'] = new DBO_COL('artwork', 'unknown', '-2', '-1');
 $dbo->cols['artwork']->inputTypeDefault = 'Dropzone';
 $dbo->cols['artwork']->size = '300M/5';
 $dbo->cols['artwork']->format = '.rar, .zip, .jpeg, .jpg';
+$dbo->cols['artwork']->mandatoryEdit = '1';
 $dbo->cols['artwork']->searchMode = 'exact';
 $dbo->cols['artwork']->capContClassDefault = array();
 $dbo->cols['artwork']->valContClassDefault = array();

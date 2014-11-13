@@ -13,7 +13,7 @@ function dbo_pendingQC_custom_edit($table, $cols, $wheres){
 	$jobid = $wheres["js_id"];
 	$REMARK = $cols['remark'];
 	unset($cols['remark']);
-
+	$attachment = false;
 	if(!empty($cols['artwork']['name'])) {
 		/*$ret = "Attachement cannot be empty";
 		return $ret;*/
@@ -37,10 +37,12 @@ function dbo_pendingQC_custom_edit($table, $cols, $wheres){
 	if(!$ok){
 		$ret[] = $DB->lastError;
 		$FLOWDECISION = false;
-	}else{
-		// upload the the right place...
-		$doc = new DocumentManager();
-		$ok = $doc->saveMultipleFile($attachment,$jobid,'js_id','QC artwork done');
+	}else{	
+		if ($attachment) {
+			// upload the the right place...
+			$doc = new DocumentManager();
+			$ok = $doc->saveMultipleFile($attachment,$jobid,'js_id','QC artwork done');
+		}
 		$FLOWDECISION = true;
 
 	}
@@ -52,7 +54,10 @@ function dbo_pendingQC_custom_edit($table, $cols, $wheres){
 $dbo->render();
 ?>
 <script type="text/javascript">
-if( $('#dbo_pendingQC_edit_js_decision').val() != 'Revert' ){
-	// dropzone-dbo_pendingQC_edit_artwork mandatory
-}
+$('#dbo_pendingQC_edit_js_decision').change(function () {
+	if ($(this).val() == 'Revert') {
+		$('#dbo_pendingQC_edit_artwork').trigger('disable');
+	}
+	else $('#dbo_pendingQC_edit_artwork').trigger('enable');
+}).change();
 </script>

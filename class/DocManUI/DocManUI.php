@@ -175,7 +175,7 @@ class DocManUI {
 		
 		$html = "
 		<div id='dropzone-{$inputname}' class='dropzone-box'>
-			<input type='hidden' class='dropzone-actual-input' name='{$inputname}' value=''>
+			<input type='hidden' class='dropzone-actual-input' id='{$inputname}' name='{$inputname}' value=''>
 			<div class='dz-default dz-message'>
 				<i class='fa fa-cloud-upload'></i>
 				Drop files in here<br><span class='dz-text-small'>or click to pick manually</span>
@@ -231,6 +231,20 @@ class DocManUI {
 			}
 		}
 	});
+	
+	
+	\$dropzoneInput.data('dropzone', Dropzone.forElement(\$dropzoneDiv[0]));
+	\$dropzoneInput.on('disable', function() {
+		var \$t = $(this).val('').prop('disabled', true);
+			dz = \$t.data('dropzone');
+		dz.removeAllFiles(true);
+		dz.disable();
+		\$dropzoneDiv.addClass('disabled');
+	}).on('enable', function() {
+		$(this).prop('disabled', false);
+		$(this).data('dropzone').enable();
+		\$dropzoneDiv.removeClass('disabled');
+	})
 })();
 </script>";
 		return $html.$js;
