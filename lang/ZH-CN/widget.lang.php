@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by uat_supervisor1 on 15-07-2014 01:25:08*/
+/*Last Modified by uat_supervisor1 on 01-12-2014 21:19:30*/
 $translate = array (
   'SALES BY QUANTITY MTD' => '销售数量（本月至今）',
   'Monthly sales' => '销售',
@@ -21,5 +21,6 @@ $translate = array (
   'My performance' => '我的表现',
   'Performance' => 'Performance',
   'Performance data' => 'Performance data',
+  'CUSTOMER REQUIREMENT MTD' => '客戶需求統計',
 );
 ?>

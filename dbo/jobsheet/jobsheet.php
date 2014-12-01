@@ -139,21 +139,21 @@ function showPercentage($col, $colVal, $data=array(), $html=null){
 }	
 function showLength($col, $colVal, $data=array(), $html=null){
 	$fronthtml = substr($html,0, strpos($html, '</div>'));
-	$html = $fronthtml.'<span class="input-group-addon">Length</span></div>';
+	$html = $fronthtml.'<span class="input-group-addon">Length | 长度</span></div>';
 	$html = '<div class="form-group">'.$html.'</div>';
 	return $html;
 
 }	
 function showWidth($col, $colVal, $data=array(), $html=null){
 	$fronthtml = substr($html,0, strpos($html, '</div>'));
-	$html = $fronthtml.'<span class="input-group-addon">Width</span></div>';
+	$html = $fronthtml.'<span class="input-group-addon">Width | 宽度</span></div>';
 	$html = '<div class="form-group">'.$html.'</div>';
 	return $html;
 
 }	
 function showHeight($col, $colVal, $data=array(), $html=null){
 	$fronthtml = substr($html,0, strpos($html, '</div>'));
-	$html = $fronthtml.'<span class="input-group-addon">Height</span></div>';
+	$html = $fronthtml.'<span class="input-group-addon">Height | 高度</span></div>';
 	$html = '<div class="form-group">'.$html.'</div>';
 	return $html;
 

@@ -91,6 +91,56 @@ class Home{
 			
 
 	}
+	function renderJobByOutput($caption='CUSTOMER REQUIREMENT MTD'){
+		global $HTML,$DB,$USER;
+		$showgraph = true;
+
+		$xAxis = array();
+		$result = array();
+
+		list($currentOrgId, $currentOrgExternal) = $DB->getRow("select org_id, org_external from fcuserorgrole join fcorg on uor_orgid = org_id where uor_id = :0 and uor_rolid = :1", array($USER->userorgroleid, $USER->roleid));
+		if($currentOrgExternal=='Y'){
+			$sqlWhere = "and js_orgid=".$USER->orgid;
+		}else{
+			$sqlWhere = "and 1=1";		
+		}
+		$sql = "select count(*),jol_title from 
+				mjobsheet 
+				left join mjoboutput on jo_jsid = js_id
+				join mjoboutputlookup on cast( coalesce(jo_outputcode,'0') as integer) = jol_id
+				where js_request_Date > ( date_trunc('month', current_date) )::date
+				and js_request_Date < ( date_trunc('month', current_date) + INTERVAL '1 MONTH')::date
+                $sqlWhere
+                group by jol_title";
+
+		$name = $DB->GetOne("select to_char(current_date,'Mon-YYYY')",null, PDO::FETCH_ASSOC);				
+
+		$rawdata = $DB->GetArray($sql);
+
+		foreach ($rawdata as $jokey => $jovalue) {
+			$xAxis[] = $jovalue['jol_title'];
+			$result[] = $jovalue['count'];
+		}
+		//$arrcnt = array_count_values($result);
+		/*vd($xAxis);
+		vd($result);
+		vd($rawdata);*/
+		if(empty($rawdata)) $showgraph = false; // if no data
+		$data[] = array("name" => $name, "data" => $result);
+		/*vd($data);*/
+
+		$HTML->addJS('js/highcharts.js');
+		$smarty = $this->initSmarty();
+	
+		$smarty->assign('paneltitle',tl($caption,true,'widget') );
+		$smarty->assign('data',json_encode($data)); 
+		$smarty->assign('xAxis',json_encode($xAxis)); 
+		$smarty->assign('showgraph',json_encode($showgraph)); 
+		$smarty->assign('Home',$this); 
+		$html = $smarty->fetch('jobbyoutput.html');
+/*		vd($html);*/
+		return $html;
+	}
 	function renderJobByCat($caption='SALES BY QUANTITY MTD'){
 		global $HTML,$DB,$USER;
 		$sql = "select * from mjobcatlookup order by jcl_title";

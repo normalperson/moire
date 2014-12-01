@@ -90,7 +90,7 @@ $dbo->cols['js_cartonsize_top']->caption->set('default', 'js_cartonsize_top', 't
 $dbo->cols['js_cartonsize_bottom']->caption->set('default', 'js_cartonsize_bottom', 'text');
 $dbo->cols['js_expectdelivery']->caption->set('default', 'Expected Delivery', 'text');
 $dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text');
-$dbo->cols['js_forwardtocusttime']->caption->set('default', 'js_forwardtocusttime', 'text');
+$dbo->cols['js_forwardtocusttime']->caption->set('default', 'Completed Date', 'text');
 $dbo->cols['js_color_9']->caption->set('default', 'Color 9', 'text');
 
 $dbo->titleList = 'Job List';
@@ -108,6 +108,9 @@ $dbo->text->newSubmit = 'Save';
 $dbo->text->listSubmit = 'Submit';
 $dbo->text->detailCancel = 'Back';
 $dbo->text->detailDelete = 'Delete';
+$dbo->text->listListNew = 'List New';
+$dbo->text->listListNewAdd = 'Add';
+$dbo->text->listListNewDelete = 'Delete';
 $dbo->text->listNew = 'New';
 $dbo->text->listEdit = 'Edit';
 $dbo->text->listDelete = 'Delete';

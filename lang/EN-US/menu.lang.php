@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 10-11-2014 15:33:38*/
+/*Last Modified by esp on 27-11-2014 22:24:45*/
 $translate = array (
   'Admin Setup' => 'Admin Setup',
   'Setting' => 'Setting',
@@ -37,15 +37,15 @@ $translate = array (
   'User related setup' => 'User related setup',
   'Invoice' => 'Invoice',
   'Debtors Aging' => 'Debtors Aging',
-  'Currency Setup' => 'Currency Setup',
-  'Region Setup' => 'Region Setup',
-  'Payment' => 'Payment',
   'Billing' => 'Billing',
   'Statement' => 'Statement',
+  'Payment' => 'Payment',
   'Report' => 'Report',
   'Daily call report' => 'Daily call report',
   'Daily sale report' => 'Daily sale report',
   'Daily job report' => 'Daily job report',
+  'Currency Setup' => 'Currency Setup',
+  'Region Setup' => 'Region Setup',
   'Performance report' => 'Performance report',
   'Workflow Settings' => 'Workflow Settings',
   'Workflow' => 'Workflow',

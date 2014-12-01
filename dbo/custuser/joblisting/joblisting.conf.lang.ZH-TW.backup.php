@@ -1,0 +1,41 @@
+<?php
+require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
+
+$dbo->cols['js_id']->caption->set('default', '訂單ID', 'text');
+$dbo->cols['js_cuid']->caption->set('default', '客戶名稱', 'text');
+$dbo->cols['js_ctid']->caption->set('default', 'Person in charge', 'text');
+$dbo->cols['js_request_date']->caption->set('default', '提交日期', 'text');
+$dbo->cols['js_request_by']->caption->set('default', 'Requestor', 'text');
+$dbo->cols['js_title']->caption->set('default', 'js_title', 'text');
+$dbo->cols['js_description']->caption->set('default', '訂單描述', 'text');
+$dbo->cols['js_description']->caption->setTabCaption('default', '訂單訊息', 'text');
+$dbo->cols['js_material_provided']->caption->set('default', 'js_material_provided', 'text');
+$dbo->cols['js_cyan']->caption->set('default', 'Cyan', 'text');
+$dbo->cols['js_cyan']->caption->setTabCaption('default', 'COLOR', 'text');
+$dbo->cols['js_magenta']->caption->set('default', 'Magenta', 'text');
+$dbo->cols['js_yellow']->caption->set('default', 'Yellow', 'text');
+$dbo->cols['js_black']->caption->set('default', 'Black', 'text');
+$dbo->cols['js_color_1']->caption->set('default', '顏色1', 'text');
+$dbo->cols['js_color_2']->caption->set('default', '顏色2', 'text');
+$dbo->cols['js_color_3']->caption->set('default', '顏色3', 'text');
+$dbo->cols['js_color_4']->caption->set('default', '顏色4', 'text');
+$dbo->cols['js_color_5']->caption->set('default', '顏色5', 'text');
+$dbo->cols['js_angle_1']->caption->set('default', '角度1', 'text');
+$dbo->cols['js_angle_2']->caption->set('default', '角度2', 'text');
+$dbo->cols['js_angle_3']->caption->set('default', '角度3', 'text');
+$dbo->cols['js_angle_4']->caption->set('default', '角度4', 'text');
+$dbo->cols['js_angle_5']->caption->set('default', '角度5', 'text');
+$dbo->cols['js_bleeding']->caption->set('default', '滲色', 'text');
+$dbo->cols['js_bleeding_remark']->caption->set('default', '滲色備註', 'text');
+$dbo->cols['js_carcode']->caption->set('default', 'Carton type', 'text');
+$dbo->cols['js_distortion']->caption->set('default', '縮比', 'text');
+$dbo->cols['js_distortion']->caption->setTabCaption('default', '紙箱類型', 'text');
+$dbo->cols['js_distortion_value']->caption->set('default', '縮比值', 'text');
+$dbo->cols['js_diecut_ind']->caption->set('default', '模切', 'text');
+$dbo->cols['js_thicknessplate']->caption->set('default', 'js_thicknessplate', 'text');
+$dbo->cols['js_category']->caption->set('default', '類別', 'text');
+$dbo->cols['js_trapping_size']->caption->set('default', '套印 (mm)', 'text');
+$dbo->cols['js_barcodetype']->caption->set('default', 'Barcode type', 'text');
+$dbo->cols['js_barcodenumber']->caption->set('default', 'Barcode number', 'text');
+$dbo->cols['js_primcat']->caption->set('default', '首要類別', 'text');
+$dbo->cols['js_status']->caption->set('default',
