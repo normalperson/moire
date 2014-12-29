@@ -187,6 +187,10 @@ class Setting{
 		html_header();
 		$dbo = dbo_include('menu');	
 	}
+	function holidaysetup(){
+		html_header();
+		$dbo = dbo_include('publicholiday');	
+	}
 	function showDBO(){
 		html_header();
 		$dbo = dbo_include('jobsheet');	

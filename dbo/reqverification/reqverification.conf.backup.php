@@ -4,11 +4,10 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'reqverification';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
-$dbo->fileSaveMode = 511;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, \'\' remark from mjobsheet';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'remark');
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_rate', 'js_totalinch', 'remark');
 $dbo->colList = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
@@ -19,6 +18,11 @@ $dbo->colEdit = array('js_decision', 'js_assignto', 'js_price', 'js_requiretime'
 $dbo->colSearch = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colExport = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colSort = array();
+$dbo->colSum = array();
+$dbo->colSumPage = array();
+$dbo->colAvg = array();
+$dbo->colAvgPage = array();
+$dbo->colGroupable = array();
 $dbo->canSearch = false;
 $dbo->canNew = false;
 $dbo->canEdit = true;
@@ -37,15 +41,19 @@ $dbo->titleEdit = 'Decision';
 $dbo->titleSearch = 'Search Record';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
-$dbo->pageLinkCount = 7;
-$dbo->recordPerPage = 10;
-$dbo->showRecordNo = 1;
+$dbo->pageLinkCount = '7';
+$dbo->recordPerPage = '10';
+$dbo->showRecordNo = '1';
 $dbo->defaultState = 'list';
-$dbo->maxSortCount = 9;
+$dbo->maxSortCount = '9';
+$dbo->defaultDateFormat = 'yyyy-mm-dd';
+$dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
+$dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
-$dbo->render = array();
+$dbo->pdfEngine = 'dompdf';
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_5418feb308eb64_01401584', 'dbo_reqverification_customize', 'showpricereqver', 'dbo_reqverification_custom_edit');
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
 $dbo->cols['js_id']->inputTypeDefault = 'text';
@@ -457,7 +465,7 @@ $dbo->cols['js_completiondate']->option->editMethod = 'text';
 $dbo->cols['js_assignto'] = new DBO_COL('js_assignto', 'varchar', '-1', '54');
 $dbo->cols['js_assignto']->defaultEditValue = ' ';
 $dbo->cols['js_assignto']->inputTypeDefault = 'select';
-$dbo->cols['js_assignto']->mandatoryEdit = 1;
+$dbo->cols['js_assignto']->mandatoryEdit = '1';
 $dbo->cols['js_assignto']->searchMode = 'exact';
 $dbo->cols['js_assignto']->capContClassDefault = array();
 $dbo->cols['js_assignto']->valContClassDefault = array();
@@ -495,7 +503,7 @@ $dbo->cols['attachment']->option->newMethod = 'text';
 $dbo->cols['attachment']->option->editMethod = 'text';
 $dbo->cols['remark'] = new DBO_COL('remark', 'unknown', '-2', '-1');
 $dbo->cols['remark']->inputTypeDefault = 'text';
-$dbo->cols['remark']->mandatoryEdit = 1;
+$dbo->cols['remark']->mandatoryEdit = '1';
 $dbo->cols['remark']->searchMode = 'exact';
 $dbo->cols['remark']->capContClassDefault = array();
 $dbo->cols['remark']->valContClassDefault = array();
@@ -582,7 +590,7 @@ $dbo->cols['js_decision'] = new DBO_COL('js_decision', 'varchar', '-1', '54');
 $dbo->cols['js_decision']->defaultEditValueMethod = 'text';
 $dbo->cols['js_decision']->defaultEditValue = ' ';
 $dbo->cols['js_decision']->inputTypeDefault = 'select';
-$dbo->cols['js_decision']->mandatoryEdit = 1;
+$dbo->cols['js_decision']->mandatoryEdit = '1';
 $dbo->cols['js_decision']->searchMode = 'exact';
 $dbo->cols['js_decision']->capContClassDefault = array();
 $dbo->cols['js_decision']->valContClassDefault = array();
@@ -643,7 +651,7 @@ $dbo->cols['js_manrequiretime']->option->editMethod = 'text';
 $dbo->cols['js_requiretime'] = new DBO_COL('js_requiretime', 'int4', '4', '-1');
 $dbo->cols['js_requiretime']->displayDataType = 'int';
 $dbo->cols['js_requiretime']->inputTypeDefault = 'TextInputControl';
-$dbo->cols['js_requiretime']->mandatoryEdit = 1;
+$dbo->cols['js_requiretime']->mandatoryEdit = '1';
 $dbo->cols['js_requiretime']->searchMode = 'exact';
 $dbo->cols['js_requiretime']->capContClassDefault = array();
 $dbo->cols['js_requiretime']->valContClassDefault = array();
@@ -726,7 +734,6 @@ $dbo->cols['js_price']->inputEditModifierMethod = 'phpfunc';
 $dbo->cols['js_price']->inputNewModifier = 'showPriceReqVer';
 $dbo->cols['js_price']->inputEditModifier = 'showPriceReqVer';
 $dbo->cols['js_price']->inputTypeDefault = 'TextInputControl';
-$dbo->cols['js_price']->attributeDefault = array('readonly'=>array('readonly'));
 $dbo->cols['js_price']->searchMode = 'exact';
 $dbo->cols['js_price']->capContClassDefault = array();
 $dbo->cols['js_price']->valContClassDefault = array();
@@ -736,6 +743,38 @@ $dbo->cols['js_price']->option->listMethod = 'text';
 $dbo->cols['js_price']->option->detailMethod = 'text';
 $dbo->cols['js_price']->option->newMethod = 'text';
 $dbo->cols['js_price']->option->editMethod = 'text';
+$dbo->cols['js_outputtype'] = new DBO_COL('js_outputtype', 'varchar', '-1', '54');
+$dbo->cols['js_outputtype']->inputTypeDefault = 'text';
+$dbo->cols['js_outputtype']->capContClassDefault = array();
+$dbo->cols['js_outputtype']->valContClassDefault = array();
+$dbo->cols['js_outputwidth'] = new DBO_COL('js_outputwidth', 'int4', '4', '-1');
+$dbo->cols['js_outputwidth']->inputTypeDefault = 'text';
+$dbo->cols['js_outputwidth']->capContClassDefault = array();
+$dbo->cols['js_outputwidth']->valContClassDefault = array();
+$dbo->cols['js_outputheight'] = new DBO_COL('js_outputheight', 'int4', '4', '-1');
+$dbo->cols['js_outputheight']->inputTypeDefault = 'text';
+$dbo->cols['js_outputheight']->capContClassDefault = array();
+$dbo->cols['js_outputheight']->valContClassDefault = array();
+$dbo->cols['js_qcchecked'] = new DBO_COL('js_qcchecked', 'varchar', '-1', '2004');
+$dbo->cols['js_qcchecked']->inputTypeDefault = 'text';
+$dbo->cols['js_qcchecked']->capContClassDefault = array();
+$dbo->cols['js_qcchecked']->valContClassDefault = array();
+$dbo->cols['js_currency'] = new DBO_COL('js_currency', 'varchar', '-1', '54');
+$dbo->cols['js_currency']->inputTypeDefault = 'text';
+$dbo->cols['js_currency']->capContClassDefault = array();
+$dbo->cols['js_currency']->valContClassDefault = array();
+$dbo->cols['js_finalprice'] = new DBO_COL('js_finalprice', 'numeric', '-1', '1310728');
+$dbo->cols['js_finalprice']->inputTypeDefault = 'text';
+$dbo->cols['js_finalprice']->capContClassDefault = array();
+$dbo->cols['js_finalprice']->valContClassDefault = array();
+$dbo->cols['js_rate'] = new DBO_COL('js_rate', 'numeric', '-1', '1310728');
+$dbo->cols['js_rate']->inputTypeDefault = 'text';
+$dbo->cols['js_rate']->capContClassDefault = array();
+$dbo->cols['js_rate']->valContClassDefault = array();
+$dbo->cols['js_totalinch'] = new DBO_COL('js_totalinch', 'numeric', '-1', '1310728');
+$dbo->cols['js_totalinch']->inputTypeDefault = 'text';
+$dbo->cols['js_totalinch']->capContClassDefault = array();
+$dbo->cols['js_totalinch']->valContClassDefault = array();
 
 // support multiple language. only caption
 global $LANG;
@@ -751,6 +790,13 @@ $dbo->saveDir = dirname(dirname(__FILE__));
 $dbo->run();
 
 /*
+# enable overwriting DBO class
+class DBO_custom_reqverification extends DBO{
+	function __construct(){
+		parent::__construct();
+	}
+}
+
 $dbo->newModifier = 'dbo_reqverification_custom_new';
 function dbo_reqverification_custom_new($table, $cols){
 	global $DB;

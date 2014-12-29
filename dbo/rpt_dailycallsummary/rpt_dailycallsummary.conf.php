@@ -6,20 +6,21 @@ $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
 $dbo->table = 'rpt_dailycallsummary';
 $dbo->key = array();
-$dbo->sql = 'select * from rpt_dailycallsummary';
+$dbo->sql = 'select * from rpt_dailycallsummary
+order by rpt_completiondate';
 $dbo->col = array('rpt_completiondate', 'rpt_astotaljob', 'rpt_astotalprice', 'rpt_astotalinch', 'rpt_eutotaljob', 'rpt_eutotalprice', 'rpt_eutotalinch', 'rpt_lctotaljob', 'rpt_lctotalprice', 'rpt_lctotalinch', 'rpt_callid', 'rpt_totalpriceinmyr', 'rpt_totalpriceinusd');
 $dbo->colList = array('rpt_completiondate', 'rpt_astotaljob', 'rpt_astotalprice', 'rpt_astotalinch', 'rpt_eutotaljob', 'rpt_eutotalprice', 'rpt_eutotalinch', 'rpt_lctotaljob', 'rpt_lctotalprice', 'rpt_lctotalinch', 'rpt_totalpriceinmyr', 'rpt_totalpriceinusd');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
 $dbo->colDetail = array();
-$dbo->colNew = array('rpt_astotalinch', 'rpt_astotaljob');
+$dbo->colNew = array();
 $dbo->colEdit = array();
 $dbo->colSearch = array('rpt_completiondate');
 $dbo->colExport = array('rpt_completiondate', 'rpt_astotaljob', 'rpt_astotalprice', 'rpt_astotalinch', 'rpt_eutotaljob', 'rpt_eutotalprice', 'rpt_eutotalinch', 'rpt_lctotaljob', 'rpt_lctotalprice', 'rpt_lctotalinch', 'rpt_totalpriceinmyr', 'rpt_totalpriceinusd');
 $dbo->colSort = array();
-$dbo->colSum = array('rpt_astotaljob', 'rpt_astotalprice', 'rpt_astotalinch', 'rpt_eutotaljob', 'rpt_eutotalprice', 'rpt_eutotalinch', 'rpt_lctotaljob', 'rpt_lctotalprice', 'rpt_lctotalinch', 'rpt_totalpriceinmyr', 'rpt_totalpriceinusd');
-$dbo->colSumPage = array('rpt_astotaljob', 'rpt_astotalprice', 'rpt_astotalinch', 'rpt_eutotaljob', 'rpt_eutotalprice', 'rpt_eutotalinch', 'rpt_lctotaljob', 'rpt_lctotalprice', 'rpt_lctotalinch', 'rpt_totalpriceinmyr', 'rpt_totalpriceinusd');
+$dbo->colSum = array();
+$dbo->colSumPage = array();
 $dbo->colAvg = array();
 $dbo->colAvgPage = array();
 $dbo->colGroupable = array();
@@ -60,7 +61,7 @@ $dbo->editSubmit = 'Edit';
 $dbo->listEditSubmit = 'Submit';
 $dbo->newCancel = 'Cancel';
 $dbo->newSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'totaljoblink', 'dbo_rpt_dailycallsummary_customize');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_546555114d6f70_95998251', 'totaljoblink', 'dbo_rpt_dailycallsummary_customize');
 
 $dbo->cols['completiondate'] = new DBO_COL('completiondate', 'date', '4', '-1');
 $dbo->cols['completiondate']->inputTypeDefault = 'rangedate';
@@ -396,7 +397,7 @@ class DBO_custom_rpt_dailycallsummary extends DBO{
 }
 
 $dbo->newModifier = 'dbo_rpt_dailycallsummary_custom_new';
-function dbo_rpt_dailycallsummary_custom_new($table, $cols){
+function dbo_rpt_dailycallsummary_custom_new($table, $cols, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -407,7 +408,7 @@ function dbo_rpt_dailycallsummary_custom_new($table, $cols){
 }
 
 $dbo->editModifier = 'dbo_rpt_dailycallsummary_custom_edit';
-function dbo_rpt_dailycallsummary_custom_edit($table, $cols, $wheres){
+function dbo_rpt_dailycallsummary_custom_edit($table, $cols, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -418,11 +419,11 @@ function dbo_rpt_dailycallsummary_custom_edit($table, $cols, $wheres){
 }
 
 $dbo->searchModifier = 'dbo_rpt_dailycallsummary_custom_search';
-function dbo_rpt_dailycallsummary_custom_search(&$search){
+function dbo_rpt_dailycallsummary_custom_search(&$search, $dbo){
 }
 
 $dbo->deleteModifier = 'dbo_rpt_dailycallsummary_custom_delete';
-function dbo_rpt_dailycallsummary_custom_delete($table, $wheres){
+function dbo_rpt_dailycallsummary_custom_delete($table, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);

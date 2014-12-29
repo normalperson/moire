@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by uat_artist1 on 15-07-2014 01:18:53*/
+/*Last Modified by esp on 22-12-2014 11:08:22*/
 $translate = array (
   'SALES BY QUANTITY MTD' => 'SALES BY QUANTITY MTD',
   'Monthly sales' => 'Monthly sales',
@@ -21,5 +21,6 @@ $translate = array (
   'My performance' => 'My performance',
   'Performance data' => 'Performance data',
   'Performance' => 'Performance',
+  'CUSTOMER REQUIREMENT MTD' => 'CUSTOMER REQUIREMENT MTD',
 );
 ?>

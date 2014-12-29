@@ -591,19 +591,23 @@ $(function () {
 
 	function notifyNextUsers($data) {
 		global $DB,$PUSHSOCKET;
-		if (!empty($data['pmf_obj_id']) && !empty($data['pmf_obj_type']) && $data['pmf_obj_type'] == 'PM_Activity') {
-			$pmat = new PM_Activity($data['pmf_obj_id'], $data['pmf_id']);
-			if ($pmat->type == 'USER') {
-			$userlist = PM_Case::getFlowAssignList($data['pmf_id']);
-				if ($PUSHSOCKET) {
-					foreach ($userlist as $user) {
-						if ($channel = getuserSessID($user['id'])) {
-						$PUSHSOCKET->send(json_encode(array(
-						'topic'=>$channel, 
-						'msg'=>tl("You've received a new task",false,self::$tl,getUserLang($user['id'])), 
+		$userlist = array();
+		$assign = $DB->getArray("select * from fcpmcaseflowassign where pmfa_pmfid = :0", array($data['pmf_id']), PDO::FETCH_ASSOC);
+		foreach ($assign as $a) {
+			$where = array();
+			$where[] = ($a['pmfa_userid']) ? 'uor_usrid = '.$DB->quote($a['pmfa_userid']) : '1=1';
+			$where[] = ($a['pmfa_orgid']) ? 'uor_orgid = '.$DB->quote($a['pmfa_orgid']) : '1=1';
+			$where[] = ($a['pmfa_rolid']) ? 'uor_rolid = '.$DB->quote($a['pmfa_rolid']) : '1=1';
+			$userlist = array_merge($userlist, $DB->getCol("select uor_usrid from fcuserorgrole 
+			where ".implode(' and ',$where)));
+		}
+		if ($PUSHSOCKET) {
+			foreach ($userlist as $user) {
+				if ($sessid = getuserSessID($user)) {
+					$PUSHSOCKET->send(json_encode(array(
+						'topic'=>$sessid, 
+						'msg'=>tl("You've received a new task",false,self::$tl,getUserLang($user)), 
 						'cat'=>'TASK')));
-						}
-					}
 				}
 			}
 		}

@@ -4,7 +4,6 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'rpt_dailyjobsummary';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
-$dbo->configState = true;
 $dbo->table = 'mjobsheet';
 $dbo->key = array();
 $dbo->sql = 'select cast(js_request_date as date),count(*) totalRequest, 
@@ -25,7 +24,7 @@ $dbo->colDetail = array('js_request_date', 'totalrequest', 'totalcomplete', 'tot
 $dbo->colNew = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress');
 $dbo->colEdit = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress');
 $dbo->colSearch = array('js_request_date');
-$dbo->colExport = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress');
+$dbo->colExport = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob', 'internalrevertedjob');
 $dbo->colSort = array();
 $dbo->colSum = array('totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob', 'internalrevertedjob');
 $dbo->colSumPage = array('totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob', 'internalrevertedjob');
@@ -61,6 +60,7 @@ $dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
 $dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
 $dbo->pdfEngine = 'dompdf';
+$dbo->configState = true;
 $dbo->searchCancel = 'Reset';
 $dbo->searchSubmit = 'Search';
 $dbo->detailBack = 'Back';
@@ -69,7 +69,7 @@ $dbo->editSubmit = 'Edit';
 $dbo->listEditSubmit = 'Submit';
 $dbo->newCancel = 'Cancel';
 $dbo->newSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'jobsummarylink', 'flowsummarylink', 'dbo_rpt_dailyjobsummary_customize');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_546555114d6f70_95998251', 'jobsummarylink', 'flowsummarylink', 'dbo_rpt_dailyjobsummary_customize');
 
 $dbo->cols['js_request_date'] = new DBO_COL('js_request_date', 'date', '4', '-1');
 $dbo->cols['js_request_date']->inputTypeDefault = 'BootstrapDateRange';
@@ -185,7 +185,7 @@ class DBO_custom_rpt_dailyjobsummary extends DBO{
 }
 
 $dbo->newModifier = 'dbo_rpt_dailyjobsummary_custom_new';
-function dbo_rpt_dailyjobsummary_custom_new($table, $cols){
+function dbo_rpt_dailyjobsummary_custom_new($table, $cols, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -196,7 +196,7 @@ function dbo_rpt_dailyjobsummary_custom_new($table, $cols){
 }
 
 $dbo->editModifier = 'dbo_rpt_dailyjobsummary_custom_edit';
-function dbo_rpt_dailyjobsummary_custom_edit($table, $cols, $wheres){
+function dbo_rpt_dailyjobsummary_custom_edit($table, $cols, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -207,11 +207,11 @@ function dbo_rpt_dailyjobsummary_custom_edit($table, $cols, $wheres){
 }
 
 $dbo->searchModifier = 'dbo_rpt_dailyjobsummary_custom_search';
-function dbo_rpt_dailyjobsummary_custom_search(&$search){
+function dbo_rpt_dailyjobsummary_custom_search(&$search, $dbo){
 }
 
 $dbo->deleteModifier = 'dbo_rpt_dailyjobsummary_custom_delete';
-function dbo_rpt_dailyjobsummary_custom_delete($table, $wheres){
+function dbo_rpt_dailyjobsummary_custom_delete($table, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);

@@ -561,9 +561,18 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	return $ret;
 }
 
-global $DB;
+global $DB,$USER;
 $sql = "select * from mjobcatlookup";
 $data = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
+// get base currency
+$sql = "select set_val from fcsetting where set_code= :0";
+$basecurr = $DB->GetOne($sql,array('CURRENCYBASE'), PDO::FETCH_ASSOC);
+$sql = "select rg_code,rg_currency,rg_convert from fcorg join mregion on org_region = rg_code where org_id = :0";
+$rowdata = $DB->GetRow($sql,array($USER->orgid), PDO::FETCH_ASSOC);
+// get rate
+$sql = "select cr_rate from fccurrency where cr_code = :0";
+$rate = $DB->GetOne($sql,array($rowdata['rg_currency']), PDO::FETCH_ASSOC);
+
 $timemap = array('JOBCAT'=>array(), 'JOBOUTP'=>array());
 foreach ($data as $key => $value) {
 	$timemap['JOBCAT'][$value['jcl_id']] = array(
@@ -601,6 +610,11 @@ foreach ($data as $key => $value) {
 	);
 }
 echo '<script type="text/javascript"> var jstimemap = '.json_encode($timemap).'; </script>';
+echo '<script type="text/javascript"> var currdata = '.json_encode($rowdata).'; </script>';
+echo '<script type="text/javascript"> var basecurr = \''.$basecurr.'\'; </script>';
+echo '<script type="text/javascript"> var rate = '.$rate.'; </script>';
+
+
 
 # final rendering
 $dbo->render();
@@ -722,7 +736,18 @@ $( document ).ready(function() {
 					}
 				}			
 			}); */
-
+			// currency exchange
+			console.log('basecurr '+basecurr);
+			console.log('rate '+rate);
+			console.log('currdata');
+			console.log(currdata);
+			
+			if(basecurr != currdata.rg_currency && currdata.rg_convert == 'Y'){
+			    console.log('price before calculate = '+price);
+				price = Math.round( price/rate * 100 ) /100;
+				console.log('price after calculate = '+price);
+			}			
+			
 			$priceinput.val(price);
 		}
 	}
