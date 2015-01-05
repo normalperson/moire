@@ -58,7 +58,7 @@ div.profile-photo > img{
 </style>
 <form method="post" name="basicprofile_form" id="basicprofile_form" action="" class="panel form-horizontal form-bordered" enctype="multipart/form-data">
 	<div class="panel-heading">
-		<span class="panel-title">Profile</span>
+		<span class="panel-title"><?php echo tl('Profile',false,'profile') ?> </span>
 	</div>
 	<div class="panel-body no-padding-hr">
 		<div class="form-group no-margin-hr panel-padding-h no-padding-t no-border-t">
@@ -75,7 +75,7 @@ div.profile-photo > img{
 		</div>
 		<div class="form-group no-margin-hr no-margin-b panel-padding-h">
 			<div class="row">
-				<label class="col-sm-4 control-label form-group-margin">Name:</label>
+				<label class="col-sm-4 control-label form-group-margin"><?php echo tl('Name',false,'profile') ?>:</label>
 				<div class="col-sm-8">
 					<input type="name" name="name" id="name" class="form-control" value="<?php echo htmlentities($form['name']); ?>">
 				</div>
@@ -83,7 +83,7 @@ div.profile-photo > img{
 		</div>
 		<div class="form-group no-margin-hr no-margin-b panel-padding-h">
 			<div class="row">
-				<label class="col-sm-4 control-label form-group-margin">Email:</label>
+				<label class="col-sm-4 control-label form-group-margin"><?php echo tl('Email',false,'profile') ?>:</label>
 				<div class="col-sm-8">
 					<input type="email" name="email" id="email" class="form-control" value="<?php echo htmlentities($form['email']); ?>">
 				</div>
@@ -91,7 +91,7 @@ div.profile-photo > img{
 		</div>
 		<div class="form-group no-margin-hr no-margin-b panel-padding-h">
 			<div class="row">
-				<label class="col-sm-4 control-label">Language:</label>
+				<label class="col-sm-4 control-label"><?php echo tl('Language',false,'profile') ?>:</label>
 				<div class="col-sm-8">
 					<select class="form-control form-group-margin" name="language" id="language">
 <?php
@@ -105,7 +105,7 @@ foreach($langRS as $row){
 		</div>
 		<div class="form-group no-margin-hr no-margin-b panel-padding-h">
 			<div class="row">
-				<label class="col-sm-4 control-label form-group-margin">Current Password:</label>
+				<label class="col-sm-4 control-label form-group-margin"><?php echo tl('Current Password',false,'profile') ?>:</label>
 				<div class="col-sm-8">
 					<input type="password" name="password" id="password" placeholder="Current Password" class="form-control">
 				</div>
@@ -113,7 +113,7 @@ foreach($langRS as $row){
 		</div>
 		<div class="form-group no-margin-hr no-margin-b panel-padding-h">
 			<div class="row">
-				<label class="col-sm-4 control-label form-group-margin">New Password:</label>
+				<label class="col-sm-4 control-label form-group-margin"><?php echo tl('New Password',false,'profile') ?>:</label>
 				<div class="col-sm-8">
 					<input type="password" name="password1" id="password1" placeholder="New Password" class="form-control">
 				</div>
@@ -121,7 +121,7 @@ foreach($langRS as $row){
 		</div>
 		<div class="form-group no-margin-hr no-margin-b panel-padding-h">
 			<div class="row">
-				<label class="col-sm-4 control-label form-group-margin">Retype New Password:</label>
+				<label class="col-sm-4 control-label form-group-margin"><?php echo tl('Retype New Password',false,'profile') ?>:</label>
 				<div class="col-sm-8">
 					<input type="password" name="password2" id="password2" placeholder="Retype New Password" class="form-control">
 				</div>
@@ -130,7 +130,7 @@ foreach($langRS as $row){
 		<input type="file" name="avatar" id="avatar" style="display:none;"/>
 	</div>
 	<div class="panel-footer text-right">
-		<button class="btn btn-primary" id="basicprofile_submit">Submit</button>
+		<button class="btn btn-primary" id="basicprofile_submit"><?php echo tl('Submit',false,'profile') ?></button>
 	</div>
 </form>
 <script type="text/javascript">
