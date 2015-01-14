@@ -3,6 +3,7 @@ require_once(CORE_DIR.DS.'inc'.DS.'DocumentManager.inc.php');
 class DocManUI {
 
 	var $classurl;
+	var $downloadChunk = 10485760; // bytes per chunk (10 MB)
 	function __construct() {
 		$this->classurl = WEB_HREF.'/'.__CLASS__;
 	}
@@ -61,7 +62,13 @@ class DocManUI {
 		header('Content-Transfer-Encoding: binary');
 		header('Content-Length: '.filesize($filelocation));	// provide file size
 		header('Connection: close');
-		readfile($filelocation);		// push it out
+		// readfile($filelocation);		// push it out
+		$fh = fopen($filelocation, "r");
+		while (!feof($fh)) { 
+			echo fread($fh, $this->downloadChunk);
+			ob_flush();
+			flush();
+		}
 		exit();
 
 
@@ -111,7 +118,13 @@ class DocManUI {
 		header('Content-Transfer-Encoding: binary');
 		header('Content-Length: '.filesize($zipname));	// provide file size
 		header('Connection: close');
-		readfile($zipname);
+		// readfile($zipname);
+		$fh = fopen($zipname, "r");
+		while (!feof($fh)) { 
+			echo fread($fh, $this->downloadChunk);
+			ob_flush();
+			flush();
+		}
 		unlink($zipname);
 		exit();
 

@@ -464,27 +464,27 @@ class PMTask {
 				$html .= 
 					"<li>
 						<i title='Workflow' class='fa fa-sitemap fa-fw fa-lg'></i>
-						{$rs['pmwf_name']}
+					    ".tl($rs['pmwf_name'].' ',false,'pmtask')."
 					</li>";
 
 				if ($tasktype == 'PM_Event') {
 					if ($rs['pmev_type'] == 'START') {
 						$html .= 
 						"<li>
-							<a href='startEvent?id={$rs['pmev_id']}&type=PM_Event'><i title='Start Event' class='fa fa-plus fa-fw fa-lg'></i> {$rs['pmev_name']}</a>
+							<a href='startEvent?id={$rs['pmev_id']}&type=PM_Event'><i title='Start Event' class='fa fa-plus fa-fw fa-lg'></i> ".tl($rs['pmev_name'].' ',false,'pmtask')."</a>
 						</li>";
 					}
 					else {
 						$html .= 
 						"<li>
-							<a href='caseFlowList?id={$rs['pmev_id']}&type=PM_Event'><i title='Intermediate Event' class='fa fa-play-circle-o fa-fw fa-lg'></i> {$rs['pmev_name']}</a>
+							<a href='caseFlowList?id={$rs['pmev_id']}&type=PM_Event'><i title='Intermediate Event' class='fa fa-play-circle-o fa-fw fa-lg'></i> ".tl($rs['pmev_name'].' ',false,'pmtask')."</a>
 						</li>";
 					}
 				}
 				else {
 					$html .= 
 					"<li>
-						<a href='caseFlowList?id={$rs['pmat_id']}&type=PM_Activity'><i title='User Activity' class='fa fa-pencil-square-o fa-fw fa-lg'></i> {$rs['pmat_name']}</a>
+						<a href='caseFlowList?id={$rs['pmat_id']}&type=PM_Activity'><i title='User Activity' class='fa fa-pencil-square-o fa-fw fa-lg'></i>.".tl($rs['pmat_name'].' ',false,'pmtask')."</a>
 					</li>";
 				}
 			}
