@@ -310,7 +310,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 	// determine whether need to calculate conversion
 
 	// get rate
-	$sql = "select cr_rate from fccurrency where cr_code = :0";
+	$sql = "select cr_rate from fccurrency where curr_code = :0";
 	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
 	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
@@ -457,7 +457,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$cols['js_currency'] = $rowdata['rg_currency'];
 
 	// get rate
-	$sql = "select cr_rate from fccurrency where cr_code = :0";
+	$sql = "select curr_rate from fccurrency where curr_code = :0";
 	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
 	// determine whether need to calculate conversion
@@ -570,7 +570,7 @@ $basecurr = $DB->GetOne($sql,array('CURRENCYBASE'), PDO::FETCH_ASSOC);
 $sql = "select rg_code,rg_currency,rg_convert from fcorg join mregion on org_region = rg_code where org_id = :0";
 $rowdata = $DB->GetRow($sql,array($USER->orgid), PDO::FETCH_ASSOC);
 // get rate
-$sql = "select cr_rate from fccurrency where cr_code = :0";
+$sql = "select curr_rate from fccurrency where curr_code = :0";
 $rate = $DB->GetOne($sql,array($rowdata['rg_currency']), PDO::FETCH_ASSOC);
 
 $timemap = array('JOBCAT'=>array(), 'JOBOUTP'=>array());

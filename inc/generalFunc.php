@@ -509,4 +509,8 @@ function getUserLang($userid) {
 	return $ret;
 }
 
+function displaySearchDate(){
+	return array(array('JUL-2014','AUG-2014'));
+}
+
 ?>

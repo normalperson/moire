@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 27-11-2014 22:24:45*/
+/*Last Modified by esp on 18-01-2015 15:59:34*/
 $translate = array (
   'Admin Setup' => 'Admin Setup',
   'Setting' => 'Setting',
@@ -55,5 +55,6 @@ $translate = array (
   'Vendor' => 'Vendor',
   'Vendor Setup' => 'Vendor Setup',
   'Vendor Item Setup' => 'Vendor Item Setup',
+  'Monthly sales by customer' => 'Monthly sales by customer',
 );
 ?>

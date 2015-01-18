@@ -41,6 +41,10 @@ class Report{
 		$dbo = dbo_include('rpt_performance_det');	
 
 	}
+	function monthlysalesbycustomer(){
+		html_header();
+		$dbo = dbo_include('rpt_monthsalebycustomer');			
+	}
 	
 }
 
