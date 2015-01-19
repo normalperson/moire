@@ -1,15 +1,12 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
-$dbo->cols['org_name']->caption->set('default', 'Customer name', 'text');
-$dbo->cols['totaljobrequested']->caption->set('default', 'Total Job Request', 'text');
-$dbo->cols['totalwip']->caption->set('default', 'Total WIP', 'text');
-$dbo->cols['totalcancelled']->caption->set('default', 'Total Cancelled', 'text');
-$dbo->cols['totalcompleted']->caption->set('default', 'Total Completed', 'text');
-$dbo->cols['to_char']->caption->set('default', 'to_char', 'text');
-$dbo->cols['js_request_dateinmth']->caption->set('default', 'Month', 'text');
-$dbo->cols['dateinnum']->caption->set('default', 'dateinnum', 'text');
-$dbo->cols['org_id']->caption->set('default', 'org_id', 'text');
+$dbo->cols['lu_cat']->caption->set('default', 'lu_cat', 'text');
+$dbo->cols['lu_code']->caption->set('default', 'Code', 'text');
+$dbo->cols['lu_parentcode']->caption->set('default', 'lu_parentcode', 'text');
+$dbo->cols['lu_title']->caption->set('default', 'Description', 'text');
+$dbo->cols['lu_status']->caption->set('default', 'Status', 'text');
+$dbo->cols['lu_id']->caption->set('default', 'lu_id', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

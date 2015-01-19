@@ -6,26 +6,26 @@ $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
 $dbo->table = 'mjobsheet ';
 $dbo->key = array();
-$dbo->sql = 'select to_char(js_request_date, \'YYYYMM\') as dateinnum,to_char(js_request_date,\'MON-YYYY\') as js_request_dateinmth  ,org_name,count(*) totaljobrequested,
+$dbo->sql = 'select to_char(js_request_date, \'YYYYMM\') as dateinnum,to_char(js_request_date,\'MON-YYYY\') as js_request_dateinmth  ,org_name,count(*) totaljobrequested,org_id,
 sum ( case when js_status != \'CANCELLED\' and js_status != \'COMPLETED\' then 1 else 0 end ) totalwip,
 sum ( case when js_status = \'CANCELLED\' then 1 else 0 end ) totalcancelled,
 sum ( case when js_status = \'COMPLETED\' then 1 else 0 end ) totalcompleted
 from mjobsheet join fcorg on js_orgid = org_id and org_external = \'Y\'
-group by to_char(js_request_date, \'YYYYMM\'),to_char(js_request_date,\'MON-YYYY\'),org_name
+group by to_char(js_request_date, \'YYYYMM\'),to_char(js_request_date,\'MON-YYYY\'),org_name,org_id
 order by to_char(js_request_date, \'YYYYMM\')';
-$dbo->col = array('dateinnum', 'js_request_dateinmth', 'org_name', 'totaljobrequested', 'totalwip', 'totalcancelled', 'totalcompleted');
-$dbo->colList = array('org_name', 'totaljobrequested', 'totalwip', 'totalcancelled');
+$dbo->col = array('dateinnum', 'js_request_dateinmth', 'org_name', 'totaljobrequested', 'org_id', 'totalwip', 'totalcancelled', 'totalcompleted');
+$dbo->colList = array('org_name', 'totaljobrequested', 'totalwip', 'totalcancelled', 'totalcompleted');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('org_name', 'totaljobrequested', 'totalwip', 'totalcancelled', 'totalcompleted');
-$dbo->colNew = array('org_name', 'totaljobrequested', 'totalwip', 'totalcancelled', 'totalcompleted');
-$dbo->colEdit = array('org_name', 'totaljobrequested', 'totalwip', 'totalcancelled', 'totalcompleted');
+$dbo->colDetail = array();
+$dbo->colNew = array();
+$dbo->colEdit = array();
 $dbo->colSearch = array('js_request_dateinmth', 'org_name');
-$dbo->colExport = array('org_name', 'totaljobrequested', 'totalwip', 'totalcancelled', 'totalcompleted');
+$dbo->colExport = array('js_request_dateinmth', 'org_name', 'totalcancelled', 'totalcompleted', 'totaljobrequested', 'totalwip');
 $dbo->colSort = array();
-$dbo->colSum = array();
-$dbo->colSumPage = array();
+$dbo->colSum = array('totalcancelled', 'totalcompleted', 'totaljobrequested', 'totalwip');
+$dbo->colSumPage = array('totalcancelled', 'totalcompleted', 'totaljobrequested', 'totalwip');
 $dbo->colAvg = array();
 $dbo->colAvgPage = array();
 $dbo->colGroupable = array('js_request_dateinmth');
@@ -69,7 +69,7 @@ $dbo->newSubmit = 'Submit';
 $dbo->cols['org_name'] = new DBO_COL('org_name', 'varchar', '-1', '2004');
 $dbo->cols['org_name']->inputTypeDefault = 'text';
 $dbo->cols['org_name']->exportUseLookup = true;
-$dbo->cols['org_name']->searchMode = 'exact';
+$dbo->cols['org_name']->searchMode = 'matchfront';
 $dbo->cols['org_name']->capContClassDefault = array();
 $dbo->cols['org_name']->valContClassDefault = array();
 $dbo->cols['org_name']->option->defaultMethod = 'text';
@@ -79,6 +79,8 @@ $dbo->cols['org_name']->option->detailMethod = 'text';
 $dbo->cols['org_name']->option->newMethod = 'text';
 $dbo->cols['org_name']->option->editMethod = 'text';
 $dbo->cols['totaljobrequested'] = new DBO_COL('totaljobrequested', 'int8', '8', '-1');
+$dbo->cols['totaljobrequested']->displayListModifierMethod = 'phpfunc';
+$dbo->cols['totaljobrequested']->displayListModifier = 'jobsummarylink';
 $dbo->cols['totaljobrequested']->inputTypeDefault = 'text';
 $dbo->cols['totaljobrequested']->exportUseLookup = true;
 $dbo->cols['totaljobrequested']->searchMode = 'exact';
@@ -163,6 +165,18 @@ $dbo->cols['dateinnum']->option->listMethod = 'text';
 $dbo->cols['dateinnum']->option->detailMethod = 'text';
 $dbo->cols['dateinnum']->option->newMethod = 'text';
 $dbo->cols['dateinnum']->option->editMethod = 'text';
+$dbo->cols['org_id'] = new DBO_COL('org_id', 'int4', '4', '-1');
+$dbo->cols['org_id']->inputTypeDefault = 'text';
+$dbo->cols['org_id']->exportUseLookup = true;
+$dbo->cols['org_id']->searchMode = 'exact';
+$dbo->cols['org_id']->capContClassDefault = array();
+$dbo->cols['org_id']->valContClassDefault = array();
+$dbo->cols['org_id']->option->defaultMethod = 'text';
+$dbo->cols['org_id']->option->searchMethod = 'text';
+$dbo->cols['org_id']->option->listMethod = 'text';
+$dbo->cols['org_id']->option->detailMethod = 'text';
+$dbo->cols['org_id']->option->newMethod = 'text';
+$dbo->cols['org_id']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;
