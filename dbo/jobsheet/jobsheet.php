@@ -204,11 +204,12 @@ function dbo_jobsheet_customize(&$dbo){
 	$dbo->editModifier = 'dbo_jobsheet_custom_edit';
 	
 	global $USER, $DB;
+	$custtype = $DB->GetOne("select ox_customertype from morgextra where ox_orgid = :0",array($USER->orgid), PDO::FETCH_ASSOC); // get customer type
 	if ($USER->rolename == 'Customer coordinator') {
 
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
-/*		$dbo->cols['jobcategory']->mandatoryDefault = 1;*/
+		$dbo->cols['joboutput']->option->default = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = 'sql';
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = 
 			'select mc_id, mc_name, org_name from mcustmachine join fcorg on mc_orgid = org_id where org_id ='.$USER->orgid.' order by 3,2';
@@ -216,7 +217,7 @@ function dbo_jobsheet_customize(&$dbo){
 	else {
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
-/*		$dbo->cols['jobcategory']->mandatoryDefault = 0;*/
+		$dbo->cols['joboutput']->option->default = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = $dbo->cols['js_mcid']->option->defaultMethod;
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = $dbo->cols['js_mcid']->option->default;
 	}
@@ -562,6 +563,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 }
 
 global $DB,$USER;
+$ctype = $DB->GetOne("select ox_customertype from morgextra where ox_orgid = :0",array($USER->orgid), PDO::FETCH_ASSOC); // get customer type
 $sql = "select * from mjobcatlookup";
 $data = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
 // get base currency
@@ -605,7 +607,8 @@ foreach ($data as $key => $value) {
 			3=>$value['jol_price_color_3'],
 			4=>$value['jol_price_color_4'],
 			5=>$value['jol_pricingtype'],
-			6=>$value['jol_price']
+			6=>$value['jol_price'],
+			7=>$value['jol_custtype']
 		)
 	);
 }
@@ -613,6 +616,7 @@ echo '<script type="text/javascript"> var jstimemap = '.json_encode($timemap).';
 echo '<script type="text/javascript"> var currdata = '.json_encode($rowdata).'; </script>';
 echo '<script type="text/javascript"> var basecurr = \''.$basecurr.'\'; </script>';
 echo '<script type="text/javascript"> var rate = '.$rate.'; </script>';
+echo '<script type="text/javascript"> var ctype = '.$ctype.'; </script>';
 
 
 

@@ -18,6 +18,9 @@ $dbo->cols['org_created']->caption->set('default', 'org_created', 'text');
 $dbo->cols['tp_id']->caption->set('default', 'tp_id', 'text');
 $dbo->cols['tp_orgid']->caption->set('default', 'tp_orgid', 'text');
 $dbo->cols['tp_customertype']->caption->set('default', 'Customer type', 'text');
+$dbo->cols['ox_id']->caption->set('default', 'ox_id', 'text');
+$dbo->cols['ox_orgid']->caption->set('default', 'ox_orgid', 'text');
+$dbo->cols['ox_customertype']->caption->set('default', 'Customer type', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
