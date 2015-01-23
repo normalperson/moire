@@ -257,13 +257,11 @@ $dbo->cols['curr_rate']->option->detailMethod = 'text';
 $dbo->cols['curr_rate']->option->newMethod = 'text';
 $dbo->cols['curr_rate']->option->editMethod = 'text';
 $dbo->cols['curr_status'] = new DBO_COL('curr_status', 'varchar', '-1', '36');
-$dbo->cols['curr_status']->inputTypeDefault = 'radio';
+$dbo->cols['curr_status']->inputTypeDefault = 'text';
 $dbo->cols['curr_status']->exportUseLookup = true;
 $dbo->cols['curr_status']->searchMode = 'exact';
 $dbo->cols['curr_status']->capContClassDefault = array();
 $dbo->cols['curr_status']->valContClassDefault = array();
-$dbo->cols['curr_status']->option->default = 'ACTIVE
-INACTIVE';
 $dbo->cols['curr_status']->option->defaultMethod = 'text';
 $dbo->cols['curr_status']->option->searchMethod = 'text';
 $dbo->cols['curr_status']->option->listMethod = 'text';

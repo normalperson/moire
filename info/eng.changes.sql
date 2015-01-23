@@ -62,3 +62,26 @@ INSERT INTO fclookup (lu_cat, lu_code, lu_parentcode, lu_title, lu_status, lu_id
 INSERT INTO fclookup (lu_cat, lu_code, lu_parentcode, lu_title, lu_status, lu_id) VALUES ('CUSTYPE', 'TYPE A', 'ROOT', 'Internal Company + Corrugated box plan', 'ACTIVE', 175);
 INSERT INTO fclookup (lu_cat, lu_code, lu_parentcode, lu_title, lu_status, lu_id) VALUES ('CUSTYPE', 'TYPE C', 'ROOT', 'External Company (Purchase Polymer From P&D and increase the amount of purchase)', 'ACTIVE', 177);
 INSERT INTO fclookup (lu_cat, lu_code, lu_parentcode, lu_title, lu_status, lu_id) VALUES ('CUSTYPE', 'TYPE D', 'ROOT', 'Total did not have any business with P&D Dynamic SDN BHD', 'ACTIVE', 178);
+
+
+CREATE TABLE fccurrency
+(
+  curr_code character varying(12) NOT NULL,
+  curr_name character varying(100),
+  curr_symbol character varying(5),
+  curr_decimal character varying(1) DEFAULT '.'::character varying,
+  curr_thousand character varying(1) DEFAULT ','::character varying,
+  curr_precision integer DEFAULT 2,
+  curr_format character varying(32),
+  curr_rate numeric,
+  curr_status character varying(32) DEFAULT 'ACTIVE'::character varying,
+  CONSTRAINT fccurrency_pkey PRIMARY KEY (curr_code)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE fccurrency
+  OWNER TO pnd;
+
+insert into fccurrency(curr_code,curr_name,curr_rate,curr_symbol)
+select cr_code,cr_name,cr_rate,cr_symbol from fccurrency_old  
