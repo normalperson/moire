@@ -1,6 +1,6 @@
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'rpt_monthsalebycustomer.conf.php');
-require_once(INCLUDE_DIR.'\generalFunc.php');
+require_once(INCLUDE_DIR.DIRECTORY_SEPARATOR.'generalFunc.php');
 
 function jobsummarylink($col, $colVal, $data=array(), $html=null){
 

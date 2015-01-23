@@ -231,6 +231,10 @@ class Setting{
 		html_header();
 		dbo_include('locale_setup');
 	}
+	function customertypesetup() {
+		html_header();
+		dbo_include('customertype');
+	}
 	
 	function mailtemplatesetup() {
 		html_header();

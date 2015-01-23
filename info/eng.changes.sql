@@ -2,14 +2,12 @@ ALTER TABLE fclookup
    ALTER COLUMN lu_title TYPE character varying(200);
 
 
-DROP TABLE mcustomertype;
-
 CREATE TABLE morgextra
 (
    ox_id serial, 
    ox_orgid integer, 
    ox_customertype character varying, 
-   CONSTRAINT const_mcustomertype_prikey PRIMARY KEY (tp_id)
+   CONSTRAINT const_morgextra_prikey PRIMARY KEY (ox_id)
 ) 
 WITH (
   OIDS = FALSE
@@ -60,3 +58,7 @@ INSERT INTO mjoboutputlookup (jol_id, jol_title, jol_requiredtime, jol_status, j
 
 SELECT pg_catalog.setval('mjoboutputlookup_jol_id_seq', 25, true);
 
+INSERT INTO fclookup (lu_cat, lu_code, lu_parentcode, lu_title, lu_status, lu_id) VALUES ('CUSTYPE', 'TYPE B', 'ROOT', 'External Company ( Purchase Polymer From P&D)', 'ACTIVE', 176);
+INSERT INTO fclookup (lu_cat, lu_code, lu_parentcode, lu_title, lu_status, lu_id) VALUES ('CUSTYPE', 'TYPE A', 'ROOT', 'Internal Company + Corrugated box plan', 'ACTIVE', 175);
+INSERT INTO fclookup (lu_cat, lu_code, lu_parentcode, lu_title, lu_status, lu_id) VALUES ('CUSTYPE', 'TYPE C', 'ROOT', 'External Company (Purchase Polymer From P&D and increase the amount of purchase)', 'ACTIVE', 177);
+INSERT INTO fclookup (lu_cat, lu_code, lu_parentcode, lu_title, lu_status, lu_id) VALUES ('CUSTYPE', 'TYPE D', 'ROOT', 'Total did not have any business with P&D Dynamic SDN BHD', 'ACTIVE', 178);
