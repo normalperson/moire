@@ -7,14 +7,14 @@ $dbo->id = $dboID;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, \'\' remark from mjobsheet';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_rate', 'js_totalinch', 'remark');
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_rate', 'js_totalinch', 'js_color_6', 'js_color_7', 'js_color_8', 'js_cartonsize_g', 'js_cartonsize_l1', 'js_cartonsize_w2', 'js_cartonsize_l3', 'js_cartonsize_w4', 'js_cartonsize_height', 'js_cartonsize_top', 'js_cartonsize_bottom', 'js_expectdelivery', 'js_cancelremark', 'js_forwardtocusttime', 'js_color_9', 'remark');
 $dbo->colList = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
 $dbo->colDetail = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colNew = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
-$dbo->colEdit = array('js_decision', 'js_assignto', 'js_price', 'js_requiretime', 'remark');
+$dbo->colEdit = array('js_decision', 'js_assignto', 'remark');
 $dbo->colSearch = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colExport = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colSort = array();
@@ -53,7 +53,7 @@ $dbo->lang = 'EN-US';
 $dbo->pdfEngine = 'dompdf';
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_5418feb308eb64_01401584', 'dbo_reqverification_customize', 'showpricereqver', 'dbo_reqverification_custom_edit');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_5484fde85fe702_55291486', 'dbo_reqverification_customize', 'showpricereqver', 'dbo_reqverification_custom_edit');
 
 $dbo->cols['js_id'] = new DBO_COL('js_id', 'int4', '4', '-1');
 $dbo->cols['js_id']->inputTypeDefault = 'text';
@@ -360,7 +360,7 @@ $dbo->cols['js_distortion_value']->option->listMethod = 'text';
 $dbo->cols['js_distortion_value']->option->detailMethod = 'text';
 $dbo->cols['js_distortion_value']->option->newMethod = 'text';
 $dbo->cols['js_distortion_value']->option->editMethod = 'text';
-$dbo->cols['js_diecut_ind'] = new DBO_COL('js_diecut_ind', 'varchar', '-1', '5');
+$dbo->cols['js_diecut_ind'] = new DBO_COL('js_diecut_ind', 'varchar', '-1', '54');
 $dbo->cols['js_diecut_ind']->inputTypeDefault = 'text';
 $dbo->cols['js_diecut_ind']->searchMode = 'exact';
 $dbo->cols['js_diecut_ind']->capContClassDefault = array();
@@ -745,36 +745,152 @@ $dbo->cols['js_price']->option->newMethod = 'text';
 $dbo->cols['js_price']->option->editMethod = 'text';
 $dbo->cols['js_outputtype'] = new DBO_COL('js_outputtype', 'varchar', '-1', '54');
 $dbo->cols['js_outputtype']->inputTypeDefault = 'text';
+$dbo->cols['js_outputtype']->searchMode = 'exact';
 $dbo->cols['js_outputtype']->capContClassDefault = array();
 $dbo->cols['js_outputtype']->valContClassDefault = array();
+$dbo->cols['js_outputtype']->option->defaultMethod = 'text';
+$dbo->cols['js_outputtype']->option->searchMethod = 'text';
+$dbo->cols['js_outputtype']->option->listMethod = 'text';
+$dbo->cols['js_outputtype']->option->detailMethod = 'text';
+$dbo->cols['js_outputtype']->option->newMethod = 'text';
+$dbo->cols['js_outputtype']->option->editMethod = 'text';
 $dbo->cols['js_outputwidth'] = new DBO_COL('js_outputwidth', 'int4', '4', '-1');
 $dbo->cols['js_outputwidth']->inputTypeDefault = 'text';
+$dbo->cols['js_outputwidth']->searchMode = 'exact';
 $dbo->cols['js_outputwidth']->capContClassDefault = array();
 $dbo->cols['js_outputwidth']->valContClassDefault = array();
+$dbo->cols['js_outputwidth']->option->defaultMethod = 'text';
+$dbo->cols['js_outputwidth']->option->searchMethod = 'text';
+$dbo->cols['js_outputwidth']->option->listMethod = 'text';
+$dbo->cols['js_outputwidth']->option->detailMethod = 'text';
+$dbo->cols['js_outputwidth']->option->newMethod = 'text';
+$dbo->cols['js_outputwidth']->option->editMethod = 'text';
 $dbo->cols['js_outputheight'] = new DBO_COL('js_outputheight', 'int4', '4', '-1');
 $dbo->cols['js_outputheight']->inputTypeDefault = 'text';
+$dbo->cols['js_outputheight']->searchMode = 'exact';
 $dbo->cols['js_outputheight']->capContClassDefault = array();
 $dbo->cols['js_outputheight']->valContClassDefault = array();
+$dbo->cols['js_outputheight']->option->defaultMethod = 'text';
+$dbo->cols['js_outputheight']->option->searchMethod = 'text';
+$dbo->cols['js_outputheight']->option->listMethod = 'text';
+$dbo->cols['js_outputheight']->option->detailMethod = 'text';
+$dbo->cols['js_outputheight']->option->newMethod = 'text';
+$dbo->cols['js_outputheight']->option->editMethod = 'text';
 $dbo->cols['js_qcchecked'] = new DBO_COL('js_qcchecked', 'varchar', '-1', '2004');
 $dbo->cols['js_qcchecked']->inputTypeDefault = 'text';
+$dbo->cols['js_qcchecked']->searchMode = 'exact';
 $dbo->cols['js_qcchecked']->capContClassDefault = array();
 $dbo->cols['js_qcchecked']->valContClassDefault = array();
+$dbo->cols['js_qcchecked']->option->defaultMethod = 'text';
+$dbo->cols['js_qcchecked']->option->searchMethod = 'text';
+$dbo->cols['js_qcchecked']->option->listMethod = 'text';
+$dbo->cols['js_qcchecked']->option->detailMethod = 'text';
+$dbo->cols['js_qcchecked']->option->newMethod = 'text';
+$dbo->cols['js_qcchecked']->option->editMethod = 'text';
 $dbo->cols['js_currency'] = new DBO_COL('js_currency', 'varchar', '-1', '54');
 $dbo->cols['js_currency']->inputTypeDefault = 'text';
+$dbo->cols['js_currency']->searchMode = 'exact';
 $dbo->cols['js_currency']->capContClassDefault = array();
 $dbo->cols['js_currency']->valContClassDefault = array();
+$dbo->cols['js_currency']->option->defaultMethod = 'text';
+$dbo->cols['js_currency']->option->searchMethod = 'text';
+$dbo->cols['js_currency']->option->listMethod = 'text';
+$dbo->cols['js_currency']->option->detailMethod = 'text';
+$dbo->cols['js_currency']->option->newMethod = 'text';
+$dbo->cols['js_currency']->option->editMethod = 'text';
 $dbo->cols['js_finalprice'] = new DBO_COL('js_finalprice', 'numeric', '-1', '1310728');
 $dbo->cols['js_finalprice']->inputTypeDefault = 'text';
+$dbo->cols['js_finalprice']->searchMode = 'exact';
 $dbo->cols['js_finalprice']->capContClassDefault = array();
 $dbo->cols['js_finalprice']->valContClassDefault = array();
+$dbo->cols['js_finalprice']->option->defaultMethod = 'text';
+$dbo->cols['js_finalprice']->option->searchMethod = 'text';
+$dbo->cols['js_finalprice']->option->listMethod = 'text';
+$dbo->cols['js_finalprice']->option->detailMethod = 'text';
+$dbo->cols['js_finalprice']->option->newMethod = 'text';
+$dbo->cols['js_finalprice']->option->editMethod = 'text';
 $dbo->cols['js_rate'] = new DBO_COL('js_rate', 'numeric', '-1', '1310728');
 $dbo->cols['js_rate']->inputTypeDefault = 'text';
+$dbo->cols['js_rate']->searchMode = 'exact';
 $dbo->cols['js_rate']->capContClassDefault = array();
 $dbo->cols['js_rate']->valContClassDefault = array();
+$dbo->cols['js_rate']->option->defaultMethod = 'text';
+$dbo->cols['js_rate']->option->searchMethod = 'text';
+$dbo->cols['js_rate']->option->listMethod = 'text';
+$dbo->cols['js_rate']->option->detailMethod = 'text';
+$dbo->cols['js_rate']->option->newMethod = 'text';
+$dbo->cols['js_rate']->option->editMethod = 'text';
 $dbo->cols['js_totalinch'] = new DBO_COL('js_totalinch', 'numeric', '-1', '1310728');
 $dbo->cols['js_totalinch']->inputTypeDefault = 'text';
+$dbo->cols['js_totalinch']->searchMode = 'exact';
 $dbo->cols['js_totalinch']->capContClassDefault = array();
 $dbo->cols['js_totalinch']->valContClassDefault = array();
+$dbo->cols['js_totalinch']->option->defaultMethod = 'text';
+$dbo->cols['js_totalinch']->option->searchMethod = 'text';
+$dbo->cols['js_totalinch']->option->listMethod = 'text';
+$dbo->cols['js_totalinch']->option->detailMethod = 'text';
+$dbo->cols['js_totalinch']->option->newMethod = 'text';
+$dbo->cols['js_totalinch']->option->editMethod = 'text';
+$dbo->cols['js_color_6'] = new DBO_COL('js_color_6', 'varchar', '-1', '16');
+$dbo->cols['js_color_6']->inputTypeDefault = 'text';
+$dbo->cols['js_color_6']->capContClassDefault = array();
+$dbo->cols['js_color_6']->valContClassDefault = array();
+$dbo->cols['js_color_7'] = new DBO_COL('js_color_7', 'varchar', '-1', '16');
+$dbo->cols['js_color_7']->inputTypeDefault = 'text';
+$dbo->cols['js_color_7']->capContClassDefault = array();
+$dbo->cols['js_color_7']->valContClassDefault = array();
+$dbo->cols['js_color_8'] = new DBO_COL('js_color_8', 'varchar', '-1', '16');
+$dbo->cols['js_color_8']->inputTypeDefault = 'text';
+$dbo->cols['js_color_8']->capContClassDefault = array();
+$dbo->cols['js_color_8']->valContClassDefault = array();
+$dbo->cols['js_cartonsize_g'] = new DBO_COL('js_cartonsize_g', 'numeric', '-1', '1310728');
+$dbo->cols['js_cartonsize_g']->inputTypeDefault = 'text';
+$dbo->cols['js_cartonsize_g']->capContClassDefault = array();
+$dbo->cols['js_cartonsize_g']->valContClassDefault = array();
+$dbo->cols['js_cartonsize_l1'] = new DBO_COL('js_cartonsize_l1', 'numeric', '-1', '1310728');
+$dbo->cols['js_cartonsize_l1']->inputTypeDefault = 'text';
+$dbo->cols['js_cartonsize_l1']->capContClassDefault = array();
+$dbo->cols['js_cartonsize_l1']->valContClassDefault = array();
+$dbo->cols['js_cartonsize_w2'] = new DBO_COL('js_cartonsize_w2', 'numeric', '-1', '1310728');
+$dbo->cols['js_cartonsize_w2']->inputTypeDefault = 'text';
+$dbo->cols['js_cartonsize_w2']->capContClassDefault = array();
+$dbo->cols['js_cartonsize_w2']->valContClassDefault = array();
+$dbo->cols['js_cartonsize_l3'] = new DBO_COL('js_cartonsize_l3', 'numeric', '-1', '1310728');
+$dbo->cols['js_cartonsize_l3']->inputTypeDefault = 'text';
+$dbo->cols['js_cartonsize_l3']->capContClassDefault = array();
+$dbo->cols['js_cartonsize_l3']->valContClassDefault = array();
+$dbo->cols['js_cartonsize_w4'] = new DBO_COL('js_cartonsize_w4', 'numeric', '-1', '1310728');
+$dbo->cols['js_cartonsize_w4']->inputTypeDefault = 'text';
+$dbo->cols['js_cartonsize_w4']->capContClassDefault = array();
+$dbo->cols['js_cartonsize_w4']->valContClassDefault = array();
+$dbo->cols['js_cartonsize_height'] = new DBO_COL('js_cartonsize_height', 'numeric', '-1', '1310728');
+$dbo->cols['js_cartonsize_height']->inputTypeDefault = 'text';
+$dbo->cols['js_cartonsize_height']->capContClassDefault = array();
+$dbo->cols['js_cartonsize_height']->valContClassDefault = array();
+$dbo->cols['js_cartonsize_top'] = new DBO_COL('js_cartonsize_top', 'numeric', '-1', '1310728');
+$dbo->cols['js_cartonsize_top']->inputTypeDefault = 'text';
+$dbo->cols['js_cartonsize_top']->capContClassDefault = array();
+$dbo->cols['js_cartonsize_top']->valContClassDefault = array();
+$dbo->cols['js_cartonsize_bottom'] = new DBO_COL('js_cartonsize_bottom', 'numeric', '-1', '1310728');
+$dbo->cols['js_cartonsize_bottom']->inputTypeDefault = 'text';
+$dbo->cols['js_cartonsize_bottom']->capContClassDefault = array();
+$dbo->cols['js_cartonsize_bottom']->valContClassDefault = array();
+$dbo->cols['js_expectdelivery'] = new DBO_COL('js_expectdelivery', 'timestamptz', '8', '-1');
+$dbo->cols['js_expectdelivery']->inputTypeDefault = 'text';
+$dbo->cols['js_expectdelivery']->capContClassDefault = array();
+$dbo->cols['js_expectdelivery']->valContClassDefault = array();
+$dbo->cols['js_cancelremark'] = new DBO_COL('js_cancelremark', 'text', '-1', '-1');
+$dbo->cols['js_cancelremark']->inputTypeDefault = 'text';
+$dbo->cols['js_cancelremark']->capContClassDefault = array();
+$dbo->cols['js_cancelremark']->valContClassDefault = array();
+$dbo->cols['js_forwardtocusttime'] = new DBO_COL('js_forwardtocusttime', 'timestamptz', '8', '-1');
+$dbo->cols['js_forwardtocusttime']->inputTypeDefault = 'text';
+$dbo->cols['js_forwardtocusttime']->capContClassDefault = array();
+$dbo->cols['js_forwardtocusttime']->valContClassDefault = array();
+$dbo->cols['js_color_9'] = new DBO_COL('js_color_9', 'varchar', '-1', '16');
+$dbo->cols['js_color_9']->inputTypeDefault = 'text';
+$dbo->cols['js_color_9']->capContClassDefault = array();
+$dbo->cols['js_color_9']->valContClassDefault = array();
 
 // support multiple language. only caption
 global $LANG;
@@ -798,7 +914,7 @@ class DBO_custom_reqverification extends DBO{
 }
 
 $dbo->newModifier = 'dbo_reqverification_custom_new';
-function dbo_reqverification_custom_new($table, $cols){
+function dbo_reqverification_custom_new($table, $cols, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -809,7 +925,7 @@ function dbo_reqverification_custom_new($table, $cols){
 }
 
 $dbo->editModifier = 'dbo_reqverification_custom_edit';
-function dbo_reqverification_custom_edit($table, $cols, $wheres){
+function dbo_reqverification_custom_edit($table, $cols, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -820,11 +936,11 @@ function dbo_reqverification_custom_edit($table, $cols, $wheres){
 }
 
 $dbo->searchModifier = 'dbo_reqverification_custom_search';
-function dbo_reqverification_custom_search(&$search){
+function dbo_reqverification_custom_search(&$search, $dbo){
 }
 
 $dbo->deleteModifier = 'dbo_reqverification_custom_delete';
-function dbo_reqverification_custom_delete($table, $wheres){
+function dbo_reqverification_custom_delete($table, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);

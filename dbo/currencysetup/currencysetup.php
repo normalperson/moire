@@ -9,7 +9,7 @@ function dbo_currencysetup_customize(&$dbo){
 function dbo_currencysetup_custom_edit($table, $cols, $wheres){
 	global $DB;
 	$ret = array();
-	$ok = $DB->doUpdateAudit($table, $cols, $wheres, array('cr_rate'));
+	$ok = $DB->doUpdateAudit($table, $cols, $wheres, array('curr_rate'));
 	if(!$ok){
 		$ret[] = $DB->lastError;
 	}

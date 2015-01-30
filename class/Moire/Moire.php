@@ -89,7 +89,7 @@ class Moire{
 		$pndRS = $DB->getRowAssoc("select org_id, org_name, org_address, org_contactno from fcorg where org_external = 'N' and org_parentid = 0");
 		$smarty->assign('pndData', $pndRS);
 		
-		$orgRS = $DB->getRowAssoc("select org_id, org_name, org_address, org_contactno, rg_currency, cr_code, cr_name from fcorg left join mregion on org_region = rg_code left join fccurrency on rg_currency = cr_code where org_id = :0", array($orgID));
+		$orgRS = $DB->getRowAssoc("select org_id, org_name, org_address, org_contactno, rg_currency, curr_code, curr_name from fcorg left join mregion on org_region = rg_code left join fccurrency on rg_currency = curr_code where org_id = :0", array($orgID));
 		if(!$orgRS) return false;
 		$smarty->assign('customerData', $orgRS);
 		$smarty->assign('date', date('d/m/Y'));
@@ -132,7 +132,7 @@ from minvoice join mjobsheet on iv_jsid = js_id where iv_orgid = :0 and iv_paid 
 		$pndRS = $DB->getRowAssoc("select org_id, org_name, org_address, org_contactno from fcorg where org_external = 'N' and org_parentid = 0");
 		$smarty->assign('pndData', $pndRS);
 		
-		$orgRS = $DB->getRowAssoc("select org_id, org_name, org_address, org_contactno, rg_currency, cr_code, cr_name from fcorg left join mregion on org_region = rg_code left join fccurrency on rg_currency = cr_code where org_id = :0", array($orgID));
+		$orgRS = $DB->getRowAssoc("select org_id, org_name, org_address, org_contactno, rg_currency, curr_code, curr_name from fcorg left join mregion on org_region = rg_code left join fccurrency on rg_currency = curr_code where org_id = :0", array($orgID));
 		if(!$orgRS) return false;
 		$smarty->assign('customerData', $orgRS);
 		$smarty->assign('invoiceNo', 'INV'.$this->genInvoiceNumber($invoiceID));

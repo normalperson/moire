@@ -1,20 +1,20 @@
 <?php
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
-$dboID = 'pendingQC';
+$dboID = 'customeracceptance';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
 $dbo->table = 'mjobsheet';
 $dbo->key = array('js_id');
 $dbo->sql = 'select mjobsheet.*, \'\' decision, \'\' remark,\'\' artwork from mjobsheet';
-$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_rate', 'js_totalinch', 'js_color_6', 'js_color_7', 'js_color_8', 'js_cartonsize_g', 'js_cartonsize_l1', 'js_cartonsize_w2', 'js_cartonsize_l3', 'js_cartonsize_w4', 'js_cartonsize_height', 'js_cartonsize_top', 'js_cartonsize_bottom', 'js_expectdelivery', 'js_cancelremark', 'js_forwardtocusttime', 'js_color_9', 'decision', 'remark', 'artwork');
+$dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_rate', 'js_totalinch', 'js_color_6', 'js_color_7', 'js_color_8', 'js_cartonsize_g', 'js_cartonsize_l1', 'js_cartonsize_w2', 'js_cartonsize_l3', 'js_cartonsize_w4', 'js_cartonsize_height', 'js_cartonsize_top', 'js_cartonsize_bottom', 'js_expectdelivery', 'js_cancelremark', 'js_forwardtocusttime', 'js_color_9', 'js_custrejectreason', 'decision', 'remark', 'artwork');
 $dbo->colList = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
 $dbo->colDetail = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colNew = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
-$dbo->colEdit = array('js_totalinch', 'js_decision', 'js_qcchecked', 'artwork', 'remark');
+$dbo->colEdit = array('js_decision', 'remark', 'js_custrejectreason', 'artwork');
 $dbo->colSearch = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colExport = array('js_id', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto');
 $dbo->colSort = array();
@@ -38,7 +38,7 @@ $dbo->showSearch = true;
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
 $dbo->titleNew = 'New Record';
-$dbo->titleEdit = 'QC verification';
+$dbo->titleEdit = 'Customer acceptance';
 $dbo->titleSearch = 'Search Record';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
@@ -367,7 +367,7 @@ $dbo->cols['js_trapping_size']->option->listMethod = 'text';
 $dbo->cols['js_trapping_size']->option->detailMethod = 'text';
 $dbo->cols['js_trapping_size']->option->newMethod = 'text';
 $dbo->cols['js_trapping_size']->option->editMethod = 'text';
-$dbo->cols['js_barcodetype'] = new DBO_COL('js_barcodetype', 'varchar', '-1', '54');
+$dbo->cols['js_barcodetype'] = new DBO_COL('js_barcodetype', 'int4', '4', '-1');
 $dbo->cols['js_barcodetype']->inputTypeDefault = 'text';
 $dbo->cols['js_barcodetype']->exportUseLookup = true;
 $dbo->cols['js_barcodetype']->searchMode = 'exact';
@@ -445,8 +445,8 @@ $dbo->cols['decision']->exportUseLookup = true;
 $dbo->cols['decision']->searchMode = 'exact';
 $dbo->cols['decision']->capContClassDefault = array();
 $dbo->cols['decision']->valContClassDefault = array();
-$dbo->cols['decision']->option->default = 'Revert|Revert
-Forward to Customer|Forward to customer';
+$dbo->cols['decision']->option->default = 'Accept
+Revert';
 $dbo->cols['decision']->option->defaultMethod = 'text';
 $dbo->cols['decision']->option->searchMethod = 'text';
 $dbo->cols['decision']->option->listMethod = 'text';
@@ -454,8 +454,9 @@ $dbo->cols['decision']->option->detailMethod = 'text';
 $dbo->cols['decision']->option->newMethod = 'text';
 $dbo->cols['decision']->option->editMethod = 'text';
 $dbo->cols['remark'] = new DBO_COL('remark', 'unknown', '-2', '-1');
-$dbo->cols['remark']->inputTypeDefault = 'text';
+$dbo->cols['remark']->inputTypeDefault = 'textarea';
 $dbo->cols['remark']->exportUseLookup = true;
+$dbo->cols['remark']->mandatoryNew = '1';
 $dbo->cols['remark']->mandatoryEdit = '1';
 $dbo->cols['remark']->searchMode = 'exact';
 $dbo->cols['remark']->capContClassDefault = array();
@@ -467,11 +468,10 @@ $dbo->cols['remark']->option->detailMethod = 'text';
 $dbo->cols['remark']->option->newMethod = 'text';
 $dbo->cols['remark']->option->editMethod = 'text';
 $dbo->cols['artwork'] = new DBO_COL('artwork', 'unknown', '-2', '-1');
+$dbo->cols['artwork']->inputEditModifierMethod = 'phpfunc';
+$dbo->cols['artwork']->inputEditModifier = 'downloadlink';
 $dbo->cols['artwork']->inputTypeDefault = 'Dropzone';
 $dbo->cols['artwork']->exportUseLookup = true;
-$dbo->cols['artwork']->size = '300M/5';
-$dbo->cols['artwork']->format = '.rar, .zip, .jpeg, .jpg';
-$dbo->cols['artwork']->mandatoryEdit = '1';
 $dbo->cols['artwork']->searchMode = 'exact';
 $dbo->cols['artwork']->capContClassDefault = array();
 $dbo->cols['artwork']->valContClassDefault = array();
@@ -536,8 +536,8 @@ $dbo->cols['js_decision']->mandatoryEdit = '1';
 $dbo->cols['js_decision']->searchMode = 'exact';
 $dbo->cols['js_decision']->capContClassDefault = array();
 $dbo->cols['js_decision']->valContClassDefault = array();
-$dbo->cols['js_decision']->option->default = 'Revert|Revert
-Forward to Customer|Forward to Customer';
+$dbo->cols['js_decision']->option->default = 'Accept
+		Revert';
 $dbo->cols['js_decision']->option->defaultMethod = 'text';
 $dbo->cols['js_decision']->option->searchMethod = 'text';
 $dbo->cols['js_decision']->option->listMethod = 'text';
@@ -701,26 +701,17 @@ $dbo->cols['js_outputheight']->option->detailMethod = 'text';
 $dbo->cols['js_outputheight']->option->newMethod = 'text';
 $dbo->cols['js_outputheight']->option->editMethod = 'text';
 $dbo->cols['js_qcchecked'] = new DBO_COL('js_qcchecked', 'varchar', '-1', '2004');
-$dbo->cols['js_qcchecked']->inputTypeDefault = 'PixelAdminCheckbox';
+$dbo->cols['js_qcchecked']->inputTypeDefault = 'text';
 $dbo->cols['js_qcchecked']->exportUseLookup = true;
 $dbo->cols['js_qcchecked']->searchMode = 'exact';
 $dbo->cols['js_qcchecked']->capContClassDefault = array();
 $dbo->cols['js_qcchecked']->valContClassDefault = array();
-$dbo->cols['js_qcchecked']->option->default = 'select lu_code,lu_title
-from fclookup 
-where lu_cat = \'QCLIST\'
-order by lu_title';
-$dbo->cols['js_qcchecked']->option->edit = 'select lu_code,lu_title
-from fclookup 
-where lu_cat = \'QCLIST\'
-and lu_Status = \'ACTIVE\'
-order by lu_title';
-$dbo->cols['js_qcchecked']->option->defaultMethod = 'sql';
+$dbo->cols['js_qcchecked']->option->defaultMethod = 'text';
 $dbo->cols['js_qcchecked']->option->searchMethod = 'text';
 $dbo->cols['js_qcchecked']->option->listMethod = 'text';
 $dbo->cols['js_qcchecked']->option->detailMethod = 'text';
 $dbo->cols['js_qcchecked']->option->newMethod = 'text';
-$dbo->cols['js_qcchecked']->option->editMethod = 'sql';
+$dbo->cols['js_qcchecked']->option->editMethod = 'text';
 $dbo->cols['js_currency'] = new DBO_COL('js_currency', 'varchar', '-1', '54');
 $dbo->cols['js_currency']->inputTypeDefault = 'text';
 $dbo->cols['js_currency']->exportUseLookup = true;
@@ -759,7 +750,6 @@ $dbo->cols['js_rate']->option->newMethod = 'text';
 $dbo->cols['js_rate']->option->editMethod = 'text';
 $dbo->cols['js_totalinch'] = new DBO_COL('js_totalinch', 'numeric', '-1', '1310728');
 $dbo->cols['js_totalinch']->inputTypeDefault = 'text';
-$dbo->cols['js_totalinch']->attributeEdit = array('readonly'=>array(''));
 $dbo->cols['js_totalinch']->exportUseLookup = true;
 $dbo->cols['js_totalinch']->searchMode = 'exact';
 $dbo->cols['js_totalinch']->capContClassDefault = array();
@@ -950,6 +940,23 @@ $dbo->cols['js_color_9']->option->listMethod = 'text';
 $dbo->cols['js_color_9']->option->detailMethod = 'text';
 $dbo->cols['js_color_9']->option->newMethod = 'text';
 $dbo->cols['js_color_9']->option->editMethod = 'text';
+$dbo->cols['js_custrejectreason'] = new DBO_COL('js_custrejectreason', 'varchar', '-1', '-1');
+$dbo->cols['js_custrejectreason']->inputTypeDefault = 'PixelAdminCheckbox';
+$dbo->cols['js_custrejectreason']->exportUseLookup = true;
+$dbo->cols['js_custrejectreason']->searchMode = 'exact';
+$dbo->cols['js_custrejectreason']->capContClassDefault = array();
+$dbo->cols['js_custrejectreason']->valContClassDefault = array();
+$dbo->cols['js_custrejectreason']->option->default = 'select lu_code,lu_title
+from fclookup 
+where lu_cat = \'QCLIST\'
+and lu_Status = \'ACTIVE\'
+order by lu_title';
+$dbo->cols['js_custrejectreason']->option->defaultMethod = 'sql';
+$dbo->cols['js_custrejectreason']->option->searchMethod = 'text';
+$dbo->cols['js_custrejectreason']->option->listMethod = 'text';
+$dbo->cols['js_custrejectreason']->option->detailMethod = 'text';
+$dbo->cols['js_custrejectreason']->option->newMethod = 'text';
+$dbo->cols['js_custrejectreason']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;
@@ -966,14 +973,14 @@ $dbo->run();
 
 /*
 # enable overwriting DBO class
-class DBO_custom_pendingQC extends DBO{
+class DBO_custom_customeracceptance extends DBO{
 	function __construct(){
 		parent::__construct();
 	}
 }
 
-$dbo->newModifier = 'dbo_pendingQC_custom_new';
-function dbo_pendingQC_custom_new($table, $cols, $dbo){
+$dbo->newModifier = 'dbo_customeracceptance_custom_new';
+function dbo_customeracceptance_custom_new($table, $cols, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -983,8 +990,8 @@ function dbo_pendingQC_custom_new($table, $cols, $dbo){
 	return $ret;
 }
 
-$dbo->editModifier = 'dbo_pendingQC_custom_edit';
-function dbo_pendingQC_custom_edit($table, $cols, $wheres, $dbo){
+$dbo->editModifier = 'dbo_customeracceptance_custom_edit';
+function dbo_customeracceptance_custom_edit($table, $cols, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -994,12 +1001,12 @@ function dbo_pendingQC_custom_edit($table, $cols, $wheres, $dbo){
 	return $ret;
 }
 
-$dbo->searchModifier = 'dbo_pendingQC_custom_search';
-function dbo_pendingQC_custom_search(&$search, $dbo){
+$dbo->searchModifier = 'dbo_customeracceptance_custom_search';
+function dbo_customeracceptance_custom_search(&$search, $dbo){
 }
 
-$dbo->deleteModifier = 'dbo_pendingQC_custom_delete';
-function dbo_pendingQC_custom_delete($table, $wheres, $dbo){
+$dbo->deleteModifier = 'dbo_customeracceptance_custom_delete';
+function dbo_customeracceptance_custom_delete($table, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);
@@ -1009,7 +1016,7 @@ function dbo_pendingQC_custom_delete($table, $wheres, $dbo){
 	return $ret;
 }
 
-function dbo_pendingQC_display_modifier($col, $colVal, $data=array(), $html=null){
+function dbo_customeracceptance_display_modifier($col, $colVal, $data=array(), $html=null){
 }
 */
 ?>

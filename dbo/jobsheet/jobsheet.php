@@ -209,7 +209,9 @@ function dbo_jobsheet_customize(&$dbo){
 
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
-		$dbo->cols['joboutput']->option->default = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
+		$dbo->cols['joboutput']->option->new = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
+		$dbo->cols['joboutput']->option->edit = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
+		$dbo->cols['joboutput']->option->default = "select jol_id,jol_title from mjoboutputlookup";		
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = 'sql';
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = 
 			'select mc_id, mc_name, org_name from mcustmachine join fcorg on mc_orgid = org_id where org_id ='.$USER->orgid.' order by 3,2';
@@ -217,7 +219,9 @@ function dbo_jobsheet_customize(&$dbo){
 	else {
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
-		$dbo->cols['joboutput']->option->default = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
+		$dbo->cols['joboutput']->option->new = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
+		$dbo->cols['joboutput']->option->edit = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
+		$dbo->cols['joboutput']->option->default = "select jol_id,jol_title from mjoboutputlookup";		
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = $dbo->cols['js_mcid']->option->defaultMethod;
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = $dbo->cols['js_mcid']->option->default;
 	}
@@ -311,7 +315,7 @@ function dbo_jobsheet_custom_new($table, $cols){
 	// determine whether need to calculate conversion
 
 	// get rate
-	$sql = "select cr_rate from fccurrency where curr_code = :0";
+	$sql = "select curr_rate from fccurrency where curr_code = :0";
 	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
 	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
@@ -741,10 +745,6 @@ $( document ).ready(function() {
 				}			
 			}); */
 			// currency exchange
-			console.log('basecurr '+basecurr);
-			console.log('rate '+rate);
-			console.log('currdata');
-			console.log(currdata);
 			
 			if(basecurr != currdata.rg_currency && currdata.rg_convert == 'Y'){
 			    console.log('price before calculate = '+price);
@@ -884,7 +884,7 @@ $( document ).ready(function() {
 	})
 	setCartonProp();*/
 
-	$('[name="dbo_jobsheet_new_js_diecut_ind"], [name="dbo_jobsheet_edit_js_diecut_ind"]').change(function(){
+	/*$('[name="dbo_jobsheet_new_js_diecut_ind"], [name="dbo_jobsheet_edit_js_diecut_ind"]').change(function(){
 		$this = $(this);
 		if($this.val() == 'Y')	$cartonTypeInp.val('').prop('disabled', true).change();
 		else{
@@ -894,7 +894,7 @@ $( document ).ready(function() {
 				return false;
 			}).length > 0) $cartonTypeInp.prop('disabled', false).change();
 		}	
-	});
+	});*/
 	
 	
 });

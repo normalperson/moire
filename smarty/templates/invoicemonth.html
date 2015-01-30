@@ -145,7 +145,7 @@ table.invoice_table > thead > tr > th, table.invoice_table > tfoot > tr > th{
 						<th style="text-align:center">DATE</th>
 						<th style="text-align:center">JOB CODE</th>
 						<th style="text-align:left">JOB TITLE</th>
-						<th style="text-align:right">AMOUNT {ldelim}{$customerData.cr_code}{rdelim}</th>
+						<th style="text-align:right">AMOUNT {ldelim}{$customerData.curr_code}{rdelim}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -164,14 +164,14 @@ table.invoice_table > thead > tr > th, table.invoice_table > tfoot > tr > th{
 						<td colspan="5">&nbsp;</td>
 					</tr>
 					<tr>
-						<td colspan="5">{$customerData.cr_name|upper} : {$total_amount_word|upper}</td>
+						<td colspan="5">{$customerData.curr_name|upper} : {$total_amount_word|upper}</td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
 						<th colspan="3"></th>
 						<th>Total</th>
-						<th>{ldelim}{$customerData.cr_code}{rdelim} {$amount_accu|number_format:2}</th>
+						<th>{ldelim}{$customerData.curr_code}{rdelim} {$amount_accu|number_format:2}</th>
 					</tr>
 				</tfoot>
 			</table>

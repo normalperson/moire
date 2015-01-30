@@ -85,3 +85,23 @@ ALTER TABLE fccurrency
 
 insert into fccurrency(curr_code,curr_name,curr_rate,curr_symbol)
 select cr_code,cr_name,cr_rate,cr_symbol from fccurrency_old  
+
+
+update fclookup
+set lu_status = 'INACTIVE'
+where lu_cat = 'QCLIST';
+
+insert into fclookup(lu_cat,lu_code,lu_title)
+values('QCLIST','MITEM','Missing Item');
+
+insert into fclookup(lu_cat,lu_code,lu_title)
+values('QCLIST','MSIZE','Mistake on Size / Position');
+
+insert into fclookup(lu_cat,lu_code,lu_title)
+values('QCLIST','MCOLOR','Mistake on Color / Tone');
+
+insert into fclookup(lu_cat,lu_code,lu_title)
+values('QCLIST','MWORD','Mistake on word');
+
+ALTER TABLE mjobsheet
+   ADD COLUMN js_custrejectreason character varying;
