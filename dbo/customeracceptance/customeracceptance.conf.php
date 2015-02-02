@@ -535,7 +535,7 @@ $dbo->cols['js_decision']->searchMode = 'exact';
 $dbo->cols['js_decision']->capContClassDefault = array();
 $dbo->cols['js_decision']->valContClassDefault = array();
 $dbo->cols['js_decision']->option->default = 'Accept
-		Revert';
+Revert';
 $dbo->cols['js_decision']->option->defaultMethod = 'text';
 $dbo->cols['js_decision']->option->searchMethod = 'text';
 $dbo->cols['js_decision']->option->listMethod = 'text';
@@ -941,6 +941,8 @@ $dbo->cols['js_color_9']->option->editMethod = 'text';
 $dbo->cols['js_custrejectreason'] = new DBO_COL('js_custrejectreason', 'varchar', '-1', '-1');
 $dbo->cols['js_custrejectreason']->inputTypeDefault = 'PixelAdminCheckbox';
 $dbo->cols['js_custrejectreason']->exportUseLookup = true;
+$dbo->cols['js_custrejectreason']->mandatoryNew = '1';
+$dbo->cols['js_custrejectreason']->mandatoryEdit = '1';
 $dbo->cols['js_custrejectreason']->searchMode = 'exact';
 $dbo->cols['js_custrejectreason']->capContClassDefault = array();
 $dbo->cols['js_custrejectreason']->valContClassDefault = array();

@@ -72,12 +72,21 @@ $dbo->render();
 ?>
 <script type="text/javascript">
 $( document ).ready(function() {
-    if( $('#dbo_customeracceptance_edit_js_decision').val() == 'Revert'){
+	$('#dbo_customeracceptance_edit_js_decision').change(function(){
+		if( $.trim($(this).val()) == 'Revert'){
+			console.log($('[name='+escapeSelectorStr('dbo_customeracceptance_edit_js_custrejectreason[]')+']'));
+	    	$('[name='+escapeSelectorStr('dbo_customeracceptance_edit_js_custrejectreason[]')+']').removeAttr("disabled");
+	    	$('#dbo_customeracceptance_edit_remark').removeAttr("disabled");
+	    	$('#dbo_customeracceptance_edit_artwork').trigger('enable');
 
-    	// reject reason must be mandatory
-    	// dbo_customeracceptance_edit_js_custrejectreason
-
-    }
+	    }else{    	
+	    	console.log('inside else');
+	    	$('#dbo_customeracceptance_edit_artwork').trigger('disable');
+	    	$('[name='+escapeSelectorStr('dbo_customeracceptance_edit_js_custrejectreason[]')+']').prop("disabled", true);
+	    	$('#dbo_customeracceptance_edit_remark').prop("disabled", true);
+	    }
+	});
+    
 });
 	
 </script>

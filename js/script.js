@@ -173,3 +173,7 @@ function postData(input, action) {
     }
     form.appendTo('body').submit();
 }
+function escapeSelectorStr(str) {
+    if (str) return str.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+    return str;
+}

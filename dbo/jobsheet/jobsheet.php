@@ -579,8 +579,8 @@ $rowdata = $DB->GetRow($sql,array($USER->orgid), PDO::FETCH_ASSOC);
 $sql = "select curr_rate from fccurrency where curr_code = :0";
 $rate = $DB->GetOne($sql,array($rowdata['rg_currency']), PDO::FETCH_ASSOC);
 
-$timemap = array('JOBCAT'=>array(), 'JOBOUTP'=>array());
-foreach ($data as $key => $value) {
+$timemap = array('JOBOUTP'=>array());
+/*foreach ($data as $key => $value) {
 	$timemap['JOBCAT'][$value['jcl_id']] = array(
 		'time'=> array(
 			1=>$value['jcl_requiretime_color_1'],
@@ -598,18 +598,18 @@ foreach ($data as $key => $value) {
 		),
 		'title'=> $value['jcl_title'],
 	);
-}
+}*/
 $data = $DB->GetArray("select * from mjoboutputlookup",null, PDO::FETCH_ASSOC);
 foreach ($data as $key => $value) {
 	$timemap['JOBOUTP'][$value['jol_id']] = array(
 		1=>$value['jol_requiredtime'],
 		'title'=>$value['jol_title'],
 		'price'=> array(
-			0=>null,
-			1=>$value['jol_price_color_1'],
-			2=>$value['jol_price_color_2'],
-			3=>$value['jol_price_color_3'],
-			4=>$value['jol_price_color_4'],
+			0=>0,
+			1=>(trim($value['jol_price_color_1']))==''?0:trim($value['jol_price_color_1']),
+			2=>(trim($value['jol_price_color_2']))==''?0:trim($value['jol_price_color_2']),
+			3=>(trim($value['jol_price_color_3']))==''?0:trim($value['jol_price_color_3']),
+			4=>(trim($value['jol_price_color_4']))==''?0:trim($value['jol_price_color_4']),
 			5=>$value['jol_pricingtype'],
 			6=>$value['jol_price'],
 			7=>$value['jol_custtype']
@@ -620,7 +620,7 @@ echo '<script type="text/javascript"> var jstimemap = '.json_encode($timemap).';
 echo '<script type="text/javascript"> var currdata = '.json_encode($rowdata).'; </script>';
 echo '<script type="text/javascript"> var basecurr = \''.$basecurr.'\'; </script>';
 echo '<script type="text/javascript"> var rate = '.$rate.'; </script>';
-echo '<script type="text/javascript"> var ctype = '.$ctype.'; </script>';
+echo '<script type="text/javascript"> var ctype = \''.$ctype.'\'; </script>';
 
 
 
@@ -844,8 +844,8 @@ $( document ).ready(function() {
 	var $barcodeTable = $('.dbo_edit #detail-jbc_jsid-table, .dbo_new #detail-jbc_jsid-table');
 	function setBarcodeProp() {
 		if ($outputjob.filter(':checked').filter(function () {
-			if (typeof jstimemap['JOBCAT'][this.value] != 'undefined' &&
-			jstimemap['JOBCAT'][this.value]['title'].toUpperCase() == 'BARCODE') return true;
+			if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
+			jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'BARCODE') return true;
 			return false;
 		}).length > 0) {
 			$barcodeTable.removeClass('disabled');
@@ -869,32 +869,6 @@ $( document ).ready(function() {
 	}).change();
 	
 	
-	// carton type enabling
-	/*var $cartonTypeInp = $('#dbo_jobsheet_new_js_carid, #dbo_jobsheet_edit_js_carid');
-	function setCartonProp() {
-		if ($outputjob.filter(':checked').filter(function () {
-			if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
-			jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'MASTER CARD') return true;
-			return false;
-		}).length > 0) $cartonTypeInp.prop('disabled', false).change();
-		else $cartonTypeInp.val('').prop('disabled', true).change();
-	}
-	$outputjob.click(function () {
-		setCartonProp();
-	})
-	setCartonProp();*/
-
-	/*$('[name="dbo_jobsheet_new_js_diecut_ind"], [name="dbo_jobsheet_edit_js_diecut_ind"]').change(function(){
-		$this = $(this);
-		if($this.val() == 'Y')	$cartonTypeInp.val('').prop('disabled', true).change();
-		else{
-			if ($outputjob.filter(':checked').filter(function () {
-				if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
-				jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'MASTER CARD') return true;
-				return false;
-			}).length > 0) $cartonTypeInp.prop('disabled', false).change();
-		}	
-	});*/
 	
 	
 });
