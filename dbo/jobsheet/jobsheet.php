@@ -845,7 +845,7 @@ $( document ).ready(function() {
 	function setBarcodeProp() {
 		if ($outputjob.filter(':checked').filter(function () {
 			if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
-			jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'BARCODE') return true;
+			jstimemap['JOBOUTP'][this.value]['title'].toUpperCase().substring(0, 7) == 'BARCODE') return true;
 			return false;
 		}).length > 0) {
 			$barcodeTable.removeClass('disabled');
