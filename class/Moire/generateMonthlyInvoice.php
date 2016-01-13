@@ -27,5 +27,6 @@ if(isset($argv) && !empty($argv)){ // command line
 		if($invoiceDate=='1970-01-01') $invoiceDate = false;
 	}
 }
+echo 'Invoice date = '.$invoiceDate.'<br>';
 generateMonthlyInvoice($invoiceDate);
 ?>

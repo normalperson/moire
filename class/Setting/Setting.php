@@ -28,6 +28,10 @@ class Setting{
 		html_header();
 		dbo_include('testUpload');
 	}
+	function reassignment(){
+		html_header();
+		dbo_include('reassignment');
+	}
 	function customUpload(){
 		html_header();
 		$smarty = new Smarty();

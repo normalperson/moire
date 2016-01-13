@@ -1,0 +1,558 @@
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 09:54:44
+    [file] => Array
+        (
+            [name] => 2016010074_I 3035.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpWBRR1G
+            [error] => 0
+            [size] => 980881
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 10:13:28
+    [file] => Array
+        (
+            [name] => 2016010061_1601141 MC DOWELL'S RESERVE WHISKY 24X375ML_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpqtL2HM
+            [error] => 0
+            [size] => 31531306
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 10:44:04
+    [file] => Array
+        (
+            [name] => 2016010074_I 3035_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpz6cCsY
+            [error] => 0
+            [size] => 824803
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 10:45:56
+    [file] => Array
+        (
+            [name] => 2016010074_C239_I 3035_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpCcARfk
+            [error] => 0
+            [size] => 824843
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 11:01:24
+    [file] => Array
+        (
+            [name] => 16010621_DAILY VEGETABLE COOKING OIL 4 X 5L.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpDMPhwM
+            [error] => 0
+            [size] => 6192726
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL2
+    [time] => 2016-01-12 11:06:54
+    [file] => Array
+        (
+            [name] => 16010632 welcare   I.V SOLUTION ADMIISTRATION  _IF-2041 _IF-2060_2 JOB.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpXWCRbB
+            [error] => 0
+            [size] => 5756902
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => Deswell_Packaging
+    [time] => 2016-01-12 11:14:27
+    [file] => Array
+        (
+            [name] => Archive.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpBwuGR7
+            [error] => 0
+            [size] => 12631820
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => MG01
+    [time] => 2016-01-12 11:43:37
+    [file] => Array
+        (
+            [name] => 6010111 REXBENA 24 X 375ML.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php0lqIT0
+            [error] => 0
+            [size] => 16086918
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-12 11:46:18
+    [file] => Array
+        (
+            [name] => 竹塘菇.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpvasVhv
+            [error] => 0
+            [size] => 3973987
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-12 12:41:48
+    [file] => Array
+        (
+            [name] => 竹塘菇.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpFHyII7
+            [error] => 0
+            [size] => 3973987
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => MG01
+    [time] => 2016-01-12 12:45:47
+    [file] => Array
+        (
+            [name] => 6010111 REXBENA 24 X 375ML.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpWJ3IQt
+            [error] => 0
+            [size] => 16086918
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 12:57:40
+    [file] => Array
+        (
+            [name] => 2016010079 小綠寶.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpvutKPc
+            [error] => 0
+            [size] => 4413288
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 13:02:14
+    [file] => Array
+        (
+            [name] => 16010621_DAILY VEGETABLE COOKING OIL 4 X 5L_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpSMkdsv
+            [error] => 0
+            [size] => 6187181
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 13:13:32
+    [file] => Array
+        (
+            [name] => 2016010073 18110.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpoJaKWN
+            [error] => 0
+            [size] => 4009081
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 13:21:55
+    [file] => Array
+        (
+            [name] => 2016010073 18110_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpkBmiBK
+            [error] => 0
+            [size] => 1057671
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 13:40:27
+    [file] => Array
+        (
+            [name] => 16010621_DAILY VEGETABLE COOKING OIL 4 X 5L.zip
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 13:40:52
+    [file] => Array
+        (
+            [name] => 16010632 welcare   I.V SOLUTION ADMIISTRATION  _IF-2041 _IF-2060_2 JOB.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpU3aV7S
+            [error] => 0
+            [size] => 17530298
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => CBLAU
+    [time] => 2016-01-12 13:43:47
+    [file] => Array
+        (
+            [name] => 2016010079 小綠寶_QC.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php6YM3l7
+            [error] => 0
+            [size] => 3592655
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 14:02:49
+    [file] => Array
+        (
+            [name] => 16010632 welcare   I.V SOLUTION ADMIISTRATION  _IF-2041 _IF-2060_2 JOB_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpyKfSTJ
+            [error] => 0
+            [size] => 17522574
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 15:08:35
+    [file] => Array
+        (
+            [name] => 2016010062_1601142 MC DOWELL'S RESERVE WHISKY 48X180ML.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpdBCu68
+            [error] => 0
+            [size] => 19365300
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => MG01
+    [time] => 2016-01-12 15:41:47
+    [file] => Array
+        (
+            [name] => 6010055  TAZA 16L.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpH0ckwE
+            [error] => 0
+            [size] => 8916823
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 16:22:49
+    [file] => Array
+        (
+            [name] => 2016010085_6010111 REXBENA 24 X 375ML.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpEAxSXi
+            [error] => 0
+            [size] => 18178220
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 16:46:53
+    [file] => Array
+        (
+            [name] => 2016010085_6010111 REXBENA 24 X 375ML_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpuasyxw
+            [error] => 0
+            [size] => 17787890
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-01-12 17:26:52
+    [file] => Array
+        (
+            [name] => 16010668 hlg00457a pm-oc-sensinitryl senza0 - small.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phprrYyrg
+            [error] => 0
+            [size] => 1974956
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-01-12 17:28:00
+    [file] => Array
+        (
+            [name] => 16010669 hlg00458a pm-oc-sensinitryl senza0 - medium.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpc26srY
+            [error] => 0
+            [size] => 1947832
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-01-12 17:29:05
+    [file] => Array
+        (
+            [name] => 16010671 hlg00459a pm-oc-sensinitryl senza0 - large.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpUant0s
+            [error] => 0
+            [size] => 1962765
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-01-12 17:30:22
+    [file] => Array
+        (
+            [name] => 16010672 hlg00460a pm-oc-sensinitryl senza0 - x-large.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpKRPobk
+            [error] => 0
+            [size] => 1996223
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => MY00027
+    [time] => 2016-01-12 17:38:31
+    [file] => Array
+        (
+            [name] => 1601316 DA EARN.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpe3Lm5C
+            [error] => 0
+            [size] => 12183291
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 18:42:56
+    [file] => Array
+        (
+            [name] => 2016010086_6010055  TAZA 16L.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpFju5lQ
+            [error] => 0
+            [size] => 15612123
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 18:44:04
+    [file] => Array
+        (
+            [name] => 2016010082 CASH (PLS GROUP).zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpyoKPxq
+            [error] => 0
+            [size] => 14946561
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 18:51:53
+    [file] => Array
+        (
+            [name] => 2016010086_6010055  TAZA 16L_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpiv5hp5
+            [error] => 0
+            [size] => 15333155
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-12 18:55:09
+    [file] => Array
+        (
+            [name] => 2016010084_竹塘菇.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php7wdf1K
+            [error] => 0
+            [size] => 7987021
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 18:57:48
+    [file] => Array
+        (
+            [name] => 2016010082 CASH (PLS GROUP)_QC.zip
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 18:59:45
+    [file] => Array
+        (
+            [name] => 2016010082 CASH (PLS GROUP)_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpYay0vZ
+            [error] => 0
+            [size] => 13892212
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 19:18:53
+    [file] => Array
+        (
+            [name] => 2016010062_1601142 MC DOWELL'S RESERVE WHISKY 48X180ML_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpsjDAk1
+            [error] => 0
+            [size] => 19410250
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 19:22:07
+    [file] => Array
+        (
+            [name] => 2016010084_竹塘菇_QC.zip
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-12 19:23:46
+    [file] => Array
+        (
+            [name] => 2016010084_竹塘菇_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phppWZVbr
+            [error] => 0
+            [size] => 4069306
+        )
+
+    [file_exists] => true
+)

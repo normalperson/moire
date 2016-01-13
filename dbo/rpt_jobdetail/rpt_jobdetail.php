@@ -1,6 +1,15 @@
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'rpt_jobdetail.conf.php');
 
+function showActionButtons($col, $colVal, $data=array(), $html=null) {
+	$ret = '';
+	if (!empty($data['pmc_id'])) {	
+		include_once(CLASS_DIR.DS.'PMTask'.DS.'PMTask.php');	
+		$ret .= PMTask::showTimelineButton($data['pmc_id']);
+		$ret .= PMTask::showCommentButton($data['pmc_id']);
+	}
+	return $ret."</div>";
+}
 # customization
 function dbo_rpt_jobdetail_customize(&$dbo){
 	global $GLOBAL,$DB;	

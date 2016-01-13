@@ -1,0 +1,15 @@
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-13 11:29:59
+    [file] => Array
+        (
+            [name] => 菜脯.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php1msMqH
+            [error] => 0
+            [size] => 2274829
+        )
+
+    [file_exists] => true
+)

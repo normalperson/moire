@@ -264,16 +264,26 @@ function dbo_jobsheet_custom_new($table, $cols){
 	*/
 	// handle file upload if empty 
 	if($cols['attachment'] == '') {
-		/*$ret = "Attachement cannot be empty";
-		return $ret;*/
+		$ret = "Attachment cannot be empty";
+		return array($ret);
 		unset($cols['attachment']);
 	}
 	else{
 		$attachment = json_decode($cols['attachment'],true);
 		// validate rar or zip format
+		if (!$attachment) {
+			$ret = "Attachment cannot be empty";
+			return array($ret);
+		}
+		
+		foreach ($attachment as $att) {
+			if (!file_exists($att['tmp_name'])) $ret[] = "\"{$att['name']}\" missing from uploaded folder";
+		}
+		if ($ret) return $ret;
+		
+		
 		unset($cols['attachment']); 
 	}
-
 	
 	foreach ($cols as $k=>$v) {
 		if (substr($k,0,6) == '__map_') unset($cols[$k]);
@@ -318,14 +328,17 @@ function dbo_jobsheet_custom_new($table, $cols){
 	$sql = "select curr_rate from fccurrency where curr_code = :0";
 	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
-	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
+/*	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
 		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
 
 	}else{
 		$cols['js_finalprice'] = $price;
 		$cols['js_rate'] = $rate;
-	}
+	}*/
+
+	$cols['js_finalprice'] = $price;
+	$cols['js_rate'] = $rate;
 
 	
 	$cols['js_code'] = $currmth.str_pad($ind, 4, "0", STR_PAD_LEFT);
@@ -427,6 +440,14 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	}
 	else{
 		$attachment = json_decode($cols['attachment'],true);
+		
+		if ($attachment) {
+			foreach ($attachment as $att) {
+				if (!file_exists($att['tmp_name'])) $ret[] = "\"{$att['name']}\" missing from uploaded folder";
+			}
+			if ($ret) return $ret;
+		}
+		
 		// validate rar or zip format
 		unset($cols['attachment']); 
 	}
@@ -466,7 +487,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
 	// determine whether need to calculate conversion
-	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
+/*	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
 
 		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
@@ -474,7 +495,10 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	}else{
 		$cols['js_finalprice'] = $price;
 		$cols['js_rate'] = $rate;
-	}
+	}*/
+
+	$cols['js_finalprice'] = $price;
+	$cols['js_rate'] = $rate;
 
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
@@ -621,7 +645,7 @@ echo '<script type="text/javascript"> var currdata = '.json_encode($rowdata).'; 
 echo '<script type="text/javascript"> var basecurr = \''.$basecurr.'\'; </script>';
 echo '<script type="text/javascript"> var rate = '.$rate.'; </script>';
 echo '<script type="text/javascript"> var ctype = \''.$ctype.'\'; </script>';
-
+echo '<script type="text/javascript"> var dbostate = \''.$_GET['dbostate'].'\'; </script>';
 
 
 # final rendering
@@ -869,8 +893,42 @@ $( document ).ready(function() {
 	}).change();
 	
 	
+
+	// console.log('DBo state = '+dbostate);
+	if(dbostate == 'new' || dbostate == 'edit'){
+		// console.log('inside if');
+		var submitted = false;
+
+	    window.onbeforeunload = function (e) {
+	    	// console.log('before unload');
+	        if (!submitted) {
+	        	// console.log('inside...');
+	            var message = "你肯定你要离开这页吗？", e = e || window.event;
+	            if (e) {
+	                e.returnValue = message;
+	            }
+	            return message;
+	        }
+	    }
+
+	     $("#dbo_jobsheet_newform").submit(function() {
+	     	submitted = true;
+	     });
+
+	     $("#dbo_jobsheet_editform").submit(function() {
+	     	submitted = true;
+	     });
+	     
+
+	     $('.btn-success').click(function(){
+	     	submitted = true;
+	     });
+
+	}
+
 	
 	
 });
+
 
 </script>

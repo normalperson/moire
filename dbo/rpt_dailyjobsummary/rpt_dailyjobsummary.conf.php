@@ -10,9 +10,16 @@ $dbo->sql = 'select cast(js_request_date as date),count(*) totalRequest,
 sum(case when js_Status = \'COMPLETED\' then 1 else 0 end) as totalcomplete,
 sum(case when js_status = \'CANCELLED\' then 1 else 0 end) as totalcancel,
 sum(case when js_status != \'COMPLETED\' and js_status != \'CANCELLED\' then 1 else 0 end) as totalinprogress,
-sum( revertedjob(js_id) ) as revertedjob,
-sum( internalrevertedjob(js_id) ) as internalrevertedjob
-from mjobsheet
+sum( coalesce(revert,0) ) as revertedjob,
+sum( coalesce(internalrevert,0) ) as internalrevertedjob
+from mjobsheet join fcpmcase on pmc_casekey = js_id and pmc_casetype = \'jobsheet\'
+left join (
+	select pmf_pmcid, 
+	sum(case when pmf_prev_pmcnid = 19 then 1 else 0 end) internalrevert,
+	sum(case when pmf_prev_pmcnid = 26 then 1 else 0 end) revert
+	from fcpmcaseflow where pmf_prev_pmcnid in (19,26)
+	group by pmf_pmcid
+) cc on pmf_pmcid = pmc_id
 group by cast(js_request_date as date)
 order by cast(js_request_date as date)';
 $dbo->col = array('js_request_date', 'totalrequest', 'totalcomplete', 'totalcancel', 'totalinprogress', 'revertedjob', 'internalrevertedjob');
@@ -69,7 +76,7 @@ $dbo->editSubmit = 'Edit';
 $dbo->listEditSubmit = 'Submit';
 $dbo->newCancel = 'Cancel';
 $dbo->newSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_546555114d6f70_95998251', 'jobsummarylink', 'flowsummarylink', 'dbo_rpt_dailyjobsummary_customize');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'displaysearchdate', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_552a66a6af7718_55672847', 'jobsummarylink', 'flowsummarylink', 'dbo_rpt_dailyjobsummary_customize');
 
 $dbo->cols['js_request_date'] = new DBO_COL('js_request_date', 'date', '4', '-1');
 $dbo->cols['js_request_date']->inputTypeDefault = 'BootstrapDateRange';
@@ -136,7 +143,7 @@ $dbo->cols['totalinprogress']->option->listMethod = 'text';
 $dbo->cols['totalinprogress']->option->detailMethod = 'text';
 $dbo->cols['totalinprogress']->option->newMethod = 'text';
 $dbo->cols['totalinprogress']->option->editMethod = 'text';
-$dbo->cols['revertedjob'] = new DBO_COL('revertedjob', 'int8', '8', '-1');
+$dbo->cols['revertedjob'] = new DBO_COL('revertedjob', 'numeric', '-1', '-1');
 $dbo->cols['revertedjob']->displayListModifierMethod = 'phpfunc';
 $dbo->cols['revertedjob']->displayListModifier = 'flowsummarylink';
 $dbo->cols['revertedjob']->inputTypeDefault = 'text';
@@ -149,7 +156,7 @@ $dbo->cols['revertedjob']->option->listMethod = 'text';
 $dbo->cols['revertedjob']->option->detailMethod = 'text';
 $dbo->cols['revertedjob']->option->newMethod = 'text';
 $dbo->cols['revertedjob']->option->editMethod = 'text';
-$dbo->cols['internalrevertedjob'] = new DBO_COL('internalrevertedjob', 'int8', '8', '-1');
+$dbo->cols['internalrevertedjob'] = new DBO_COL('internalrevertedjob', 'numeric', '-1', '-1');
 $dbo->cols['internalrevertedjob']->displayListModifierMethod = 'phpfunc';
 $dbo->cols['internalrevertedjob']->displayListModifier = 'flowsummarylink';
 $dbo->cols['internalrevertedjob']->inputTypeDefault = 'text';

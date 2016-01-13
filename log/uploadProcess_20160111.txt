@@ -1,0 +1,496 @@
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 10:03:35
+    [file] => Array
+        (
+            [name] => 2016010068_WORKER 25KG.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpqxmg8A
+            [error] => 0
+            [size] => 2966493
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-11 10:07:40
+    [file] => Array
+        (
+            [name] => 2016010068_WORKER 25KG_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpobddB2
+            [error] => 0
+            [size] => 2965039
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-11 10:26:20
+    [file] => Array
+        (
+            [name] => 2016010067_WORKER 40KG_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_php7FHSF6
+            [error] => 0
+            [size] => 2911352
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-11 11:27:54
+    [file] => Array
+        (
+            [name] => W-013 I 3016.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpOliceM
+            [error] => 0
+            [size] => 275463
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-11 11:32:55
+    [file] => Array
+        (
+            [name] => C-256.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpNU6KuI
+            [error] => 0
+            [size] => 302070
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 11:34:30
+    [file] => Array
+        (
+            [name] => 2016010061_1601141 MC DOWELL'S RESERVE WHISKY 24X375ML.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpMw9YeZ
+            [error] => 0
+            [size] => 31552998
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-11 11:35:58
+    [file] => Array
+        (
+            [name] => I 3035.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpkcTC7Y
+            [error] => 0
+            [size] => 87541
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => MY00027
+    [time] => 2016-01-11 11:45:03
+    [file] => Array
+        (
+            [name] => 1601274 418-6 TIER SINGLE SHOE RACK.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpdYVjAM
+            [error] => 0
+            [size] => 628417
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-11 11:55:11
+    [file] => Array
+        (
+            [name] => 18110.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpTwPzxe
+            [error] => 0
+            [size] => 3562055
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-11 12:12:44
+    [file] => Array
+        (
+            [name] => I 3035.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpgD5SRU
+            [error] => 0
+            [size] => 87541
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL5
+    [time] => 2016-01-11 14:09:30
+    [file] => Array
+        (
+            [name] => 16010572_M 21350A_SALTWATER_400 X 250 X 159MM.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpyLQYrn
+            [error] => 0
+            [size] => 1241904
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL5
+    [time] => 2016-01-11 14:10:51
+    [file] => Array
+        (
+            [name] => 16010573_M 21351A_SALTWATER_450 X 360 X 179MM.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpDei1AH
+            [error] => 0
+            [size] => 1267446
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 14:25:42
+    [file] => Array
+        (
+            [name] => 2016010070_I 3016.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phplresmL
+            [error] => 0
+            [size] => 1281838
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-11 14:40:17
+    [file] => Array
+        (
+            [name] => M36314DN4.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php2lCndu
+            [error] => 0
+            [size] => 582397
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-11 14:42:15
+    [file] => Array
+        (
+            [name] => M36314MN4.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpHCgimP
+            [error] => 0
+            [size] => 507014
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-11 14:50:29
+    [file] => Array
+        (
+            [name] => 2016010070_W-013_I 3016_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpcdWEZK
+            [error] => 0
+            [size] => 1108891
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 14:54:19
+    [file] => Array
+        (
+            [name] => 2016010069 CONTAINER ARTWORK.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php9Dnsly
+            [error] => 0
+            [size] => 2264664
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 14:54:49
+    [file] => Array
+        (
+            [name] => 16010572_M 21350A_SALTWATER_400 X 250 X 159MM.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpOcIEuI
+            [error] => 0
+            [size] => 1912022
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 15:35:23
+    [file] => Array
+        (
+            [name] => 16010573_M 21351A_SALTWATER_450 X 360 X 179MM.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpEo6O4x
+            [error] => 0
+            [size] => 1953032
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-11 15:40:01
+    [file] => Array
+        (
+            [name] => 16010572_M 21350A_SALTWATER_400 X 250 X 159MM_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpr6jphb
+            [error] => 0
+            [size] => 1907236
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-11 15:44:59
+    [file] => Array
+        (
+            [name] => 16010573_M 21351A_SALTWATER_450 X 360 X 179MM_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpRthgCS
+            [error] => 0
+            [size] => 1947779
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-11 15:55:42
+    [file] => Array
+        (
+            [name] => 2016010069 CONTAINER ARTWORK_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpvPvvPB
+            [error] => 0
+            [size] => 2261725
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 16:16:41
+    [file] => Array
+        (
+            [name] => 2016010078_M36314MN4.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpCOa7OJ
+            [error] => 0
+            [size] => 1469812
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-01-11 16:18:51
+    [file] => Array
+        (
+            [name] => 小綠寶.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpZtoH17
+            [error] => 0
+            [size] => 2077000
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-11 16:33:55
+    [file] => Array
+        (
+            [name] => 2016010078_M36314MN4_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpg2TRtI
+            [error] => 0
+            [size] => 1304128
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 17:04:25
+    [file] => Array
+        (
+            [name] => 統盈36CM.rar
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 17:04:31
+    [file] => Array
+        (
+            [name] => 2016010077 M36314DN4.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpG3F0ru
+            [error] => 0
+            [size] => 2944564
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-11 17:21:44
+    [file] => Array
+        (
+            [name] => 2016010077 M36314DN4_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpLAOype
+            [error] => 0
+            [size] => 1923970
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 17:56:12
+    [file] => Array
+        (
+            [name] => 2016010071_I3054.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php35ITkv
+            [error] => 0
+            [size] => 1545794
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-11 18:20:11
+    [file] => Array
+        (
+            [name] => 1601274 418-6 TIER SINGLE SHOE RACK.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpWlD6bx
+            [error] => 0
+            [size] => 1542074
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => CBLAU
+    [time] => 2016-01-11 18:21:13
+    [file] => Array
+        (
+            [name] => 1601274 418-6 TIER SINGLE SHOE RACK_QC.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpi0xt3J
+            [error] => 0
+            [size] => 1715159
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-11 18:21:57
+    [file] => Array
+        (
+            [name] => 2016010071_C-256_I3054_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpohkYEv
+            [error] => 0
+            [size] => 1370975
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL5
+    [time] => 2016-01-11 18:57:57
+    [file] => Array
+        (
+            [name] => 16010621_DAILY VEGETABLE COOKING OIL 4 X 5L.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpJ5fdOi
+            [error] => 0
+            [size] => 3110744
+        )
+
+    [file_exists] => true
+)

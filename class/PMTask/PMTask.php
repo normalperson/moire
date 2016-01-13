@@ -757,6 +757,7 @@ $(function () {
 		global $DB;
 		$html = "";
 		$o = new $r['pmf_obj_type']($r['pmf_obj_id']);
+		if (!$o || !$o->id) return;
 		$startdate = new DateTime($r['pmf_start_date']);
 		$enddate = new DateTime($r['pmf_end_date']);
 		$duedate = new DateTime($r['pmf_due_date']);

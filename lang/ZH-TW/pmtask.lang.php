@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 06-01-2015 10:44:04*/
+/*Last Modified by DWSUPER on 08-07-2015 18:18:57*/
 $translate = array (
   'Artwork job' => '美工訂單',
   'New Job' => '新增訂單',
@@ -31,5 +31,11 @@ $translate = array (
   'You\'ve received a new task' => 'You\'ve received a new task',
   'Artwork job ' => '圖稿訂單',
   'New Job ' => '新訂單',
+  'Pending acceptance ' => 'Pending acceptance ',
+  'Pending resolution  ' => 'Pending resolution  ',
+  'Work in progress  ' => 'Work in progress  ',
+  'Acknowledge Job ' => 'Acknowledge Job ',
+  'Requirement verification ' => 'Requirement verification ',
+  'Pending check (QC) ' => 'Pending check (QC) ',
 );
 ?>

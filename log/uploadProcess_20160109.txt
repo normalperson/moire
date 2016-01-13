@@ -1,0 +1,212 @@
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-09 09:29:18
+    [file] => Array
+        (
+            [name] => 2016010054_1601173 DA EARN SCREED WP (BLACK) APACK.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpai2YKr
+            [error] => 0
+            [size] => 22709894
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-09 09:58:14
+    [file] => Array
+        (
+            [name] => 16010508 LPP0059  6 x 4L HI-REV ATF MV-1 Ctn.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpNwpGur
+            [error] => 0
+            [size] => 3328451
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => MY00027
+    [time] => 2016-01-09 10:09:49
+    [file] => Array
+        (
+            [name] => WORKER 40KG.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpdq8RGX
+            [error] => 0
+            [size] => 2379287
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => MY00027
+    [time] => 2016-01-09 10:16:13
+    [file] => Array
+        (
+            [name] => WORKER 25KG.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpRAaUff
+            [error] => 0
+            [size] => 2177715
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => MY00027
+    [time] => 2016-01-09 10:33:38
+    [file] => Array
+        (
+            [name] => CONTAINER ARTWORK.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpvGxg5U
+            [error] => 0
+            [size] => 1281343
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-09 10:51:29
+    [file] => Array
+        (
+            [name] => 16010508 LPP0059  6 x 4L HI-REV ATF MV-1 Ctn_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpkB6bjr
+            [error] => 0
+            [size] => 3319485
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-09 11:20:39
+    [file] => Array
+        (
+            [name] => 2016010054_1601173 DA EARN SCREED WP (BLACK) APACK.zip
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-09 11:20:59
+    [file] => Array
+        (
+            [name] => 16010509  LPP0062  6 x 4L HI-REV Lubricants 7240 Smart Phone Holder Ptd Ctn.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpx85PJj
+            [error] => 0
+            [size] => 17599678
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-09 11:39:00
+    [file] => Array
+        (
+            [name] => 16010509  LPP0062  6 x 4L HI-REV Lubricants 7240 Smart Phone Holder Ptd Ctn_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpgDFHTo
+            [error] => 0
+            [size] => 17370680
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-01-09 12:23:43
+    [file] => Array
+        (
+            [name] => 2016010054_1601173 DA EARN SCREED WP (BLACK) APACK_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpKgie6D
+            [error] => 0
+            [size] => 22731884
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-09 12:39:01
+    [file] => Array
+        (
+            [name] => 6010083 DUNCA Ice VODKA 24.zip
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-09 12:44:43
+    [file] => Array
+        (
+            [name] => 6010083 DUNCA Ice VODKA 24.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phppwS1Fg
+            [error] => 0
+            [size] => 194101128
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-01-09 12:45:35
+    [file] => Array
+        (
+            [name] => 2016010067_WORKER 40KG.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpSSs5YR
+            [error] => 0
+            [size] => 2681078
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => CBLAU
+    [time] => 2016-01-09 12:56:05
+    [file] => Array
+        (
+            [name] => 6010083 DUNCA Ice VODKA 24_QC.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpqpOb5s
+            [error] => 0
+            [size] => 100279548
+        )
+
+    [file_exists] => true
+)

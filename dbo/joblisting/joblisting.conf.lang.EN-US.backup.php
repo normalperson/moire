@@ -93,6 +93,7 @@ $dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text'
 $dbo->cols['js_forwardtocusttime']->caption->set('default', 'Completed Date', 'text');
 $dbo->cols['js_color_9']->caption->set('default', 'Color 9', 'text');
 $dbo->cols['org_name']->caption->set('default', 'Customer ', 'text');
+$dbo->cols['js_custrejectreason']->caption->set('default', 'js_custrejectreason', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';
