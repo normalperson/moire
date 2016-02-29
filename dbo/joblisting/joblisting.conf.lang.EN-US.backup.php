@@ -90,7 +90,7 @@ $dbo->cols['js_cartonsize_top']->caption->set('default', 'js_cartonsize_top', 't
 $dbo->cols['js_cartonsize_bottom']->caption->set('default', 'js_cartonsize_bottom', 'text');
 $dbo->cols['js_expectdelivery']->caption->set('default', 'Expected Delivery', 'text');
 $dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text');
-$dbo->cols['js_forwardtocusttime']->caption->set('default', 'Completed Date', 'text');
+$dbo->cols['js_forwardtocusttime']->caption->set('default', 'Forwarded to <br>customer datetime', 'text');
 $dbo->cols['js_color_9']->caption->set('default', 'Color 9', 'text');
 $dbo->cols['org_name']->caption->set('default', 'Customer ', 'text');
 $dbo->cols['js_custrejectreason']->caption->set('default', 'js_custrejectreason', 'text');
