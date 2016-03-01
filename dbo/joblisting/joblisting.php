@@ -55,7 +55,6 @@ function dbo_joblisting_customize(&$dbo){
 	global $GLOBAL,$USER,$DB;
 	autoDetailTableInput($dbo);
 	list($currentOrgId, $currentOrgExternal) = $DB->getRow("select org_id, org_external from fcuserorgrole join fcorg on uor_orgid = org_id where uor_id = :0 and uor_rolid = :1", array($USER->userorgroleid, $USER->roleid));
-	
 	if($currentOrgExternal=='Y'){
 		$dbo->whereSQL = "js_orgid = ".$USER->orgid;
 		$dbo->colSearch = array('pmc_id', 'js_code', 'js_status', 'js_request_date', 'js_description', 'js_primcat', 'js_assignto');

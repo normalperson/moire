@@ -59,7 +59,7 @@ $dbo->cols['filehistory']->caption->setTabCaption('default', 'File history', 'te
 $dbo->cols['pmc_id']->caption->set('default', 'Job ID', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
 $dbo->cols['js_jobcolor']->caption->set('default', 'Color of job', 'text');
-$dbo->cols['joboutput']->caption->set('default', 'Output Requirement', 'text');
+$dbo->cols['joboutput']->caption->set('default', 'Customer Requirement', 'text');
 $dbo->cols['printbutton']->caption->set('default', ' ', 'text');
 $dbo->cols['js_lpi']->caption->set('default', 'LPI', 'text');
 $dbo->cols['js_mcid']->caption->set('default', 'Printer Name', 'text');

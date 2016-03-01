@@ -1303,7 +1303,12 @@ $dbo->cols['js_custrejectreason']->exportUseLookup = true;
 $dbo->cols['js_custrejectreason']->searchMode = 'exact';
 $dbo->cols['js_custrejectreason']->capContClassDefault = array();
 $dbo->cols['js_custrejectreason']->valContClassDefault = array();
-$dbo->cols['js_custrejectreason']->option->defaultMethod = 'text';
+$dbo->cols['js_custrejectreason']->option->default = 'select lu_code,lu_title
+from fclookup 
+where lu_cat = \'QCLIST\'
+order by lu_title
+';
+$dbo->cols['js_custrejectreason']->option->defaultMethod = 'sql';
 $dbo->cols['js_custrejectreason']->option->searchMethod = 'text';
 $dbo->cols['js_custrejectreason']->option->listMethod = 'text';
 $dbo->cols['js_custrejectreason']->option->detailMethod = 'text';

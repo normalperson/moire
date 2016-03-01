@@ -435,7 +435,7 @@ class Home{
 	function showJobList(){
 		global $GLOBAL;
 		html_header();
-		if( isset($GLOBAL['dbosess']['joblisting']) && count($GLOBAL['dbosess']['joblisting']) > 0 ) unset($GLOBAL['dbosess']['joblisting']);
+		if( isset($_GET['frompage']) && isset($GLOBAL['dbosess']['joblisting']) && count($GLOBAL['dbosess']['joblisting']) > 0 ) unset($GLOBAL['dbosess']['joblisting']);
 		dbo_include('joblisting');
 	}
 	function showJobWIP(){
