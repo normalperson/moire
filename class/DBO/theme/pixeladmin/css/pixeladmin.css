@@ -483,226 +483,30 @@ div.dbo_theme_pixeladmin table.dbo_list ul.dbo_paging > li.pagesummary > span {
 }
 
 div.dbo_theme_pixeladmin table.dbo_list  a.sortable{
-	color:white;
+	color:#1D89CF;
 }
 
 div.dbo_theme_pixeladmin table.dbo_list  a.sortable:after{
 }
-
 div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc{
-	background:url(images/dbo/asc.png) no-repeat right center;
 	padding-right:13px;
 }
 div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc{
-	background:url(images/dbo/desc.png) no-repeat right center;
 	padding-right:13px;
 }
 
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_1{
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc:after{
+	content: "\f0dd";
+	font-family: FontAwesome;
+	margin: 3px;
 }
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_1:after{
-	content:"1";
-	font-size:0.7em;
-	text-decoration:normal;
-	font-style:italic;
-	margin-left:5px;
-	color:#66ffcc;
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_2{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_2:after{
-	content:"2";
-	font-size:0.7em;
-	text-decoration:normal;
-	font-style:italic;
-	margin-left:5px;
-	color:#66ffcc;
+div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc:after{
+	content: "\f0de";
+	font-family: FontAwesome;
+	margin: 3px;
 }
 
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_3{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_3:after{
-	content:"3";
-	font-size:0.7em;
-	text-decoration:normal;
-	font-style:italic;
-	margin-left:5px;
-	color:#66ffcc;
-}
 
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_4{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_4:after{
-	content:"4";
-	font-size:0.7em;
-	text-decoration:normal;
-	font-style:italic;
-	margin-left:5px;
-	color:#66ffcc;
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_5{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_5:after{
-	content:"5";
-	font-size:0.7em;
-	text-decoration:normal;
-	font-style:italic;
-	margin-left:5px;
-	color:#66ffcc;
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_6{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_6:after{
-	content:"6";
-	font-size:0.7em;
-	text-decoration:normal;
-	font-style:italic;
-	margin-left:5px;
-	color:#66ffcc;
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_7{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_7:after{
-	content:"7";
-	font-size:0.7em;
-	text-decoration:normal;
-	font-style:italic;
-	margin-left:5px;
-	color:#66ffcc;
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_8{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_8:after{
-	content:"8";
-	font-size:0.7em;
-	text-decoration:normal;
-	font-style:italic;
-	margin-left:5px;
-	color:#66ffcc;
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_9{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_9:after{
-	content:"9";
-	font-size:0.7em;
-	text-decoration:normal;
-	font-style:italic;
-	margin-left:5px;
-	color:#66ffcc;
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_1{
-	background:url(images/dbo/asc.png) no-repeat right center;
-	padding-right:13px;
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_1:after{
-	content:" [A1]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_1{
-	background:url(images/dbo/desc.png) no-repeat right center;
-	padding-right:13px;
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_1:after{
-	content:" [D1]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_2{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_2:after{
-	content:" [A2]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_2{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_2:after{
-	content:" [D2]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_3{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_3:after{
-	content:" [A3]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_3{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_3:after{
-	content:" [D3]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_4{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_4:after{
-	content:" [A4]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_4{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_4:after{
-	content:" [D4]";
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_5{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_5:after{
-	content:" [A5]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_5{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_5:after{
-	content:" [D5]";
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_6{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_6:after{
-	content:" [A6]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_6{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_6:after{
-	content:" [D6]";
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_7{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_7:after{
-	content:" [A7]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_7{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_7:after{
-	content:" [D7]";
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_8{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_8:after{
-	content:" [A8]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_8{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_8:after{
-	content:" [D8]";
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_9{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_asc_9:after{
-	content:" [A9]";
-}
-
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_9{
-}
-div.dbo_theme_pixeladmin table.dbo_list  a.sort_desc_9:after{
-	content:" [D9]";
-}
 
 /* detail */
 td.dbo_container_detail td.form_button{

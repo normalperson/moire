@@ -209,8 +209,8 @@ function dbo_jobsheet_customize(&$dbo){
 
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
-		$dbo->cols['joboutput']->option->new = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
-		$dbo->cols['joboutput']->option->edit = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
+		$dbo->cols['joboutput']->option->new = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' and jol_status = 'ACTIVE' order by jol_seq";		
+		$dbo->cols['joboutput']->option->edit = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' and jol_status = 'ACTIVE' order by jol_seq";		
 		$dbo->cols['joboutput']->option->default = "select jol_id,jol_title from mjoboutputlookup";		
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = 'sql';
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = 
@@ -219,8 +219,8 @@ function dbo_jobsheet_customize(&$dbo){
 	else {
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
-		$dbo->cols['joboutput']->option->new = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
-		$dbo->cols['joboutput']->option->edit = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' order by jol_seq";		
+		$dbo->cols['joboutput']->option->new = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' and jol_status = 'ACTIVE' order by jol_seq";		
+		$dbo->cols['joboutput']->option->edit = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' and jol_status = 'ACTIVE' order by jol_seq";		
 		$dbo->cols['joboutput']->option->default = "select jol_id,jol_title from mjoboutputlookup";		
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = $dbo->cols['js_mcid']->option->defaultMethod;
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = $dbo->cols['js_mcid']->option->default;
@@ -747,8 +747,7 @@ $( document ).ready(function() {
 					}else if(jstimemap['JOBOUTP'][opid]['price'][5]=='UNIT'){
 						tmpPrice = parseFloat(jstimemap['JOBOUTP'][opid]['price'][6] * $('#detail-jbc_jsid-table > tbody > tr').length);
 					}
-					if(tmpPrice > price)
-						price = tmpPrice;
+					price += tmpPrice;
 				});
 				// console.log(jstimemap);
 			}

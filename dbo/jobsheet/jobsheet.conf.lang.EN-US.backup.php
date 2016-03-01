@@ -8,6 +8,7 @@ $dbo->cols['js_request_date']->caption->set('default', 'Request date', 'text');
 $dbo->cols['js_request_by']->caption->set('default', 'Requestor', 'text');
 $dbo->cols['js_title']->caption->set('default', 'js_title', 'text');
 $dbo->cols['js_description']->caption->set('default', 'Job description', 'text');
+$dbo->cols['js_description']->caption->setSectionCaption('default', 'Job information', 'text');
 $dbo->cols['js_material_provided']->caption->set('default', 'js_material_provided', 'text');
 $dbo->cols['js_cyan']->caption->set('default', 'Cyan', 'text');
 $dbo->cols['js_cyan']->caption->setTabCaption('default', 'COLOR', 'text');
