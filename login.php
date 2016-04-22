@@ -37,7 +37,7 @@ if(!empty($_POST['username'])){
 				$mail = new Email();
 				// vd($mail); $fromarr['emailadd'], $fromarr['name']
 				$ret = $mail->sendEmail_bySMTP(
-					$fromarr=array('emailadd'=>'noreply@moiregc.com.my', 'name'=>'no-reply-moire'),
+					$fromarr=array('emailadd'=>'moiregc@pddynamic.com', 'name'=>'no-reply-moire'),
 					$replytoarr='',
 					$toaddarr=array(array('emailadd'=>$_POST['forgotemail'], 'name'=>'')),
 					$subject='Moire Reset Password',

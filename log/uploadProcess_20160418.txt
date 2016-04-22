@@ -1,0 +1,646 @@
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 10:01:19
+    [file] => Array
+        (
+            [name] => 2016040112_綜合.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpXelUJN
+            [error] => 0
+            [size] => 14007351
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 13:09:55
+    [file] => Array
+        (
+            [name] => 2016040119_PURE GHEE.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpu66lwn
+            [error] => 0
+            [size] => 3516431
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 13:19:26
+    [file] => Array
+        (
+            [name] => 2016040112_綜合_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpJ3ILss
+            [error] => 0
+            [size] => 4353616
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 13:33:44
+    [file] => Array
+        (
+            [name] => 2016040119_PURE GHEE_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpQtFzpj
+            [error] => 0
+            [size] => 1159694
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-04-18 13:59:40
+    [file] => Array
+        (
+            [name] => 16040868 MOI puffmax vegetable pastry margarine - hard cubes.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php1MJC1m
+            [error] => 0
+            [size] => 2291287
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-04-18 14:00:21
+    [file] => Array
+        (
+            [name] => 16040870 MOI puffmax vegetable pastry margarine - medium cubes.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phphA1ZRk
+            [error] => 0
+            [size] => 2294015
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-04-18 14:00:58
+    [file] => Array
+        (
+            [name] => 16040871 danmax laminating margarine.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpHTq6Fy
+            [error] => 0
+            [size] => 2240364
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL2
+    [time] => 2016-04-18 14:24:45
+    [file] => Array
+        (
+            [name] => 16040863_WELCARE IF-2025_1A03-S08-16D AIR-GUARD SAFETY INFUSION SET_MACRO SINGLE CHAMBER.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phplNEaDU
+            [error] => 0
+            [size] => 12437681
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 14:43:53
+    [file] => Array
+        (
+            [name] => 2016040113_onemed.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpjVad3Z
+            [error] => 0
+            [size] => 4965195
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 14:45:21
+    [file] => Array
+        (
+            [name] => 2016040113_onemed_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_php1XSEAs
+            [error] => 0
+            [size] => 4824725
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL5
+    [time] => 2016-04-18 15:05:42
+    [file] => Array
+        (
+            [name] => 16040857_ASAM JAWA_4 X 4KG.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpFXh45z
+            [error] => 0
+            [size] => 15518562
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL5
+    [time] => 2016-04-18 15:06:58
+    [file] => Array
+        (
+            [name] => 16040858_ASAM JAWA_30 X 500G.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpkmqpfU
+            [error] => 0
+            [size] => 15473648
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 15:18:34
+    [file] => Array
+        (
+            [name] => 16040868 MOI puffmax vegetable pastry margarine - hard cubes.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpRRNhq8
+            [error] => 0
+            [size] => 6637869
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL5
+    [time] => 2016-04-18 15:30:19
+    [file] => Array
+        (
+            [name] => 16040890_WATAN MOMIN PURE VEGETABLE OIL_2 X 7 LTR.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpwJuz9W
+            [error] => 0
+            [size] => 3608326
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 15:41:29
+    [file] => Array
+        (
+            [name] => 16040868 MOI puffmax vegetable pastry margarine - hard cubes_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpvL1HO3
+            [error] => 0
+            [size] => 5048586
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 16:12:47
+    [file] => Array
+        (
+            [name] => 16040868 MOI puffmax vegetable pastry margarine - hard cubes.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpntzZhb
+            [error] => 0
+            [size] => 6637830
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 16:13:23
+    [file] => Array
+        (
+            [name] => 16040870 MOI puffmax vegetable pastry margarine - medium cubes.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php1OJ2ss
+            [error] => 0
+            [size] => 6709159
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-18 16:56:36
+    [file] => Array
+        (
+            [name] => Downloads.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpf0wE8q
+            [error] => 0
+            [size] => 105334
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 17:05:26
+    [file] => Array
+        (
+            [name] => 16040868 MOI puffmax vegetable pastry margarine - hard cubes_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpDD7rGV
+            [error] => 0
+            [size] => 5048447
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => PNDJX01
+    [time] => 2016-04-18 17:07:36
+    [file] => Array
+        (
+            [name] => 大华.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpzbp9Sc
+            [error] => 0
+            [size] => 5040164
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 17:10:40
+    [file] => Array
+        (
+            [name] => ATT_1460513752273_11632.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php2jlgzt
+            [error] => 0
+            [size] => 46342850
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 17:11:16
+    [file] => Array
+        (
+            [name] => 16040871 danmax laminating margarine.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpI6A8De
+            [error] => 0
+            [size] => 6418954
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 17:22:56
+    [file] => Array
+        (
+            [name] => 16040863_WELCARE IF-2025_1A03-S08-16D AIR-GUARD SAFETY INFUSION SET_MACRO SINGLE CHAMBER.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpMdOQKd
+            [error] => 0
+            [size] => 17588591
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL5
+    [time] => 2016-04-18 17:26:29
+    [file] => Array
+        (
+            [name] => 16040905_WATAN MOMIN PURE VEGETABLE OIL_4 X 5 LTR.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpxnFcUd
+            [error] => 0
+            [size] => 3322879
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 17:51:18
+    [file] => Array
+        (
+            [name] => 16040870 MOI puffmax vegetable pastry margarine - medium cubes_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpp5J4Vz
+            [error] => 0
+            [size] => 6710048
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 17:53:07
+    [file] => Array
+        (
+            [name] => 16040871 danmax laminating margarine_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpb033sL
+            [error] => 0
+            [size] => 6414098
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 17:55:23
+    [file] => Array
+        (
+            [name] => 16040863_WELCARE IF-2025_1A03-S08-16D AIR-GUARD SAFETY INFUSION SET_MACRO SINGLE CHAMBER_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpLswZTY
+            [error] => 0
+            [size] => 12765701
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-04-18 17:58:48
+    [file] => Array
+        (
+            [name] => 16040908 HLG PM-OC-TACTILE TOUCH NPF1 - X-SMALL.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phphCmqV2
+            [error] => 0
+            [size] => 1741408
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-04-18 17:59:26
+    [file] => Array
+        (
+            [name] => 16040910 HLG PM-OC-TACTILE TOUCH NPF1 - SMALL.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php1T9yc4
+            [error] => 0
+            [size] => 1731207
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-04-18 18:00:01
+    [file] => Array
+        (
+            [name] => 16040911 HLG PM-OC-TACTILE TOUCH NPF1 - MEDIUM.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpLldFkk
+            [error] => 0
+            [size] => 1745913
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-04-18 18:00:31
+    [file] => Array
+        (
+            [name] => 16040912 HLG PM-OC-TACTILE TOUCH NPF1 - LARGE.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpZEYeuZ
+            [error] => 0
+            [size] => 1744622
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL3
+    [time] => 2016-04-18 18:01:00
+    [file] => Array
+        (
+            [name] => 16040913 HLG PM-OC-TACTILE TOUCH NPF1 - X-LARGE.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phppeNtPX
+            [error] => 0
+            [size] => 1772173
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-18 18:11:12
+    [file] => Array
+        (
+            [name] => 絲瓜.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpjOmUzD
+            [error] => 0
+            [size] => 1629181
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-18 18:13:14
+    [file] => Array
+        (
+            [name] => fwn01050022 (1).zip
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-18 18:13:28
+    [file] => Array
+        (
+            [name] => 凱馨-土骨腿切塊550X330X170.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpxmqWmy
+            [error] => 0
+            [size] => 108842
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-18 18:14:13
+    [file] => Array
+        (
+            [name] => 凱馨-烏骨雞切塊420X290X170.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php939dVI
+            [error] => 0
+            [size] => 141537
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 18:28:07
+    [file] => Array
+        (
+            [name] => 2016040111_好康_ATT_1460513752273_11632_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phptBQnag
+            [error] => 0
+            [size] => 9795430
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 18:59:59
+    [file] => Array
+        (
+            [name] => 2016040129_大华.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpy4unUb
+            [error] => 0
+            [size] => 5929590
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 19:23:20
+    [file] => Array
+        (
+            [name] => 2016040129_大华_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpoCqo24
+            [error] => 0
+            [size] => 5751900
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-18 20:28:40
+    [file] => Array
+        (
+            [name] => 2016040120_SUMO.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpw7cja6
+            [error] => 0
+            [size] => 3609186
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-18 20:29:31
+    [file] => Array
+        (
+            [name] => 2016040120_SUMO_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_php7cmZ53
+            [error] => 0
+            [size] => 3280007
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-18 21:19:39
+    [file] => Array
+        (
+            [name] => 6入.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpQ2ZERz
+            [error] => 0
+            [size] => 13063678
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-18 21:54:15
+    [file] => Array
+        (
+            [name] => 20入.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpusv7qq
+            [error] => 0
+            [size] => 4655024
+        )
+
+    [file_exists] => true
+)

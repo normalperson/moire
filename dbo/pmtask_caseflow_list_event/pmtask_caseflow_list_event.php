@@ -1,9 +1,9 @@
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'pmtask_caseflow_list_event.conf.php');
-
 # customization
 function dbo_pmtask_caseflow_list_event_customize(&$dbo){
 	global $GLOBAL, $DB, $USER;
+
 	if (empty($GLOBAL['PMTask_taskid'])) die('missing event id');
 	$dbo->sql = "select a.*,b.*,'' as urgency, '' as actions,c.js_assignto,c.js_orgid, case when pmf_due_date is not null and pmf_due_date <= now() then 'Y' else 'N' end as isdue,
 	".PM_Case::genCaseDescriptionSQL()." as casedesc from fcpmcase a 

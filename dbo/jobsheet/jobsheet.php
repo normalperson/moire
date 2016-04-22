@@ -204,11 +204,14 @@ function dbo_jobsheet_customize(&$dbo){
 	$dbo->editModifier = 'dbo_jobsheet_custom_edit';
 	
 	global $USER, $DB;
+	$custtype = $DB->GetOne("select ox_customertype from morgextra where ox_orgid = :0",array($USER->orgid), PDO::FETCH_ASSOC); // get customer type
 	if ($USER->rolename == 'Customer coordinator') {
 
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
-/*		$dbo->cols['jobcategory']->mandatoryDefault = 1;*/
+		$dbo->cols['joboutput']->option->new = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' and jol_status = 'ACTIVE' order by jol_seq";		
+		$dbo->cols['joboutput']->option->edit = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' and jol_status = 'ACTIVE' order by jol_seq";		
+		$dbo->cols['joboutput']->option->default = "select jol_id,jol_title from mjoboutputlookup";		
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = 'sql';
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = 
 			'select mc_id, mc_name, org_name from mcustmachine join fcorg on mc_orgid = org_id where org_id ='.$USER->orgid.' order by 3,2';
@@ -216,7 +219,9 @@ function dbo_jobsheet_customize(&$dbo){
 	else {
 		$dbo->cols['js_mcid']->mandatoryDefault = 0;
 		$dbo->cols['joboutput']->mandatoryDefault = 0;
-/*		$dbo->cols['jobcategory']->mandatoryDefault = 0;*/
+		$dbo->cols['joboutput']->option->new = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' and jol_status = 'ACTIVE' order by jol_seq";		
+		$dbo->cols['joboutput']->option->edit = "select jol_id,jol_title from mjoboutputlookup where jol_custtype = '".$custtype."' and jol_status = 'ACTIVE' order by jol_seq";		
+		$dbo->cols['joboutput']->option->default = "select jol_id,jol_title from mjoboutputlookup";		
 		$dbo->cols['js_mcid']->option->editMethod = $dbo->cols['js_mcid']->option->newMethod = $dbo->cols['js_mcid']->option->defaultMethod;
 		$dbo->cols['js_mcid']->option->edit = $dbo->cols['js_mcid']->option->new = $dbo->cols['js_mcid']->option->default;
 	}
@@ -259,16 +264,26 @@ function dbo_jobsheet_custom_new($table, $cols){
 	*/
 	// handle file upload if empty 
 	if($cols['attachment'] == '') {
-		/*$ret = "Attachement cannot be empty";
-		return $ret;*/
+		$ret = "Attachment cannot be empty";
+		return array($ret);
 		unset($cols['attachment']);
 	}
 	else{
 		$attachment = json_decode($cols['attachment'],true);
 		// validate rar or zip format
+		if (!$attachment) {
+			$ret = "Attachment cannot be empty";
+			return array($ret);
+		}
+		
+		foreach ($attachment as $att) {
+			if (!file_exists($att['tmp_name'])) $ret[] = "\"{$att['name']}\" missing from uploaded folder";
+		}
+		if ($ret) return $ret;
+		
+		
 		unset($cols['attachment']); 
 	}
-
 	
 	foreach ($cols as $k=>$v) {
 		if (substr($k,0,6) == '__map_') unset($cols[$k]);
@@ -310,17 +325,20 @@ function dbo_jobsheet_custom_new($table, $cols){
 	// determine whether need to calculate conversion
 
 	// get rate
-	$sql = "select cr_rate from fccurrency where curr_code = :0";
+	$sql = "select curr_rate from fccurrency where curr_code = :0";
 	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
-	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
+/*	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
 		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
 
 	}else{
 		$cols['js_finalprice'] = $price;
 		$cols['js_rate'] = $rate;
-	}
+	}*/
+
+	$cols['js_finalprice'] = $price;
+	$cols['js_rate'] = $rate;
 
 	
 	$cols['js_code'] = $currmth.str_pad($ind, 4, "0", STR_PAD_LEFT);
@@ -422,6 +440,14 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	}
 	else{
 		$attachment = json_decode($cols['attachment'],true);
+		
+		if ($attachment) {
+			foreach ($attachment as $att) {
+				if (!file_exists($att['tmp_name'])) $ret[] = "\"{$att['name']}\" missing from uploaded folder";
+			}
+			if ($ret) return $ret;
+		}
+		
 		// validate rar or zip format
 		unset($cols['attachment']); 
 	}
@@ -461,7 +487,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	$rate = $DB->GetOne($sql,array($cols['js_currency']), PDO::FETCH_ASSOC);
 
 	// determine whether need to calculate conversion
-	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
+/*	if($basecurr != $cols['js_currency'] && $rowdata['rg_convert'] == 'Y'){
 
 		$cols['js_finalprice'] =  bcdiv($price, $rate, 2);
 		$cols['js_rate'] = $rate;
@@ -469,7 +495,10 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 	}else{
 		$cols['js_finalprice'] = $price;
 		$cols['js_rate'] = $rate;
-	}
+	}*/
+
+	$cols['js_finalprice'] = $price;
+	$cols['js_rate'] = $rate;
 
 	$ok = $DB->doUpdate($table, $cols, $wheres);
 	if(!$ok){
@@ -562,6 +591,7 @@ function dbo_jobsheet_custom_edit($table, $cols, $wheres){
 }
 
 global $DB,$USER;
+$ctype = $DB->GetOne("select ox_customertype from morgextra where ox_orgid = :0",array($USER->orgid), PDO::FETCH_ASSOC); // get customer type
 $sql = "select * from mjobcatlookup";
 $data = $DB->GetArray($sql,null, PDO::FETCH_ASSOC);
 // get base currency
@@ -573,8 +603,8 @@ $rowdata = $DB->GetRow($sql,array($USER->orgid), PDO::FETCH_ASSOC);
 $sql = "select curr_rate from fccurrency where curr_code = :0";
 $rate = $DB->GetOne($sql,array($rowdata['rg_currency']), PDO::FETCH_ASSOC);
 
-$timemap = array('JOBCAT'=>array(), 'JOBOUTP'=>array());
-foreach ($data as $key => $value) {
+$timemap = array('JOBOUTP'=>array());
+/*foreach ($data as $key => $value) {
 	$timemap['JOBCAT'][$value['jcl_id']] = array(
 		'time'=> array(
 			1=>$value['jcl_requiretime_color_1'],
@@ -592,20 +622,21 @@ foreach ($data as $key => $value) {
 		),
 		'title'=> $value['jcl_title'],
 	);
-}
+}*/
 $data = $DB->GetArray("select * from mjoboutputlookup",null, PDO::FETCH_ASSOC);
 foreach ($data as $key => $value) {
 	$timemap['JOBOUTP'][$value['jol_id']] = array(
 		1=>$value['jol_requiredtime'],
 		'title'=>$value['jol_title'],
 		'price'=> array(
-			0=>null,
-			1=>$value['jol_price_color_1'],
-			2=>$value['jol_price_color_2'],
-			3=>$value['jol_price_color_3'],
-			4=>$value['jol_price_color_4'],
+			0=>0,
+			1=>(trim($value['jol_price_color_1']))==''?0:trim($value['jol_price_color_1']),
+			2=>(trim($value['jol_price_color_2']))==''?0:trim($value['jol_price_color_2']),
+			3=>(trim($value['jol_price_color_3']))==''?0:trim($value['jol_price_color_3']),
+			4=>(trim($value['jol_price_color_4']))==''?0:trim($value['jol_price_color_4']),
 			5=>$value['jol_pricingtype'],
-			6=>$value['jol_price']
+			6=>$value['jol_price'],
+			7=>$value['jol_custtype']
 		)
 	);
 }
@@ -613,7 +644,8 @@ echo '<script type="text/javascript"> var jstimemap = '.json_encode($timemap).';
 echo '<script type="text/javascript"> var currdata = '.json_encode($rowdata).'; </script>';
 echo '<script type="text/javascript"> var basecurr = \''.$basecurr.'\'; </script>';
 echo '<script type="text/javascript"> var rate = '.$rate.'; </script>';
-
+echo '<script type="text/javascript"> var ctype = \''.$ctype.'\'; </script>';
+echo '<script type="text/javascript"> var dbostate = \''.$_GET['dbostate'].'\'; </script>';
 
 
 # final rendering
@@ -715,8 +747,7 @@ $( document ).ready(function() {
 					}else if(jstimemap['JOBOUTP'][opid]['price'][5]=='UNIT'){
 						tmpPrice = parseFloat(jstimemap['JOBOUTP'][opid]['price'][6] * $('#detail-jbc_jsid-table > tbody > tr').length);
 					}
-					if(tmpPrice > price)
-						price = tmpPrice;
+					price += tmpPrice;
 				});
 				// console.log(jstimemap);
 			}
@@ -737,10 +768,6 @@ $( document ).ready(function() {
 				}			
 			}); */
 			// currency exchange
-			console.log('basecurr '+basecurr);
-			console.log('rate '+rate);
-			console.log('currdata');
-			console.log(currdata);
 			
 			if(basecurr != currdata.rg_currency && currdata.rg_convert == 'Y'){
 			    console.log('price before calculate = '+price);
@@ -840,8 +867,8 @@ $( document ).ready(function() {
 	var $barcodeTable = $('.dbo_edit #detail-jbc_jsid-table, .dbo_new #detail-jbc_jsid-table');
 	function setBarcodeProp() {
 		if ($outputjob.filter(':checked').filter(function () {
-			if (typeof jstimemap['JOBCAT'][this.value] != 'undefined' &&
-			jstimemap['JOBCAT'][this.value]['title'].toUpperCase() == 'BARCODE') return true;
+			if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
+			jstimemap['JOBOUTP'][this.value]['title'].toUpperCase().substring(0, 7) == 'BARCODE') return true;
 			return false;
 		}).length > 0) {
 			$barcodeTable.removeClass('disabled');
@@ -865,34 +892,42 @@ $( document ).ready(function() {
 	}).change();
 	
 	
-	// carton type enabling
-	/*var $cartonTypeInp = $('#dbo_jobsheet_new_js_carid, #dbo_jobsheet_edit_js_carid');
-	function setCartonProp() {
-		if ($outputjob.filter(':checked').filter(function () {
-			if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
-			jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'MASTER CARD') return true;
-			return false;
-		}).length > 0) $cartonTypeInp.prop('disabled', false).change();
-		else $cartonTypeInp.val('').prop('disabled', true).change();
-	}
-	$outputjob.click(function () {
-		setCartonProp();
-	})
-	setCartonProp();*/
 
-	$('[name="dbo_jobsheet_new_js_diecut_ind"], [name="dbo_jobsheet_edit_js_diecut_ind"]').change(function(){
-		$this = $(this);
-		if($this.val() == 'Y')	$cartonTypeInp.val('').prop('disabled', true).change();
-		else{
-			if ($outputjob.filter(':checked').filter(function () {
-				if (typeof jstimemap['JOBOUTP'][this.value] != 'undefined' &&
-				jstimemap['JOBOUTP'][this.value]['title'].toUpperCase() == 'MASTER CARD') return true;
-				return false;
-			}).length > 0) $cartonTypeInp.prop('disabled', false).change();
-		}	
-	});
+	// console.log('DBo state = '+dbostate);
+	if(dbostate == 'new' || dbostate == 'edit'){
+		// console.log('inside if');
+		var submitted = false;
+
+	    window.onbeforeunload = function (e) {
+	    	// console.log('before unload');
+	        if (!submitted) {
+	        	// console.log('inside...');
+	            var message = "你肯定你要离开这页吗？", e = e || window.event;
+	            if (e) {
+	                e.returnValue = message;
+	            }
+	            return message;
+	        }
+	    }
+
+	     $("#dbo_jobsheet_newform").submit(function() {
+	     	submitted = true;
+	     });
+
+	     $("#dbo_jobsheet_editform").submit(function() {
+	     	submitted = true;
+	     });
+	     
+
+	     $('.btn-success').click(function(){
+	     	submitted = true;
+	     });
+
+	}
+
 	
 	
 });
+
 
 </script>

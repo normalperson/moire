@@ -18,9 +18,14 @@ $dbo->colEdit = array('lu_cat', 'lu_code', 'lu_parentcode', 'lu_title', 'lu_stat
 $dbo->colSearch = array('lu_cat', 'lu_code', 'lu_parentcode', 'lu_title', 'lu_status', 'lu_id');
 $dbo->colExport = array('lu_cat', 'lu_code', 'lu_parentcode', 'lu_title', 'lu_status', 'lu_id');
 $dbo->colSort = array();
+$dbo->colSum = array();
+$dbo->colSumPage = array();
+$dbo->colAvg = array();
+$dbo->colAvgPage = array();
+$dbo->colGroupable = array();
 $dbo->canSearch = true;
 $dbo->canNew = true;
-$dbo->canEdit = false;
+$dbo->canEdit = true;
 $dbo->canDelete = true;
 $dbo->canDetail = false;
 $dbo->canListEdit = false;
@@ -28,6 +33,7 @@ $dbo->canListNew = false;
 $dbo->canNewGroup = array();
 $dbo->canEditGroup = array();
 $dbo->canDeleteGroup = array();
+$dbo->listEditToggle = false;
 $dbo->showSearch = true;
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';
@@ -37,19 +43,23 @@ $dbo->titleSearch = 'Search Record';
 $dbo->layoutNew = '1|1';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
-$dbo->pageLinkCount = 7;
-$dbo->recordPerPage = 10;
-$dbo->showRecordNo = 1;
+$dbo->pageLinkCount = '7';
+$dbo->recordPerPage = '10';
+$dbo->showRecordNo = '1';
 $dbo->defaultState = 'list';
-$dbo->maxSortCount = 9;
+$dbo->maxSortCount = '9';
+$dbo->defaultDateFormat = 'yyyy-mm-dd';
+$dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
+$dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
-$dbo->render = array();
+$dbo->pdfEngine = 'dompdf';
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
 
 $dbo->cols['lu_cat'] = new DBO_COL('lu_cat', 'varchar', '-1', '16');
 $dbo->cols['lu_cat']->inputTypeDefault = 'text';
 $dbo->cols['lu_cat']->inputTypeSearch = 'select';
+$dbo->cols['lu_cat']->exportUseLookup = true;
 $dbo->cols['lu_cat']->searchMode = 'exact';
 $dbo->cols['lu_cat']->capContClassDefault = array();
 $dbo->cols['lu_cat']->valContClassDefault = array();
@@ -63,6 +73,7 @@ $dbo->cols['lu_cat']->option->newMethod = 'text';
 $dbo->cols['lu_cat']->option->editMethod = 'text';
 $dbo->cols['lu_code'] = new DBO_COL('lu_code', 'varchar', '-1', '54');
 $dbo->cols['lu_code']->inputTypeDefault = 'text';
+$dbo->cols['lu_code']->exportUseLookup = true;
 $dbo->cols['lu_code']->searchMode = 'exact';
 $dbo->cols['lu_code']->capContClassDefault = array();
 $dbo->cols['lu_code']->valContClassDefault = array();
@@ -74,6 +85,7 @@ $dbo->cols['lu_code']->option->newMethod = 'text';
 $dbo->cols['lu_code']->option->editMethod = 'text';
 $dbo->cols['lu_parentcode'] = new DBO_COL('lu_parentcode', 'varchar', '-1', '16');
 $dbo->cols['lu_parentcode']->inputTypeDefault = 'text';
+$dbo->cols['lu_parentcode']->exportUseLookup = true;
 $dbo->cols['lu_parentcode']->searchMode = 'exact';
 $dbo->cols['lu_parentcode']->capContClassDefault = array();
 $dbo->cols['lu_parentcode']->valContClassDefault = array();
@@ -83,8 +95,9 @@ $dbo->cols['lu_parentcode']->option->listMethod = 'text';
 $dbo->cols['lu_parentcode']->option->detailMethod = 'text';
 $dbo->cols['lu_parentcode']->option->newMethod = 'text';
 $dbo->cols['lu_parentcode']->option->editMethod = 'text';
-$dbo->cols['lu_title'] = new DBO_COL('lu_title', 'varchar', '-1', '54');
+$dbo->cols['lu_title'] = new DBO_COL('lu_title', 'varchar', '-1', '204');
 $dbo->cols['lu_title']->inputTypeDefault = 'text';
+$dbo->cols['lu_title']->exportUseLookup = true;
 $dbo->cols['lu_title']->searchMode = 'exact';
 $dbo->cols['lu_title']->capContClassDefault = array();
 $dbo->cols['lu_title']->valContClassDefault = array();
@@ -96,6 +109,7 @@ $dbo->cols['lu_title']->option->newMethod = 'text';
 $dbo->cols['lu_title']->option->editMethod = 'text';
 $dbo->cols['lu_status'] = new DBO_COL('lu_status', 'varchar', '-1', '16');
 $dbo->cols['lu_status']->inputTypeDefault = 'radio';
+$dbo->cols['lu_status']->exportUseLookup = true;
 $dbo->cols['lu_status']->searchMode = 'exact';
 $dbo->cols['lu_status']->capContClassDefault = array();
 $dbo->cols['lu_status']->valContClassDefault = array();
@@ -109,6 +123,7 @@ $dbo->cols['lu_status']->option->newMethod = 'text';
 $dbo->cols['lu_status']->option->editMethod = 'text';
 $dbo->cols['lu_id'] = new DBO_COL('lu_id', 'int4', '4', '-1');
 $dbo->cols['lu_id']->inputTypeDefault = 'text';
+$dbo->cols['lu_id']->exportUseLookup = true;
 $dbo->cols['lu_id']->searchMode = 'exact';
 $dbo->cols['lu_id']->capContClassDefault = array();
 $dbo->cols['lu_id']->valContClassDefault = array();
@@ -133,8 +148,15 @@ $dbo->saveDir = dirname(dirname(__FILE__));
 $dbo->run();
 
 /*
+# enable overwriting DBO class
+class DBO_custom_lookup extends DBO{
+	function __construct(){
+		parent::__construct();
+	}
+}
+
 $dbo->newModifier = 'dbo_lookup_custom_new';
-function dbo_lookup_custom_new($table, $cols){
+function dbo_lookup_custom_new($table, $cols, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -145,7 +167,7 @@ function dbo_lookup_custom_new($table, $cols){
 }
 
 $dbo->editModifier = 'dbo_lookup_custom_edit';
-function dbo_lookup_custom_edit($table, $cols, $wheres){
+function dbo_lookup_custom_edit($table, $cols, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -156,11 +178,11 @@ function dbo_lookup_custom_edit($table, $cols, $wheres){
 }
 
 $dbo->searchModifier = 'dbo_lookup_custom_search';
-function dbo_lookup_custom_search(&$search){
+function dbo_lookup_custom_search(&$search, $dbo){
 }
 
 $dbo->deleteModifier = 'dbo_lookup_custom_delete';
-function dbo_lookup_custom_delete($table, $wheres){
+function dbo_lookup_custom_delete($table, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);

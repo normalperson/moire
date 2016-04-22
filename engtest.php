@@ -1,10 +1,5 @@
 <?php
-$data = array(
-				'js_status'=>'CANCELLED',
-				'js_decision'=>'Cancel',
-			);
-$cremark = array('js_cancelremark' => '1234');
-$data = array_merge($data, $cremark);
-
-var_dump($data);
-?>
+include_once('init.inc.php');
+html_header();
+global $HTML;
+echo "1234";

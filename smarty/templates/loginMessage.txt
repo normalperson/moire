@@ -1,5 +1,4 @@
-<h2>Message Board</h2>
-<div>Welcome message </div>
+<h2>MOIRE wish you Happy Chinese New Year </h2>
 
 
 

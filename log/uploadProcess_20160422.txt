@@ -1,0 +1,60 @@
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-22 09:09:54
+    [file] => Array
+        (
+            [name] => 2016040161_牙線棒.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpz1Hnii
+            [error] => 0
+            [size] => 1866317
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-22 09:11:01
+    [file] => Array
+        (
+            [name] => 2016040161_牙線棒_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpnVQXe7
+            [error] => 0
+            [size] => 1859614
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-22 09:31:35
+    [file] => Array
+        (
+            [name] => 16041121_MOI_KRISPI SHORTENING (SMP 36-39) 20KG.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpx7BPQO
+            [error] => 0
+            [size] => 3377091
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-22 10:02:41
+    [file] => Array
+        (
+            [name] => 16041121_MOI_KRISPI SHORTENING (SMP 36-39) 20KG_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpbiphoG
+            [error] => 0
+            [size] => 3373314
+        )
+
+    [file_exists] => true
+)

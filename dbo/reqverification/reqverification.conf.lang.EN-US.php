@@ -70,6 +70,22 @@ $dbo->cols['js_currency']->caption->set('default', 'js_currency', 'text');
 $dbo->cols['js_finalprice']->caption->set('default', 'js_finalprice', 'text');
 $dbo->cols['js_rate']->caption->set('default', 'js_rate', 'text');
 $dbo->cols['js_totalinch']->caption->set('default', 'js_totalinch', 'text');
+$dbo->cols['js_color_6']->caption->set('default', 'js_color_6', 'text');
+$dbo->cols['js_color_7']->caption->set('default', 'js_color_7', 'text');
+$dbo->cols['js_color_8']->caption->set('default', 'js_color_8', 'text');
+$dbo->cols['js_cartonsize_g']->caption->set('default', 'js_cartonsize_g', 'text');
+$dbo->cols['js_cartonsize_l1']->caption->set('default', 'js_cartonsize_l1', 'text');
+$dbo->cols['js_cartonsize_w2']->caption->set('default', 'js_cartonsize_w2', 'text');
+$dbo->cols['js_cartonsize_l3']->caption->set('default', 'js_cartonsize_l3', 'text');
+$dbo->cols['js_cartonsize_w4']->caption->set('default', 'js_cartonsize_w4', 'text');
+$dbo->cols['js_cartonsize_height']->caption->set('default', 'js_cartonsize_height', 'text');
+$dbo->cols['js_cartonsize_top']->caption->set('default', 'js_cartonsize_top', 'text');
+$dbo->cols['js_cartonsize_bottom']->caption->set('default', 'js_cartonsize_bottom', 'text');
+$dbo->cols['js_expectdelivery']->caption->set('default', 'js_expectdelivery', 'text');
+$dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text');
+$dbo->cols['js_forwardtocusttime']->caption->set('default', 'js_forwardtocusttime', 'text');
+$dbo->cols['js_color_9']->caption->set('default', 'js_color_9', 'text');
+$dbo->cols['js_custrejectreason']->caption->set('default', 'js_custrejectreason', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Job Detail';
@@ -105,5 +121,10 @@ $dbo->text->sumPageGroup = 'Total (Group)';
 $dbo->text->avg = 'Average';
 $dbo->text->avgPage = 'Average (Page)';
 $dbo->text->avgPageGroup = 'Average (Group)';
+$dbo->text->listListEditToggle = 'Edit Toggle';
+$dbo->text->messageConfirmDelete = ' ';
+$dbo->text->messageConfirmMultipleDelete = ' ';
+$dbo->text->defaultMessageConfirmDelete = 'Confirm delete?';
+$dbo->text->defaultMessageConfirmMultipleDelete = 'Confirm delete?';
 
 ?>

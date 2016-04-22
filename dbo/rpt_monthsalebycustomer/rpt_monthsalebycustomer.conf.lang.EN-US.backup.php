@@ -9,6 +9,7 @@ $dbo->cols['totalcompleted']->caption->set('default', 'Total Completed', 'text')
 $dbo->cols['to_char']->caption->set('default', 'to_char', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'Month', 'text');
 $dbo->cols['dateinnum']->caption->set('default', 'dateinnum', 'text');
+$dbo->cols['org_id']->caption->set('default', 'org_id', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

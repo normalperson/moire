@@ -1,111 +1,102 @@
-<style type="text/css">
-table.doctable > thead > tr > th {
-	padding: 3px; 
-	line-height: 1.42857143;
-	vertical-align: top;
-	border-top: 1px solid #e4e4e4;
-}
-</style>
 <div id="{$id}">
-<div class="row">
-<div class="col-md-12">
-	{if count($docinfo) > 0}
-		<button class="btn btn-primary disabled docdownload pull-right"  name="docdownload" disabled="disabled">{'Download'|tl:false:'filehistory'}</button>
-	{/if}
-</div>
-{if count($docinfo) > 0}
-<div class="col-md-12">
-<table class="table table-striped doctable">
-	<thead>
-		<tr>
-			<th>
-				<label class="px-single" style="margin: 2px 3px 0 0"><input type="checkbox" value="0" class="px checkall"><span class="lbl"></span></label>
-			</th>
-			<th>{'Created date'|tl:true:'filehistory'}</th>
-			<th>{'Created by'|tl:true:'filehistory'}</th>
-			<th>{'File name'|tl:true:'filehistory'}</th>
-			<th>{'File ext'|tl:true:'filehistory'}</th>
-			<th>{'File size'|tl:true:'filehistory'}</th>
-		</tr>
-	</thead>
-	<tbody>
-		{counter assign=i start=1}	
-		{foreach from=$docinfo item="di"}				
-		<tr>
-			<td><label class="px-single" style="margin: 2px 3px 0 0">
-				<input type="checkbox" name="fid[]" value="{$di.fd_id}" class="px"><span class="lbl"></span></label>
-			</td>
-			<td>{$di.fd_created_date|date_format:'Y-m-d H:i:s'}</td>
-			<td>{$di.fd_created_by}</td>
-<!-- 			<td>{$di.fd_description}</td> -->
-			<td>{$di.fd_file_name}
-				{if $i eq 1}&nbsp;&nbsp;<a href="#" class="label label-warning">Latest</a>
-				{/if}
-			</td>
-			<td>{$di.fd_file_ext}</td>
-			<td>{$di.fd_file_size}</td>
-		</tr>
-		{counter}
-		{/foreach}
-	</tbody>
-</table>
-</div>
-</div> <!-- end of row -->
-{else}
-<div class="alert alert-info">
-	No files was uploaded
-</div>
+	<table class="table table-hover doctable">
+		<thead>
+			<tr>
+				<th>
+					<label class="px-single" style="margin: 2px 3px 0 0"><input type="checkbox" class="px checkall"><span class="lbl"></span></label>
+				</th>
+	{foreach from=$cols item="desc" key="code"}
+				<th>{$desc}</th>
+	{/foreach}
+				<th style='text-align:right'>
+					<button class="btn btn-xs btn-labeled btn-info doc-download-bulk"><span class="btn-label icon fa fa-download"></span>Bulk Download</button>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach from=$docinfo item="di"}			
+			<tr>
+				<td>
+					<label class="px-single" style="margin: 2px 3px 0 0">
+					<input type="checkbox" name="fid[]" value="{$di.fd_id}" class="px"><span class="lbl"></span></label>
+				</td>
+	{foreach from=$cols item="desc" key="code"}
+				<td>
+		{if $code == 'fd_created_date'}
+					{$di[$code]|date_format:'j-M-Y g:i A'}
+		{else}
+					{$di[$code]}
+		{/if}
+				</td>
+	{/foreach}
+				<td style='text-align:right'>
+					<button class="btn btn-xs btn-labeled doc-download" data-fdid="{$di.fd_id}">
+						<span class="btn-label icon fa fa-download"></span>Download
+					</button>
+{if $candelete}
+					<button type="button" class="close doc-remove" style='margin-left:15px' data-fdid="{$di.fd_id}">×</button>
 {/if}
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
 </div>
 <script type="text/javascript">
 (function(){
 	var container = $('#{$id}'),
-		$button = container.find('button.docdownload'),
+		$bulkbutton = container.find('button.doc-download-bulk'),
 	    $allcheckboxes = container.find('input:checkbox'),
 	    downloadurl = '{$downloadurl}',
 	    reftype = '{$reftype}';
 {literal}
-   	container.find('.checkall').on('click', function () {
-    	$allcheckboxes.prop('checked',this.checked);
-    });
+	container.on('click', '.doc-download', function (e) {
+		e.preventDefault();
+		doSubmit(downloadurl, {'reftype':reftype, 'docid':$(this).data('fdid')}, 'post', "_blank");
+	})
 
-    $allcheckboxes.change(function(){
-    	if($allcheckboxes.filter(':checked').length > 0){
-	 		$button.attr("disabled",false)
-	 		       .removeClass('disabled');
+	function autoToggleBulkButton() {
+		if($allcheckboxes.filter(':checked').length > 0){
+	 		$bulkbutton.attr("disabled",false).removeClass('disabled');
 	 	}else{
-	 		$button.attr( 'disabled', true )
-	 		       .addClass('disabled');
+	 		$bulkbutton.attr( 'disabled', true ).addClass('disabled');
 	 	}
+	}
+    $allcheckboxes.change(autoToggleBulkButton);
+	container.find('.checkall').on('click', function () {
+    	$allcheckboxes.prop('checked',this.checked);
+		autoToggleBulkButton();
     });
-
-    $button.click(function(){
-    	//console.log('Download url = '+downloadurl);
-
-/*    	var docid = [];
-    	var $form = $('<form>').attr({'action':downloadurl, 'method':'post'});
-
-    	$('<input type="hidden" name="reftype" value="'+reftype+'"/>').appendTo($form);
-    	$allcheckboxes.filter(':checked').each(function(){
-    		$('<input type="hidden" name="docid[]" value="'+$(this).val()+'"/>').appendTo($form);
-    	});*/
-
-    	/*$form.submit();*/
-
-		var docid = [];    	
-		$allcheckboxes.filter(':checked').each(function(){
-			docid.push($(this).val());
-		});		
-
-    	json = JSON.stringify(docid);
-    	window.open(downloadurl+'?reftype='+reftype+'&docid='+json,'_blank'); 
-
-    });
-
+	autoToggleBulkButton();
+	container.on('click', '.doc-download-bulk', function (e) {
+		e.preventDefault();
+		var docIDs = $allcheckboxes.filter(':checked:not(.checkall)').map(function(){
+			return $(this).val();
+		}).get();
+		doSubmit(downloadurl, {'reftype':reftype, 'docid':docIDs}, 'post', "_blank");
+	});
+{/literal}
+{if $candelete}
+{literal}
+	container.on('click', '.doc-remove', function (e) {
+		e.preventDefault();
+		var $this = $(this),
+			docid = $this.data('fdid');
+		bootbox.confirm({
+			message: "Are you sure you want to remove this file?",
+			callback: function(result) {
+				if (result) {
+					ajaxGetJSON('DocManUI::delete', [docid], function (ret) {
+						$this.closest('tr').remove();
+					});
+				}
+			},
+			className: "bootbox-sm"
+		});
+	});
+{/literal}
+{/if}
+{literal}
 })();
 {/literal}
-
-
-
-
 </script>

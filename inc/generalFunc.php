@@ -510,7 +510,22 @@ function getUserLang($userid) {
 }
 
 function displaySearchDate(){
-	return array(array('JUL-2014','AUG-2014'));
+
+	$start = '2014-07-01';
+
+	// A DATE TO STOP GENERATING DATA
+	$stop  = date("Y-m-d");
+	$ret = array();
+	// A LOOP TO SHOW THE DATES
+	while ($start <= $stop)
+	{
+	    $start = date('M-Y', strtotime($start));
+	    //echo strtoupper($start).'<br>';
+	    $newdate = array(strtoupper($start),strtoupper($start));
+	    array_push($ret, $newdate);
+	    $start = date('Y-m-01', strtotime($start . ' + 1 MONTH'));
+	}
+	return $ret;
 }
 
 ?>

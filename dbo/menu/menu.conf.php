@@ -4,7 +4,6 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'menu';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
-$dbo->fileSaveMode = 511;
 $dbo->table = 'fcmenu';
 $dbo->key = array('mn_id');
 $dbo->sql = 'select * from fcmenu';
@@ -23,6 +22,7 @@ $dbo->colSum = array();
 $dbo->colSumPage = array();
 $dbo->colAvg = array();
 $dbo->colAvgPage = array();
+$dbo->colGroupable = array();
 $dbo->canSearch = true;
 $dbo->canNew = true;
 $dbo->canEdit = true;
@@ -42,16 +42,17 @@ $dbo->titleSearch = 'Search Menu';
 $dbo->layoutSearch = '1|1';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
-$dbo->pageLinkCount = 5;
-$dbo->recordPerPage = 100;
-$dbo->showRecordNo = 1;
+$dbo->pageLinkCount = '5';
+$dbo->recordPerPage = '100';
+$dbo->showRecordNo = '1';
 $dbo->defaultState = 'search';
-$dbo->maxSortCount = 9;
+$dbo->maxSortCount = '9';
 $dbo->defaultDateFormat = 'yyyy-mm-dd';
 $dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
 $dbo->defaultTimeFormat = 'hh24:min:ss';
 $dbo->lang = 'EN-US';
-$dbo->render = array();
+$dbo->pdfEngine = 'dompdf';
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'displaysearchdate', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_5695e3041dcaa9_86301002', 'testoptiontitle');
 
 $dbo->cols['mn_menu'] = new DBO_COL('mn_menu', 'varchar', '-1', '24');
 $dbo->cols['mn_menu']->inputTypeDefault = 'text';
@@ -85,8 +86,8 @@ $dbo->cols['mn_parentcode']->option->newMethod = 'text';
 $dbo->cols['mn_parentcode']->option->editMethod = 'text';
 $dbo->cols['mn_title'] = new DBO_COL('mn_title', 'varchar', '-1', '54');
 $dbo->cols['mn_title']->inputTypeDefault = 'text';
-$dbo->cols['mn_title']->mandatoryNew = 1;
-$dbo->cols['mn_title']->mandatoryEdit = 1;
+$dbo->cols['mn_title']->mandatoryNew = '1';
+$dbo->cols['mn_title']->mandatoryEdit = '1';
 $dbo->cols['mn_title']->searchMode = 'matchany';
 $dbo->cols['mn_title']->capContClassDefault = array();
 $dbo->cols['mn_title']->valContClassDefault = array();
@@ -189,8 +190,8 @@ $dbo->cols['mn_parentid']->option->newMethod = 'text';
 $dbo->cols['mn_parentid']->option->editMethod = 'text';
 $dbo->cols['mn_code'] = new DBO_COL('mn_code', 'varchar', '-1', '36');
 $dbo->cols['mn_code']->inputTypeDefault = 'text';
-$dbo->cols['mn_code']->mandatoryNew = 1;
-$dbo->cols['mn_code']->mandatoryEdit = 1;
+$dbo->cols['mn_code']->mandatoryNew = '1';
+$dbo->cols['mn_code']->mandatoryEdit = '1';
 $dbo->cols['mn_code']->searchMode = 'matchfront';
 $dbo->cols['mn_code']->capContClassDefault = array();
 $dbo->cols['mn_code']->valContClassDefault = array();
@@ -246,7 +247,7 @@ $dbo->cols['mn_class']->option->detailMethod = 'text';
 $dbo->cols['mn_class']->option->newMethod = 'text';
 $dbo->cols['mn_class']->option->editMethod = 'text';
 $dbo->cols['mn_classlist'] = new DBO_COL('mn_classlist', 'varchar', '-1', '1004');
-$dbo->cols['mn_classlist']->inputTypeDefault = 'text';
+$dbo->cols['mn_classlist']->inputTypeDefault = 'PixelAdminRadioInline';
 $dbo->cols['mn_classlist']->searchMode = 'exact';
 $dbo->cols['mn_classlist']->capContClassDefault = array();
 $dbo->cols['mn_classlist']->valContClassDefault = array();
@@ -388,8 +389,15 @@ $dbo->saveDir = dirname(dirname(__FILE__));
 $dbo->run();
 
 /*
+# enable overwriting DBO class
+class DBO_custom_menu extends DBO{
+	function __construct(){
+		parent::__construct();
+	}
+}
+
 $dbo->newModifier = 'dbo_menu_custom_new';
-function dbo_menu_custom_new($table, $cols){
+function dbo_menu_custom_new($table, $cols, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -400,7 +408,7 @@ function dbo_menu_custom_new($table, $cols){
 }
 
 $dbo->editModifier = 'dbo_menu_custom_edit';
-function dbo_menu_custom_edit($table, $cols, $wheres){
+function dbo_menu_custom_edit($table, $cols, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -411,11 +419,11 @@ function dbo_menu_custom_edit($table, $cols, $wheres){
 }
 
 $dbo->searchModifier = 'dbo_menu_custom_search';
-function dbo_menu_custom_search(&$search){
+function dbo_menu_custom_search(&$search, $dbo){
 }
 
 $dbo->deleteModifier = 'dbo_menu_custom_delete';
-function dbo_menu_custom_delete($table, $wheres){
+function dbo_menu_custom_delete($table, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);

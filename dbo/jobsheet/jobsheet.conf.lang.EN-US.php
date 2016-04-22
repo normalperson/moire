@@ -8,6 +8,7 @@ $dbo->cols['js_request_date']->caption->set('default', 'Request date', 'text');
 $dbo->cols['js_request_by']->caption->set('default', 'Requestor', 'text');
 $dbo->cols['js_title']->caption->set('default', 'js_title', 'text');
 $dbo->cols['js_description']->caption->set('default', 'Job description', 'text');
+$dbo->cols['js_description']->caption->setSectionCaption('default', 'Job information', 'text');
 $dbo->cols['js_material_provided']->caption->set('default', 'js_material_provided', 'text');
 $dbo->cols['js_cyan']->caption->set('default', 'Cyan', 'text');
 $dbo->cols['js_cyan']->caption->setTabCaption('default', 'COLOR', 'text');
@@ -73,7 +74,7 @@ $dbo->cols['pmc_id']->caption->set('default', 'Job ID', 'text');
 $dbo->cols['js_outputtype']->caption->set('default', 'Output type', 'text');
 $dbo->cols['js_outputwidth']->caption->set('default', 'Output width (inch)', 'text');
 $dbo->cols['js_outputheight']->caption->set('default', 'Output height (inch)', 'text');
-$dbo->cols['js_qcchecked']->caption->set('default', 'Quality control list', 'text');
+$dbo->cols['js_qcchecked']->caption->set('default', 'Internal reject reason', 'text');
 $dbo->cols['js_currency']->caption->set('default', 'Currency', 'text');
 $dbo->cols['js_finalprice']->caption->set('default', 'Price', 'text');
 $dbo->cols['js_rate']->caption->set('default', 'js_rate', 'text');
@@ -93,6 +94,7 @@ $dbo->cols['js_expectdelivery']->caption->set('default', 'Expected Delivery Time
 $dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text');
 $dbo->cols['js_forwardtocusttime']->caption->set('default', 'js_forwardtocusttime', 'text');
 $dbo->cols['js_color_9']->caption->set('default', 'Color 9', 'text');
+$dbo->cols['js_custrejectreason']->caption->set('default', 'Customer reject reason', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';
@@ -128,5 +130,10 @@ $dbo->text->sumPageGroup = 'Total (Group)';
 $dbo->text->avg = 'Average';
 $dbo->text->avgPage = 'Average (Page)';
 $dbo->text->avgPageGroup = 'Average (Group)';
+$dbo->text->listListEditToggle = 'Edit Toggle';
+$dbo->text->messageConfirmDelete = ' ';
+$dbo->text->messageConfirmMultipleDelete = ' ';
+$dbo->text->defaultMessageConfirmDelete = 'Confirm delete?';
+$dbo->text->defaultMessageConfirmMultipleDelete = 'Confirm delete?';
 
 ?>

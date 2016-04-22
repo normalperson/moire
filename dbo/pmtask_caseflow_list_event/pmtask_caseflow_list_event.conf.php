@@ -4,7 +4,6 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'pmtask_caseflow_list_event';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
-$dbo->fileSaveMode = 511;
 $dbo->table = 'fcpmcaseflow';
 $dbo->key = array('pmf_id', 'pmf_pmcid');
 $dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions,c.js_assignto,c.js_orgid, case when pmf_due_date is not null and pmf_due_date <= now() then \'Y\' else \'N\' end as isdue,

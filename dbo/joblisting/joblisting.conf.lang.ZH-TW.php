@@ -29,7 +29,6 @@ $dbo->cols['js_bleeding']->caption->set('default', '滲色', 'text');
 $dbo->cols['js_bleeding_remark']->caption->set('default', '滲色備註', 'text');
 $dbo->cols['js_carcode']->caption->set('default', 'Carton type', 'text');
 $dbo->cols['js_distortion']->caption->set('default', '縮比', 'text');
-$dbo->cols['js_distortion']->caption->setTabCaption('default', '紙箱類型', 'text');
 $dbo->cols['js_distortion_value']->caption->set('default', '縮比值', 'text');
 $dbo->cols['js_diecut_ind']->caption->set('default', '模切', 'text');
 $dbo->cols['js_thicknessplate']->caption->set('default', 'js_thicknessplate', 'text');
@@ -94,6 +93,8 @@ $dbo->cols['js_expectdelivery']->caption->set('default', '預計發貨', 'text')
 $dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text');
 $dbo->cols['js_forwardtocusttime']->caption->set('default', '完成日期', 'text');
 $dbo->cols['js_color_9']->caption->set('default', '顏色 9', 'text');
+$dbo->cols['org_name']->caption->set('default', 'org_name', 'text');
+$dbo->cols['js_custrejectreason']->caption->set('default', 'js_custrejectreason', 'text');
 
 $dbo->titleList = '訂單列表';
 $dbo->titleDetail = 'Job Detail';

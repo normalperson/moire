@@ -59,7 +59,7 @@ $dbo->cols['filehistory']->caption->setTabCaption('default', 'File history', 'te
 $dbo->cols['pmc_id']->caption->set('default', 'Job ID', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
 $dbo->cols['js_jobcolor']->caption->set('default', 'Color of job', 'text');
-$dbo->cols['joboutput']->caption->set('default', 'Output Requirement', 'text');
+$dbo->cols['joboutput']->caption->set('default', 'Customer Requirement', 'text');
 $dbo->cols['printbutton']->caption->set('default', ' ', 'text');
 $dbo->cols['js_lpi']->caption->set('default', 'LPI', 'text');
 $dbo->cols['js_mcid']->caption->set('default', 'Printer Name', 'text');
@@ -90,9 +90,10 @@ $dbo->cols['js_cartonsize_top']->caption->set('default', 'js_cartonsize_top', 't
 $dbo->cols['js_cartonsize_bottom']->caption->set('default', 'js_cartonsize_bottom', 'text');
 $dbo->cols['js_expectdelivery']->caption->set('default', 'Expected Delivery', 'text');
 $dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text');
-$dbo->cols['js_forwardtocusttime']->caption->set('default', 'Completed Date', 'text');
+$dbo->cols['js_forwardtocusttime']->caption->set('default', 'Forwarded to <br>customer datetime', 'text');
 $dbo->cols['js_color_9']->caption->set('default', 'Color 9', 'text');
 $dbo->cols['org_name']->caption->set('default', 'Customer ', 'text');
+$dbo->cols['js_custrejectreason']->caption->set('default', 'js_custrejectreason', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';
@@ -112,18 +113,13 @@ $dbo->text->detailDelete = 'Delete';
 $dbo->text->listListNew = 'List New';
 $dbo->text->listListNewAdd = 'Add';
 $dbo->text->listListNewDelete = 'Delete';
-$dbo->text->listListEditToggle = 'Edit Toggle';
 $dbo->text->listNew = 'New';
 $dbo->text->listEdit = 'Edit';
 $dbo->text->listDelete = 'Delete';
 $dbo->text->listDetail = 'Detail';
-$dbo->text->messageConfirmDelete = ' ';
-$dbo->text->messageConfirmMultipleDelete = ' ';
 $dbo->text->messageAfterNew = '';
 $dbo->text->messageAfterEdit = '';
 $dbo->text->messageAfterDelete = '';
-$dbo->text->defaultMessageConfirmDelete = 'Confirm delete?';
-$dbo->text->defaultMessageConfirmMultipleDelete = 'Confirm delete?';
 $dbo->text->defaultMessageAfterNew = 'Record created.';
 $dbo->text->defaultMessageAfterEdit = 'Record updated.';
 $dbo->text->defaultMessageAfterDelete = 'Record deleted.';
@@ -133,5 +129,10 @@ $dbo->text->sumPageGroup = 'Total (Group)';
 $dbo->text->avg = 'Average';
 $dbo->text->avgPage = 'Average (Page)';
 $dbo->text->avgPageGroup = 'Average (Group)';
+$dbo->text->listListEditToggle = 'Edit Toggle';
+$dbo->text->messageConfirmDelete = ' ';
+$dbo->text->messageConfirmMultipleDelete = ' ';
+$dbo->text->defaultMessageConfirmDelete = 'Confirm delete?';
+$dbo->text->defaultMessageConfirmMultipleDelete = 'Confirm delete?';
 
 ?>

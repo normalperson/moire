@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 04-11-2014 15:06:04*/
+/*Last Modified by TW00001 on 22-02-2016 14:58:50*/
 $translate = array (
   'Notifications' => 'Notifications',
   'VIEW ALL' => 'VIEW ALL',
@@ -7,5 +7,6 @@ $translate = array (
   'NOTICE' => 'NOTICE',
   'View Content' => 'View Content',
   'NO NOTIFICATION' => 'NO NOTIFICATION',
+  'MORE NOTIFICATIONS' => 'MORE NOTIFICATIONS',
 );
 ?>

@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by TW00001 on 26-08-2014 11:19:24*/
+/*Last Modified by TW00001 on 06-05-2015 13:56:34*/
 $translate = array (
   'year' => 'year',
   'month' => 'month',
@@ -17,5 +17,6 @@ $translate = array (
   'seconds' => 'seconds',
   'ago' => 'ago',
   'later' => 'later',
+  'just now' => 'just now',
 );
 ?>

@@ -77,7 +77,7 @@ $dbo->cols['js_price']->caption->set('default', 'Price', 'text');
 $dbo->cols['js_outputtype']->caption->set('default', 'Output type', 'text');
 $dbo->cols['js_outputwidth']->caption->set('default', 'Output width (mm)', 'text');
 $dbo->cols['js_outputheight']->caption->set('default', 'Output height (mm)', 'text');
-$dbo->cols['js_qcchecked']->caption->set('default', 'Quality control list', 'text');
+$dbo->cols['js_qcchecked']->caption->set('default', 'Internal reject reason', 'text');
 $dbo->cols['js_currency']->caption->set('default', 'js_currency', 'text');
 $dbo->cols['js_finalprice']->caption->set('default', 'js_finalprice', 'text');
 $dbo->cols['js_rate']->caption->set('default', 'js_rate', 'text');
@@ -97,6 +97,7 @@ $dbo->cols['js_expectdelivery']->caption->set('default', 'js_expectdelivery', 't
 $dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text');
 $dbo->cols['js_forwardtocusttime']->caption->set('default', 'js_forwardtocusttime', 'text');
 $dbo->cols['js_color_9']->caption->set('default', 'Color 9', 'text');
+$dbo->cols['js_custrejectreason']->caption->set('default', 'Customer reject reason', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';
@@ -113,6 +114,9 @@ $dbo->text->newSubmit = 'Save';
 $dbo->text->listSubmit = 'Submit';
 $dbo->text->detailCancel = 'Back';
 $dbo->text->detailDelete = 'Delete';
+$dbo->text->listListNew = 'List New';
+$dbo->text->listListNewAdd = 'Add';
+$dbo->text->listListNewDelete = 'Delete';
 $dbo->text->listNew = 'New';
 $dbo->text->listEdit = 'Edit';
 $dbo->text->listDelete = 'Delete';
@@ -129,5 +133,10 @@ $dbo->text->sumPageGroup = 'Total (Group)';
 $dbo->text->avg = 'Average';
 $dbo->text->avgPage = 'Average (Page)';
 $dbo->text->avgPageGroup = 'Average (Group)';
+$dbo->text->listListEditToggle = 'Edit Toggle';
+$dbo->text->messageConfirmDelete = ' ';
+$dbo->text->messageConfirmMultipleDelete = ' ';
+$dbo->text->defaultMessageConfirmDelete = 'Confirm delete?';
+$dbo->text->defaultMessageConfirmMultipleDelete = 'Confirm delete?';
 
 ?>

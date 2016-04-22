@@ -7,22 +7,22 @@ $dbo->id = $dboID;
 $dbo->table = 'mjoboutputlookup';
 $dbo->key = array('jol_id');
 $dbo->sql = 'select * from mjoboutputlookup order by jol_seq';
-$dbo->col = array('jol_id', 'jol_title', 'jol_requiredtime', 'jol_status', 'jol_price_color_1', 'jol_price_color_2', 'jol_price_color_3', 'jol_price_color_4', 'jol_pricingtype', 'jol_price', 'jol_seq');
-$dbo->colList = array('jol_title', 'jol_requiredtime', 'jol_status', 'jol_seq');
+$dbo->col = array('jol_id', 'jol_title', 'jol_requiredtime', 'jol_status', 'jol_price_color_1', 'jol_price_color_2', 'jol_price_color_3', 'jol_price_color_4', 'jol_pricingtype', 'jol_price', 'jol_seq', 'jol_custtype');
+$dbo->colList = array('jol_title', 'jol_requiredtime', 'jol_price', 'jol_status', 'jol_seq');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
 $dbo->colDetail = array('jol_id', 'jol_title', 'jol_requiredtime', 'jol_status');
-$dbo->colNew = array('jol_title', 'jol_requiredtime', 'jol_status', 'jol_pricingtype', 'jol_price', 'jol_seq');
-$dbo->colEdit = array('jol_title', 'jol_requiredtime', 'jol_status', 'jol_pricingtype', 'jol_price', 'jol_seq');
-$dbo->colSearch = array('jol_id', 'jol_title', 'jol_requiredtime', 'jol_status');
+$dbo->colNew = array('jol_custtype', 'jol_title', 'jol_requiredtime', 'jol_status', 'jol_pricingtype', 'jol_price', 'jol_seq');
+$dbo->colEdit = array('jol_custtype', 'jol_title', 'jol_requiredtime', 'jol_status', 'jol_pricingtype', 'jol_price', 'jol_seq');
+$dbo->colSearch = array('jol_id', 'jol_title', 'jol_requiredtime', 'jol_status', 'jol_price');
 $dbo->colExport = array('jol_id', 'jol_title', 'jol_requiredtime', 'jol_status');
 $dbo->colSort = array();
 $dbo->colSum = array();
 $dbo->colSumPage = array();
 $dbo->colAvg = array();
 $dbo->colAvgPage = array();
-$dbo->colGroupable = array();
+$dbo->colGroupable = array('jol_custtype');
 $dbo->canSearch = false;
 $dbo->canNew = true;
 $dbo->canEdit = true;
@@ -33,6 +33,7 @@ $dbo->canListNew = false;
 $dbo->canNewGroup = array();
 $dbo->canEditGroup = array();
 $dbo->canDeleteGroup = array();
+$dbo->listEditToggle = false;
 $dbo->showSearch = true;
 $dbo->titleList = 'List Job Output';
 $dbo->titleDetail = 'Detail';
@@ -42,7 +43,7 @@ $dbo->titleSearch = 'Search Record';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
 $dbo->pageLinkCount = '7';
-$dbo->recordPerPage = '10';
+$dbo->recordPerPage = '100';
 $dbo->showRecordNo = '1';
 $dbo->defaultState = 'list';
 $dbo->maxSortCount = '9';
@@ -59,10 +60,10 @@ $dbo->editSubmit = 'Save';
 $dbo->listEditSubmit = 'Submit';
 $dbo->newCancel = 'Cancel';
 $dbo->newSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'dbo_joboutputsetup_customize');
 
 $dbo->cols['jol_id'] = new DBO_COL('jol_id', 'int4', '4', '-1');
 $dbo->cols['jol_id']->inputTypeDefault = 'text';
+$dbo->cols['jol_id']->exportUseLookup = true;
 $dbo->cols['jol_id']->searchMode = 'exact';
 $dbo->cols['jol_id']->capContClassDefault = array();
 $dbo->cols['jol_id']->valContClassDefault = array();
@@ -74,6 +75,7 @@ $dbo->cols['jol_id']->option->newMethod = 'text';
 $dbo->cols['jol_id']->option->editMethod = 'text';
 $dbo->cols['jol_title'] = new DBO_COL('jol_title', 'varchar', '-1', '204');
 $dbo->cols['jol_title']->inputTypeDefault = 'text';
+$dbo->cols['jol_title']->exportUseLookup = true;
 $dbo->cols['jol_title']->mandatoryNew = '1';
 $dbo->cols['jol_title']->mandatoryEdit = '1';
 $dbo->cols['jol_title']->searchMode = 'exact';
@@ -87,6 +89,7 @@ $dbo->cols['jol_title']->option->newMethod = 'text';
 $dbo->cols['jol_title']->option->editMethod = 'text';
 $dbo->cols['jol_requiredtime'] = new DBO_COL('jol_requiredtime', 'int4', '4', '-1');
 $dbo->cols['jol_requiredtime']->inputTypeDefault = 'text';
+$dbo->cols['jol_requiredtime']->exportUseLookup = true;
 $dbo->cols['jol_requiredtime']->mandatoryNew = '1';
 $dbo->cols['jol_requiredtime']->mandatoryEdit = '1';
 $dbo->cols['jol_requiredtime']->searchMode = 'exact';
@@ -100,6 +103,7 @@ $dbo->cols['jol_requiredtime']->option->newMethod = 'text';
 $dbo->cols['jol_requiredtime']->option->editMethod = 'text';
 $dbo->cols['jol_status'] = new DBO_COL('jol_status', 'varchar', '-1', '36');
 $dbo->cols['jol_status']->inputTypeDefault = 'PixelAdminRadioInline';
+$dbo->cols['jol_status']->exportUseLookup = true;
 $dbo->cols['jol_status']->mandatoryNew = '1';
 $dbo->cols['jol_status']->mandatoryEdit = '1';
 $dbo->cols['jol_status']->searchMode = 'exact';
@@ -115,6 +119,7 @@ $dbo->cols['jol_status']->option->newMethod = 'text';
 $dbo->cols['jol_status']->option->editMethod = 'text';
 $dbo->cols['jol_price_color_1'] = new DBO_COL('jol_price_color_1', 'numeric', '-1', '1310728');
 $dbo->cols['jol_price_color_1']->inputTypeDefault = 'text';
+$dbo->cols['jol_price_color_1']->exportUseLookup = true;
 $dbo->cols['jol_price_color_1']->mandatoryNew = '1';
 $dbo->cols['jol_price_color_1']->mandatoryEdit = '1';
 $dbo->cols['jol_price_color_1']->searchMode = 'exact';
@@ -128,6 +133,7 @@ $dbo->cols['jol_price_color_1']->option->newMethod = 'text';
 $dbo->cols['jol_price_color_1']->option->editMethod = 'text';
 $dbo->cols['jol_price_color_2'] = new DBO_COL('jol_price_color_2', 'numeric', '-1', '1310728');
 $dbo->cols['jol_price_color_2']->inputTypeDefault = 'text';
+$dbo->cols['jol_price_color_2']->exportUseLookup = true;
 $dbo->cols['jol_price_color_2']->mandatoryNew = '1';
 $dbo->cols['jol_price_color_2']->mandatoryEdit = '1';
 $dbo->cols['jol_price_color_2']->searchMode = 'exact';
@@ -141,6 +147,7 @@ $dbo->cols['jol_price_color_2']->option->newMethod = 'text';
 $dbo->cols['jol_price_color_2']->option->editMethod = 'text';
 $dbo->cols['jol_price_color_3'] = new DBO_COL('jol_price_color_3', 'numeric', '-1', '1310728');
 $dbo->cols['jol_price_color_3']->inputTypeDefault = 'text';
+$dbo->cols['jol_price_color_3']->exportUseLookup = true;
 $dbo->cols['jol_price_color_3']->mandatoryNew = '1';
 $dbo->cols['jol_price_color_3']->mandatoryEdit = '1';
 $dbo->cols['jol_price_color_3']->searchMode = 'exact';
@@ -154,6 +161,7 @@ $dbo->cols['jol_price_color_3']->option->newMethod = 'text';
 $dbo->cols['jol_price_color_3']->option->editMethod = 'text';
 $dbo->cols['jol_price_color_4'] = new DBO_COL('jol_price_color_4', 'numeric', '-1', '1310728');
 $dbo->cols['jol_price_color_4']->inputTypeDefault = 'text';
+$dbo->cols['jol_price_color_4']->exportUseLookup = true;
 $dbo->cols['jol_price_color_4']->mandatoryNew = '1';
 $dbo->cols['jol_price_color_4']->mandatoryEdit = '1';
 $dbo->cols['jol_price_color_4']->searchMode = 'exact';
@@ -167,6 +175,7 @@ $dbo->cols['jol_price_color_4']->option->newMethod = 'text';
 $dbo->cols['jol_price_color_4']->option->editMethod = 'text';
 $dbo->cols['jol_pricingtype'] = new DBO_COL('jol_pricingtype', 'varchar', '-1', '16');
 $dbo->cols['jol_pricingtype']->inputTypeDefault = 'radio';
+$dbo->cols['jol_pricingtype']->exportUseLookup = true;
 $dbo->cols['jol_pricingtype']->mandatoryNew = '1';
 $dbo->cols['jol_pricingtype']->mandatoryEdit = '1';
 $dbo->cols['jol_pricingtype']->searchMode = 'exact';
@@ -182,6 +191,7 @@ $dbo->cols['jol_pricingtype']->option->newMethod = 'text';
 $dbo->cols['jol_pricingtype']->option->editMethod = 'text';
 $dbo->cols['jol_price'] = new DBO_COL('jol_price', 'numeric', '-1', '1310728');
 $dbo->cols['jol_price']->inputTypeDefault = 'text';
+$dbo->cols['jol_price']->exportUseLookup = true;
 $dbo->cols['jol_price']->mandatoryNew = '1';
 $dbo->cols['jol_price']->mandatoryEdit = '1';
 $dbo->cols['jol_price']->searchMode = 'exact';
@@ -195,6 +205,7 @@ $dbo->cols['jol_price']->option->newMethod = 'text';
 $dbo->cols['jol_price']->option->editMethod = 'text';
 $dbo->cols['jol_seq'] = new DBO_COL('jol_seq', 'int4', '4', '-1');
 $dbo->cols['jol_seq']->inputTypeDefault = 'text';
+$dbo->cols['jol_seq']->exportUseLookup = true;
 $dbo->cols['jol_seq']->mandatoryNew = '1';
 $dbo->cols['jol_seq']->mandatoryEdit = '1';
 $dbo->cols['jol_seq']->searchMode = 'exact';
@@ -206,6 +217,23 @@ $dbo->cols['jol_seq']->option->listMethod = 'text';
 $dbo->cols['jol_seq']->option->detailMethod = 'text';
 $dbo->cols['jol_seq']->option->newMethod = 'text';
 $dbo->cols['jol_seq']->option->editMethod = 'text';
+$dbo->cols['jol_custtype'] = new DBO_COL('jol_custtype', 'varchar', '-1', '54');
+$dbo->cols['jol_custtype']->inputTypeDefault = 'select';
+$dbo->cols['jol_custtype']->exportUseLookup = true;
+$dbo->cols['jol_custtype']->mandatoryNew = '1';
+$dbo->cols['jol_custtype']->mandatoryEdit = '1';
+$dbo->cols['jol_custtype']->searchMode = 'exact';
+$dbo->cols['jol_custtype']->capContClassDefault = array();
+$dbo->cols['jol_custtype']->valContClassDefault = array();
+$dbo->cols['jol_custtype']->option->default = 'select lu_code,lu_title from fclookup
+where lu_cat = \'CUSTYPE\'
+order by lu_code';
+$dbo->cols['jol_custtype']->option->defaultMethod = 'sql';
+$dbo->cols['jol_custtype']->option->searchMethod = 'text';
+$dbo->cols['jol_custtype']->option->listMethod = 'text';
+$dbo->cols['jol_custtype']->option->detailMethod = 'text';
+$dbo->cols['jol_custtype']->option->newMethod = 'text';
+$dbo->cols['jol_custtype']->option->editMethod = 'text';
 
 // support multiple language. only caption
 global $LANG;
@@ -229,7 +257,7 @@ class DBO_custom_joboutputsetup extends DBO{
 }
 
 $dbo->newModifier = 'dbo_joboutputsetup_custom_new';
-function dbo_joboutputsetup_custom_new($table, $cols){
+function dbo_joboutputsetup_custom_new($table, $cols, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -240,7 +268,7 @@ function dbo_joboutputsetup_custom_new($table, $cols){
 }
 
 $dbo->editModifier = 'dbo_joboutputsetup_custom_edit';
-function dbo_joboutputsetup_custom_edit($table, $cols, $wheres){
+function dbo_joboutputsetup_custom_edit($table, $cols, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -251,11 +279,11 @@ function dbo_joboutputsetup_custom_edit($table, $cols, $wheres){
 }
 
 $dbo->searchModifier = 'dbo_joboutputsetup_custom_search';
-function dbo_joboutputsetup_custom_search(&$search){
+function dbo_joboutputsetup_custom_search(&$search, $dbo){
 }
 
 $dbo->deleteModifier = 'dbo_joboutputsetup_custom_delete';
-function dbo_joboutputsetup_custom_delete($table, $wheres){
+function dbo_joboutputsetup_custom_delete($table, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);

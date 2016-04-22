@@ -153,16 +153,15 @@ class Messaging {
 	}
 	
 	function ajaxSearchRecipient() {
-		global $DB;
+		global $DB,$USER;
 		$q = $_REQUEST['query'];
 		$qstr = $DB->quote("%{$q}%");
-	
-		$rs = $DB->getArray("select usr_userid as id, usr_name||' ('||usr_userid||')' as text from fcuser
-		where ( usr_userid ilike {$qstr} or usr_name ilike {$qstr} ) limit 10", array(),PDO::FETCH_ASSOC);
+		$sql = "select usr_userid as id, usr_name||' ('||usr_userid||')' as text from fcuser
+		where ( usr_userid ilike {$qstr} or usr_name ilike {$qstr} ) and usr_userid in (select uor_usrid from fcuserorgrole where uor_orgid = :0 union select uor_usrid from fcuserorgrole where uor_orgid =1)  limit 10";
+		$rs = $DB->getArray($sql, array($USER->orgid),PDO::FETCH_ASSOC);
 
 		echo json_encode($rs);
 	}
-	
 	function ajaxGetRecipient() {
 		global $DB;
 		$useridstr = $_REQUEST['userid'];
@@ -432,4 +431,3 @@ class Messaging {
 	}
 }
 ?>
-
