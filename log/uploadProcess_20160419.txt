@@ -1,0 +1,664 @@
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 10:05:19
+    [file] => Array
+        (
+            [name] => 16040908 HLG PM-OC-TACTILE TOUCH NPF1 - X-SMALL.zip
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 10:05:23
+    [file] => Array
+        (
+            [name] => 16040910 HLG PM-OC-TACTILE TOUCH NPF1 - SMALL.zip
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 10:05:23
+    [file] => Array
+        (
+            [name] => 16040912 HLG PM-OC-TACTILE TOUCH NPF1 - LARGE.zip
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 10:05:24
+    [file] => Array
+        (
+            [name] => 16040913 HLG PM-OC-TACTILE TOUCH NPF1 - X-LARGE.zip
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 10:05:26
+    [file] => Array
+        (
+            [name] => 16040911 HLG PM-OC-TACTILE TOUCH NPF1 - MEDIUM.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phplQkyqh
+            [error] => 0
+            [size] => 4968735
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 10:05:53
+    [file] => Array
+        (
+            [name] => 16040912 HLG PM-OC-TACTILE TOUCH NPF1 - LARGE.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpnxtnFq
+            [error] => 0
+            [size] => 4978736
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 10:06:07
+    [file] => Array
+        (
+            [name] => 16040908 HLG PM-OC-TACTILE TOUCH NPF1 - X-SMALL.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpx0TUUi
+            [error] => 0
+            [size] => 4956973
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 10:06:26
+    [file] => Array
+        (
+            [name] => 16040913 HLG PM-OC-TACTILE TOUCH NPF1 - X-LARGE.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php1TnS1Q
+            [error] => 0
+            [size] => 5032947
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 10:06:56
+    [file] => Array
+        (
+            [name] => 16040910 HLG PM-OC-TACTILE TOUCH NPF1 - SMALL.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php7oZLGr
+            [error] => 0
+            [size] => 4955431
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 10:51:33
+    [file] => Array
+        (
+            [name] => 16040908 HLG PM-OC-TACTILE TOUCH NPF1 - X-SMALL_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpr7NrJi
+            [error] => 0
+            [size] => 4947843
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 10:56:03
+    [file] => Array
+        (
+            [name] => 16040910 HLG PM-OC-TACTILE TOUCH NPF1 - SMALL_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpdCLBcF
+            [error] => 0
+            [size] => 4946887
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 10:57:24
+    [file] => Array
+        (
+            [name] => 16040911 HLG PM-OC-TACTILE TOUCH NPF1 - MEDIUM_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpzHAIOH
+            [error] => 0
+            [size] => 4960587
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 10:58:54
+    [file] => Array
+        (
+            [name] => 16040912 HLG PM-OC-TACTILE TOUCH NPF1 - LARGE_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpUirQP4
+            [error] => 0
+            [size] => 4971373
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 11:00:15
+    [file] => Array
+        (
+            [name] => 16040913 HLG PM-OC-TACTILE TOUCH NPF1 - X-LARGE_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpmeGxXh
+            [error] => 0
+            [size] => 5028105
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 11:54:33
+    [file] => Array
+        (
+            [name] => 2016040138_凱馨-烏骨雞切塊420X290X170.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpHAAPqk
+            [error] => 0
+            [size] => 1034914
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 11:54:33
+    [file] => Array
+        (
+            [name] => 2016040137_凱馨-土骨腿切塊550X330X170.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phptMqDFH
+            [error] => 0
+            [size] => 1519847
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 11:54:52
+    [file] => Array
+        (
+            [name] => 2016040137_凱馨-土骨腿切塊550X330X170.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpxspVMq
+            [error] => 0
+            [size] => 1521086
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 11:55:13
+    [file] => Array
+        (
+            [name] => 2016040138_凱馨-烏骨雞切塊420X290X170.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php2b22Zx
+            [error] => 0
+            [size] => 1034914
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 11:58:24
+    [file] => Array
+        (
+            [name] => 2016040137_凱馨-土骨腿切塊550X330X170_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpNHih3B
+            [error] => 0
+            [size] => 721689
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 12:00:38
+    [file] => Array
+        (
+            [name] => 2016040138_凱馨-烏骨雞切塊420X290X170_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phplX9Thv
+            [error] => 0
+            [size] => 860230
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 13:25:07
+    [file] => Array
+        (
+            [name] => 16040905_WATAN MOMIN PURE VEGETABLE OIL_4 X 5 LTR.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php2xaCNm
+            [error] => 0
+            [size] => 20267583
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 13:28:08
+    [file] => Array
+        (
+            [name] => 16040890_WATAN MOMIN PURE VEGETABLE OIL_2 X 7 LTR.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpsJqLFM
+            [error] => 0
+            [size] => 20509070
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 14:00:36
+    [file] => Array
+        (
+            [name] => 2016040139_廟口6入.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpsF8DZM
+            [error] => 0
+            [size] => 13956818
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 14:12:08
+    [file] => Array
+        (
+            [name] => 16040905_WATAN MOMIN PURE VEGETABLE OIL_4 X 5 LTR_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpMaasKZ
+            [error] => 0
+            [size] => 19547700
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 14:13:45
+    [file] => Array
+        (
+            [name] => 16040890_WATAN MOMIN PURE VEGETABLE OIL_2 X 7 LTR_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpcve15Y
+            [error] => 0
+            [size] => 19788265
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 14:21:07
+    [file] => Array
+        (
+            [name] => 2016040139_廟口6入_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpRPvuNl
+            [error] => 0
+            [size] => 13572928
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 14:40:12
+    [file] => Array
+        (
+            [name] => 2016040128_簡圖.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpFYGj8l
+            [error] => 0
+            [size] => 321643
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 14:43:38
+    [file] => Array
+        (
+            [name] => 2016040140_20入.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpI9d8oG
+            [error] => 0
+            [size] => 5559049
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 14:43:39
+    [file] => Array
+        (
+            [name] => 2016040128_簡圖_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpspS3iY
+            [error] => 0
+            [size] => 319694
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 14:52:13
+    [file] => Array
+        (
+            [name] => 2016040140_20入_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpHUEyei
+            [error] => 0
+            [size] => 5122266
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => MY00027
+    [time] => 2016-04-19 15:18:37
+    [file] => Array
+        (
+            [name] => BX 266, BX 267 Base.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpe9QGel
+            [error] => 0
+            [size] => 7357225
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 15:50:17
+    [file] => Array
+        (
+            [name] => 16040857_ASAM JAWA_4 X 4KG.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpBPsWoW
+            [error] => 0
+            [size] => 19367209
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 15:51:43
+    [file] => Array
+        (
+            [name] => 16040857_ASAM JAWA_4 X 4KG_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpNmq8jx
+            [error] => 0
+            [size] => 18976966
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 16:36:21
+    [file] => Array
+        (
+            [name] => 2016040141_BX 267 & BX 267 Base.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpo1lntw
+            [error] => 0
+            [size] => 8466944
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 17:11:19
+    [file] => Array
+        (
+            [name] => 16040858_ASAM JAWA_30 X 500G.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpT8Ti4h
+            [error] => 0
+            [size] => 19809533
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 17:13:02
+    [file] => Array
+        (
+            [name] => 16040858_ASAM JAWA_30 X 500G_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpNNc3bn
+            [error] => 0
+            [size] => 18623076
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 17:14:14
+    [file] => Array
+        (
+            [name] => 2016040141_BX 267 & BX 267 Base_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phptbJcjw
+            [error] => 0
+            [size] => 8192303
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 17:34:35
+    [file] => Array
+        (
+            [name] => 2016040136_網室絲瓜.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpDUBNP1
+            [error] => 0
+            [size] => 2101247
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-19 17:48:35
+    [file] => Array
+        (
+            [name] => 2016040136_網室絲瓜.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpfSr89k
+            [error] => 0
+            [size] => 2101718
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-19 17:52:09
+    [file] => Array
+        (
+            [name] => 2016040136_網室絲瓜_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phppKp2oT
+            [error] => 0
+            [size] => 1928947
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-19 21:45:17
+    [file] => Array
+        (
+            [name] => 菜鬆.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpZlW0OH
+            [error] => 0
+            [size] => 6726750
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-19 21:58:59
+    [file] => Array
+        (
+            [name] => 日昇木瓜.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpdrjBrT
+            [error] => 0
+            [size] => 7567201
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-19 22:08:10
+    [file] => Array
+        (
+            [name] => 共選木瓜(紅).rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phplXKs5n
+            [error] => 0
+            [size] => 8656378
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00001
+    [time] => 2016-04-19 22:18:32
+    [file] => Array
+        (
+            [name] => 嘜頭-1221-10504004.rar
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpJT0x48
+            [error] => 0
+            [size] => 65668
+        )
+
+    [file_exists] => true
+)
