@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 02-02-2015 19:19:44*/
+/*Last Modified by esp on 14-01-2015 15:39:13*/
 $translate = array (
   'Artwork job' => 'Artwork job',
   'New Job' => 'New Job',
@@ -32,6 +32,5 @@ $translate = array (
   'Artwork job ' => 'Artwork job ',
   'New Job ' => 'New Job ',
   'Pending check (QC) ' => 'Pending check (QC) ',
-  'Acknowledge Job ' => 'Acknowledge Job ',
 );
 ?>
