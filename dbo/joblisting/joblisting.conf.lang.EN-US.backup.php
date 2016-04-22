@@ -92,7 +92,7 @@ $dbo->cols['js_expectdelivery']->caption->set('default', 'Expected Delivery', 't
 $dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text');
 $dbo->cols['js_forwardtocusttime']->caption->set('default', 'Completed Date', 'text');
 $dbo->cols['js_color_9']->caption->set('default', 'Color 9', 'text');
-$dbo->cols['org_name']->caption->set('default', 'org_name', 'text');
+$dbo->cols['org_name']->caption->set('default', 'Customer ', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';

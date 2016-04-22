@@ -69,7 +69,7 @@ function dbo_joblisting_customize(&$dbo){
 		unset($GLOBAL['actvorder']);
 	}	
 	if( isset($GLOBAL['actvorder'])  && $GLOBAL['actvorder'] ){
-		$dbo->whereSQL .= " and js_status != 'COMPLETED'";
+		$dbo->whereSQL .= " and js_status != 'COMPLETED' and js_status != 'CANCELLED' and js_status != 'PENDING CUSTOMER RESOLUTION' and js_status != 'PENDING ACCEPTANCE'";
 	}
 
 }

@@ -97,24 +97,7 @@ $dbo->layoutNew = '5;
 =
 1;
 1;';
-$dbo->layoutEdit = '5;
-5;
-5;
-5;
-5;
-5;
-1|1|1|1|1;
-1|1|1|1|1;
-5;
-5;
-=
-1|1;
-2;
-2;
-2|2;
-=
-1;
-1;';
+$dbo->layoutEdit = '';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'One';
 $dbo->pageLinkCount = '7';
