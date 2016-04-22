@@ -4,3 +4,5 @@
 *.db
 #ignore info/tmp
 /info/tmp/
+info/dump/*
+log/*
