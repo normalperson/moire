@@ -146,7 +146,14 @@ table.invoice_table > thead > tr > th, table.invoice_table > tfoot > tr > th{
 			<table width="100%" class="invoice_table" border="0" cellspacing="0">
 				<thead>
 					<tr>
-						<th align="left">DATE</th>
+						<th align="left">DATE<br />
+							<select name="yearmonth" id="yearmonth" onchange="document.location='?yearmonth='+this.options[this.selectedIndex].value;">
+								<option value="*ALL">All</option>
+{foreach $yearmonthArray as $row}
+								<option value="{$row[0]}"{if $selected_yearmonth==$row[0]} selected{/if}>{$row[1]}</option>
+{/foreach}
+							</select>
+						</th>
 						<th align="left">REF. NO.</th>
 						<th align="left">DESCRIPTION</th>
 						<th align="right">DEBIT</th>

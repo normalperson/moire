@@ -94,9 +94,43 @@ class Moire{
 		$smarty->assign('customerData', $orgRS);
 		$smarty->assign('date', date('d/m/Y'));
 		$smarty->assign('soa_date', date('M Y'));
+		$selected_yearmonth = isset($_GET['yearmonth'])?$_GET['yearmonth']:'*ALL';
+		$smarty->assign('selected_yearmonth', $selected_yearmonth);
 		
+		$yearmonthArray = array();
+		$minmaxMonthRS = $DB->getRowAssoc("select min(iv_invoicedate) as min_iv_invoicedate, max(iv_invoicedate) as max_iv_invoicedate from minvoice join mjobsheet on iv_jsid = js_id where iv_orgid = :0 and iv_paid != 'Y'", array($orgID));
+		// pr($minmaxMonthRS);
+		if($minmaxMonthRS && $minmaxMonthRS['min_iv_invoicedate']){
+			$minMonthDate = date('Y-m-01', strtotime($minmaxMonthRS['min_iv_invoicedate']));
+			$maxMonthDate = date('Y-m-01', strtotime($minmaxMonthRS['max_iv_invoicedate']));
+			$minMonthTime = strtotime($minMonthDate);
+			$maxMonthTime = strtotime($maxMonthDate);
+			// pr(array($minMonthDate, $maxMonthDate));
+			// pr(array($minMonthTime, $maxMonthTime));
+			$datetime = $datetime1 = new DateTime($minMonthDate);
+			$datetime2 = new DateTime($maxMonthDate);
+			$interval = $datetime1->diff($datetime2);
+			$monthDiff = $interval->format('%y')*12 + $interval->format('%m');
+			// d($monthDiff);
+			$yearmonthArray = array(array($datetime->format('Y-m'), $datetime->format('M Y')));
+			for($i=0;$i<$monthDiff;$i++){
+				$datetime->add(new DateInterval('P1M'));
+				$yearmonthArray[] = array($datetime->format('Y-m'), $datetime->format('M Y'));
+			}
+		}
+		$smarty->assign('yearmonthArray', $yearmonthArray);
+		// pr($yearmonthArray);
+		
+		$wheres = array("iv_paid != 'Y'");
+		if($selected_yearmonth && $selected_yearmonth!= '*ALL'){
+			$date = new DateTime($selected_yearmonth.'-01');
+			$from = $date->format('Y-m-d');
+			$date->add(new DateInterval('P1M'));
+			$wheres[] = "iv_invoicedate >= '{$from}' and iv_invoicedate < '".$date->format('Y-m-d')."'";
+		}
+		// pr($wheres);
 		$invoiceRS = $DB->getArrayAssoc("select iv_id, 'INV'||lpad(iv_id::text, 8, '0') as invoice_no, iv_invoicedate, iv_amount, 0 as credit, js_description 
-from minvoice join mjobsheet on iv_jsid = js_id where iv_orgid = :0 and iv_paid != 'Y' order by iv_invoicedate asc, iv_id asc", array($orgID));
+from minvoice join mjobsheet on iv_jsid = js_id where iv_orgid = :0 and ".(implode(" and ", $wheres))." order by iv_invoicedate asc, iv_id asc", array($orgID));
 		$smarty->assign('invoiceData', $invoiceRS);
 		$totalAmount = 0;
 		foreach($invoiceRS as $row){
