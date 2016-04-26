@@ -94,6 +94,7 @@ $dbo->cols['js_forwardtocusttime']->caption->set('default', 'Forwarded to <br>cu
 $dbo->cols['js_color_9']->caption->set('default', 'Color 9', 'text');
 $dbo->cols['org_name']->caption->set('default', 'Customer ', 'text');
 $dbo->cols['js_custrejectreason']->caption->set('default', 'js_custrejectreason', 'text');
+$dbo->cols['jobdesc']->caption->set('default', 'jobdesc', 'text');
 
 $dbo->titleList = 'Job List';
 $dbo->titleDetail = 'Job Detail';

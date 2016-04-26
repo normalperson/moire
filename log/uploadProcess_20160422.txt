@@ -58,3 +58,379 @@ Array
 
     [file_exists] => true
 )
+Array
+(
+    [user] => KEIFOONG
+    [time] => 2016-04-22 10:34:29
+    [file] => Array
+        (
+            [name] => Shabbir Cooking Oil 16L Rev1.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_php92CAus
+            [error] => 0
+            [size] => 2268454
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => KEIFOONG
+    [time] => 2016-04-22 10:36:36
+    [file] => Array
+        (
+            [name] => Fahim Vege Oil 16L Rev1.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpF5nTrF
+            [error] => 0
+            [size] => 1863963
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00002
+    [time] => 2016-04-22 13:22:51
+    [file] => Array
+        (
+            [name] => 泛博國際.rar
+            [type] => application/x-rar
+            [tmp_name] => /tmp/dz_tmp_phpNscRq0
+            [error] => 0
+            [size] => 7990564
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00002
+    [time] => 2016-04-22 13:56:01
+    [file] => Array
+        (
+            [name] => 大甲芋頭捲.rar
+            [type] => application/x-rar
+            [tmp_name] => /tmp/dz_tmp_phpVuEfjS
+            [error] => 0
+            [size] => 39956694
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00002
+    [time] => 2016-04-22 14:03:48
+    [file] => Array
+        (
+            [name] => 真好加.rar
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+            [dropzone_error] => Failed to move uploaded file
+        )
+
+    [file_exists] => false
+)
+Array
+(
+    [user] => KEIFOONG
+    [time] => 2016-04-22 14:13:53
+    [file] => Array
+        (
+            [name] => YOSHYHAMA.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpnoDm8q
+            [error] => 0
+            [size] => 4447075
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00002
+    [time] => 2016-04-22 14:18:15
+    [file] => Array
+        (
+            [name] => 真好加.rar
+            [type] => application/x-rar
+            [tmp_name] => /tmp/dz_tmp_php9TSCYP
+            [error] => 0
+            [size] => 19813790
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00002
+    [time] => 2016-04-22 14:41:59
+    [file] => Array
+        (
+            [name] => 禾生.rar
+            [type] => application/x-rar
+            [tmp_name] => /tmp/dz_tmp_phptMuqT4
+            [error] => 0
+            [size] => 32782049
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-22 14:42:26
+    [file] => Array
+        (
+            [name] => 2016040167_特級紅文旦袋.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpJznBe6
+            [error] => 0
+            [size] => 7296348
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => TW00002
+    [time] => 2016-04-22 14:47:33
+    [file] => Array
+        (
+            [name] => 黑木耳.rar
+            [type] => application/x-rar
+            [tmp_name] => /tmp/dz_tmp_php3mghIv
+            [error] => 0
+            [size] => 1532275
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL2
+    [time] => 2016-04-22 14:54:43
+    [file] => Array
+        (
+            [name] => 16041134  welcare  if-2050 _ 1A12-S08-16D    air-guard  safety infusion set _ macro   single chamber.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpBA5sAT
+            [error] => 0
+            [size] => 19444614
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-22 15:11:10
+    [file] => Array
+        (
+            [name] => 2016040167_特級紅文旦袋_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpX1SRQD
+            [error] => 0
+            [size] => 1025923
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-22 15:49:54
+    [file] => Array
+        (
+            [name] => 16041099_NEW MOON CHICKEN CURRY PASTE 24 X 120G.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpXdQHL7
+            [error] => 0
+            [size] => 18319403
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-22 15:51:33
+    [file] => Array
+        (
+            [name] => 16041099_NEW MOON CHICKEN CURRY PASTE 24 X 120G_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpziJaS7
+            [error] => 0
+            [size] => 18304641
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-22 16:50:10
+    [file] => Array
+        (
+            [name] => 16041134  welcare  if-2050 _ 1A12-S08-16D    air-guard  safety infusion set _ macro   single chamber.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpZ44GlC
+            [error] => 0
+            [size] => 25414457
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL5
+    [time] => 2016-04-22 19:01:55
+    [file] => Array
+        (
+            [name] => 16041169_LAFFAIR BE LOVE BABY TALC 36 X 125G.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpT99NaT
+            [error] => 0
+            [size] => 14486032
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => FGKL5
+    [time] => 2016-04-22 19:05:47
+    [file] => Array
+        (
+            [name] => 16041172_LAFFAIR BE LOVE BABY TALC 24 X 320G.zip
+            [type] => application/zip
+            [tmp_name] => /tmp/dz_tmp_phpovfSWh
+            [error] => 0
+            [size] => 15271389
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-22 19:08:37
+    [file] => Array
+        (
+            [name] => 2016040172_YOSHYHAMA.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpND5VYY
+            [error] => 0
+            [size] => 5271894
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-22 19:20:54
+    [file] => Array
+        (
+            [name] => 2016040168_shabbir.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpONZA1C
+            [error] => 0
+            [size] => 10336048
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-22 19:23:12
+    [file] => Array
+        (
+            [name] => 2016040175_黑木耳.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpKS24Rs
+            [error] => 0
+            [size] => 2917928
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => CBLAU
+    [time] => 2016-04-22 19:47:41
+    [file] => Array
+        (
+            [name] => 2016040168_shabbir_QC.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phpePcH4y
+            [error] => 0
+            [size] => 10638516
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => HORYEE
+    [time] => 2016-04-22 20:55:42
+    [file] => Array
+        (
+            [name] => 2016040170_泛博國際.zip
+            [type] => application/octet-stream
+            [tmp_name] => /tmp/dz_tmp_phptrxtxL
+            [error] => 0
+            [size] => 14010037
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-22 21:00:17
+    [file] => Array
+        (
+            [name] => 2016040175_黑木耳_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpV3O67F
+            [error] => 0
+            [size] => 2719358
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-22 21:02:05
+    [file] => Array
+        (
+            [name] => 2016040172_YOSHYHAMA_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpkMCeDZ
+            [error] => 0
+            [size] => 5130357
+        )
+
+    [file_exists] => true
+)
+Array
+(
+    [user] => JOHNSONLAI
+    [time] => 2016-04-22 21:08:03
+    [file] => Array
+        (
+            [name] => 2016040170_泛博國際_QC.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/dz_tmp_phpDdqKK7
+            [error] => 0
+            [size] => 1158403
+        )
+
+    [file_exists] => true
+)

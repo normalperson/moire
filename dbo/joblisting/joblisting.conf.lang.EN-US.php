@@ -54,7 +54,7 @@ $dbo->cols['js_width']->caption->set('default', 'Width', 'text');
 $dbo->cols['js_height']->caption->set('default', 'Height', 'text');
 $dbo->cols['js_manrequiretime']->caption->set('default', 'js_manrequiretime', 'text');
 $dbo->cols['js_requiretime']->caption->set('default', 'Estimated time required', 'text');
-$dbo->cols['filehistory']->caption->set('default', 'filehistory', 'text');
+$dbo->cols['filehistory']->caption->set('default', ' ', 'text');
 $dbo->cols['filehistory']->caption->setTabCaption('default', 'File history', 'text');
 $dbo->cols['pmc_id']->caption->set('default', 'Job ID', 'text');
 $dbo->cols['js_request_dateinmth']->caption->set('default', 'js_request_dateinmth', 'text');
@@ -93,7 +93,7 @@ $dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text'
 $dbo->cols['js_forwardtocusttime']->caption->set('default', 'Forwarded to <br>customer datetime', 'text');
 $dbo->cols['js_color_9']->caption->set('default', 'Color 9', 'text');
 $dbo->cols['org_name']->caption->set('default', 'Customer ', 'text');
-$dbo->cols['js_custrejectreason']->caption->set('default', 'js_custrejectreason', 'text');
+$dbo->cols['js_custrejectreason']->caption->set('default', 'Customer Reject Reason', 'text');
 $dbo->cols['jobdesc']->caption->set('default', 'jobdesc', 'text');
 
 $dbo->titleList = 'Job List';
