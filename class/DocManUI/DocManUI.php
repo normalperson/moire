@@ -156,6 +156,7 @@ $(function() {
 		$smarty->assign('reftype',$reftype);
 		$smarty->assign('id',$id);
 		$smarty->assign('downloadurl',WEB_HREF.'/'.__CLASS__.'/download');
+		$smarty->assign('classurl', $this->classurl);
 		$smarty->assign('docinfo',$docinfo);
 		$smarty->assign('candelete',$candelete);
 		$smarty->assign('cols',$cols);

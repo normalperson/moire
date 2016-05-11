@@ -86,9 +86,11 @@
 			message: "Are you sure you want to remove this file?",
 			callback: function(result) {
 				if (result) {
-					ajaxGetJSON('DocManUI::delete', [docid], function (ret) {
+					//ajaxGetJSON('DocManUI::delete', [docid], function (ret) {
+					/* ajaxGetJSON('{/literal}{$classurl}{literal}/delete/'+docid, [docid], function (ret) {
 						$this.closest('tr').remove();
-					});
+					}); */
+					ajaxGet('{/literal}{$classurl}{literal}/delete/'+docid,  function(){ $this.closest('tr').remove(); });
 				}
 			},
 			className: "bootbox-sm"

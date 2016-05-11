@@ -28,7 +28,7 @@ function showActionButtons($col, $colVal, $data=array(), $html=null) {
 
 function showFileHistory($col, $colVal, $data=array(), $html=null){
 	$docUI = new DocManUI();
-	$html = $docUI->getFileList($data['js_id'],'js_id');
+	$html = $docUI->getFileList($data['js_id'],'js_id',true);
 	return $html;
 }
 
