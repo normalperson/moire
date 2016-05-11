@@ -27,8 +27,9 @@ function showActionButtons($col, $colVal, $data=array(), $html=null) {
 }
 
 function showFileHistory($col, $colVal, $data=array(), $html=null){
+	global $USER;
 	$docUI = new DocManUI();
-	$html = $docUI->getFileList($data['js_id'],'js_id',true);
+	$html = $docUI->getFileList($data['js_id'],'js_id',$USER->inGroup(array('deletefile')));
 	return $html;
 }
 
