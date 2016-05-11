@@ -3,6 +3,13 @@ require(dirname(__FILE__).DIRECTORY_SEPARATOR.'soaorg.conf.php');
 
 # customization
 function dbo_soaorg_customize(&$dbo){
+	global $USER,$DB;
+	$orgRS = $DB->getRowAssoc("select org_external from fcorg where org_id = :0", array($USER->orgid));
+	if($orgRS['org_external']=='Y'){
+		$dbo->whereSQL = "org_id = ".$USER->orgid;
+	}else{
+		$dbo->whereSQL = "1=1 ";
+	}
 }
 
 // statementButton({org_id}, {invoicedate})

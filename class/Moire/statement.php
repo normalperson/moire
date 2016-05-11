@@ -7,10 +7,10 @@ if(!isset($_GET['nosoaorg'])){
 }
 global $USER, $DB;
 $orgRS = $DB->getRowAssoc("select org_external from fcorg where org_id = :0", array($USER->orgid));
-if($orgRS['org_external']=='Y'){
+/*if($orgRS['org_external']=='Y'){
 	$moire = new Moire();
 	$html = $moire->soa_as_html($USER->orgid);
-}else{
+}else{*/
 	if(!isset($_GET['nosoaorg'])){
 		echo '<div id="soaorg_container">';
 		dbo_include('soaorg');
@@ -25,5 +25,5 @@ if($orgRS['org_external']=='Y'){
 		$moire = new Moire();
 		$moire->invoicemonth_as_html($_GET['orgid'], $_GET['invoiceid']);
 	}
-}
+/*}*/
 ?>

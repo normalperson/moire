@@ -33,7 +33,7 @@ class DBO_InputType_PixelAdminCheckbox extends DBO_InputType{
 			$currval = htmlentities($val, ENT_QUOTES, $HTML->htmlentities_encoding);
 			$ret .= '
 				<div class="checkbox">
-					<label>
+					<label style="display:inline">
 						<input type="checkbox" id="'.$currid.'" name="'.$currname.'" value="'.$currval.'" class="px" '.
 						(in_array($val, $values) ? 'checked="checked"' : '').
 						($ext?' '.$ext:'').'>

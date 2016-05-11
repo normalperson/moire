@@ -8,21 +8,21 @@ $dbo->table = 'fcorg';
 $dbo->key = array('org_id');
 $dbo->sql = 'select org_id, org_name, minvoicemonth.*, coalesce(to_char(im_invoicedate, \'YYYY Mon\'), \'No Invoice *\') as invoicedate, \'\' as button from fcorg left join minvoicemonth on org_id = im_orgid where org_external = \'Y\'';
 $dbo->col = array('org_id', 'org_name', 'im_id', 'im_invoicedate', 'im_created', 'im_orgid', 'invoicedate', 'button');
-$dbo->colList = array('org_name', 'button');
+$dbo->colList = array('invoicedate', 'org_name', 'button');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
 $dbo->colDetail = array('org_name');
-$dbo->colNew = array('org_id', 'org_name');
-$dbo->colEdit = array('org_id', 'org_name');
+$dbo->colNew = array('invoicedate', 'org_name');
+$dbo->colEdit = array('invoicedate', 'org_name');
 $dbo->colSearch = array('org_name', 'invoicedate');
-$dbo->colExport = array('org_id', 'org_name');
+$dbo->colExport = array('invoicedate', 'org_name');
 $dbo->colSort = array();
 $dbo->colSum = array();
 $dbo->colSumPage = array();
 $dbo->colAvg = array();
 $dbo->colAvgPage = array();
-$dbo->colGroupable = array('invoicedate');
+$dbo->colGroupable = array();
 $dbo->canSearch = true;
 $dbo->canNew = false;
 $dbo->canEdit = false;
@@ -59,7 +59,8 @@ $dbo->editSubmit = 'Edit';
 $dbo->listEditSubmit = 'Submit';
 $dbo->newCancel = 'Cancel';
 $dbo->newSubmit = 'Submit';
-$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'qstr', 'check_ip_online', 'implode_multi', 'array_column', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_54041d8f3bae13_93533903', 'dbo_soaorg_customize', 'statementbutton');
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'displaysearchdate', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_552a66a6af7718_55672847', 'dbo_soaorg_customize', 'statementbutton');
+$dbo->whereSQL = '1=1 ';
 
 $dbo->cols['org_id'] = new DBO_COL('org_id', 'int4', '4', '-1');
 $dbo->cols['org_id']->inputTypeDefault = 'text';
@@ -175,7 +176,7 @@ class DBO_custom_soaorg extends DBO{
 }
 
 $dbo->newModifier = 'dbo_soaorg_custom_new';
-function dbo_soaorg_custom_new($table, $cols){
+function dbo_soaorg_custom_new($table, $cols, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -186,7 +187,7 @@ function dbo_soaorg_custom_new($table, $cols){
 }
 
 $dbo->editModifier = 'dbo_soaorg_custom_edit';
-function dbo_soaorg_custom_edit($table, $cols, $wheres){
+function dbo_soaorg_custom_edit($table, $cols, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -197,11 +198,11 @@ function dbo_soaorg_custom_edit($table, $cols, $wheres){
 }
 
 $dbo->searchModifier = 'dbo_soaorg_custom_search';
-function dbo_soaorg_custom_search(&$search){
+function dbo_soaorg_custom_search(&$search, $dbo){
 }
 
 $dbo->deleteModifier = 'dbo_soaorg_custom_delete';
-function dbo_soaorg_custom_delete($table, $wheres){
+function dbo_soaorg_custom_delete($table, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);
