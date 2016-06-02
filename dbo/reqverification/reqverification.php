@@ -7,8 +7,14 @@ function dbo_reqverification_customize(&$dbo){
 }
 
 function showPriceReqVer($col, $colVal, $data, $html) {
+  global $USER,$DB;
+  // get the currency code by org
+  $sql = "select rg_currency as currencycode
+      from fcorg join mregion on org_region = rg_code where org_id = :0";
+  $currcode = $DB->GetOne($sql,array($data['js_orgid']), PDO::FETCH_ASSOC);    
+
 	$fronthtml = substr($html,0, strpos($html, '</div>'));
-	$html = '<span class="input-group-addon">RM</span>'.$fronthtml.'</div>';
+	$html = '<span class="input-group-addon">'.$currcode.'</span>'.$fronthtml.'</div>';
 	$html = '<div class="input-group">'.$html.'</div>';
 	return $html;
 }

@@ -67,7 +67,7 @@ $dbo->cols['js_outputwidth']->caption->set('default', 'js_outputwidth', 'text');
 $dbo->cols['js_outputheight']->caption->set('default', 'js_outputheight', 'text');
 $dbo->cols['js_qcchecked']->caption->set('default', 'js_qcchecked', 'text');
 $dbo->cols['js_currency']->caption->set('default', 'js_currency', 'text');
-$dbo->cols['js_finalprice']->caption->set('default', 'js_finalprice', 'text');
+$dbo->cols['js_finalprice']->caption->set('default', 'Final Price', 'text');
 $dbo->cols['js_rate']->caption->set('default', 'js_rate', 'text');
 $dbo->cols['js_totalinch']->caption->set('default', 'js_totalinch', 'text');
 $dbo->cols['js_color_6']->caption->set('default', 'js_color_6', 'text');
