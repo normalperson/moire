@@ -26,13 +26,14 @@ left join (
 select string_agg(jol_title,\', \' order by jo_id) jobdesc,jo_jsid from mjoboutput join mjoboutputlookup on jo_outputcode = jol_id::text
 group by jo_jsid) c on js_id = c.jo_jsid
 left join fcorg
-on js_orgid = org_id';
+on js_orgid = org_id
+order by js_id desc';
 $dbo->col = array('js_id', 'js_orgid', 'js_ctid', 'js_request_date', 'js_request_by', 'js_title', 'js_model', 'js_description', 'js_material_provided', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_diecut_no', 'js_trapping_size', 'js_primcat', 'js_status', 'js_completiondate', 'js_assignto', 'js_carid', 'js_decision', 'js_width', 'js_height', 'js_requiretime', 'js_request_dateinmth', 'js_jobcolor', 'js_lpi', 'js_mcid', 'js_code', 'js_month_occur', 'js_price', 'js_outputtype', 'js_outputwidth', 'js_outputheight', 'js_qcchecked', 'js_currency', 'js_finalprice', 'js_rate', 'js_totalinch', 'js_color_6', 'js_color_7', 'js_color_8', 'js_color_9', 'js_cartonsize_g', 'js_cartonsize_l1', 'js_cartonsize_w2', 'js_cartonsize_l3', 'js_cartonsize_w4', 'js_cartonsize_height', 'js_cartonsize_top', 'js_cartonsize_bottom', 'js_expectdelivery', 'js_cancelremark', 'js_forwardtocusttime', 'js_custrejectreason', 'pmc_id', 'filehistory', 'org_name', 'jobcategory', 'joboutput', 'jobdesc', 'printbutton', '__map_mjobbarcode__jbc_jsid__', '__map_mjobbarcode__jbc_btcode__', '__map_mjobbarcode__jbc_value__');
 $dbo->colList = array('pmc_id', 'js_code', 'js_description', 'js_status', 'js_request_date', 'js_forwardtocusttime', 'js_orgid', 'joboutput', 'js_request_by', 'js_assignto', 'js_currency', 'js_finalprice', 'printbutton');
 $dbo->colListEdit = array();
 $dbo->colListNew = array();
 $dbo->colListGlobalInput = array();
-$dbo->colDetail = array('js_description', 'joboutput', 'js_diecut_ind', 'js_cartonsize_l1', 'js_cartonsize_w2', 'js_cartonsize_height', 'js_carid', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_color_6', 'js_color_7', 'js_color_8', 'js_color_9', 'js_trapping_size', 'js_bleeding', 'js_bleeding_remark', 'js_lpi', 'js_distortion', 'js_distortion_value', 'js_outputtype', 'js_outputwidth', 'js_outputheight', '__map_mjobbarcode__jbc_jsid__', 'js_expectdelivery', 'js_price', 'js_requiretime', 'js_qcchecked', 'js_custrejectreason', 'filehistory');
+$dbo->colDetail = array('js_description', 'joboutput', 'js_diecut_ind', 'js_cartonsize_l1', 'js_cartonsize_w2', 'js_cartonsize_height', 'js_carid', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_color_6', 'js_color_7', 'js_color_8', 'js_color_9', 'js_trapping_size', 'js_bleeding', 'js_bleeding_remark', 'js_lpi', 'js_distortion', 'js_distortion_value', 'js_outputtype', 'js_outputwidth', 'js_outputheight', '__map_mjobbarcode__jbc_jsid__', 'js_expectdelivery', 'js_price', 'js_requiretime', 'js_qcchecked', 'js_custrejectreason', 'js_totalinch', 'filehistory');
 $dbo->colNew = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid');
 $dbo->colEdit = array('js_description', 'js_ctid', 'jobcategory', 'js_trapping_size', 'js_color_1', 'js_color_2', 'js_color_3', 'js_color_4', 'js_color_5', 'js_angle_1', 'js_angle_2', 'js_angle_3', 'js_angle_4', 'js_angle_5', 'js_bleeding', 'js_bleeding_remark', 'js_distortion', 'js_distortion_value', 'js_diecut_ind', 'js_carid', 'filehistory');
 $dbo->colSearch = array('pmc_id', 'js_code', 'js_status', 'js_request_date', 'js_description', 'js_primcat', 'js_orgid', 'js_assignto');
@@ -1002,6 +1003,7 @@ $dbo->cols['js_rate']->option->detailMethod = 'text';
 $dbo->cols['js_rate']->option->newMethod = 'text';
 $dbo->cols['js_rate']->option->editMethod = 'text';
 $dbo->cols['js_totalinch'] = new DBO_COL('js_totalinch', 'numeric', '-1', '1310728');
+$dbo->cols['js_totalinch']->displayDataType = 'currency';
 $dbo->cols['js_totalinch']->inputTypeDefault = 'text';
 $dbo->cols['js_totalinch']->searchMode = 'exact';
 $dbo->cols['js_totalinch']->capContClassDefault = array();

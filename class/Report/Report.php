@@ -32,6 +32,11 @@ class Report{
 		html_header();
 		$dbo = dbo_include('rpt_dailyjobsummary');	
 	}
+	public function dailyoutput()
+	{
+		html_header();
+		$dbo = dbo_include('rpt_dailyoutput');	
+	}
 	function performancesummary(){
 		html_header();
 		$dbo = dbo_include('rpt_performance');	
@@ -44,6 +49,11 @@ class Report{
 	function monthlysalesbycustomer(){
 		html_header();
 		$dbo = dbo_include('rpt_monthsalebycustomer');			
+	}
+
+	function jobsla(){
+		html_header();
+		$dbo = dbo_include('rpt_jobsla');
 	}
 	
 }

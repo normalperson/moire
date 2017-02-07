@@ -1,5 +1,5 @@
 <?php
-/*Last Modified by esp on 07-07-2015 09:43:27*/
+/*Last Modified by esp on 06-09-2016 15:01:17*/
 $translate = array (
   'Admin Setup' => '主管设置',
   'Setting' => '设置',
@@ -58,5 +58,6 @@ $translate = array (
   'Monthly sales by customer' => 'Monthly sales by customer',
   'Public Holiday' => 'Public Holiday',
   'Customer type setup' => 'Customer type setup',
+  'Reassignment' => 'Reassignment',
 );
 ?>
