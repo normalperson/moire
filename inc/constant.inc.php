@@ -1,5 +1,4 @@
 <?php
-define('CORE_DIR', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'fcore'));
 if(!defined('FILEUPLOAD_DIR')) define('FILEUPLOAD_DIR', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'fileupload'));
 define('DOC_DIR', realpath(dirname(__FILE__).''.DIRECTORY_SEPARATOR.'..'));
 define('INCLUDE_DIR', dirname(__FILE__));

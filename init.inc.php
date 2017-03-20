@@ -1,6 +1,9 @@
 <?php
 require_once(dirname(__FILE__).'/inc/constant.inc.php');
-require_once(dirname(__FILE__).'/../../fcore/init.inc.php');
+if(defined('APP') && file_exists(dirname(__FILE__).'/../../fcore_'.APP.'/init.inc.php'))
+	require_once(dirname(__FILE__).'/../../fcore_'.APP.'/init.inc.php');
+else if(file_exists(dirname(__FILE__).'/../../fcore/init.inc.php'))
+	require_once(dirname(__FILE__).'/../../fcore/init.inc.php');
 require_once(dirname(__FILE__).'/header.inc.php');
 require_once(dirname(__FILE__).'/inc/generalFunc.php');
 require_once(dirname(__FILE__).'/inc/appFunc.php');

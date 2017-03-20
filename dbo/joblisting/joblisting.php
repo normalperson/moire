@@ -4,6 +4,11 @@ require_once(DOC_DIR.DS.'inc'.DS.'appFunc.php');
 require_once(CLASS_DIR.DS.'DocManUI'.DS.'DocManUI.php');
 require_once(CORE_DIR.DS.'inc'.DS.'DocumentManager.inc.php');
 
+global $USER;
+if(!in_array($USER->roleid, array(10, 19))){
+	$dbo->canEdit = false;
+}
+
 function displayCartonDetail($col, $colVal, $data=array(), $html=null){
 	$str = "<script>getCarton(".$colVal.",'dbotab_joblisting_detail_tbody_1',".$data['js_id'].",true)</script>";
 	$html .= $str;
