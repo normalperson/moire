@@ -66,4 +66,39 @@ function menu_custom_search(&$search){
 */
 # final rendering
 $dbo->render();
+
+if(isset($_GET['helpexport']) || isset($_GET['helpimport'])){
+	global $DB;
+	echo '<pre>
+do $$
+declare
+var_pid integer;
+begin
+';
+	if($dbo->currState=='list') $rows = $dbo->render['data'][$dbo->currState];
+	else $rows = array($dbo->render['data'][$dbo->currState]);
+	foreach($rows as $row){
+		$parentRS = $DB->getRowAssoc("select * from ".$DB->prefix."menu where mn_id = ".$row['mn_parentid']);
+		echo 'select mn_id into var_pid from '.$DB->prefix.'menu where mn_code = '.$DB->quote($parentRS['mn_code']).";\r\n";
+		if(!empty($row['mn_id'])){
+			unset($row['mn_id']);
+		}
+		$row['mn_parentid'] = 'var_pid';
+		echo "delete from ".$DB->prefix."menu where mn_code = ".$DB->quote($row['mn_code']).";\r\n";
+		$cols = $vals = array();
+		foreach($row as $col=>$val){
+			if(strlen($val)){
+				$cols[] = $col;
+				$vals[] = $dbo->cols[$col]->isNumeric()?$val:$DB->quote($val);
+			}
+		}
+		echo "insert into ".$DB->prefix."menu (".implode(', ', $cols).") values (".implode(", ", $vals).");\r\n\r\n";
+		// pr($row);
+		// pr($cols);
+		// pr($vals);
+	}
+	echo 'end;
+$$;
+</pre>';
+}
 ?>

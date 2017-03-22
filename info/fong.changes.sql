@@ -180,3 +180,16 @@ delete from mcarton;
 
 ALTER TABLE mcarton
    ADD COLUMN car_seq integer;
+
+   
+-- 23/3/2017 startdo $$
+declare
+var_pid integer;
+begin
+select mn_id into var_pid from fcmenu where mn_code = 'REPORT';
+delete from fcmenu where mn_code = 'RPTJOB';
+insert into fcmenu (mn_code, mn_parentid, mn_title, mn_status, mn_order, mn_webflag, mn_class, mn_func) values ('RPTJOB', var_pid, 'Job', 'ACTIVE', 6000, 'Y', 'Report', 'job');
+
+end;
+$$;
+-- 23/3/2017 end

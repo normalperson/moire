@@ -55,6 +55,10 @@ class Report{
 		html_header();
 		$dbo = dbo_include('rpt_jobsla');
 	}
+	function job(){
+		html_header();
+		$dbo = dbo_include('rpt_job');
+	}
 	
 }
 
