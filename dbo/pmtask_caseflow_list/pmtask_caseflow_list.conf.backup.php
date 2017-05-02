@@ -4,22 +4,21 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'ini
 $dboID = 'pmtask_caseflow_list';
 $dbo = DBO_init($dboID);
 $dbo->id = $dboID;
-$dbo->fileSaveMode = 511;
 $dbo->table = 'fcpmcaseflow';
 $dbo->key = array('pmf_id');
 $dbo->sql = 'select a.*,b.*,\'\' as urgency, \'\' as actions, case when pmf_due_date is not null and pmf_due_date <= now() then \'Y\' else \'N\' end as isdue,
 	case when pmc_casetype = \'jobsheet\' then (select case when js_code is null then \'\' else js_code||\' - \' end ||case when length(js_description) < 23 then js_description else substring(js_description,0,20)||\'...\' end from mjobsheet where js_id = pmc_casekey)  else concat(pmc_casetype,\'::\',pmc_casekey) end as casedesc
 	from fcpmcase a join fcpmcaseflow b on pmf_pmcid=pmc_id 
-	where pmf_obj_id = 2 and pmf_obj_type = \'PM_Activity\' and pmf_end_date is null
+	where pmf_obj_id = 5 and pmf_obj_type = \'PM_Activity\' and pmf_end_date is null
 	and (
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id) = 0 or
 			(select count(*) from fcpmcaseflowassign where pmfa_pmfid = pmf_id and 
-				(pmfa_userid is null or pmfa_userid = \'uat_customer1\') and 
-				(pmfa_rolid is null or pmfa_rolid=\'14\') and
-				(pmfa_orgid is null or pmfa_orgid=\'9\') and
-				(pmfa_pmscode is null or pmfa_pmscode in (\'REQUEST_NEWJOB\',\'CUSTHOME\',\'ADMIN\'))
+				(pmfa_userid is null or pmfa_userid = \'JOHNSONLAI\') and 
+				(pmfa_rolid is null or pmfa_rolid=\'18\') and
+				(pmfa_orgid is null or pmfa_orgid=\'1\') and
+				(pmfa_pmscode is null  or (\'QCHOME\' like pmfa_pmscode or \'ADMIN\' like pmfa_pmscode))
 			) > 0)
-	order by pmf_due_date, pmf_start_date';
+	order by pmc_id desc, pmf_due_date, pmf_start_date';
 $dbo->col = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date', 'pmf_end_by', 'pmf_end_pmfid', 'pmf_from_event_gateway', 'pmf_last_timer_check_date', 'pmf_timer_due_date', 'pmf_timer_due_count', 'urgency', 'actions', 'isdue', 'casedesc');
 $dbo->colList = array('urgency', 'pmc_id', 'casedesc', 'pmc_created_date', 'pmc_created_by', 'pmf_start_date', 'pmf_due_date', 'actions');
 $dbo->colListEdit = array();
@@ -30,7 +29,12 @@ $dbo->colNew = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_caseke
 $dbo->colEdit = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
 $dbo->colSearch = array('pmc_id', 'casedesc', 'pmf_start_date', 'isdue');
 $dbo->colExport = array('pmc_id', 'pmc_created_date', 'pmc_created_by', 'pmc_casekey', 'pmc_casetype', 'pmc_parentid', 'pmc_pmwfid', 'pmc_start_pmevid', 'pmc_start_date', 'pmc_end_pmevid', 'pmc_end_date', 'pmc_closed', 'pmf_id', 'pmf_pmcid', 'pmf_obj_id', 'pmf_obj_type', 'pmf_previd', 'pmf_prev_pmcnid', 'pmf_start_date', 'pmf_end_date', 'pmf_end_status', 'pmf_due_date', 'pmf_last_perform_date');
-$dbo->colSort = array();
+$dbo->colSort = array('pmc_id', 'pmc_created_date', 'pmf_due_date');
+$dbo->colSum = array();
+$dbo->colSumPage = array();
+$dbo->colAvg = array();
+$dbo->colAvgPage = array();
+$dbo->colGroupable = array();
 $dbo->canSearch = true;
 $dbo->canNew = false;
 $dbo->canEdit = false;
@@ -49,15 +53,20 @@ $dbo->titleEdit = 'Edit Record';
 $dbo->titleSearch = 'Search Record';
 $dbo->theme = 'pixeladmin';
 $dbo->layout = 'AlwaysList';
-$dbo->pageLinkCount = 7;
-$dbo->recordPerPage = 10;
-$dbo->showRecordNo = 1;
+$dbo->pageLinkCount = '7';
+$dbo->recordPerPage = '100';
+$dbo->showRecordNo = '1';
 $dbo->defaultState = 'list';
-$dbo->maxSortCount = 9;
-$dbo->lang = 'ZH-CN';
-$dbo->render = array();
+$dbo->maxSortCount = '9';
+$dbo->defaultDateFormat = 'yyyy-mm-dd';
+$dbo->defaultDateTimeFormat = 'yyyy-mm-dd hh24:min:ss';
+$dbo->defaultTimeFormat = 'hh24:min:ss';
+$dbo->lang = 'EN-US';
+$dbo->pdfEngine = 'dompdf';
+$dbo->listEditToggle = false;
 $dbo->detailBack = 'Back';
 $dbo->listEditSubmit = 'Submit';
+$dbo->userFunctions = array('d', 'p', 'pre', 'pr', 'vd', 'truncate', 'fiif', 'redirect', 'glob_recursive', 'unlink_recursive', 'alert', 'core_include', 'core_include_once', 'core_require', 'core_require_once', 'core_log', 'app_log', 'randomstring', 'time_to_sec', 'array_split_by_value', 'array_count_value', 'qstr', 'check_ip_online', 'implode_multi', 'check_core_license', 'check_app_license', 'getprioritysmarty', 'smartyautoload', 'email_destruct', 'html_destruct', 'installckeditor', 'html_outputjs', 'html_outputcss', 'html_ent', 'getjs', 'getcss', 'tl', 'global_destruct', 'dbo_init', 'dbo_include', 'dbo_require', 'dbo_log', 'html_header', 'globalformatdate', 'associative_push', 'searchvalue', 'format_number', 'arr2tree', 'quote', 'time_different_string', 'insertnotice', 'autodetailtableinput', 'gendetailtabledisplay', 'gendetailtableinput', 'autodetailcustomedit', 'autodetailcustomnew', 'movesingleimage', 'convertbytes', 'getusersessid', 'showdbo', 'getuserlang', 'displaysearchdate', 'getuseravatarimage', 'getprimarycat', 'showprinterinfo', 'usertoporgid', 'orgtoporgid', 'sendmailfromtemplate', 'calculatecompletion', 'generateinvoicehtml', 'web_filter', 'getnodearr', 'content_552a66a6af7718_55672847', 'dbo_pmtask_caseflow_list_customize', 'showurgency', 'showcaselink', 'showcasedescription', 'showactions');
 
 $dbo->cols['pmc_id'] = new DBO_COL('pmc_id', 'int4', '4', '-1');
 $dbo->cols['pmc_id']->displayDataType = 'int';
@@ -68,6 +77,7 @@ $dbo->cols['pmc_id']->inputTypeSearch = 'TextInputControl';
 $dbo->cols['pmc_id']->searchMode = 'exact';
 $dbo->cols['pmc_id']->capContClassDefault = array();
 $dbo->cols['pmc_id']->valContClassDefault = array();
+$dbo->cols['pmc_id']->exportUseLookup = true;
 $dbo->cols['pmc_id']->option->defaultMethod = 'text';
 $dbo->cols['pmc_id']->option->searchMethod = 'text';
 $dbo->cols['pmc_id']->option->listMethod = 'text';
@@ -81,6 +91,7 @@ $dbo->cols['pmc_created_date']->format = 'DD-MON-YYYY HH:MIN AP';
 $dbo->cols['pmc_created_date']->searchMode = 'exact';
 $dbo->cols['pmc_created_date']->capContClassDefault = array();
 $dbo->cols['pmc_created_date']->valContClassDefault = array();
+$dbo->cols['pmc_created_date']->exportUseLookup = true;
 $dbo->cols['pmc_created_date']->option->defaultMethod = 'text';
 $dbo->cols['pmc_created_date']->option->searchMethod = 'text';
 $dbo->cols['pmc_created_date']->option->listMethod = 'text';
@@ -92,7 +103,9 @@ $dbo->cols['pmc_created_by']->inputTypeDefault = 'text';
 $dbo->cols['pmc_created_by']->searchMode = 'exact';
 $dbo->cols['pmc_created_by']->capContClassDefault = array();
 $dbo->cols['pmc_created_by']->valContClassDefault = array();
-$dbo->cols['pmc_created_by']->option->defaultMethod = 'text';
+$dbo->cols['pmc_created_by']->exportUseLookup = true;
+$dbo->cols['pmc_created_by']->option->default = 'select usr_userid,usr_name from fcuser';
+$dbo->cols['pmc_created_by']->option->defaultMethod = 'sql';
 $dbo->cols['pmc_created_by']->option->searchMethod = 'text';
 $dbo->cols['pmc_created_by']->option->listMethod = 'text';
 $dbo->cols['pmc_created_by']->option->detailMethod = 'text';
@@ -105,6 +118,7 @@ $dbo->cols['pmc_casekey']->inputTypeDefault = 'text';
 $dbo->cols['pmc_casekey']->searchMode = 'exact';
 $dbo->cols['pmc_casekey']->capContClassDefault = array();
 $dbo->cols['pmc_casekey']->valContClassDefault = array();
+$dbo->cols['pmc_casekey']->exportUseLookup = true;
 $dbo->cols['pmc_casekey']->option->defaultMethod = 'text';
 $dbo->cols['pmc_casekey']->option->searchMethod = 'text';
 $dbo->cols['pmc_casekey']->option->listMethod = 'text';
@@ -116,6 +130,7 @@ $dbo->cols['pmc_casetype']->inputTypeDefault = 'text';
 $dbo->cols['pmc_casetype']->searchMode = 'exact';
 $dbo->cols['pmc_casetype']->capContClassDefault = array();
 $dbo->cols['pmc_casetype']->valContClassDefault = array();
+$dbo->cols['pmc_casetype']->exportUseLookup = true;
 $dbo->cols['pmc_casetype']->option->defaultMethod = 'text';
 $dbo->cols['pmc_casetype']->option->searchMethod = 'text';
 $dbo->cols['pmc_casetype']->option->listMethod = 'text';
@@ -127,6 +142,7 @@ $dbo->cols['pmc_parentid']->inputTypeDefault = 'text';
 $dbo->cols['pmc_parentid']->searchMode = 'exact';
 $dbo->cols['pmc_parentid']->capContClassDefault = array();
 $dbo->cols['pmc_parentid']->valContClassDefault = array();
+$dbo->cols['pmc_parentid']->exportUseLookup = true;
 $dbo->cols['pmc_parentid']->option->defaultMethod = 'text';
 $dbo->cols['pmc_parentid']->option->searchMethod = 'text';
 $dbo->cols['pmc_parentid']->option->listMethod = 'text';
@@ -138,6 +154,7 @@ $dbo->cols['pmc_pmwfid']->inputTypeDefault = 'text';
 $dbo->cols['pmc_pmwfid']->searchMode = 'exact';
 $dbo->cols['pmc_pmwfid']->capContClassDefault = array();
 $dbo->cols['pmc_pmwfid']->valContClassDefault = array();
+$dbo->cols['pmc_pmwfid']->exportUseLookup = true;
 $dbo->cols['pmc_pmwfid']->option->defaultMethod = 'text';
 $dbo->cols['pmc_pmwfid']->option->searchMethod = 'text';
 $dbo->cols['pmc_pmwfid']->option->listMethod = 'text';
@@ -149,6 +166,7 @@ $dbo->cols['pmc_start_pmevid']->inputTypeDefault = 'text';
 $dbo->cols['pmc_start_pmevid']->searchMode = 'exact';
 $dbo->cols['pmc_start_pmevid']->capContClassDefault = array();
 $dbo->cols['pmc_start_pmevid']->valContClassDefault = array();
+$dbo->cols['pmc_start_pmevid']->exportUseLookup = true;
 $dbo->cols['pmc_start_pmevid']->option->defaultMethod = 'text';
 $dbo->cols['pmc_start_pmevid']->option->searchMethod = 'text';
 $dbo->cols['pmc_start_pmevid']->option->listMethod = 'text';
@@ -162,6 +180,7 @@ $dbo->cols['pmc_start_date']->format = 'DD-MON-YYYY HH:MIN AP';
 $dbo->cols['pmc_start_date']->searchMode = 'exact';
 $dbo->cols['pmc_start_date']->capContClassDefault = array();
 $dbo->cols['pmc_start_date']->valContClassDefault = array();
+$dbo->cols['pmc_start_date']->exportUseLookup = true;
 $dbo->cols['pmc_start_date']->option->defaultMethod = 'text';
 $dbo->cols['pmc_start_date']->option->searchMethod = 'text';
 $dbo->cols['pmc_start_date']->option->listMethod = 'text';
@@ -173,6 +192,7 @@ $dbo->cols['pmc_end_pmevid']->inputTypeDefault = 'text';
 $dbo->cols['pmc_end_pmevid']->searchMode = 'exact';
 $dbo->cols['pmc_end_pmevid']->capContClassDefault = array();
 $dbo->cols['pmc_end_pmevid']->valContClassDefault = array();
+$dbo->cols['pmc_end_pmevid']->exportUseLookup = true;
 $dbo->cols['pmc_end_pmevid']->option->defaultMethod = 'text';
 $dbo->cols['pmc_end_pmevid']->option->searchMethod = 'text';
 $dbo->cols['pmc_end_pmevid']->option->listMethod = 'text';
@@ -186,6 +206,7 @@ $dbo->cols['pmc_end_date']->format = 'DD-MON-YYYY HH:MIN AP';
 $dbo->cols['pmc_end_date']->searchMode = 'exact';
 $dbo->cols['pmc_end_date']->capContClassDefault = array();
 $dbo->cols['pmc_end_date']->valContClassDefault = array();
+$dbo->cols['pmc_end_date']->exportUseLookup = true;
 $dbo->cols['pmc_end_date']->option->defaultMethod = 'text';
 $dbo->cols['pmc_end_date']->option->searchMethod = 'text';
 $dbo->cols['pmc_end_date']->option->listMethod = 'text';
@@ -197,6 +218,7 @@ $dbo->cols['pmc_closed']->inputTypeDefault = 'text';
 $dbo->cols['pmc_closed']->searchMode = 'exact';
 $dbo->cols['pmc_closed']->capContClassDefault = array();
 $dbo->cols['pmc_closed']->valContClassDefault = array();
+$dbo->cols['pmc_closed']->exportUseLookup = true;
 $dbo->cols['pmc_closed']->option->defaultMethod = 'text';
 $dbo->cols['pmc_closed']->option->searchMethod = 'text';
 $dbo->cols['pmc_closed']->option->listMethod = 'text';
@@ -208,6 +230,7 @@ $dbo->cols['pmf_id']->inputTypeDefault = 'text';
 $dbo->cols['pmf_id']->searchMode = 'exact';
 $dbo->cols['pmf_id']->capContClassDefault = array();
 $dbo->cols['pmf_id']->valContClassDefault = array();
+$dbo->cols['pmf_id']->exportUseLookup = true;
 $dbo->cols['pmf_id']->option->defaultMethod = 'text';
 $dbo->cols['pmf_id']->option->searchMethod = 'text';
 $dbo->cols['pmf_id']->option->listMethod = 'text';
@@ -219,6 +242,7 @@ $dbo->cols['pmf_pmcid']->inputTypeDefault = 'text';
 $dbo->cols['pmf_pmcid']->searchMode = 'exact';
 $dbo->cols['pmf_pmcid']->capContClassDefault = array();
 $dbo->cols['pmf_pmcid']->valContClassDefault = array();
+$dbo->cols['pmf_pmcid']->exportUseLookup = true;
 $dbo->cols['pmf_pmcid']->option->defaultMethod = 'text';
 $dbo->cols['pmf_pmcid']->option->searchMethod = 'text';
 $dbo->cols['pmf_pmcid']->option->listMethod = 'text';
@@ -230,6 +254,7 @@ $dbo->cols['pmf_obj_id']->inputTypeDefault = 'text';
 $dbo->cols['pmf_obj_id']->searchMode = 'exact';
 $dbo->cols['pmf_obj_id']->capContClassDefault = array();
 $dbo->cols['pmf_obj_id']->valContClassDefault = array();
+$dbo->cols['pmf_obj_id']->exportUseLookup = true;
 $dbo->cols['pmf_obj_id']->option->defaultMethod = 'text';
 $dbo->cols['pmf_obj_id']->option->searchMethod = 'text';
 $dbo->cols['pmf_obj_id']->option->listMethod = 'text';
@@ -241,6 +266,7 @@ $dbo->cols['pmf_obj_type']->inputTypeDefault = 'text';
 $dbo->cols['pmf_obj_type']->searchMode = 'exact';
 $dbo->cols['pmf_obj_type']->capContClassDefault = array();
 $dbo->cols['pmf_obj_type']->valContClassDefault = array();
+$dbo->cols['pmf_obj_type']->exportUseLookup = true;
 $dbo->cols['pmf_obj_type']->option->defaultMethod = 'text';
 $dbo->cols['pmf_obj_type']->option->searchMethod = 'text';
 $dbo->cols['pmf_obj_type']->option->listMethod = 'text';
@@ -252,6 +278,7 @@ $dbo->cols['pmf_previd']->inputTypeDefault = 'text';
 $dbo->cols['pmf_previd']->searchMode = 'exact';
 $dbo->cols['pmf_previd']->capContClassDefault = array();
 $dbo->cols['pmf_previd']->valContClassDefault = array();
+$dbo->cols['pmf_previd']->exportUseLookup = true;
 $dbo->cols['pmf_previd']->option->defaultMethod = 'text';
 $dbo->cols['pmf_previd']->option->searchMethod = 'text';
 $dbo->cols['pmf_previd']->option->listMethod = 'text';
@@ -263,6 +290,7 @@ $dbo->cols['pmf_prev_pmcnid']->inputTypeDefault = 'text';
 $dbo->cols['pmf_prev_pmcnid']->searchMode = 'exact';
 $dbo->cols['pmf_prev_pmcnid']->capContClassDefault = array();
 $dbo->cols['pmf_prev_pmcnid']->valContClassDefault = array();
+$dbo->cols['pmf_prev_pmcnid']->exportUseLookup = true;
 $dbo->cols['pmf_prev_pmcnid']->option->defaultMethod = 'text';
 $dbo->cols['pmf_prev_pmcnid']->option->searchMethod = 'text';
 $dbo->cols['pmf_prev_pmcnid']->option->listMethod = 'text';
@@ -277,6 +305,7 @@ $dbo->cols['pmf_start_date']->format = 'DD-MON-YYYY HH:MIN AP';
 $dbo->cols['pmf_start_date']->searchMode = 'exact';
 $dbo->cols['pmf_start_date']->capContClassDefault = array();
 $dbo->cols['pmf_start_date']->valContClassDefault = array();
+$dbo->cols['pmf_start_date']->exportUseLookup = true;
 $dbo->cols['pmf_start_date']->option->defaultMethod = 'text';
 $dbo->cols['pmf_start_date']->option->searchMethod = 'text';
 $dbo->cols['pmf_start_date']->option->listMethod = 'text';
@@ -290,6 +319,7 @@ $dbo->cols['pmf_end_date']->format = 'DD-MON-YYYY HH:MIN AP';
 $dbo->cols['pmf_end_date']->searchMode = 'exact';
 $dbo->cols['pmf_end_date']->capContClassDefault = array();
 $dbo->cols['pmf_end_date']->valContClassDefault = array();
+$dbo->cols['pmf_end_date']->exportUseLookup = true;
 $dbo->cols['pmf_end_date']->option->defaultMethod = 'text';
 $dbo->cols['pmf_end_date']->option->searchMethod = 'text';
 $dbo->cols['pmf_end_date']->option->listMethod = 'text';
@@ -301,6 +331,7 @@ $dbo->cols['pmf_end_status']->inputTypeDefault = 'text';
 $dbo->cols['pmf_end_status']->searchMode = 'exact';
 $dbo->cols['pmf_end_status']->capContClassDefault = array();
 $dbo->cols['pmf_end_status']->valContClassDefault = array();
+$dbo->cols['pmf_end_status']->exportUseLookup = true;
 $dbo->cols['pmf_end_status']->option->defaultMethod = 'text';
 $dbo->cols['pmf_end_status']->option->searchMethod = 'text';
 $dbo->cols['pmf_end_status']->option->listMethod = 'text';
@@ -314,6 +345,7 @@ $dbo->cols['pmf_due_date']->format = 'DD-MON-YYYY HH:MIN AP';
 $dbo->cols['pmf_due_date']->searchMode = 'exact';
 $dbo->cols['pmf_due_date']->capContClassDefault = array();
 $dbo->cols['pmf_due_date']->valContClassDefault = array();
+$dbo->cols['pmf_due_date']->exportUseLookup = true;
 $dbo->cols['pmf_due_date']->option->defaultMethod = 'text';
 $dbo->cols['pmf_due_date']->option->searchMethod = 'text';
 $dbo->cols['pmf_due_date']->option->listMethod = 'text';
@@ -327,6 +359,7 @@ $dbo->cols['pmf_last_perform_date']->format = 'DD-MON-YYYY HH:MIN AP';
 $dbo->cols['pmf_last_perform_date']->searchMode = 'exact';
 $dbo->cols['pmf_last_perform_date']->capContClassDefault = array();
 $dbo->cols['pmf_last_perform_date']->valContClassDefault = array();
+$dbo->cols['pmf_last_perform_date']->exportUseLookup = true;
 $dbo->cols['pmf_last_perform_date']->option->defaultMethod = 'text';
 $dbo->cols['pmf_last_perform_date']->option->searchMethod = 'text';
 $dbo->cols['pmf_last_perform_date']->option->listMethod = 'text';
@@ -338,6 +371,7 @@ $dbo->cols['pmf_token_pmgwid']->inputTypeDefault = 'text';
 $dbo->cols['pmf_token_pmgwid']->searchMode = 'exact';
 $dbo->cols['pmf_token_pmgwid']->capContClassDefault = array();
 $dbo->cols['pmf_token_pmgwid']->valContClassDefault = array();
+$dbo->cols['pmf_token_pmgwid']->exportUseLookup = true;
 $dbo->cols['pmf_token_pmgwid']->option->defaultMethod = 'text';
 $dbo->cols['pmf_token_pmgwid']->option->searchMethod = 'text';
 $dbo->cols['pmf_token_pmgwid']->option->listMethod = 'text';
@@ -349,6 +383,7 @@ $dbo->cols['pmf_token_return_pmgwid']->inputTypeDefault = 'text';
 $dbo->cols['pmf_token_return_pmgwid']->searchMode = 'exact';
 $dbo->cols['pmf_token_return_pmgwid']->capContClassDefault = array();
 $dbo->cols['pmf_token_return_pmgwid']->valContClassDefault = array();
+$dbo->cols['pmf_token_return_pmgwid']->exportUseLookup = true;
 $dbo->cols['pmf_token_return_pmgwid']->option->defaultMethod = 'text';
 $dbo->cols['pmf_token_return_pmgwid']->option->searchMethod = 'text';
 $dbo->cols['pmf_token_return_pmgwid']->option->listMethod = 'text';
@@ -362,6 +397,7 @@ $dbo->cols['urgency']->inputTypeDefault = 'text';
 $dbo->cols['urgency']->searchMode = 'exact';
 $dbo->cols['urgency']->capContClassDefault = array();
 $dbo->cols['urgency']->valContClassDefault = array();
+$dbo->cols['urgency']->exportUseLookup = true;
 $dbo->cols['urgency']->option->defaultMethod = 'text';
 $dbo->cols['urgency']->option->searchMethod = 'text';
 $dbo->cols['urgency']->option->listMethod = 'text';
@@ -375,6 +411,7 @@ $dbo->cols['actions']->inputTypeDefault = 'text';
 $dbo->cols['actions']->searchMode = 'exact';
 $dbo->cols['actions']->capContClassDefault = array();
 $dbo->cols['actions']->valContClassDefault = array();
+$dbo->cols['actions']->exportUseLookup = true;
 $dbo->cols['actions']->option->defaultMethod = 'text';
 $dbo->cols['actions']->option->searchMethod = 'text';
 $dbo->cols['actions']->option->listMethod = 'text';
@@ -386,6 +423,7 @@ $dbo->cols['pmf_specific_userid']->inputTypeDefault = 'checkbox';
 $dbo->cols['pmf_specific_userid']->searchMode = 'exact';
 $dbo->cols['pmf_specific_userid']->capContClassDefault = array();
 $dbo->cols['pmf_specific_userid']->valContClassDefault = array();
+$dbo->cols['pmf_specific_userid']->exportUseLookup = true;
 $dbo->cols['pmf_specific_userid']->option->defaultMethod = 'text';
 $dbo->cols['pmf_specific_userid']->option->searchMethod = 'text';
 $dbo->cols['pmf_specific_userid']->option->listMethod = 'text';
@@ -397,6 +435,7 @@ $dbo->cols['pmf_end_by']->inputTypeDefault = 'checkbox';
 $dbo->cols['pmf_end_by']->searchMode = 'exact';
 $dbo->cols['pmf_end_by']->capContClassDefault = array();
 $dbo->cols['pmf_end_by']->valContClassDefault = array();
+$dbo->cols['pmf_end_by']->exportUseLookup = true;
 $dbo->cols['pmf_end_by']->option->defaultMethod = 'text';
 $dbo->cols['pmf_end_by']->option->searchMethod = 'text';
 $dbo->cols['pmf_end_by']->option->listMethod = 'text';
@@ -408,6 +447,7 @@ $dbo->cols['pmf_end_pmfid']->inputTypeDefault = 'checkbox';
 $dbo->cols['pmf_end_pmfid']->searchMode = 'exact';
 $dbo->cols['pmf_end_pmfid']->capContClassDefault = array();
 $dbo->cols['pmf_end_pmfid']->valContClassDefault = array();
+$dbo->cols['pmf_end_pmfid']->exportUseLookup = true;
 $dbo->cols['pmf_end_pmfid']->option->defaultMethod = 'text';
 $dbo->cols['pmf_end_pmfid']->option->searchMethod = 'text';
 $dbo->cols['pmf_end_pmfid']->option->listMethod = 'text';
@@ -419,6 +459,7 @@ $dbo->cols['pmf_from_event_gateway']->inputTypeDefault = 'checkbox';
 $dbo->cols['pmf_from_event_gateway']->searchMode = 'exact';
 $dbo->cols['pmf_from_event_gateway']->capContClassDefault = array();
 $dbo->cols['pmf_from_event_gateway']->valContClassDefault = array();
+$dbo->cols['pmf_from_event_gateway']->exportUseLookup = true;
 $dbo->cols['pmf_from_event_gateway']->option->defaultMethod = 'text';
 $dbo->cols['pmf_from_event_gateway']->option->searchMethod = 'text';
 $dbo->cols['pmf_from_event_gateway']->option->listMethod = 'text';
@@ -430,6 +471,7 @@ $dbo->cols['pmf_last_timer_check_date']->inputTypeDefault = 'text';
 $dbo->cols['pmf_last_timer_check_date']->searchMode = 'exact';
 $dbo->cols['pmf_last_timer_check_date']->capContClassDefault = array();
 $dbo->cols['pmf_last_timer_check_date']->valContClassDefault = array();
+$dbo->cols['pmf_last_timer_check_date']->exportUseLookup = true;
 $dbo->cols['pmf_last_timer_check_date']->option->defaultMethod = 'text';
 $dbo->cols['pmf_last_timer_check_date']->option->searchMethod = 'text';
 $dbo->cols['pmf_last_timer_check_date']->option->listMethod = 'text';
@@ -443,6 +485,7 @@ $dbo->cols['pmf_timer_due_date']->format = 'DD-MON-YYYY HH:MIN AP';
 $dbo->cols['pmf_timer_due_date']->searchMode = 'exact';
 $dbo->cols['pmf_timer_due_date']->capContClassDefault = array();
 $dbo->cols['pmf_timer_due_date']->valContClassDefault = array();
+$dbo->cols['pmf_timer_due_date']->exportUseLookup = true;
 $dbo->cols['pmf_timer_due_date']->option->defaultMethod = 'text';
 $dbo->cols['pmf_timer_due_date']->option->searchMethod = 'text';
 $dbo->cols['pmf_timer_due_date']->option->listMethod = 'text';
@@ -454,6 +497,7 @@ $dbo->cols['pmf_timer_due_count']->inputTypeDefault = 'text';
 $dbo->cols['pmf_timer_due_count']->searchMode = 'exact';
 $dbo->cols['pmf_timer_due_count']->capContClassDefault = array();
 $dbo->cols['pmf_timer_due_count']->valContClassDefault = array();
+$dbo->cols['pmf_timer_due_count']->exportUseLookup = true;
 $dbo->cols['pmf_timer_due_count']->option->defaultMethod = 'text';
 $dbo->cols['pmf_timer_due_count']->option->searchMethod = 'text';
 $dbo->cols['pmf_timer_due_count']->option->listMethod = 'text';
@@ -465,6 +509,7 @@ $dbo->cols['isdue']->inputTypeDefault = 'PixelAdminCheckbox';
 $dbo->cols['isdue']->searchMode = 'exact';
 $dbo->cols['isdue']->capContClassDefault = array();
 $dbo->cols['isdue']->valContClassDefault = array();
+$dbo->cols['isdue']->exportUseLookup = true;
 $dbo->cols['isdue']->option->default = 'Y/Show Due Only';
 $dbo->cols['isdue']->option->defaultMethod = 'text';
 $dbo->cols['isdue']->option->searchMethod = 'text';
@@ -477,6 +522,7 @@ $dbo->cols['casedesc']->inputTypeDefault = 'text';
 $dbo->cols['casedesc']->searchMode = 'matchany';
 $dbo->cols['casedesc']->capContClassDefault = array();
 $dbo->cols['casedesc']->valContClassDefault = array();
+$dbo->cols['casedesc']->exportUseLookup = true;
 $dbo->cols['casedesc']->option->defaultMethod = 'text';
 $dbo->cols['casedesc']->option->searchMethod = 'text';
 $dbo->cols['casedesc']->option->listMethod = 'text';
@@ -498,8 +544,15 @@ $dbo->saveDir = dirname(dirname(__FILE__));
 $dbo->run();
 
 /*
+# enable overwriting DBO class
+class DBO_custom_pmtask_caseflow_list extends DBO{
+	function __construct(){
+		parent::__construct();
+	}
+}
+
 $dbo->newModifier = 'dbo_pmtask_caseflow_list_custom_new';
-function dbo_pmtask_caseflow_list_custom_new($table, $cols){
+function dbo_pmtask_caseflow_list_custom_new($table, $cols, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doInsert($table, $cols);
@@ -510,7 +563,7 @@ function dbo_pmtask_caseflow_list_custom_new($table, $cols){
 }
 
 $dbo->editModifier = 'dbo_pmtask_caseflow_list_custom_edit';
-function dbo_pmtask_caseflow_list_custom_edit($table, $cols, $wheres){
+function dbo_pmtask_caseflow_list_custom_edit($table, $cols, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doUpdate($table, $cols, $wheres);
@@ -521,11 +574,11 @@ function dbo_pmtask_caseflow_list_custom_edit($table, $cols, $wheres){
 }
 
 $dbo->searchModifier = 'dbo_pmtask_caseflow_list_custom_search';
-function dbo_pmtask_caseflow_list_custom_search(&$search){
+function dbo_pmtask_caseflow_list_custom_search(&$search, $dbo){
 }
 
 $dbo->deleteModifier = 'dbo_pmtask_caseflow_list_custom_delete';
-function dbo_pmtask_caseflow_list_custom_delete($table, $wheres){
+function dbo_pmtask_caseflow_list_custom_delete($table, $wheres, $dbo){
 	global $DB;
 	$ret = array();
 	$ok = $DB->doDelete($table, $wheres);
