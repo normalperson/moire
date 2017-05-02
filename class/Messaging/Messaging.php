@@ -23,7 +23,7 @@ class Messaging {
 		
 		
 		$html = 
-"<li id='{$id}' data-showlimit='{$showLimit}' data-height='{$height}' class='nav-icon-btn nav-icon-btn-success dropdown messageLI'>
+"<li id='{$id}' data-showlimit='{$showLimit}' data-height='{$height}' class='nav-icon-btn nav-icon-btn-danger dropdown messageLI'>
 	<a href='javascript:void(0)' class='dropdown-toggle' data-toggle='dropdown'>".
 		(($unreadCount) ? "<span class='label'>{$unreadCount}</span>" : "").
 		"<i class='nav-icon fa fa-envelope'></i>

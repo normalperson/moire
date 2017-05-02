@@ -2,9 +2,9 @@
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'init.inc.php');
 
 $dbo->cols['js_id']->caption->set('default', 'Job ID', 'text');
-$dbo->cols['js_orgid']->caption->set('default', 'js_orgid', 'text');
+$dbo->cols['js_orgid']->caption->set('default', 'Customer Name', 'text');
 $dbo->cols['js_ctid']->caption->set('default', 'js_ctid', 'text');
-$dbo->cols['js_request_date']->caption->set('default', 'js_request_date', 'text');
+$dbo->cols['js_request_date']->caption->set('default', 'Request Date', 'text');
 $dbo->cols['js_request_by']->caption->set('default', 'Requestor', 'text');
 $dbo->cols['js_title']->caption->set('default', 'js_title', 'text');
 $dbo->cols['js_model']->caption->set('default', 'js_model', 'text');
@@ -67,6 +67,7 @@ $dbo->cols['js_expectdelivery']->caption->set('default', 'js_expectdelivery', 't
 $dbo->cols['js_cancelremark']->caption->set('default', 'js_cancelremark', 'text');
 $dbo->cols['js_forwardtocusttime']->caption->set('default', 'Forwarded to Customer Datetime', 'text');
 $dbo->cols['js_custrejectreason']->caption->set('default', 'js_custrejectreason', 'text');
+$dbo->cols['joboutput']->caption->set('default', 'Job Output', 'text');
 
 $dbo->titleList = 'List Record';
 $dbo->titleDetail = 'Detail';

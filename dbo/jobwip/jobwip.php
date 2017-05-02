@@ -1,5 +1,8 @@
 <?php
 require(dirname(__FILE__).DIRECTORY_SEPARATOR.'jobwip.conf.php');
+require_once(DOC_DIR.DS.'inc'.DS.'appFunc.php');
+require_once(CLASS_DIR.DS.'DocManUI'.DS.'DocManUI.php');
+require_once(CORE_DIR.DS.'inc'.DS.'DocumentManager.inc.php');
 
 # customization
 function dbo_jobwip_customize(&$dbo){
@@ -19,6 +22,12 @@ function showActionButtons($col, $colVal, $data=array(), $html=null) {
 		$ret .= PMTask::showCommentButton($data['pmc_id']);
 	}
 	return $ret."</div>";
+}
+function showFileHistory($col, $colVal, $data=array(), $html=null){
+	global $USER;
+	$docUI = new DocManUI();
+	$html = $docUI->getFileList($data['js_id'],'js_id',$USER->inGroup(array('deletefile')));
+	return $html;
 }
 # final rendering
 $dbo->render();
