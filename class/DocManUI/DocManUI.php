@@ -430,8 +430,8 @@ $(function() {
 				$_FILES['file']['dropzone_error'] = "Failed to move uploaded file";
 			}
 			
-			file_put_contents("/usr/local/apache2/htdocs/moire/log/uploadProcess_".date('Ymd').".txt", print_r(array_merge(array('user'=>$USER->userid, 'time'=>date('Y-m-d H:i:s')),$_FILES, array('file_exists'=>file_exists($_FILES['file']['tmp_name']) ? 'true' : 'false')),true), FILE_APPEND | LOCK_EX);
-			$oldlogfiles = glob("/usr/local/apache2/htdocs/moire/log/uploadProcess_*");
+			file_put_contents(DOC_DIR."/log/uploadProcess_".date('Ymd').".txt", print_r(array_merge(array('user'=>$USER->userid, 'time'=>date('Y-m-d H:i:s')),$_FILES, array('file_exists'=>file_exists($_FILES['file']['tmp_name']) ? 'true' : 'false')),true), FILE_APPEND | LOCK_EX);
+			$oldlogfiles = glob(DOC_DIR."/log/uploadProcess_*");
 			foreach ($oldlogfiles as $lg) {
 				if(is_file($lg))
 					if($time - filemtime($lg) >= 60*60*24*5) // 5 days
